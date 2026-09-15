@@ -39,6 +39,7 @@ issues_def = [
         "asset": asset_cmp,
         "target_tech": tech_pool[0], # Round Robin #1 -> an.nguyen
         "status": "Open",
+        "incident_time": "2026-09-07 10:45:00", # FSM: Khach goi Hotline bao luc 10:45
         "description": "May nen khi bao loi E-04 qua nhiet luc 08:30 sang, ap suat khi giam dot ngot lam dung ca san xuat."
     },
     {
@@ -50,6 +51,7 @@ issues_def = [
         "asset": asset_gen,
         "target_tech": tech_pool[1], # Round Robin #2 -> binh.tran
         "status": "Open",
+        "incident_time": "2026-09-07 11:00:00",
         "description": "Chuan bi cho mua mua bao, nha may can kiem tra tong the bo dieu toc va bom dau may phat dien."
     },
     {
@@ -61,6 +63,7 @@ issues_def = [
         "asset": asset_prn,
         "target_tech": tech_pool[2], # Round Robin #3 -> cuong.le
         "status": "Replied",
+        "incident_time": "2026-09-07 11:15:00",
         "description": "Ban in hop giay carton bi loi vet soc trang tai cum in mau vang so 3."
     },
     {
@@ -72,6 +75,7 @@ issues_def = [
         "asset": asset_pnl,
         "target_tech": tech_pool[0], # Round Robin #4 -> LOOPS BACK TO an.nguyen
         "status": "Open",
+        "incident_time": "2026-09-07 11:20:00",
         "description": "Khoi dong tu nhanh may ep so 2 bi ro ho quang, phat nhiet nong va nhay aptomat."
     },
     {
@@ -83,6 +87,7 @@ issues_def = [
         "asset": asset_chl,
         "target_tech": tech_pool[2],
         "status": "On Hold", # Gap Analysis representation of "Waiting for Parts"
+        "incident_time": "2026-09-07 11:25:00",
         "description": "Bao tri phat hien van tiet luu Danfoss hoat dong sai lech gay dong bang ong hut. [WAITING FOR PARTS: Van tiet luu PART-VAL-EXP01]."
     },
     {
@@ -94,6 +99,7 @@ issues_def = [
         "asset": asset_cmp,
         "target_tech": tech_pool[1],
         "status": "Closed",
+        "incident_time": "2026-09-07 11:30:00",
         "description": "Khao sat vi tri lap dat them cam bien do ap suat khi nen tren duong ong chinh."
     }
 ]
@@ -112,6 +118,7 @@ for item in issues_def:
             "company": fc.COMPANY,
             "status": "Open",
             "custom_asset": item["asset"],
+            "custom_incident_time": item.get("incident_time"),
             "description": item["description"]
         })
         iss_name = issue_doc.get("name")
@@ -119,6 +126,9 @@ for item in issues_def:
     else:
         iss_name = existing[0]["name"]
         print(f"[EXISTS] Issue: {iss_name}")
+        # Ensure custom_incident_time is updated
+        if item.get("incident_time"):
+            fc.update_doc("Issue", iss_name, {"custom_incident_time": item.get("incident_time")})
 
     # Assign technician according to Round Robin contract
     assign_res = fc.request("POST", "/api/method/frappe.desk.form.assign_to.add", {
@@ -190,28 +200,34 @@ bins = fc.list_docs("Bin", filters=[["item_code", "=", "PART-FLT-OIL01"], ["ware
 qty_before = bins[0]["actual_qty"] if bins else 0
 print(f"[STOCK BEFORE] PART-FLT-OIL01 in {wh_main}: {qty_before} Nos")
 
-# Create and Submit Stock Entry (Material Issue)
-se_issue_doc = fc.create_doc("Stock Entry", {
-    "stock_entry_type": "Material Issue",
-    "company": fc.COMPANY,
-    "custom_issue": issue_1_name,
-    "custom_asset": asset_cmp,
-    "custom_technician": assigned_tech_iss1,
-    "items": [
-        {
-            "item_code": "PART-FLT-OIL01",
-            "qty": 2,
-            "uom": "Nos",
-            "stock_uom": "Nos",
-            "conversion_factor": 1,
-            "s_warehouse": wh_main,
-            "basic_rate": 650000
-        }
-    ]
-})
-se_issue_name = se_issue_doc.get("name")
-fc.submit_doc("Stock Entry", se_issue_name)
-print(f"[SUBMITTED] Stock Entry (Material Issue): {se_issue_name}")
+# Check if Stock Entry (Material Issue) for this issue already exists
+existing_se = fc.list_docs("Stock Entry", filters=[["custom_issue", "=", issue_1_name], ["docstatus", "=", 1]])
+if not existing_se:
+    # Create and Submit Stock Entry (Material Issue)
+    se_issue_doc = fc.create_doc("Stock Entry", {
+        "stock_entry_type": "Material Issue",
+        "company": fc.COMPANY,
+        "custom_issue": issue_1_name,
+        "custom_asset": asset_cmp,
+        "custom_technician": assigned_tech_iss1,
+        "items": [
+            {
+                "item_code": "PART-FLT-OIL01",
+                "qty": 2,
+                "uom": "Nos",
+                "stock_uom": "Nos",
+                "conversion_factor": 1,
+                "s_warehouse": wh_main,
+                "basic_rate": 650000
+            }
+        ]
+    })
+    se_issue_name = se_issue_doc.get("name")
+    fc.submit_doc("Stock Entry", se_issue_name)
+    print(f"[SUBMITTED] Stock Entry (Material Issue): {se_issue_name}")
+else:
+    se_issue_name = existing_se[0]["name"]
+    print(f"[EXISTS] Stock Entry (Material Issue): {se_issue_name}")
 print(f"  - Linked custom_issue: {issue_1_name}")
 print(f"  - Linked custom_asset: {asset_cmp}")
 print(f"  - Linked custom_technician: {assigned_tech_iss1}")

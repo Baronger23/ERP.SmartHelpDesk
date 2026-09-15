@@ -14,7 +14,11 @@ print(f"[OK] Company verified: {company.get('name')} ({fc.COMPANY_ABBR})")
 # 2. Warehouses
 warehouses = [
     {"name": f"Kho Linh kien Trung tam - {fc.COMPANY_ABBR}", "warehouse_name": "Kho Linh kien Trung tam"},
-    {"name": f"Kho Xe Ky thuat Di dong - {fc.COMPANY_ABBR}", "warehouse_name": "Kho Xe Ky thuat Di dong"}
+    {"name": f"Kho Xe Ky thuat Di dong - {fc.COMPANY_ABBR}", "warehouse_name": "Kho Xe Ky thuat Di dong"},
+    {"name": f"Kho Xe - Nguyen Van An - {fc.COMPANY_ABBR}", "warehouse_name": "Kho Xe - Nguyen Van An"},
+    {"name": f"Kho Xe - Tran Dinh Binh - {fc.COMPANY_ABBR}", "warehouse_name": "Kho Xe - Tran Dinh Binh"},
+    {"name": f"Kho Xe - Le Hoang Cuong - {fc.COMPANY_ABBR}", "warehouse_name": "Kho Xe - Le Hoang Cuong"},
+    {"name": f"Kho Thu hoi Linh kien Hong - {fc.COMPANY_ABBR}", "warehouse_name": "Kho Thu hoi Linh kien Hong"}
 ]
 parent_wh = f"All Warehouses - {fc.COMPANY_ABBR}"
 for wh in warehouses:
@@ -123,7 +127,7 @@ for it in items_def:
 
 # 7. Asset Categories
 asset_cats = [
-    "Compressor", "Industrial Printing", "HVAC & Cooling", "Generator", "Electrical Panel"
+    "Compressor", "Industrial Printing", "HVAC & Cooling", "Generator", "Electrical Panel", "Calibration Equipment"
 ]
 fixed_asset_acc = f"1750 - Plants and Machineries - {fc.COMPANY_ABBR}"
 for cat in asset_cats:
@@ -140,7 +144,7 @@ for cat in asset_cats:
     else:
         print(f"[EXISTS] Asset Category: {cat}")
 
-# 8. Locations & Assets (5 Assets)
+# 8. Locations & Assets (5 Customer Assets + 1 Internal Calibrated Tool Asset)
 assets_def = [
     {
         "code": "AST-PRN-01",
@@ -186,6 +190,15 @@ assets_def = [
         "customer": "Cong ty Nhua & Co khi Song Long",
         "serial": "MSB-SL-1200A",
         "val": 180000000
+    },
+    {
+        "code": "TOOL-VIB01",
+        "name": "May do rung cong nghiep SKF CMAS 100-SL",
+        "cat": "Calibration Equipment",
+        "loc": "Kho Cong Cu Ky Thuat - AIS",
+        "customer": None,
+        "serial": "SKF-VIB-9921",
+        "val": 35000000
     }
 ]
 

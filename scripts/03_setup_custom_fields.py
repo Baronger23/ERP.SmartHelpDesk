@@ -15,7 +15,41 @@ custom_fields = [
         "options": "Asset",
         "insert_after": "customer"
     },
-    # 2. Stock Entry -> Issue
+    # 2. Issue -> custom_incident_time (FSM Actual Incident Time)
+    {
+        "dt": "Issue",
+        "fieldname": "custom_incident_time",
+        "label": "Actual Incident Time (Thoi diem khach bao)",
+        "fieldtype": "Datetime",
+        "insert_after": "custom_asset"
+    },
+    # 3. Issue -> custom_related_issue (Callback / Incident Chain Link)
+    {
+        "dt": "Issue",
+        "fieldname": "custom_related_issue",
+        "label": "Related Original Issue (Callback Ref)",
+        "fieldtype": "Link",
+        "options": "Issue",
+        "insert_after": "custom_incident_time"
+    },
+    # 4. Issue -> custom_root_cause (Root Cause Category)
+    {
+        "dt": "Issue",
+        "fieldname": "custom_root_cause",
+        "label": "Root Cause Category",
+        "fieldtype": "Select",
+        "options": "Hardware Failure\nOperator Error\nFalse Alarm / No Fault Found\nAdjustment Only\nEnvironmental",
+        "insert_after": "custom_related_issue"
+    },
+    # 5. Issue -> custom_has_callback (Flag on Original Issue)
+    {
+        "dt": "Issue",
+        "fieldname": "custom_has_callback",
+        "label": "Has Callback / Recall",
+        "fieldtype": "Check",
+        "insert_after": "custom_root_cause"
+    },
+    # 6. Stock Entry -> Issue
     {
         "dt": "Stock Entry",
         "fieldname": "custom_issue",

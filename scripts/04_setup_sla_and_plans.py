@@ -18,7 +18,7 @@ for prio in ["Urgent", "High", "Medium", "Low"]:
         print(f"[EXISTS] Issue Priority: {prio}")
 
 # 3. Issue Types
-issue_types = ["Corrective Repair", "Preventive Maintenance", "Technical Inspection"]
+issue_types = ["Corrective Repair", "Preventive Maintenance", "Technical Inspection", "Callback / Recall"]
 for it in issue_types:
     if not fc.exists_doc("Issue Type", it):
         fc.create_doc("Issue Type", {"name": it})
@@ -44,7 +44,15 @@ workdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 # 5. VIP Customer SLA (Specific to Customer: Cong ty CP Bao bi Tan A)
 vip_sla_name = "SLA Khach hang VIP"
 vip_doc_name = f"SLA-Issue-{vip_sla_name}"
-if not fc.exists_doc("Service Level Agreement", vip_doc_name) and not fc.exists_doc("Service Level Agreement", vip_sla_name):
+vip_priorities = [
+    {"priority": "Urgent", "default_priority": 1, "response_time": 1800, "resolution_time": 14400},   # 30m / 4h
+    {"priority": "High", "default_priority": 0, "response_time": 3600, "resolution_time": 28800},     # 1h / 8h
+    {"priority": "Medium", "default_priority": 0, "response_time": 14400, "resolution_time": 86400},  # 4h / 24h
+    {"priority": "Low", "default_priority": 0, "response_time": 28800, "resolution_time": 172800}     # 8h / 48h
+]
+
+target_vip_name = vip_doc_name if fc.exists_doc("Service Level Agreement", vip_doc_name) else (vip_sla_name if fc.exists_doc("Service Level Agreement", vip_sla_name) else None)
+if not target_vip_name:
     res_vip = fc.create_doc("Service Level Agreement", {
         "service_level": vip_sla_name,
         "document_type": "Issue",
@@ -52,12 +60,7 @@ if not fc.exists_doc("Service Level Agreement", vip_doc_name) and not fc.exists_
         "entity": "Cong ty CP Bao bi Tan A",
         "holiday_list": hl_name,
         "enabled": 1,
-        "priorities": [
-            {"priority": "Urgent", "default_priority": 1, "response_time": 1800, "resolution_time": 14400},   # 30m / 4h
-            {"priority": "High", "default_priority": 0, "response_time": 3600, "resolution_time": 28800},     # 1h / 8h
-            {"priority": "Medium", "default_priority": 0, "response_time": 7200, "resolution_time": 43200},   # 2h / 12h
-            {"priority": "Low", "default_priority": 0, "response_time": 14400, "resolution_time": 86400}      # 4h / 24h
-        ],
+        "priorities": vip_priorities,
         "sla_fulfilled_on": [{"status": "Resolved"}, {"status": "Closed"}],
         "support_and_resolution": [
             {"workday": d, "start_time": "08:00:00", "end_time": "17:30:00"} for d in workdays
@@ -65,24 +68,28 @@ if not fc.exists_doc("Service Level Agreement", vip_doc_name) and not fc.exists_
     })
     print(f"[CREATED] VIP SLA: {vip_sla_name}")
 else:
-    print(f"[EXISTS] VIP SLA: {vip_sla_name}")
+    fc.update_doc("Service Level Agreement", target_vip_name, {"priorities": vip_priorities})
+    print(f"[UPDATED] VIP SLA priorities (2D Matrix): {target_vip_name}")
 
 # 6. Standard Customer SLA (Default SLA for all other customers)
 std_sla_name = "SLA Khach hang Standard"
 std_doc_name = f"SLA-Issue-{std_sla_name}"
-if not fc.exists_doc("Service Level Agreement", std_doc_name) and not fc.exists_doc("Service Level Agreement", std_sla_name):
+std_priorities = [
+    {"priority": "Urgent", "default_priority": 0, "response_time": 3600, "resolution_time": 28800},    # 1h / 8h
+    {"priority": "High", "default_priority": 0, "response_time": 14400, "resolution_time": 86400},    # 4h / 24h
+    {"priority": "Medium", "default_priority": 1, "response_time": 28800, "resolution_time": 172800}, # 8h / 48h
+    {"priority": "Low", "default_priority": 0, "response_time": 86400, "resolution_time": 259200}     # 24h / 72h
+]
+
+target_std_name = std_doc_name if fc.exists_doc("Service Level Agreement", std_doc_name) else (std_sla_name if fc.exists_doc("Service Level Agreement", std_sla_name) else None)
+if not target_std_name:
     res_std = fc.create_doc("Service Level Agreement", {
         "service_level": std_sla_name,
         "document_type": "Issue",
         "default_service_level_agreement": 1,
         "holiday_list": hl_name,
         "enabled": 1,
-        "priorities": [
-            {"priority": "Urgent", "default_priority": 0, "response_time": 7200, "resolution_time": 28800},    # 2h / 8h
-            {"priority": "High", "default_priority": 0, "response_time": 14400, "resolution_time": 57600},     # 4h / 16h
-            {"priority": "Medium", "default_priority": 1, "response_time": 14400, "resolution_time": 86400},   # 4h / 24h
-            {"priority": "Low", "default_priority": 0, "response_time": 28800, "resolution_time": 172800}      # 8h / 48h
-        ],
+        "priorities": std_priorities,
         "sla_fulfilled_on": [{"status": "Resolved"}, {"status": "Closed"}],
         "support_and_resolution": [
             {"workday": d, "start_time": "08:00:00", "end_time": "17:30:00"} for d in workdays
@@ -90,7 +97,8 @@ if not fc.exists_doc("Service Level Agreement", std_doc_name) and not fc.exists_
     })
     print(f"[CREATED] Standard SLA: {std_sla_name}")
 else:
-    print(f"[EXISTS] Standard SLA: {std_sla_name}")
+    fc.update_doc("Service Level Agreement", target_std_name, {"priorities": std_priorities})
+    print(f"[UPDATED] Standard SLA priorities (2D Matrix): {target_std_name}")
 
 # 7. 3 Asset Maintenance Plans
 # Lookup Asset document names by item_code

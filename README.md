@@ -19,9 +19,10 @@ Hệ thống quản lý HelpDesk và Bảo trì bảo dưỡng thiết bị (Mai
 ├── scripts/                          # Bộ script tự động hóa cấu hình và kiểm chứng
 │   ├── 01_setup_master_data.py       # Khởi tạo dữ liệu nền tảng
 │   ├── 02_setup_technicians_and_rules.py # Cấu hình kỹ thuật viên & Round Robin
-│   ├── 03_setup_custom_fields.py     # Thêm Custom Fields cho Desk/Issue
-│   ├── 04_setup_sla_and_plans.py     # Cấu hình SLA & kế hoạch bảo trì
+│   ├── 03_setup_custom_fields.py     # Thêm Custom Fields cho Desk/Issue (bao gồm custom_incident_time)
+│   ├── 04_setup_sla_and_plans.py     # Cấu hình Ma trận SLA 2 chiều & kế hoạch bảo trì
 │   ├── 05_execute_scenarios.py       # Chạy các kịch bản kiểm chứng end-to-end
+│   ├── 06_server_script_prototypes.py# Mã nguyên mẫu Server Script (Skill-based routing & Absence)
 │   └── frappe_client.py              # Thư viện giao tiếp REST API Frappe Cloud
 ├── screenshots/                      # Ảnh chụp màn hình minh chứng các luồng hoạt động
 ├── midterm_report.md                 # Báo cáo chi tiết giữa kỳ
