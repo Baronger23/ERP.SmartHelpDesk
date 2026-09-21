@@ -9,11 +9,11 @@
       "priority": "Urgent",
       "status": "Resolved",
       "sla": "SLA-Issue-SLA Khach hang VIP",
-      "response_by": "2026-09-07 12:00:26.210553",
+      "response_by": "2026-09-16 08:30:00",
       "resolution_by": null,
       "assigned_user": "an.nguyen@smarthelpdesk.local",
-      "_assign": "[\"binh.tran@smarthelpdesk.local\", \"an.nguyen@smarthelpdesk.local\"]",
-      "asset": "ACC-ASS-2026-00001"
+      "_assign": "[\"an.nguyen@smarthelpdesk.local\"]",
+      "asset": "ACC-ASS-2026-00002"
     },
     "ISSUE_2": {
       "name": "ISS-2026-00002",
@@ -22,10 +22,10 @@
       "priority": "Medium",
       "status": "Open",
       "sla": "SLA-Issue-SLA Khach hang Standard",
-      "response_by": "2026-09-08 10:00:27.215358",
+      "response_by": "2026-09-16 16:00:00",
       "resolution_by": null,
       "assigned_user": "binh.tran@smarthelpdesk.local",
-      "_assign": "[\"cuong.le@smarthelpdesk.local\", \"binh.tran@smarthelpdesk.local\"]",
+      "_assign": "[\"binh.tran@smarthelpdesk.local\"]",
       "asset": "ACC-ASS-2026-00004"
     },
     "ISSUE_3": {
@@ -35,11 +35,11 @@
       "priority": "High",
       "status": "Replied",
       "sla": "SLA-Issue-SLA Khach hang VIP",
-      "response_by": "2026-09-07 12:30:28.309652",
+      "response_by": "2026-09-16 09:00:00",
       "resolution_by": null,
       "assigned_user": "cuong.le@smarthelpdesk.local",
-      "_assign": "[\"an.nguyen@smarthelpdesk.local\", \"cuong.le@smarthelpdesk.local\"]",
-      "asset": "ACC-ASS-2026-00002"
+      "_assign": "[\"cuong.le@smarthelpdesk.local\"]",
+      "asset": "ACC-ASS-2026-00001"
     },
     "ISSUE_4": {
       "name": "ISS-2026-00004",
@@ -48,10 +48,10 @@
       "priority": "High",
       "status": "Open",
       "sla": "SLA-Issue-SLA Khach hang Standard",
-      "response_by": "2026-09-07 15:30:29.427086",
+      "response_by": "2026-09-16 12:00:00",
       "resolution_by": null,
       "assigned_user": "an.nguyen@smarthelpdesk.local",
-      "_assign": "[\"binh.tran@smarthelpdesk.local\", \"an.nguyen@smarthelpdesk.local\"]",
+      "_assign": "[\"an.nguyen@smarthelpdesk.local\"]",
       "asset": "ACC-ASS-2026-00005"
     },
     "ISSUE_5": {
@@ -61,10 +61,10 @@
       "priority": "Medium",
       "status": "On Hold",
       "sla": "SLA-Issue-SLA Khach hang Standard",
-      "response_by": "2026-09-08 10:00:30.381487",
+      "response_by": "2026-09-16 16:00:00",
       "resolution_by": null,
       "assigned_user": "cuong.le@smarthelpdesk.local",
-      "_assign": "[\"cuong.le@smarthelpdesk.local\"]",
+      "_assign": "[\"binh.tran@smarthelpdesk.local\", \"cuong.le@smarthelpdesk.local\"]",
       "asset": "ACC-ASS-2026-00003"
     },
     "ISSUE_6": {
@@ -74,11 +74,11 @@
       "priority": "Low",
       "status": "Closed",
       "sla": "SLA-Issue-SLA Khach hang VIP",
-      "response_by": "2026-09-08 10:00:31.595597",
+      "response_by": "2026-09-16 16:00:00",
       "resolution_by": null,
       "assigned_user": "binh.tran@smarthelpdesk.local",
-      "_assign": "[\"an.nguyen@smarthelpdesk.local\", \"binh.tran@smarthelpdesk.local\"]",
-      "asset": "ACC-ASS-2026-00001"
+      "_assign": "[\"cuong.le@smarthelpdesk.local\", \"binh.tran@smarthelpdesk.local\"]",
+      "asset": "ACC-ASS-2026-00002"
     }
   },
   "maintenance_log": {
@@ -88,16 +88,16 @@
     "custom_issue": "ISS-2026-00005"
   },
   "stock_transaction": {
-    "name": "MAT-STE-2026-00003",
+    "name": "MAT-STE-2026-00002",
     "type": "Material Issue",
     "item_code": "PART-FLT-OIL01",
     "qty_issued": 2,
     "stock_before": 2.0,
-    "stock_after": 0.0,
+    "stock_after": 2.0,
     "reorder_level": 3.0,
     "reorder_condition_met": true,
     "custom_issue": "ISS-2026-00001",
-    "custom_asset": "ACC-ASS-2026-00001",
+    "custom_asset": "ACC-ASS-2026-00002",
     "custom_technician": "an.nguyen@smarthelpdesk.local"
   }
 }

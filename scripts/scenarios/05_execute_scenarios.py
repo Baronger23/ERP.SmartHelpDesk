@@ -39,6 +39,7 @@ issues_def = [
         "asset": asset_cmp,
         "target_tech": tech_pool[0], # Round Robin #1 -> an.nguyen
         "status": "Open",
+        "warranty_status": "In Warranty",
         "incident_time": "2026-09-07 10:45:00", # FSM: Khach goi Hotline bao luc 10:45
         "description": "May nen khi bao loi E-04 qua nhiet luc 08:30 sang, ap suat khi giam dot ngot lam dung ca san xuat."
     },
@@ -119,6 +120,7 @@ for item in issues_def:
             "status": "Open",
             "custom_asset": item["asset"],
             "custom_incident_time": item.get("incident_time"),
+            "custom_warranty_status": item.get("warranty_status", "In Warranty"),
             "description": item["description"]
         })
         iss_name = issue_doc.get("name")
@@ -126,9 +128,14 @@ for item in issues_def:
     else:
         iss_name = existing[0]["name"]
         print(f"[EXISTS] Issue: {iss_name}")
-        # Ensure custom_incident_time is updated
+        # Ensure custom_incident_time and custom_warranty_status are updated
+        update_fields = {}
         if item.get("incident_time"):
-            fc.update_doc("Issue", iss_name, {"custom_incident_time": item.get("incident_time")})
+            update_fields["custom_incident_time"] = item.get("incident_time")
+        if item.get("warranty_status"):
+            update_fields["custom_warranty_status"] = item.get("warranty_status")
+        if update_fields:
+            fc.update_doc("Issue", iss_name, update_fields)
 
     # Assign technician according to Round Robin contract
     assign_res = fc.request("POST", "/api/method/frappe.desk.form.assign_to.add", {
@@ -210,6 +217,7 @@ if not existing_se:
         "custom_issue": issue_1_name,
         "custom_asset": asset_cmp,
         "custom_technician": assigned_tech_iss1,
+        "custom_billing_type": "Under Warranty",
         "items": [
             {
                 "item_code": "PART-FLT-OIL01",

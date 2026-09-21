@@ -225,22 +225,49 @@ for a in assets_def:
         })
         print(f"[CREATED] Fixed Asset Item: {item_asset_code}")
     
-    # Asset
+    # Asset (Hạt sạn 1: Cách ly kế toán cho thiết bị của khách hàng & Hạt sạn 3: Tạo QR Code)
     existing_assets = fc.list_docs("Asset", filters=[["item_code", "=", item_asset_code], ["company", "=", fc.COMPANY]])
+    
+    is_cust_asset = 1 if a.get("customer") else 0
+    
+    asset_doc_name = existing_assets[0]["name"] if existing_assets else None
+    
+    # Generate Quick Issue Reporting URL for QR code (Hạt sạn 3)
+    import urllib.parse
+    qr_url = f"{fc.BASE_URL}/app/issue/new?custom_asset={asset_doc_name or ''}&customer={urllib.parse.quote(a.get('customer') or '')}"
+    qr_html = (
+        f'<div style="text-align: center; padding: 12px; background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 10px;">'
+        f'<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={urllib.parse.quote(qr_url)}" alt="QR Code" width="150" height="150" style="border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" />'
+        f'<br><div style="margin-top: 8px;"><b style="color: #1e293b; font-size: 13px;">QUÉT ĐỂ BÁO LỖI THIẾT BỊ NÀY</b></div>'
+        f'<div style="color: #64748b; font-size: 11px; margin-top: 2px;">Mã: <b>{a["code"]}</b> | Số Serial: <b>{a["serial"]}</b></div>'
+        f'</div>'
+    )
+    
+    asset_payload = {
+        "asset_name": a["name"],
+        "item_code": item_asset_code,
+        "company": fc.COMPANY,
+        "location": loc,
+        "purchase_date": "2025-01-10",
+        "gross_purchase_amount": a["val"],
+        "net_purchase_amount": a["val"],
+        "is_existing_asset": 1,
+        "calculate_depreciation": 0,
+        "custom_customer": a.get("customer"),
+        "custom_is_customer_equipment": is_cust_asset,
+        "custom_qr_url": qr_url,
+        "custom_qr_code_html": qr_html
+    }
+    
     if not existing_assets:
-        doc = fc.create_doc("Asset", {
-            "asset_name": a["name"],
-            "item_code": item_asset_code,
-            "company": fc.COMPANY,
-            "location": loc,
-            "purchase_date": "2025-01-10",
-            "gross_purchase_amount": a["val"],
-            "net_purchase_amount": a["val"],
-            "is_existing_asset": 1
-        })
-        print(f"[CREATED] Asset: {a['code']} -> Document Name: {doc.get('name')}")
+        doc = fc.create_doc("Asset", asset_payload)
+        print(f"[CREATED] Asset: {a['code']} -> {doc.get('name')} (Customer: {a.get('customer')}, Isolated: {is_cust_asset})")
     else:
-        print(f"[EXISTS] Asset: {a['code']} -> {existing_assets[0]['name']}")
+        doc_name = existing_assets[0]["name"]
+        # Update QR URL with actual document name
+        asset_payload["custom_qr_url"] = f"{fc.BASE_URL}/app/issue/new?custom_asset={doc_name}&customer={urllib.parse.quote(a.get('customer') or '')}"
+        fc.update_doc("Asset", doc_name, asset_payload)
+        print(f"[UPDATED] Asset: {a['code']} -> {doc_name} (Customer: {a.get('customer')}, Accounting Isolated: YES)")
 
 # 9. Initial Stock Receipt (Material Receipt)
 # Notice: For PART-FLT-OIL01 we set initial qty = 4. Later in scenario we issue 2, leaving 2 (< reorder_level 3).

@@ -39,6 +39,11 @@ STEPS = [
     },
     {
         "step": "05",
+        "title": "Field Technician Mobile Quick Actions (Client Scripts)",
+        "script": os.path.join(PROJECT_ROOT, "scripts", "setup", "05_setup_quick_actions.py")
+    },
+    {
+        "step": "06",
         "title": "End-to-End Operational Scenarios & Evidence Collection",
         "script": os.path.join(PROJECT_ROOT, "scripts", "scenarios", "05_execute_scenarios.py")
     }

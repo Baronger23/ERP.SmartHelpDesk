@@ -84,6 +84,70 @@ custom_fields = [
         "fieldtype": "Link",
         "options": "Issue",
         "insert_after": "maintenance_status"
+    },
+    # 6. Asset -> custom_customer (Hạt sạn 1: Gán máy móc cho Khách hàng cụ thể)
+    {
+        "dt": "Asset",
+        "fieldname": "custom_customer",
+        "label": "Customer / Owner (Khach hang so huu)",
+        "fieldtype": "Link",
+        "options": "Customer",
+        "insert_after": "item_code"
+    },
+    # 7. Asset -> custom_is_customer_equipment (Đánh dấu máy khách để loại trừ kế toán)
+    {
+        "dt": "Asset",
+        "fieldname": "custom_is_customer_equipment",
+        "label": "Is Customer Equipment (Thiet bi cua khach hang)",
+        "fieldtype": "Check",
+        "default": "1",
+        "insert_after": "custom_customer"
+    },
+    # 8. Asset -> custom_qr_url (Hạt sạn 3: URL để quét QR tạo nhanh ticket)
+    {
+        "dt": "Asset",
+        "fieldname": "custom_qr_url",
+        "label": "Quick Issue URL (Link bao loi nhanh)",
+        "fieldtype": "Small Text",
+        "read_only": 1,
+        "insert_after": "custom_is_customer_equipment"
+    },
+    # 9. Asset -> custom_qr_code_html (Hạt sạn 3: Hiển thị hình ảnh mã QR ngay trên máy)
+    {
+        "dt": "Asset",
+        "fieldname": "custom_qr_code_html",
+        "label": "Equipment QR Code (Tem QR May)",
+        "fieldtype": "HTML",
+        "insert_after": "custom_qr_url"
+    },
+    # 10. Stock Entry -> custom_billing_type (Hạt sạn 2: Phân định Bảo hành vs Tính phí khách hàng)
+    {
+        "dt": "Stock Entry",
+        "fieldname": "custom_billing_type",
+        "label": "Billing Type (Phan loai chi phi)",
+        "fieldtype": "Select",
+        "options": "Under Warranty\nBillable to Customer\nGoodwill",
+        "default": "Under Warranty",
+        "insert_after": "custom_technician"
+    },
+    # 11. Stock Entry -> custom_sales_invoice (Hạt sạn 2: Nối hóa đơn nếu là Billable)
+    {
+        "dt": "Stock Entry",
+        "fieldname": "custom_sales_invoice",
+        "label": "Sales Invoice Ref (Hoa don tinh phi)",
+        "fieldtype": "Link",
+        "options": "Sales Invoice",
+        "insert_after": "custom_billing_type"
+    },
+    # 12. Issue -> custom_warranty_status
+    {
+        "dt": "Issue",
+        "fieldname": "custom_warranty_status",
+        "label": "Warranty Status (Trang thai bao hanh)",
+        "fieldtype": "Select",
+        "options": "In Warranty\nOut of Warranty\nGoodwill",
+        "default": "In Warranty",
+        "insert_after": "custom_asset"
     }
 ]
 
