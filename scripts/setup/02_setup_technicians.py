@@ -75,22 +75,73 @@ if not fc.exists_doc("Asset Maintenance Team", team_name):
 else:
     print(f"[EXISTS] Asset Maintenance Team: {team_name}")
 
-# 4. Assignment Rule (Round Robin for Issue)
-rule_name = "Round Robin Assignment for Issues"
+# 4. Skill-Based Assignment Rules (Phân bổ công việc dựa trên năng lực chuyên môn)
+# Tắt quy tắc Round Robin mù cũ nếu tồn tại
+old_rule = "Round Robin Assignment for Issues"
+if fc.exists_doc("Assignment Rule", old_rule):
+    try:
+        fc.update_doc("Assignment Rule", old_rule, {"disabled": 1})
+        print(f"[DISABLED] Old Generic Rule: {old_rule}")
+    except Exception as e:
+        print(f"[NOTE] Disabling old rule: {e}")
+
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-if not fc.exists_doc("Assignment Rule", rule_name):
-    rule_doc = fc.create_doc("Assignment Rule", {
-        "name": rule_name,
+skill_rules = [
+    {
+        "name": "Skill Rule - Co khi va Khi nen",
         "document_type": "Issue",
-        "description": "Tu dong gan Ky thuat vien theo vong tron Round Robin",
+        "description": "Dinh tuyen su co may nen khi va may in cong nghiep toi Chuyen vien Co khi: Nguyen Van An",
+        "priority": 1,
+        "assign_condition": 'custom_asset_category in ["Compressor", "Industrial Printing"]',
+        "rule": "Round Robin",
+        "assignment_days": [{"day": d} for d in days],
+        "users": [{"user": "an.nguyen@smarthelpdesk.local"}]
+    },
+    {
+        "name": "Skill Rule - Dien cong nghiep va Tu dong hoa",
+        "document_type": "Issue",
+        "description": "Dinh tuyen su co tu dien va may phat dien toi Chuyen vien Dien: Tran Dinh Binh",
+        "priority": 1,
+        "assign_condition": 'custom_asset_category in ["Electrical Panel", "Generator"]',
+        "rule": "Round Robin",
+        "assignment_days": [{"day": d} for d in days],
+        "users": [{"user": "binh.tran@smarthelpdesk.local"}]
+    },
+    {
+        "name": "Skill Rule - Nhiet lanh HVAC",
+        "document_type": "Issue",
+        "description": "Dinh tuyen su co he thong Chiller toi Chuyen vien Nhiet Lanh: Le Hoang Cuong",
+        "priority": 1,
+        "assign_condition": 'custom_asset_category in ["HVAC & Cooling"]',
+        "rule": "Round Robin",
+        "assignment_days": [{"day": d} for d in days],
+        "users": [{"user": "cuong.le@smarthelpdesk.local"}]
+    },
+    {
+        "name": "Skill Rule - Fallback Mac dinh",
+        "document_type": "Issue",
+        "description": "Quy tac du phong: Xoay vong deu khi su co chua xac dinh duoc thiet bi hoac ngoai danh muc",
+        "priority": 5,
         "assign_condition": 'status == "Open"',
         "rule": "Round Robin",
         "assignment_days": [{"day": d} for d in days],
         "users": [{"user": t["email"]} for t in techs]
-    })
-    print(f"[CREATED] Assignment Rule: {rule_name} (Round Robin for 3 Techs)")
-else:
-    print(f"[EXISTS] Assignment Rule: {rule_name}")
+    }
+]
+
+for r in skill_rules:
+    if not fc.exists_doc("Assignment Rule", r["name"]):
+        try:
+            fc.create_doc("Assignment Rule", r)
+            print(f"[CREATED] Skill-Based Assignment Rule: {r['name']}")
+        except Exception as e:
+            print(f"[ERROR] Creating Rule {r['name']}: {e}")
+    else:
+        try:
+            fc.update_doc("Assignment Rule", r["name"], r)
+            print(f"[UPDATED] Skill-Based Assignment Rule: {r['name']}")
+        except Exception as e:
+            print(f"[ERROR] Updating Rule {r['name']}: {e}")
 
 print("=== 02_SETUP_TECHNICIANS_AND_RULES.PY COMPLETED SUCCESSFULLY ===")

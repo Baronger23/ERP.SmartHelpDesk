@@ -37,10 +37,11 @@ issues_def = [
         "priority": "Urgent",
         "issue_type": "Corrective Repair",
         "asset": asset_cmp,
-        "target_tech": tech_pool[0], # Round Robin #1 -> an.nguyen
+        "asset_category": "Compressor",
+        "target_tech": tech_pool[0], # Skill: Co khi & Khi nen -> an.nguyen
         "status": "Open",
         "warranty_status": "In Warranty",
-        "incident_time": "2026-09-07 10:45:00", # FSM: Khach goi Hotline bao luc 10:45
+        "incident_time": "2026-09-07 10:45:00",
         "description": "May nen khi bao loi E-04 qua nhiet luc 08:30 sang, ap suat khi giam dot ngot lam dung ca san xuat."
     },
     {
@@ -50,7 +51,8 @@ issues_def = [
         "priority": "Medium",
         "issue_type": "Preventive Maintenance",
         "asset": asset_gen,
-        "target_tech": tech_pool[1], # Round Robin #2 -> binh.tran
+        "asset_category": "Generator",
+        "target_tech": tech_pool[1], # Skill: Dien & May phat -> binh.tran
         "status": "Open",
         "incident_time": "2026-09-07 11:00:00",
         "description": "Chuan bi cho mua mua bao, nha may can kiem tra tong the bo dieu toc va bom dau may phat dien."
@@ -62,7 +64,8 @@ issues_def = [
         "priority": "High",
         "issue_type": "Corrective Repair",
         "asset": asset_prn,
-        "target_tech": tech_pool[2], # Round Robin #3 -> cuong.le
+        "asset_category": "Industrial Printing",
+        "target_tech": tech_pool[0], # Skill: Co khi in an -> an.nguyen
         "status": "Replied",
         "incident_time": "2026-09-07 11:15:00",
         "description": "Ban in hop giay carton bi loi vet soc trang tai cum in mau vang so 3."
@@ -74,7 +77,8 @@ issues_def = [
         "priority": "High",
         "issue_type": "Corrective Repair",
         "asset": asset_pnl,
-        "target_tech": tech_pool[0], # Round Robin #4 -> LOOPS BACK TO an.nguyen
+        "asset_category": "Electrical Panel",
+        "target_tech": tech_pool[1], # Skill: Dien ha the & Tu dien -> binh.tran
         "status": "Open",
         "incident_time": "2026-09-07 11:20:00",
         "description": "Khoi dong tu nhanh may ep so 2 bi ro ho quang, phat nhiet nong va nhay aptomat."
@@ -86,8 +90,9 @@ issues_def = [
         "priority": "Medium",
         "issue_type": "Corrective Repair",
         "asset": asset_chl,
-        "target_tech": tech_pool[2],
-        "status": "On Hold", # Gap Analysis representation of "Waiting for Parts"
+        "asset_category": "HVAC & Cooling",
+        "target_tech": tech_pool[2], # Skill: Nhiet - Lanh HVAC -> cuong.le
+        "status": "On Hold",
         "incident_time": "2026-09-07 11:25:00",
         "description": "Bao tri phat hien van tiet luu Danfoss hoat dong sai lech gay dong bang ong hut. [WAITING FOR PARTS: Van tiet luu PART-VAL-EXP01]."
     },
@@ -98,7 +103,8 @@ issues_def = [
         "priority": "Low",
         "issue_type": "Technical Inspection",
         "asset": asset_cmp,
-        "target_tech": tech_pool[1],
+        "asset_category": "Compressor",
+        "target_tech": tech_pool[0], # Skill: He thong khi nen -> an.nguyen
         "status": "Closed",
         "incident_time": "2026-09-07 11:30:00",
         "description": "Khao sat vi tri lap dat them cam bien do ap suat khi nen tren duong ong chinh."
@@ -119,6 +125,7 @@ for item in issues_def:
             "company": fc.COMPANY,
             "status": "Open",
             "custom_asset": item["asset"],
+            "custom_asset_category": item.get("asset_category"),
             "custom_incident_time": item.get("incident_time"),
             "custom_warranty_status": item.get("warranty_status", "In Warranty"),
             "description": item["description"]
@@ -128,16 +135,26 @@ for item in issues_def:
     else:
         iss_name = existing[0]["name"]
         print(f"[EXISTS] Issue: {iss_name}")
-        # Ensure custom_incident_time and custom_warranty_status are updated
-        update_fields = {}
+        # Ensure custom fields including custom_asset_category are updated
+        update_fields = {
+            "custom_asset": item["asset"],
+            "custom_asset_category": item.get("asset_category")
+        }
         if item.get("incident_time"):
             update_fields["custom_incident_time"] = item.get("incident_time")
         if item.get("warranty_status"):
             update_fields["custom_warranty_status"] = item.get("warranty_status")
-        if update_fields:
-            fc.update_doc("Issue", iss_name, update_fields)
+        fc.update_doc("Issue", iss_name, update_fields)
 
-    # Assign technician according to Round Robin contract
+    # Re-assign technician according to Skill-Based Routing Matrix
+    # Remove previous assignment ToDo if any
+    try:
+        old_todos = fc.list_docs("ToDo", filters=[["reference_type", "=", "Issue"], ["reference_name", "=", iss_name], ["status", "=", "Open"]])
+        for td in old_todos:
+            fc.request("DELETE", f"/api/resource/ToDo/{td['name']}")
+    except Exception:
+        pass
+
     assign_res = fc.request("POST", "/api/method/frappe.desk.form.assign_to.add", {
         "doctype": "Issue",
         "name": iss_name,

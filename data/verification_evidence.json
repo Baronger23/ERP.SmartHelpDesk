@@ -37,8 +37,8 @@
       "sla": "SLA-Issue-SLA Khach hang VIP",
       "response_by": "2026-09-16 09:00:00",
       "resolution_by": null,
-      "assigned_user": "cuong.le@smarthelpdesk.local",
-      "_assign": "[\"cuong.le@smarthelpdesk.local\"]",
+      "assigned_user": "an.nguyen@smarthelpdesk.local",
+      "_assign": "[\"an.nguyen@smarthelpdesk.local\"]",
       "asset": "ACC-ASS-2026-00001"
     },
     "ISSUE_4": {
@@ -50,8 +50,8 @@
       "sla": "SLA-Issue-SLA Khach hang Standard",
       "response_by": "2026-09-16 12:00:00",
       "resolution_by": null,
-      "assigned_user": "an.nguyen@smarthelpdesk.local",
-      "_assign": "[\"an.nguyen@smarthelpdesk.local\"]",
+      "assigned_user": "binh.tran@smarthelpdesk.local",
+      "_assign": "[\"binh.tran@smarthelpdesk.local\"]",
       "asset": "ACC-ASS-2026-00005"
     },
     "ISSUE_5": {
@@ -64,7 +64,7 @@
       "response_by": "2026-09-16 16:00:00",
       "resolution_by": null,
       "assigned_user": "cuong.le@smarthelpdesk.local",
-      "_assign": "[\"binh.tran@smarthelpdesk.local\", \"cuong.le@smarthelpdesk.local\"]",
+      "_assign": "[\"cuong.le@smarthelpdesk.local\"]",
       "asset": "ACC-ASS-2026-00003"
     },
     "ISSUE_6": {
@@ -76,8 +76,8 @@
       "sla": "SLA-Issue-SLA Khach hang VIP",
       "response_by": "2026-09-16 16:00:00",
       "resolution_by": null,
-      "assigned_user": "binh.tran@smarthelpdesk.local",
-      "_assign": "[\"cuong.le@smarthelpdesk.local\", \"binh.tran@smarthelpdesk.local\"]",
+      "assigned_user": "an.nguyen@smarthelpdesk.local",
+      "_assign": "[\"an.nguyen@smarthelpdesk.local\"]",
       "asset": "ACC-ASS-2026-00002"
     }
   },

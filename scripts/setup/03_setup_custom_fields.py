@@ -15,13 +15,23 @@ custom_fields = [
         "options": "Asset",
         "insert_after": "customer"
     },
+    # 1b. Issue -> custom_asset_category (Skill-based Routing)
+    {
+        "dt": "Issue",
+        "fieldname": "custom_asset_category",
+        "label": "Asset Category (Chuyen mon thiet bi)",
+        "fieldtype": "Link",
+        "options": "Asset Category",
+        "fetch_from": "custom_asset.asset_category",
+        "insert_after": "custom_asset"
+    },
     # 2. Issue -> custom_incident_time (FSM Actual Incident Time)
     {
         "dt": "Issue",
         "fieldname": "custom_incident_time",
         "label": "Actual Incident Time (Thoi diem khach bao)",
         "fieldtype": "Datetime",
-        "insert_after": "custom_asset"
+        "insert_after": "custom_asset_category"
     },
     # 3. Issue -> custom_related_issue (Callback / Incident Chain Link)
     {
