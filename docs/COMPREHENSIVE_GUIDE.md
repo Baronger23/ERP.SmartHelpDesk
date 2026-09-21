@@ -1,286 +1,357 @@
-# CẨM NANG TOÀN DIỆN: GIẢI MÃ DỰ ÁN SMART HELPDESK & MAINTENANCE TRÊN ERPNEXT
-> **Tài liệu hướng dẫn từ A đến Z dành cho:** Thành viên dự án, Người mới bắt đầu với ERPNext, và Hội đồng đánh giá đồ án.  
-> **Dự án:** Triển khai Hệ thống Smart Helpdesk & Quản trị Bảo trì Công nghiệp (Field Service Management & MRO)  
-> **Nền tảng:** ERPNext v16 / Frappe Framework  
-> **Đơn vị thực hiện:** Nhóm sinh viên DUT.K1N4 — Đề tài Hệ Thống Thông Tin  
+# CẨM NANG TOÀN DIỆN VÀ CHI TIẾT: GIẢI MÃ DỰ ÁN SMART HELPDESK & MAINTENANCE TRÊN NỀN TẢNG ERPNEXT
+> **Tài liệu tham chiếu chuẩn mực (Master Reference Guide) từ A đến Z**  
+> **Dành cho:** Thành viên dự án, Chuyên viên phân tích nghiệp vụ (BA), Lập trình viên, và Hội đồng đánh giá đồ án Hệ Thống Thông Tin.  
+> **Dự án:** Triển khai Hệ thống Smart Helpdesk & Quản trị Bảo trì Công nghiệp (Field Service Management - FSM & MRO)  
+> **Nền tảng công nghệ:** ERPNext v16 / Frappe Framework v16  
+> **Đơn vị thực hiện:** Nhóm sinh viên DUT.K1N4  
 
 ---
 
-## MỤC LỤC
-1. [Phần 1: Nhập môn cho người chưa từng dùng ERPNext (Mental Model)](#phần-1-nhập-môn-cho-người-chưa-từng-dùng-erpnext-mental-model)
-2. [Phần 2: Bức tranh Domain & Bản đồ Chức năng Tổng thể (Domain Blueprint)](#phần-2-bức-tranh-domain--bản-đồ-chức-năng-tổng-thể-domain-blueprint)
-3. [Phần 3: Phân tích 8 Nỗi đau Doanh nghiệp Thực tế (8 Comprehensive Pain Points)](#phần-3-phân-tích-8-nỗi-đau-doanh-nghiệp-thực-tế-8-comprehensive-pain-points)
-4. [Phần 4: Bản phân tích Đánh đổi Kiến trúc (Architecture Decision Records & Trade-offs)](#phần-4-bản-phân-tích-đánh-đổi-kiến-trúc-architecture-decision-records--trade-offs)
-5. [Phần 5: Cẩm nang Thao tác Giao diện ERPNext (Click-by-Click UI Walkthrough)](#phần-5-cẩm-nang-thao-tác-giao-diện-erpnext-click-by-click-ui-walkthrough)
-6. [Phần 6: Đào sâu Tối ưu hóa Hệ thống Hiện tại (Deep-Dive Optimization)](#phần-6-đào-sâu-tối-ưu-hóa-hệ-thống-hiện-tại-deep-dive-optimization)
-7. [Phần 7: Lộ trình Mở rộng & Scale Quy mô Tương lai (Future Roadmap)](#phần-7-lộ-trình-mở-rộng--scale-quy-mô-tương-lai-future-roadmap)
+## MỤC LỤC CHI TIẾT
+1. [Chương 1: Nền tảng Triết lý ERP & Frappe Framework Dành Cho Người Mới Bắt Đầu](#chương-1-nền-tảng-triết-lý-erp--frappe-framework-dành-cho-người-mới-bắt-đầu)
+2. [Chương 2: Bức tranh Doanh nghiệp & Danh mục Dữ liệu Chủ (Master Data Ecosystem)](#chương-2-bức-tranh-doanh-nghiệp--danh-mục-dữ-liệu-chủ-master-data-ecosystem)
+3. [Chương 3: Ba Trụ Cột Chức Năng Cốt Lõi Của Dự Án (Core Domain Pillars)](#chương-3-ba-trụ-cột-chức-năng-cốt-lõi-của-dự-án-core-domain-pillars)
+4. [Chương 4: Phân tích Chi tiết 8 Nỗi Đau Doanh Nghiệp Thực Tế (Comprehensive Pain Points)](#chương-4-phân-tích-chi-tiết-8-nỗi-đau-doanh-nghiệp-thực-tế-comprehensive-pain-points)
+5. [Chương 5: Bản Phân Tích Đánh Đổi Kiến Trúc (Architecture Decision Records - ADR & Trade-Offs)](#chương-5-bản-phân-tích-đánh-đổi-kiến-trúc-architecture-decision-records---adr--trade-offs)
+6. [Chương 6: Cẩm Nang Thao Tác Giao Diện Desk Từng Bước (Click-by-Click UI Walkthrough)](#chương-6-cẩm-nang-thao-tác-giao-diện-desk-từng-bước-click-by-click-ui-walkthrough)
+7. [Chương 7: Đào Sâu Tối Ưu Hóa Kỹ Thuật & Đo Lường KPI Vận Hành (Deep-Dive & KPI Engine)](#chương-7-đào-sâu-tối-ưu-hóa-kỹ-thuật--đo-lường-kpi-vận-hành-deep-dive--kpi-engine)
+8. [Chương 8: Thiết Kế Kiến Trúc Mở Rộng Pha Cuối Kỳ (AI Agent RAG & IoT Roadmap)](#chương-8-thiết-kế-kiến-trúc-mở-rộng-pha-cuối-kỳ-ai-agent-rag--iot-roadmap)
 
 ---
 
-## PHẦN 1: NHẬP MÔN CHO NGƯỜI CHƯA TỪNG DÙNG ERPNEXT (MENTAL MODEL)
+# CHƯƠNG 1: NỀN TẢNG TRIẾT LÝ ERP & FRAPPE FRAMEWORK DÀNH CHO NGƯỜI MỚI BẮT ĐẦU
 
-### 1.1. Bản chất: Frappe Framework vs. ERPNext là gì?
-Để không bị ngợp giữa hàng trăm tính năng, bạn cần hiểu rõ sự phân tầng:
-* **Frappe Framework (Cái Khung Gầm - Engine):**
-  * Tương tự như Laravel trong PHP hay Django trong Python, nhưng Frappe đi kèm sẵn một **hệ điều hành web thu nhỏ**.
-  * Frappe chịu trách nhiệm: Quản lý cơ sở dữ liệu (Database MariaDB/PostgreSQL), vẽ giao diện người dùng (gọi là **Desk**), cơ chế xác thực/tài khoản, hệ thống phân quyền (Role & Permissions), thanh tìm kiếm toàn cục (`Ctrl + K`), và các cổng giao tiếp REST API. Bản thân Frappe **hoàn toàn không chứa nghiệp vụ kinh doanh** nào cả.
-* **ERPNext (Ứng dụng Chạy trên Frappe):**
-  * Là một bộ ứng dụng quản trị doanh nghiệp mã nguồn mở khổng lồ được xây dựng bằng Frappe.
-  * ERPNext mang đến các module quản lý phòng ban: Kế toán (`Accounting`), Mua hàng (`Buying`), Bán hàng (`Selling`), Quản lý kho (`Stock`), Tài sản (`Assets`), Nhân sự (`HR`), và Dịch vụ hỗ trợ (`Support`).
+## 1.1. Bản chất: Frappe Framework vs. ERPNext là gì?
 
-### 1.2. Tại sao doanh nghiệp dùng ERPNext thay vì tự code Web từ đầu?
-* **Tư duy tự code Web App (Custom Development):**
-  * Khi máy hỏng $\rightarrow$ Viết code lưu vào bảng `Issues`.
-  * Khi KTV thay lọc dầu $\rightarrow$ Lưu dòng chữ "Đã thay 2 lọc dầu".
-  * *Hạn chế:* Hệ thống này là một "hòn đảo thông tin cô lập". Nó không biết 2 cái lọc dầu đó từ kho nào xuất ra, giá trị bao nhiêu tiền, ai chịu chi phí, và kho còn đủ đồ để chạy sự cố tiếp theo hay không.
-* **Tư duy Hệ thống ERP (Enterprise Resource Planning):**
-  * Một hành động kỹ thuật ở hiện trường (thay 2 cái lọc dầu) sẽ lập tức kích hoạt chuỗi phản ứng liên phòng ban:
-    1. **Kho (`Stock`):** Tồn kho giảm từ 4 xuống 2 cái; cảnh báo thủ kho nhập thêm hàng vì đã dưới mức an toàn (Reorder Level = 3).
-    2. **Kế toán (`Accounting`):** Sổ cái ghi giảm giá trị tài sản kho 1.300.000 VNĐ; hạch toán vào chi phí bảo hành của hợp đồng tương ứng.
-    3. **Tài sản (`Assets`):** Máy móc ghi nhận một ca thay thế phụ tùng, phục vụ tính tổng chi phí sở hữu (TCO).
-  * 👉 **ERP đảm bảo tính toàn vẹn dữ liệu xuyên suốt (Single Source of Truth), không một dữ liệu nào bị rời rạc.**
+Để không bị lạc lối giữa hàng nghìn chức năng, bạn cần phân biệt rõ ràng hai khái niệm thường bị đánh đồng:
 
-### 1.3. Bảng thuật ngữ cơ bản cần nắm
-| Thuật ngữ | Ý nghĩa trong ERPNext | Tương đương trong lập trình truyền thống |
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                                     ERPNEXT v16                                        │
+│  (Ứng dụng Quản trị Doanh nghiệp: Kế toán, Kho, Mua hàng, Bán hàng, Tài sản, Support)  │
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ Chạy trên nền tảng
+┌───────────────────────────────────────────▼────────────────────────────────────────────┐
+│                                 FRAPPE FRAMEWORK v16                                   │
+│ (Khung gầm Full-stack: DocType ORM, Giao diện Desk, Phân quyền, REST API, Client/Server)│
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ Chạy trên hạ tầng
+┌───────────────────────────────────────────▼────────────────────────────────────────────┐
+│                          HẠ TẦNG CƠ SỞ DỮ LIỆU & DỊCH VỤ                               │
+│            MariaDB 10.6+  |  Redis (Cache/Queue)  |  Python 3.11+  |  NodeJS            │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Frappe Framework (Nền tảng / Khung gầm - Engine):**
+   * Giống như hệ điều hành Android của điện thoại. Nó chưa có nghiệp vụ buôn bán hay sửa máy nào cả.
+   * Frappe đảm nhiệm các bài toán kỹ thuật nền tảng:
+     * **Cơ chế ORM (Object-Relational Mapping):** Tự động chuyển đổi các bảng CSDL quan hệ thành các đối tượng phần mềm gọi là **DocType**.
+     * **Giao diện làm việc (Desk):** Tự động vẽ ra toàn bộ màn hình danh sách, form nhập liệu, biểu đồ, thanh tìm kiếm thông minh `Ctrl + K`.
+     * **Bảo mật & Phân quyền:** Phân quyền theo vai trò (Role-based Access Control - RBAC) tới từng trường dữ liệu (Field-level permission).
+     * **Tự động hóa:** Cung cấp Client Script (JavaScript chạy trên trình duyệt) và Server Script (Python chạy trên máy chủ).
+2. **ERPNext (Ứng dụng Hoạch định Nguồn lực Doanh nghiệp):**
+   * Là một phần mềm ERP mã nguồn mở hoàn chỉnh, được xây dựng hoàn toàn bằng Frappe Framework.
+   * ERPNext cung cấp sẵn các phân hệ nghiệp vụ chuẩn quốc tế:
+     * `Accounting`: Quản lý hệ thống tài khoản, sổ cái tổng hợp (General Ledger), công nợ phải thu/phải trả.
+     * `Stock`: Quản lý danh mục vật tư, số dư kho tức thời, phiếu nhập/xuất/chuyển kho, định mức tồn an toàn.
+     * `Assets`: Quản lý hồ sơ máy móc thiết bị, vị trí lắp đặt, kế hoạch bảo trì phòng ngừa.
+     * `Support`: Tiếp nhận vé yêu cầu hỗ trợ (Ticket/Issue), đo lường cam kết thời gian dịch vụ (SLA).
+
+## 1.2. Tại sao Doanh nghiệp chọn ERPNext thay vì tự lập trình Web App từ đầu?
+
+| Tiêu chí | Tự Code Web App (Custom Development) | Triển khai trên Nền tảng ERPNext |
 | :--- | :--- | :--- |
-| **DocType** | Định nghĩa một cấu trúc thực thể/bảng dữ liệu | Database Table + Model + Form Schema |
-| **Desk** | Bàn làm việc chính chứa các Workspace | Admin Dashboard / Portal |
-| **List View** | Giao diện danh sách các bản ghi | Data Table / Index View |
-| **Form View** | Giao diện xem và chỉnh sửa chi tiết một bản ghi | Detail / Edit Form |
-| **Custom Field** | Trường dữ liệu tự tạo thêm vào DocType có sẵn | `ALTER TABLE ADD COLUMN` |
-| **Client Script** | Đoạn code JavaScript chạy trên trình duyệt người dùng | Frontend Event Handlers / UI Hook |
-| **Server Script** | Đoạn code Python chạy trong sandbox server | Backend Trigger / Database Hook |
-| **Assignment Rule** | Luật tự động gán tài liệu cho nhân sự | Routing / Dispatching Engine |
+| **Cách tiếp cận** | Xây từng viên gạch trên bãi đất trống (NodeJS/React). | Mua một tòa nhà cao ốc xây sẵn, thiết lập phân vùng sử dụng. |
+| **Tính liên kết dữ liệu** | **Dữ liệu phân mảnh (Silo):** Bảng `Tickets` lưu chữ "Đã thay 2 lọc dầu". Kho không hề biết mình bị mất 2 lọc dầu, kế toán không biết 1.300.000đ này đi về đâu. | **Khép kín xuyên suốt (Single Source of Truth):** Khi một phiếu xuất kho sửa chữa được tạo, kho tự trừ hàng, kế toán tự sinh bút toán sổ cái, máy móc tự lưu vết chi phí. |
+| **Tính bất biến của sổ sách** | Lập trình viên có thể tùy tiện chạy lệnh `DELETE FROM issues` làm mất dấu vết gian lận. | **Nguyên tắc kế toán khắt khe:** Chứng từ sau khi đã ký duyệt (`Submit - docstatus=1`) là bất biến. Muốn sửa phải làm thủ tục Hủy (`Cancel`) và lưu vết kiểm toán (Audit Trail). |
+| **Thời gian triển khai** | Mất từ 6 tháng đến 1 năm chỉ để làm các tính năng CRUD, phân quyền, đăng nhập, xuất PDF. | Có sẵn toàn bộ khung quản trị, tập trung 100% thời gian vào giải quyết bài toán nghiệp vụ của ngành. |
 
-### 1.4. Bảng Đối Chiếu: "Cái gì có sẵn" vs. "Cái gì nhóm đã cấu hình/tùy biến"
-| Phân hệ | ERPNext Có Sẵn (Native) | Nhóm Đã Cấu Hình / Tùy Biến (Custom) |
-| :--- | :--- | :--- |
-| **Helpdesk & SLA** | • Bảng `Issue` để tiếp nhận yêu cầu.<br>• Mức ưu tiên `Priority` (Urgent, High...).<br>• Giao việc xoay vòng `Assignment Rule`. | • **Ma trận SLA 2 chiều:** Gói VIP (30' phản hồi) vs Standard.<br>• **Skill-based Routing:** 3 bộ quy tắc gán việc theo ngành chuyên môn.<br>• **Custom Fields:** `custom_asset`, `custom_incident_time`, `custom_root_cause`, `custom_has_callback`.<br>• **Nút bấm 1-chạm Mobile (Client Script):** [Check-in], [Xuất linh kiện], [Hoàn thành ca]. |
-| **Thiết bị & Bảo trì** | • Bảng `Asset` theo dõi tài sản.<br>• Lập lịch bảo trì `Asset Maintenance`.<br>• Nhật ký bảo trì `Asset Maintenance Log`. | • **Khai báo 5 máy công nghiệp** (Hitachi, Flexo, Daikin, Cummins, MSB) + 1 công cụ đo SKF.<br>• **Cách ly kế toán (Asset Isolation):** Tắt khấu hao `calculate_depreciation = 0`, gán cờ `custom_is_customer_equipment = 1`, gắn chủ sở hữu `custom_customer`.<br>• **Tem QR Code dán máy:** Tự động sinh mã QR để quét báo lỗi tức thời. |
-| **Kho & Vật tư** | • Bảng `Item`, `Warehouse`.<br>• Phiếu xuất/nhập/chuyển kho `Stock Entry`.<br>• Quản lý tồn kho tức thời `Bin`. | • **Cây kho FSM:** Kho Trung tâm, 3 Kho Xe KTV (`Van Stock`), Kho thu hồi xác hỏng.<br>• **Khai báo 12 linh kiện** và thiết lập mức cảnh báo Reorder.<br>• **Phân loại thanh toán:** Thêm trường `custom_billing_type` (`Under Warranty` vs `Billable to Customer`). |
-| **Nhân sự Kỹ thuật** | • Bảng `User`, `Employee`. | • Tạo 3 chuyên viên: Nguyễn Văn An (Cơ khí), Trần Đình Bình (Điện), Lê Hoàng Cường (HVAC). |
+## 1.3. Bảng Thuật Ngữ Nền Tảng Trong Hệ Thống Frappe / ERPNext
+* **DocType (Document Type):** Một thực thể dữ liệu trong Frappe. Ví dụ: `Issue` (Sự cố), `Asset` (Tài sản), `Stock Entry` (Phiếu kho). Mỗi DocType tương ứng với một bảng trong CSDL MariaDB (tên bảng có tiền tố `tab`, ví dụ `tabIssue`).
+* **Child Table (Bảng con):** Bảng dữ liệu con gắn liền với một DocType cha. Ví dụ: Phiếu kho `Stock Entry` có bảng con `items` (`tabStock Entry Detail`) chứa danh sách từng linh kiện xuất kho.
+* **Link Field (Trường liên kết):** Khóa ngoại (Foreign Key) trỏ tới một DocType khác. Ví dụ: trường `custom_asset` trên `Issue` trỏ tới DocType `Asset`.
+* **Fetch From:** Cơ chế tự động kéo dữ liệu từ bảng cha sang bảng con. Ví dụ: Khi chọn `custom_asset`, hệ thống tự động kéo `asset_category` của máy đó sang trường `custom_asset_category` trên Issue.
+* **DocStatus (Trạng thái vòng đời chứng từ):**
+  * `0 = Draft` (Bản nháp): Được phép sửa, xóa thoải mái.
+  * `1 = Submitted` (Đã ký duyệt): Đã tác động vào kho và sổ cái, không thể sửa đè.
+  * `2 = Cancelled` (Đã hủy): Bị vô hiệu hóa nhưng vẫn lưu vết trong database.
 
 ---
 
-## PHẦN 2: BỨC TRANH DOMAIN & BẢN ĐỒ CHỨC NĂNG TỔNG THỂ (DOMAIN BLUEPRINT)
+# CHƯƠNG 2: BỨC TRANH DOANH NGHIỆP & DANH MỤC DỮ LIỆU CHỦ (MASTER DATA)
 
-### 2.1. Domain của Dự Án Là Gì?
-Dự án giải quyết bài toán nghiệp vụ trong lĩnh vực:  
-👉 **MRO (Maintenance, Repair, and Overhaul) & FSM (Field Service Management)**  
-*(Quản lý dịch vụ kỹ thuật hiện trường & Bảo trì, Sửa chữa, Đại tu thiết bị công nghiệp)*
-
-Đơn vị triển khai giả định là **Công ty TNHH Dịch vụ Kỹ thuật & Bảo trì Công nghiệp Alpha (AIS)**, phục vụ 3 khách hàng công nghiệp lớn:
-1. *Công ty CP Bao bì Tân Á:* Hợp đồng VIP — Dây chuyền in Flexo & Hệ thống khí nén trục vít.
-2. *Xí nghiệp Dược Hải Nam:* Hợp đồng Standard — Hệ thống Chiller làm lạnh sâu & Máy phát điện dự phòng.
-3. *Công ty Nhựa & Cơ khí Song Long:* Hợp đồng Standard — Tủ điện phân phối tổng MSB & Máy ép thủy lực.
-
-### 2.2. Ba Trụ Cột Chức Năng Cốt Lõi
+Dự án không sử dụng dữ liệu rác, mà được xây dựng trên một hệ sinh thái **Dữ liệu chủ (Master Data)** khép kín và có tính liên kết chặt chẽ:
 
 ```
-                       ┌────────────────────────────────────────────────────────┐
-                       │   HỆ SINH THÁI FSM & MRO (SMART HELPDESK & MAINT.)     │
-                       └──────────────────────────┬─────────────────────────────┘
-                                                  │
-         ┌────────────────────────────────────────┼────────────────────────────────────────┐
-         ▼                                        ▼                                        ▼
-┌────────────────────────────────┐       ┌────────────────────────────────┐       ┌────────────────────────────────┐
-│   TRỤ CỘT 1: HELPDESK & SLA    │       │    TRỤ CỘT 2: QUẢN LÝ THIẾT BỊ │       │  TRỤ CỘT 3: QUẢN TRỊ KHO VẬT TƯ│
-│  (Service Desk & Dispatching)  │       │     & BẢO TRÌ ĐỊNH KỲ (CMMS)   │       │   (MRO Spare Parts & Inventory)│
-├────────────────────────────────┤       ├────────────────────────────────┤       ├────────────────────────────────┤
-│ 1. Tiếp nhận sự cố đa kênh     │       │ 1. Hồ sơ lý lịch máy móc       │       │ 1. Quản lý kho đa tầng:        │
-│    (Portal, Hotline, QR Code)  │       │    (Asset Registry, Serial No) │       │    Kho tổng, Kho xe KTV,       │
-│ 2. Ma trận cam kết SLA 2 chiều │       │ 2. Lập kế hoạch bảo dưỡng định │       │    Kho thu hồi xác linh kiện   │
-│    (VIP vs Standard x Priority)│       │    kỳ (1 tháng, 3 tháng, 6 th.)│       │ 2. Xuất/Nhập/Điều chuyển kho:  │
-│ 3. Điều phối kỹ thuật thông    │       │ 3. Nhật ký kiểm tra, hiệu chuẩn│       │    Chuyển kho xe, xuất cho vé  │
-│    minh (Skill-based Routing)  │       │    dụng cụ đo lường chuyên dụng│ 3. Định mức tồn kho an toàn &  │
-│ 4. Theo dõi chuỗi sự cố tái    │       │ 4. Chuyển đổi trạng thái:      │       │    Cảnh báo Reorder tự động    │
-│    phát (Callback / Recall)    │       │    Từ bảo dưỡng phát hiện hỏng │ 4. Phân định tài chính vật tư: │
-│                                │       │    sang tạo phiếu sửa chữa     │       │    Bảo hành vs Tính tiền khách │
-└────────────────────────────────┘       └────────────────────────────────┘       └────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        PHÁP NHÂN DOANH NGHIỆP: SMARTHELPDESKBARO (SBN)                 │
+│              Tên thương mại: Alpha Industrial Services (AIS) - Khu vực Đà Nẵng         │
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │
+         ┌──────────────────────────────────┼──────────────────────────────────┐
+         ▼                                  ▼                                  ▼
+┌──────────────────┐               ┌──────────────────┐               ┌──────────────────┐
+│   3 KHÁCH HÀNG   │               │ 3 KỸ THUẬT VIÊN  │               │ 3 NHÀ CUNG CẤP   │
+│   • Tân Á (VIP)  │               │ • Nguyễn Văn An  │               │ • Kim Long (Khí) │
+│   • Hải Nam (Std)│               │ • Trần Đình Bình │               │ • Minh Phát (Điện│
+│   • Song Long(Std│               │ • Lê Hoàng Cường │               │ • Tiến Đạt (Bơm) │
+└────────┬─────────┘               └────────┬─────────┘               └────────┬─────────┘
+         │                                  │                                  │
+         ▼                                  ▼                                  ▼
+┌──────────────────┐               ┌──────────────────┐               ┌──────────────────┐
+│    5 THIẾT BỊ    │               │  CÂY KHO 6 TẦNG  │               │   12 PHỤ TÙNG    │
+│ • Máy nén Hitachi│               │ • Kho Trung Tâm  │               │ • Lọc dầu, lọc gió│
+│ • Máy in Flexo   │               │ • 3 Kho Xe KTV   │               │ • Dầu máy nén    │
+│ • Chiller Daikin │               │ • Kho Xe tổng    │               │ • Rơ le, Contactor│
+│ • Máy phát Cummins│              │ • Kho thu hồi xác│               │ • Van tiết lưu...│
+│ • Tủ điện MSB    │               └──────────────────┘               └──────────────────┘
+└──────────────────┘
+```
+
+## 2.1. Danh mục 3 Khách Hàng Doanh Nghiệp (B2B Customers)
+1. **Công ty CP Bao bì Tân Á (`Cong ty CP Bao bi Tan A`):** Phân hạng hợp đồng **VIP**. Sở hữu dây chuyền in công nghiệp và hệ thống khí nén công suất lớn. Yêu cầu khắt khe: thời gian phản hồi sự cố khẩn cấp dưới 30 phút.
+2. **Xí nghiệp Dược Hải Nam (`Xi nghiep Duoc Hai Nam`):** Phân hạng hợp đồng **Standard**. Sở hữu hệ thống điều hòa Chiller phòng sạch và nguồn điện dự phòng.
+3. **Công ty Nhựa & Cơ khí Song Long (`Cong ty Nhua & Co khi Song Long`):** Phân hạng hợp đồng **Standard**. Sở hữu trạm tủ điện phân phối tổng MSB và hệ thống máy ép nhựa.
+
+## 2.2. Đội ngũ Kỹ thuật viên & Ma trận Năng lực Chuyên môn (Skill Matrix)
+Mỗi kỹ thuật viên là một chuyên gia trong một hoặc nhiều lĩnh vực kỹ thuật cụ thể:
+
+| Kỹ thuật viên | Tài khoản / Mã nhân viên | Chuyên môn kỹ thuật chính | Nhóm thiết bị phụ trách tương ứng |
+| :--- | :--- | :--- | :--- |
+| **Nguyễn Văn An** | `an.nguyen@smarthelpdesk.local`<br>(HR-EMP-00001) | **Cơ khí chính xác & Hệ thống khí nén** | • Máy nén khí trục vít (`Compressor`)<br>• Dây chuyền in công nghiệp (`Industrial Printing`) |
+| **Trần Đình Bình** | `binh.tran@smarthelpdesk.local`<br>(HR-EMP-00002) | **Điện công nghiệp & Tự động hóa** | • Tủ điện phân phối tổng MSB (`Electrical Panel`)<br>• Máy phát điện dự phòng (`Generator`) |
+| **Lê Hoàng Cường** | `cuong.le@smarthelpdesk.local`<br>(HR-EMP-00003) | **Nhiệt - Lạnh công nghiệp (HVAC)** | • Hệ thống Chiller giải nhiệt nước (`HVAC & Cooling`)<br>• Hỗ trợ vận hành máy phát điện (`Generator`) |
+
+## 2.3. Danh mục 5 Thiết bị Trọng yếu & 1 Công cụ Đo lường
+* `ACC-ASS-2026-00001`: **Máy in công nghiệp Flexo 6 màu** (Mã: `AST-PRN-01`, Vị trí: Xưởng In 1 - Tân Á, Giá trị định giá: 450.000.000đ).
+* `ACC-ASS-2026-00002`: **Máy nén khí trục vít Hitachi 75kW** (Mã: `AST-CMP-02`, Vị trí: Phòng Máy Nén Khí - Tân Á, Giá trị: 280.000.000đ).
+* `ACC-ASS-2026-00003`: **Hệ thống Chiller Daikin 100RT** (Mã: `AST-CHL-03`, Vị trí: Khu Kỹ Thuật Mái - Hải Nam, Giá trị: 650.000.000đ).
+* `ACC-ASS-2026-00004`: **Máy phát điện Cummins 250kVA** (Mã: `AST-GEN-04`, Vị trí: Nhà Xe Trạm Điện - Hải Nam, Giá trị: 350.000.000đ).
+* `ACC-ASS-2026-00005`: **Tủ điện tổng MSB 1200A** (Mã: `AST-PNL-05`, Vị trí: Phòng Điện Trung Tâm - Song Long, Giá trị: 180.000.000đ).
+* `ACC-ASS-2026-00006`: **Máy đo rung công nghiệp SKF CMAS 100-SL** (Mã: `TOOL-VIB01`, Tài sản nội bộ của AIS dùng để đi kiểm định máy cho khách).
+
+## 2.4. Cấu trúc Cây Kho Phụ Tùng Đa Tầng (Multi-tier Warehouses)
+* **Kho Linh kiện Trung tâm - SBN:** Kho tổng tại trụ sở AIS, nơi tiếp nhận hàng từ nhà cung cấp và dự trữ an toàn.
+* **Kho Xe Kỹ thuật Di động - SBN:** Kho trung chuyển nhóm xe lưu động.
+* **Kho Xe - Nguyen Van An - SBN:** Kho di động trên xe bán tải của KTV An (An chịu trách nhiệm vật chất).
+* **Kho Xe - Tran Dinh Binh - SBN:** Kho di động trên xe bán tải của KTV Bình.
+* **Kho Xe - Le Hoang Cuong - SBN:** Kho di động trên xe bán tải của KTV Cường.
+* **Kho Thu hồi Linh kiện Hỏng - SBN:** Kho phế liệu lưu giữ xác phụ tùng cũ hỏng tháo từ máy khách hàng mang về để kiểm định độc lập.
+
+---
+
+# CHƯƠNG 3: BA TRỤ CỘT CHỨC NĂNG CỐT LÕI CỦA DỰ ÁN (CORE DOMAIN PILLARS)
+
+Hệ thống được thiết kế vững chắc dựa trên 3 trụ cột nghiệp vụ:
+
+```mermaid
+graph LR
+    subgraph "TRỤ CỘT 1: HELPDESK & SLA"
+        T1["Khách báo sự cố (Web/QR/Hotline)"] --> T2["Ma trận SLA 2 chiều kiểm tra"]
+        T2 --> T3["Skill-based Routing gán đúng KTV"]
+    end
+
+    subgraph "TRỤ CỘT 2: QUẢN LÝ THIẾT BỊ (CMMS)"
+        M1["Hồ sơ máy (Asset Registry)"] --> M2["Kế hoạch bảo trì định kỳ"]
+        M2 --> M3["Phát hiện hư hỏng -> Sinh Issue"]
+        T3 -.-> M1
+    end
+
+    subgraph "TRỤ CỘT 3: KHO VẬT TƯ (INVENTORY)"
+        K1["Kho xe KTV (Van Stock)"] --> K2["Xuất linh kiện gắn Issue + Asset"]
+        K2 --> K3["Trừ tồn kho & Cảnh báo Reorder"]
+        T3 -.-> K1
+    end
+
+    K2 --> F1["Phân loại chi phí: Bảo hành vs Tính tiền"]
 ```
 
 ---
 
-## PHẦN 3: PHÂN TÍCH 8 NỖI ĐAU DOANH NGHIỆP THỰC TẾ (8 COMPREHENSIVE PAIN POINTS)
+# CHƯƠNG 4: PHÂN TÍCH CHI TIẾT 8 NỖI ĐAU DOANH NGHIỆP THỰC TẾ (COMPREHENSIVE PAIN POINTS)
 
-Khi một doanh nghiệp kỹ thuật chưa số hóa mà quản trị bằng Zalo, Excel, sổ tay, họ sẽ gặp phải 8 nỗi đau nghiêm trọng:
-
-### Nhóm Nỗi Đau 1: Ở Trụ Cột Helpdesk & Dịch Vụ Khách Hàng
-* **PP-01 (Trễ hạn cam kết SLA — Vi phạm hợp đồng):**
-  * *Thực tế:* Khách hàng VIP nhà máy bao bì dừng máy 1 giờ thiệt hại hàng trăm triệu đồng. Báo sự cố qua điện thoại/Zalo làm trôi tin nhắn, Dispatcher quên việc, KTV đến trễ hạn $\rightarrow$ Bị phạt hợp đồng, khách dọa hủy dịch vụ.
-  * *Hệ quả:* Mất uy tín doanh nghiệp, tổn thất tài chính.
-* **PP-02 (Điều phối "mù" chuyên môn — Kỹ năng không khớp việc):**
-  * *Thực tế:* Phân công theo kiểu bốc thăm ngẫu nhiên. Ca cháy chập tủ điện cao thế lại giao cho thợ cơ khí máy nén khí; ca nghẹt đường ống Chiller lạnh lại giao cho thợ điện. KTV đến nơi không biết sửa, loay hoay mất cả ngày $\rightarrow$ Kéo dài thời gian khắc phục sự cố (MTTR).
-* **PP-03 (Mất dấu chuỗi sự cố tái phát — Callback / Recall):**
-  * *Thực tế:* Máy sửa xong 3 ngày sau lại hỏng đúng lỗi cũ. Do không lưu vết, công ty coi đây là sự cố mới hoàn toàn, cử người khác đến làm lại từ đầu $\rightarrow$ Không đánh giá được tay nghề KTV làm ẩu lần trước, khách hàng bức xúc.
-
-### Nhóm Nỗi Đau 2: Ở Trụ Cột Quản Lý Thiết Bị & Bảo Trì Định Kỳ (CMMS)
-* **PP-04 (Quên lịch bảo trì ngăn ngừa — Preventive Maintenance):**
-  * *Thực tế:* Mỗi máy có chu kỳ bảo dưỡng khác nhau (thay dầu 3 tháng, nạp gas 6 tháng). Theo dõi bằng sổ sách dẫn đến bỏ quên $\rightarrow$ Máy móc cạn dầu, bó kẹt trục vít, hỏng đột ngột giữa ca sản xuất. Chi phí sửa chữa sự cố đắt gấp 5 lần bảo dưỡng định kỳ.
-* **PP-05 (Máy móc không có "Hồ sơ bệnh án" — TCO mờ mịt):**
-  * *Thực tế:* Ban giám đốc không biết một năm qua chiếc máy in Flexo đã hỏng mấy lần, đã tốn bao nhiêu tiền phụ tùng $\rightarrow$ Không có số liệu để tư vấn khách hàng nên đại tu hay thay máy mới.
-* **PP-06 (Rủi ro pháp lý & Thuế về Tài sản):**
-  * *Thực tế:* Thiết bị công nghiệp thuộc quyền sở hữu của **khách hàng**. Nhưng nếu nhân viên nhập bừa vào phần mềm kế toán thì phần mềm sẽ tự trích khấu hao tài sản của người khác vào chi phí công ty mình $\rightarrow$ Vi phạm luật kế toán và báo cáo thuế sai sự thật.
-
-### Nhóm Nỗi Đau 3: Ở Trụ Cột Quản Lý Kho & Vật Tư Kỹ Thuật (Inventory)
-* **PP-07 (Thiếu linh kiện tại hiện trường — Lãng phí thời gian di chuyển Truck-roll):**
-  * *Thực tế:* KTV chạy xe 40km đến nhà máy khách hàng, tháo máy ra mới biết thiếu lọc dầu. Lại phải chạy 40km về kho lấy đồ rồi quay lại $\rightarrow$ Lãng phí gấp đôi tiền xăng xe, công thợ, và cháy hạn cam kết SLA.
-* **PP-08 (Thất thoát phụ tùng trên xe lưu động & Kho chạm đáy đột ngột):**
-  * *Thực tế:* KTV mang linh kiện lên xe máy/bán tải đi sửa, cuối tháng thủ kho kiểm thấy hụt 10 cái lọc dầu mà không ai nhận trách nhiệm. Ban đêm máy hỏng cần đồ thay mới phát hiện kho đã hết sạch từ tuần trước (Stockout).
-* **PP-09 (Nhập nhèm dòng tiền: "Ai trả tiền phụ tùng?"):**
-  * *Thực tế:* Xuất 2 cái lọc dầu trị giá 1.300.000 VNĐ. Kế toán không biết khoản tiền này công ty AIS phải chịu lỗ vì máy trong hạn bảo hành, hay phải lập hóa đơn thu tiền công ty Tân Á vì công nhân của họ làm hỏng.
+| Mã Nỗi Đau | Phân hệ Tác Động | Hiện Trạng Doanh Nghiệp Truyền Thống | Thiệt Hại Thực Tế | Giải Pháp Trong Hệ Thống ERPNext |
+| :--- | :--- | :--- | :--- | :--- |
+| **PP-01** | Helpdesk & Khách hàng | Khách báo hỏng qua Zalo/Gọi điện, dễ trôi tin nhắn. Dispatcher không kiểm soát được giờ cam kết SLA. | Khách VIP bị dừng máy 2 giờ, thiệt hại 200 triệu đồng. AIS bị phạt vi phạm hợp đồng và mất khách hàng. | **Ma trận SLA 2 chiều:** Phân biệt SLA VIP (30' phản hồi) vs Standard (1h phản hồi). Tự động đếm ngược giờ xử lý. |
+| **PP-02** | Helpdesk & Điều phối | Giao việc theo lượt ngẫu nhiên (Round Robin mù). Sự cố cháy tủ điện giao cho thợ cơ khí; sự cố Chiller giao cho thợ điện. | KTV đến nơi không biết sửa, loay hoay mất cả buổi rồi phải gọi người khác đến cứu viện $\rightarrow$ Trễ hạn SLA. | **Skill-based Routing:** 3 quy tắc tự động tra cứu chuyên ngành thiết bị để chuyển thẳng vé đến đúng chuyên gia. |
+| **PP-03** | Helpdesk & Kỹ thuật | Máy sửa xong 2-3 ngày sau lại hỏng đúng lỗi cũ (Sự cố tái phát). Công ty không nhận biết được, coi như vé mới. | Không quy được trách nhiệm KTV sửa ẩu lần trước. Không đo lường được tỷ lệ sửa dứt điểm lần đầu (FTFR). | **Trường Callback Reference:** Trường `custom_related_issue` nối ngược vé mới về vé cũ và bật cờ `custom_has_callback = 1`. |
+| **PP-04** | Quản lý Thiết bị (CMMS) | Theo dõi lịch bảo trì ngăn ngừa trên file Excel. Nhân viên bận việc đột xuất làm quên lịch định kỳ. | Máy nén khí cạn dầu bôi trơn, kẹt trục vít, cháy động cơ $\rightarrow$ Chi phí sửa chữa đắt gấp 5 lần tiền bảo dưỡng. | **Asset Maintenance Plans:** Tự động sinh lịch bảo trì định kỳ 1 tháng, 3 tháng, 6 tháng và tạo sẵn các bản ghi kiểm tra. |
+| **PP-05** | Quản lý Thiết bị (CMMS) | Thiết bị không có hồ sơ bệnh án. Ban giám đốc không biết 1 năm qua máy móc hỏng bao nhiêu lần, tốn bao nhiêu tiền. | Không có căn cứ số liệu để tư vấn cho khách hàng nên tiếp tục sửa chữa hay thay thế máy mới (TCO mờ mịt). | **Liên kết Issue $\leftrightarrow$ Asset:** Mọi phiếu xuất kho và sự cố đều gắn chặt mã máy, cho phép bóc tách chi phí sửa chữa theo từng tài sản. |
+| **PP-06** | Kế toán & Pháp lý | Khai báo máy móc của khách hàng vào bảng `Asset` bị phần mềm tự động trích khấu hao hàng tháng vào sổ sách AIS. | Làm sai lệch Bảng cân đối kế toán và Báo cáo tài chính gửi cơ quan thuế $\rightarrow$ Vi phạm luật kế toán Việt Nam. | **Asset Accounting Isolation:** Khóa `calculate_depreciation = 0`, gắn cờ `custom_is_customer_equipment = 1` và gán chủ sở hữu `custom_customer`. |
+| **PP-07** | Kho & Vận hành | KTV chạy xe 40km đến nhà máy khách mới biết thiếu linh kiện, lại phải chạy 40km về kho lấy đồ. KTV lấm lem dầu mỡ ngại gõ form máy tính. | Lãng phí gấp đôi chi phí xăng xe, công thợ (Truck-roll cost). KTV không cập nhật kịp thời báo cáo sửa chữa. | **Kho Xe KTV (Van Stock) & Tem QR Code:** KTV luôn có đồ sẵn trên xe. Tem QR dán trên máy giúp quét báo lỗi và bấm nút 1-chạm trên điện thoại. |
+| **PP-08** | Kho & Vật tư | KTV mang linh kiện đi sửa, cuối tháng kho bị hụt hàng mà không ai nhận trách nhiệm. Nửa đêm kho hết sạch đồ thay. | Thất thoát hàng chục triệu tiền phụ tùng. Đứt gãy chuỗi cung ứng sửa chữa khẩn cấp. | **Cây kho đa tầng & Reorder Level:** Hàng chuyển lên xe nào KTV xe đó chịu trách nhiệm. Ngưỡng an toàn tự động cảnh báo khi tồn kho chạm đáy. |
+| **PP-09** | Kế toán & Tài chính | Xuất 2 cái lọc dầu giá 1.300.000đ, thủ kho xuất bừa. Kế toán không biết ai chịu tiền khoản này. | Nhập nhèm dòng tiền: Công ty bị thất thoát doanh thu hoặc khách hàng bức xúc vì bị đòi tiền trong hạn bảo hành. | **Trường Billing Type:** Bắt buộc phân định trên phiếu xuất kho: `Under Warranty` (AIS chịu chi phí) hay `Billable to Customer` (Xuất hóa đơn thu tiền). |
 
 ---
 
-## PHẦN 4: BẢN PHÂN TÍCH ĐÁNH ĐỔI KIẾN TRÚC (ARCHITECTURE DECISION RECORDS & TRADE-OFFS)
+# CHƯƠNG 5: BẢN PHÂN TÍCH ĐÁNH ĐỔI KIẾN TRÚC (ARCHITECTURE DECISION RECORDS - ADR & TRADE-OFFS)
 
-Không có giải pháp nào là hoàn hảo tuyệt đối. Mọi quyết định kỹ thuật của dự án đều là một sự **lựa chọn có tính toán (Trade-off)**:
-
-### Quyết định 1: Tận dụng DocType `Asset` Có Sẵn vs. Tự Viết DocType Mới `Customer Equipment`
-* **Vấn đề giải quyết:** PP-05 (Hồ sơ bệnh án máy) & PP-06 (Rủi ro thuế tài sản).
-* **Phương án đã chọn:** Dùng DocType `Asset` native của ERPNext, nhưng **cách ly hoàn toàn khỏi sổ cái kế toán**:
-  * Đặt `calculate_depreciation = 0` (Khóa triệt để tính năng trích khấu hao).
-  * Đặt `custom_is_customer_equipment = 1` để đánh dấu cờ máy khách hàng.
-  * Thêm `custom_customer` (Link $\rightarrow$ Customer) để định danh chủ sở hữu pháp lý.
-* **Các phương án thay thế:**
-  * *Phương án B:* Tự code một DocType mới tinh tên là `Customer Equipment`.
-  * *Phương án C:* Dùng DocType `Serial No` có sẵn.
-* **Đánh đổi (Trade-off):**
-  * ✅ **ĐƯỢC:** Tận dụng được **100% toàn bộ phân hệ `Asset Maintenance`** có sẵn của ERPNext (lập lịch bảo trì, tạo phiếu kiểm tra định kỳ, phân công đội bảo trì) mà không tốn công viết lại từ đầu.
-  * ❌ **MẤT:** Tên gọi `Asset` trong ERPNext vốn dĩ dành cho tài sản nội bộ. Người dùng mới có thể bị nhầm lẫn nếu không đọc tài liệu hướng dẫn.
-* **Lý do chọn:** Tiết kiệm hàng trăm giờ lập trình lại bánh xe lịch bảo dưỡng, trong khi việc khóa khấu hao đã loại trừ 100% rủi ro kế toán.
-
-### Quyết định 2: Skill-Based Routing vs. Round Robin Mù vs. Thuật Toán Định Vị GPS
-* **Vấn đề giải quyết:** PP-01 (Trễ hạn SLA) & PP-02 (Giao việc sai chuyên môn).
-* **Phương án đã chọn:** Bổ sung trường `custom_asset_category` trên Issue (tự động lấy từ Asset) và thiết lập **3 Quy tắc Assignment Rules chuyên ngành riêng biệt**:
-  * Máy nén khí, Máy in $\rightarrow$ Gán cho **Nguyễn Văn An** (Chuyên gia Cơ khí & Khí nén).
-  * Tủ điện MSB, Máy phát $\rightarrow$ Gán cho **Trần Đình Bình** (Chuyên gia Điện & Tự động hóa).
-  * Hệ thống Chiller $\rightarrow$ Gán cho **Lê Hoàng Cường** (Chuyên gia Nhiệt Lạnh HVAC).
-* **Các phương án thay thế:**
-  * *Phương án A:* Dùng Round Robin mặc định (chia xoay vòng mù theo số lượng).
-  * *Phương án C:* Tự code giải thuật kết nối GPS tính quãng đường di chuyển và cân bằng tải động (Load balancing).
-* **Đánh đổi (Trade-off):**
-  * ✅ **ĐƯỢC:** 100% cấu hình trực quan trên giao diện ERPNext, trong suốt, dễ kiểm soát, không cần duy trì code backend phức tạp. Chấm dứt triệt để việc thợ cơ khí đi sửa tủ điện.
-  * ❌ **MẤT:** Chưa tự động cân bằng tải nếu một ngày có quá nhiều máy nén khí hỏng cùng lúc (ông An có thể bị quá tải vé).
-* **Lý do chọn:** Đối với doanh nghiệp dịch vụ kỹ thuật, **đúng chuyên môn (Skill-fit)** quan trọng hơn nhiều so với việc chia đều việc. Giao một việc quá tải cho đúng chuyên gia vẫn xử lý tốt hơn là giao cho người không biết gì đến làm hỏng thêm máy.
-
-### Quyết định 3: Tem Dán QR Code & Web Mobile Form vs. Viết Native Mobile App (Flutter/React)
-* **Vấn đề giải quyết:** PP-07 (Rào cản hiện trường của KTV và Quản đốc nhà máy).
-* **Phương án đã chọn:** Tự động sinh **Tem mã QR Code dán trên vỏ máy**. Quét bằng camera điện thoại sẽ mở form tạo Ticket với mã máy và tên khách hàng điền sẵn 100%. Trên form Issue tích hợp bộ 3 nút bấm tác vụ nhanh (`Client Script`): `[Check-in]` $\rightarrow$ `[Xuất linh kiện]` $\rightarrow$ `[Hoàn thành]`.
-* **Các phương án thay thế:**
-  * *Phương án B:* Viết một ứng dụng di động riêng (Native App Flutter/React Native).
-  * *Phương án C:* Sử dụng phiếu biên bản giấy truyền thống.
-* **Đánh đổi (Trade-off):**
-  * ✅ **ĐƯỢC:** Chi phí 0 đồng, không cần cài đặt app, bất kỳ điện thoại nào có camera (iPhone, Android, Zalo) đều quét được ngay. Tỷ lệ người dùng chấp nhận sử dụng cao gấp 5 lần.
-  * ❌ **MẤT:** Cần kết nối Internet (Online only). Nếu nhà máy nằm ở tầng hầm mất sóng 4G thì không mở được link web.
-* **Lý do chọn:** Rào cản chuyển đổi số lớn nhất tại nhà xưởng là người dùng ngại tải app mới. Một chiếc tem dán quét ngay là giải pháp thực tế nhất.
-
-### Quyết định 4: Mô Hình Kho Xe Di Động (Van Stock) vs. Xuất Thẳng Từ Kho Trung Tâm
-* **Vấn đề giải quyết:** PP-07 (Lãng phí truck-roll) & PP-08 (Thất thoát vật tư trên đường).
-* **Phương án đã chọn:** Thiết lập cây kho đa tầng gồm `Kho Trung tâm` và các `Kho Xe KTV` (`Kho Xe - An`, `Kho Xe - Binh`...). Quy trình 2 chặng: Đầu tuần điều chuyển đồ lên xe (`Material Transfer`), khi đi sửa thì xuất từ kho xe vào máy (`Material Issue`).
-* **Các phương án thay thế:**
-  * *Phương án B:* Chỉ có 1 Kho Trung tâm, KTV cần gì thì bốc nấy, xuất thẳng từ kho tổng.
-  * *Phương án C:* Tủ linh kiện ký gửi (Consignment Stock) tại nhà máy khách hàng.
-* **Đánh đổi (Trade-off):**
-  * ✅ **ĐƯỢC:** Trách nhiệm vật chất minh bạch 100%. Hàng chuyển lên xe nào thì KTV xe đó chịu trách nhiệm. Tăng tỷ lệ sửa dứt điểm lần đầu (FTFR) vì KTV luôn có sẵn đồ trên xe.
-  * ❌ **MẤT:** Quy trình thêm 1 bước chứng từ (Transfer trước, Issue sau).
-* **Lý do chọn:** Chặn đứng "lỗ hổng đen" thất thoát linh kiện lưu động — nguyên nhân lớn nhất làm hao hụt lợi nhuận của các công ty bảo trì.
-
-### Quyết định 5: Phân Loại Chi Phí Ngay Trên Phiếu Xuất (`Billing Type`) vs. Tách Luồng Bán Hàng Riêng
-* **Vấn đề giải quyết:** PP-09 (Nhập nhèm dòng tiền Bảo hành vs Tính phí khách hàng).
-* **Phương án đã chọn:** Thêm trường `custom_billing_type` trên phiếu `Stock Entry` với 2 lựa chọn chính: `Under Warranty` (AIS chịu lỗ bảo hành) và `Billable to Customer` (Xuất hóa đơn đòi tiền khách).
-* **Các phương án thay thế:**
-  * *Phương án B:* Tách làm 2 quy trình: Nếu tính tiền thì bắt buộc phòng bán hàng tạo `Sales Order`, kế toán duyệt rồi mới cho xuất kho.
-* **Đánh đổi (Trade-off):**
-  * ✅ **ĐƯỢC:** KTV đang cứu máy lúc nửa đêm có thể xuất đồ sửa ngay lập tức để cứu tiến độ sản xuất của khách, không bị vỡ cam kết thời gian SLA.
-  * ❌ **MẤT:** Phụ thuộc vào tính trung thực của người làm phiếu.
-* **Lý do chọn:** Nguyên tắc số 1 của dịch vụ bảo trì khẩn cấp: **Cứu nhà máy trước, thủ tục giấy tờ giải quyết sau.**
-
----
-
-### BẢNG TỔNG HỢP: MA TRẬN ĐÁNH ĐỔI KIẾN TRÚC (MASTER TRADE-OFF MATRIX)
-| Quyết định Kiến trúc | Phương án Đã chọn | Phương án Thay thế | Cái ĐƯỢC lớn nhất | Cái MẤT (Đánh đổi) | Lý do then chốt để chọn |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **1. Quản lý Thiết bị** | Tận dụng `Asset` + khóa khấu hao | Tự tạo DocType `Customer Equipment` | Dùng được 100% module Bảo trì `Asset Maintenance` | Tên gọi `Asset` dễ gây nhầm với tài sản công ty | Tránh viết lại bánh xe lịch bảo dưỡng |
-| **2. Phân công việc** | Skill-Based Assignment Rules | Round Robin ngẫu nhiên / Thuật toán GPS | Đúng chuyên môn 100%, cấu hình trực quan | Chưa cân bằng được tải việc tự động | Chuyên môn quan trọng hơn chia đều |
-| **3. Thao tác KTV** | Tem QR Code + Web Mobile | Viết Native App (Flutter/React Native) | Chi phí 0đ, không cần cài app, ai cũng quét được | Bắt buộc phải có mạng Internet | Rào cản người dùng sử dụng là thấp nhất |
-| **4. Quản lý Phụ tùng** | Kho Xe di động (Van Stock) | Xuất trực tiếp từ Kho trung tâm | Trách nhiệm vật chất KTV minh bạch, tăng FTFR | Thêm 1 bước chứng từ điều chuyển kho | Chặn đứng thất thoát vật tư trên đường |
-| **5. Dòng tiền Chi phí** | Cờ `Billing Type` trên phiếu xuất | Tách luồng Bán hàng (Sales Order) | Cứu máy khách nhanh nhất, không trễ SLA | Phụ thuộc tính cẩn thận của người chọn loại | Ưu tiên thời gian phục hồi sản xuất |
-
----
-
-## PHẦN 5: CẨM NANG THAO TÁC GIAO DIỆN ERPNEXT (CLICK-BY-CLICK UI WALKTHROUGH)
-
-Bạn hãy mở trình duyệt tại `http://localhost:8080/desk` và thao tác theo 4 tour sau:
-
-### Tour 1: Tiếp Nhận Sự Cố & Xem Phân Bổ Theo Chuyên Môn
-1. Bấm phím tắt **`Ctrl + K`**, gõ: **`Issue List`** $\rightarrow$ Nhấn Enter.
-2. Xóa chữ `Open` trên thanh lọc để thấy đủ 6 sự cố.
-3. **Quan sát cột ngoài cùng bên phải (Minh chứng Skill-based Routing):**
-   * `ISS-2026-00004` (Sự cố tủ điện MSB): Có vòng tròn **`TD`** $\rightarrow$ Đã tự động gán cho **Trần Đình Bình** (Chuyên gia Điện).
-   * `ISS-2026-00001` (Máy nén khí Hitachi): Có vòng tròn **`NV`** $\rightarrow$ Đã tự động gán cho **Nguyễn Văn An** (Chuyên gia Cơ khí).
-   * `ISS-2026-00005` (Chiller Daikin đông đá): Có vòng tròn **`LC`** $\rightarrow$ Đã tự động gán cho **Lê Hoàng Cường** (Chuyên gia Nhiệt Lạnh).
-4. **Bấm vào xem chi tiết vé `ISS-2026-00002`:**
-   * Góc trên bên phải: Thấy nút màu xanh **`[ Bắt đầu xử lý (Check-in) ]`**.
-   * Bên cạnh: Nút **`[ Tác vụ hiện trường ]`** $\rightarrow$ chọn **`[ Xuất linh kiện sửa ]`**.
-   * Nút màu xanh lá: **`[ Hoàn thành ca (Resolve) ]`** $\rightarrow$ Bấm vào sẽ hiện popup hỏi nguyên nhân gốc và nghiệm thu.
-
-### Tour 2: Xem Tem QR Code & Cách Ly Kế Toán Trên Thiết Bị
-1. Bấm **`Ctrl + K`**, gõ: **`Asset List`** $\rightarrow$ Nhấn Enter.
-2. Bấm vào máy **`ACC-ASS-2026-00002`** (Máy nén khí Hitachi):
-   * **Nhìn ngay đầu trang:** Thấy **Hình ảnh Tem Mã QR Code** với dòng chữ *"QUÉT ĐỂ BÁO LỖI THIẾT BỊ NÀY"*.
-   * **Nhìn trường `Customer / Owner`:** Hiện rõ `Cong ty CP Bao bi Tan A`.
-   * **Nhìn trường `Is Customer Equipment`:** Tích chọn `Yes` (Máy khách hàng).
-   * **Kéo xuống mục `Depreciation` (Khấu hao):** Mục này hoàn toàn để trống/tắt, không tính một đồng khấu hao nào vào sổ sách AIS.
-
-### Tour 3: Kiểm Tra Xuất Kho & Cảnh Báo Đặt Hàng Lại
-1. Bấm **`Ctrl + K`**, gõ: **`Stock Entry List`** $\rightarrow$ Nhấn Enter.
-2. Bấm vào phiếu **`MAT-STE-2026-00002`**:
-   * Thấy xuất 2 cái lọc dầu `PART-FLT-OIL01` giá 1.300.000 VNĐ.
-   * Trường `Billing Type`: Đang ghi rõ là **`Under Warranty`** (Bảo hành).
-   * Trường `Technician`: Ghi rõ `an.nguyen@smarthelpdesk.local`.
-3. Bấm **`Ctrl + K`**, gõ: **`Item List`** $\rightarrow$ Chọn lọc dầu `PART-FLT-OIL01`:
-   * Số lượng thực tế trong kho: **2 cái**.
-   * Ngưỡng an toàn (`Reorder Level`): **3 cái**.
-   * Hệ thống báo động: Tồn kho đã rớt xuống dưới ngưỡng an toàn, cần mua thêm.
-
----
-
-## PHẦN 6: ĐÀO SÂU TỐI ƯU HÓA HỆ THỐNG HIỆN TẠI (DEEP-DIVE OPTIMIZATION)
-
-Nếu muốn tiếp tục đào sâu để nâng cao chất lượng đề tài:
-1. **Đào sâu về SLA (Cảnh báo leo thang tiền vi phạm):**
-   * Viết Server Script quét mỗi 15 phút. Nếu vé của khách VIP đã trôi qua 50% thời hạn (ví dụ 15 phút) mà KTV chưa bấm nút `[Check-in]` $\rightarrow$ Hệ thống tự động bắn cảnh báo đẩy lên màn hình Dispatcher để can thiệp kịp thời.
-2. **Đào sâu về Quản lý Kho (Quy trình trả xác linh kiện cũ - Core Return):**
-   * Bắt buộc KTV khi thay 2 lọc dầu mới phải mang 2 lọc dầu cũ nộp về kho `Kho Thu hoi Linh kien Hong - SBN`. Thủ kho kiểm tra xác cũ đạt yêu cầu mới cho phép đóng Ticket.
-3. **Đào sâu về Độ tin cậy Máy móc (MTBF & MTTR):**
-   * Tự động thống kê: Máy nén khí này trung bình chạy bao nhiêu giờ thì bị lỗi quá nhiệt một lần? Giúp khách hàng ra quyết định nên sửa chữa hay thay máy mới.
-
----
-
-## PHẦN 7: LỘ TRÌNH MỞ RỘNG & SCALE QUY MÔ TƯƠNG LAI (FUTURE ROADMAP)
+Trong kỹ thuật phần mềm, mọi kiến trúc sư giải pháp đều phải thực hiện phân tích đánh đổi: **Được gì và Mất gì** cho từng quyết định kỹ thuật:
 
 ```
-                               ┌────────────────────────────────────────────────────────┐
-                               │           TƯƠNG LAI: SMART MAINTENANCE ECOSYSTEM       │
-                               └──────────────────────────┬─────────────────────────────┘
-                                                          │
-         ┌─────────────────────────┬──────────────────────┴───────────────┬─────────────────────────┐
-         ▼                         ▼                                     ▼                         ▼
-┌─────────────────┐       ┌─────────────────┐                   ┌─────────────────┐       ┌─────────────────┐
-│ 1. AI RAG AGENT │       │ 2. IoT SENSORS  │                   │ 3. MOBILE PWA   │       │ 4. AUTO BILLING │
-│ Chatbot tra cứu │       │ Cảm biến rung/  │                   │ KTV quét mã     │       │ Tự kết xuất hóa │
-│ cẩm nang sửa    │       │ nhiệt tự báo lỗi│                   │ offline ngoài   │       │ đơn định kỳ     │
-│ máy, gọi tool   │       │ qua giao thức   │                   │ hiện trường     │       │ theo hợp đồng   │
-│ ERPNext kiểm kho│       │ MQTT / Webhook  │                   │ không có mạng   │       │ dịch vụ         │
-└─────────────────┘       └─────────────────┘                   └─────────────────┘       └─────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 MA TRẬN ĐÁNH ĐỔI KIẾN TRÚC (ADR)                                 │
+├──────────────────────────┬─────────────────────────────┬─────────────────────────────────────────┤
+│ Quyết định Kỹ thuật      │ Cái ĐƯỢC lớn nhất (Ưu điểm) │ Cái MẤT lớn nhất (Nhược điểm / Đánh đổi)│
+├──────────────────────────┼─────────────────────────────┼─────────────────────────────────────────┤
+│ 1. Cách ly Kế toán Asset │ Dùng 100% module Bảo trì    │ Tên gọi `Asset` dễ gây nhầm với tài sản │
+│    thay vì viết DocType  │ có sẵn của ERPNext          │ sở hữu nội bộ                           │
+├──────────────────────────┼─────────────────────────────┼─────────────────────────────────────────┤
+│ 2. Skill-based Routing   │ Đúng chuyên môn 100%,       │ Chưa tự động cân bằng tải công việc nếu │
+│    thay vì Round Robin   │ cấu hình trực quan no-code  │ xảy ra dồn dập sự cố cùng một ngành     │
+├──────────────────────────┼─────────────────────────────┼─────────────────────────────────────────┤
+│ 3. Tem QR Code Web Form  │ Chi phí 0đ, không cần tải   │ Bắt buộc phải có kết nối mạng Internet  │
+│    thay vì Native App    │ app, ai cũng quét được ngay │ (Online-only)                           │
+├──────────────────────────┼─────────────────────────────┼─────────────────────────────────────────┤
+│ 4. Mô hình Kho Xe KTV    │ Trách nhiệm vật chất rõ     │ Quy trình bị thêm 1 bước chứng từ       │
+│    thay vì xuất Kho tổng │ ràng, tăng tỷ lệ sửa ngay   │ (Chuyển kho xe trước, Xuất máy sau)     │
+├──────────────────────────┼─────────────────────────────┼─────────────────────────────────────────┤
+│ 5. Cờ Billing Type       │ Xử lý sự cố nhanh nhất,     │ Phụ thuộc vào tính trung thực của người │
+│    thay vì tách luồng Bán│ không làm trễ hạn SLA       │ chọn phân loại trên phiếu kho           │
+└──────────────────────────┴─────────────────────────────┴─────────────────────────────────────────┘
 ```
 
-1. **Tích hợp Chatbot RAG AI Agent (Định hướng Cuối kỳ):**
-   * Mô hình LLM kết hợp Vector Database chứa toàn bộ tài liệu kỹ thuật (Manual PDF) của máy móc.
-   * Khi KTV hỏi: *"Máy nén khí báo lỗi E-04 thì sửa thế nào và kho còn đồ không?"*
-   * $\rightarrow$ AI đọc lỗi từ Manual, sau đó gọi Function Calling/MCP vào ERPNext kiểm tra tồn kho `PART-FLT-OIL01` và trả lời ngay trên màn hình.
-2. **Tích hợp Cảm biến IoT / SCADA (Bảo trì dự đoán - Predictive Maintenance):**
-   * Gắn cảm biến nhiệt độ/độ rung lên máy. Khi nhiệt độ vượt quá 95°C trong 3 phút $\rightarrow$ Cảm biến tự động bắn API vào ERPNext tạo một Issue khẩn cấp trước khi máy phát nổ.
-3. **Mở rộng Doanh nghiệp Đa chi nhánh (Multi-Site Scaling):**
-   * Mở rộng phục vụ hàng trăm nhà máy từ Bắc vào Nam, phân cấp quản lý theo từng vùng miền nhưng vẫn gom chung dữ liệu kế toán tài chính về trụ sở chính.
+### Chi tiết 5 Quyết Định Kiến Trúc:
+
+#### 1. Quyết định về Quản lý Thiết bị Khách hàng:
+* **Lựa chọn:** Dùng DocType `Asset` có sẵn của ERPNext, nhưng triệt tiêu toàn bộ tính năng khấu hao tài chính (`calculate_depreciation = 0`, `custom_is_customer_equipment = 1`, `custom_customer`).
+* **Phương án thay thế:** Tự lập trình một DocType mới tên là `Customer Equipment`.
+* **Lý do chọn:** Phân hệ `Asset Maintenance` của ERPNext được thiết kế gắn chặt với DocType `Asset`. Nếu tạo DocType mới, chúng ta sẽ phải tự lập trình lại từ đầu toàn bộ các tính năng tạo lịch bảo trì định kỳ, sinh log, phân công đội bảo trì. Bằng cách cách ly tài chính, chúng ta tận dụng 100% sức mạnh có sẵn mà vẫn triệt tiêu hoàn toàn rủi ro sai lệch thuế.
+
+#### 2. Quyết định về Thuật toán Giao việc (Dispatching Engine):
+* **Lựa chọn:** Bổ sung trường `custom_asset_category` trên Issue và cấu hình **3 Assignment Rules chuyên ngành riêng biệt** (Cơ khí $\rightarrow$ An, Điện $\rightarrow$ Bình, Lạnh $\rightarrow$ Cường).
+* **Phương án thay thế:** Dùng Round Robin chia xoay vòng ngẫu nhiên, hoặc tự viết thuật toán định vị GPS phức tạp.
+* **Lý do chọn:** Đối với dịch vụ bảo trì công nghiệp, **đúng chuyên môn (Skill-fit) là yếu tố sống còn**. Giao một việc phức tạp cho một người quá tải nhưng có chuyên môn vẫn tốt hơn nhiều so với giao cho một người rảnh rỗi nhưng không biết gì về điện để làm hỏng thêm máy.
+
+#### 3. Quyết định về Công cụ Thao tác Hiện trường cho KTV:
+* **Lựa chọn:** Sinh Tem mã QR Code động dán trên vỏ máy dẫn vào web form điền sẵn dữ liệu, kết hợp bộ nút bấm 1-chạm (`Client Script`) trên giao diện web di động.
+* **Phương án thay thế:** Viết một ứng dụng di động riêng (Native App Flutter / React Native) và đẩy lên App Store / Google Play.
+* **Lý do chọn:** Rào cản chuyển đổi số lớn nhất tại nhà xưởng là **người dùng ngại cài đặt thêm app**. Một chiếc tem dán sẵn trên vỏ máy nén khí, công nhân hoặc KTV chỉ cần giơ camera điện thoại quét là xong ngay, có tỷ lệ ứng dụng thành công cao gấp nhiều lần so với bắt họ tải ứng dụng 100MB.
+
+#### 4. Quyết định về Kiến trúc Quản trị Vật tư (Van Stock):
+* **Lựa chọn:** Thiết lập cây kho đa tầng gồm Kho Trung tâm và các Kho Xe di động của từng KTV. Quy trình 2 chặng: Chặng 1 chuyển hàng lên xe KTV (`Material Transfer`), Chặng 2 xuất hàng từ xe vào máy hỏng (`Material Issue`).
+* **Phương án thay thế:** Chỉ dùng 1 Kho trung tâm duy nhất, KTV đi sửa tự lấy đồ rồi xuất thẳng từ kho tổng.
+* **Lý do chọn:** Chặn đứng "lỗ hổng đen" thất thoát linh kiện lưu động trên đường. Khi linh kiện đã chuyển lên xe của KTV An, An phải chịu trách nhiệm vật chất. Đồng thời, KTV luôn có sẵn đồ trên xe giúp sửa dứt điểm sự cố ngay lần đầu (FTFR).
+
+#### 5. Quyết định về Phân định Tài chính Chi phí:
+* **Lựa chọn:** Bổ sung trường lựa chọn `custom_billing_type` ngay trên phiếu xuất kho `Stock Entry` (`Under Warranty` vs `Billable to Customer`).
+* **Phương án thay thế:** Bắt buộc tách làm 2 quy trình: Hàng tính tiền thì phải đợi phòng kinh doanh làm Đơn bán hàng (`Sales Order`), kế toán duyệt rồi mới được mở kho.
+* **Lý do chọn:** Nguyên tắc số 1 trong xử lý sự cố khẩn cấp: **Cứu dây chuyền sản xuất của nhà máy trước, thủ tục giấy tờ giải quyết sau.** Nếu bắt khách hàng đợi kế toán duyệt đơn hàng lúc 12h đêm thì sẽ vỡ hoàn toàn cam kết thời gian SLA.
+
+---
+
+# CHƯƠNG 6: CẨM NANG THAO TÁC GIAO DIỆN DESK TỪNG BƯỚC (CLICK-BY-CLICK UI WALKTHROUGH)
+
+Hãy mở trình duyệt web tại địa chỉ: **`http://localhost:8080/desk`** và thực hiện theo 4 tour hướng dẫn sau:
+
+## Tour 1: Quản trị Sự Cố & Kiểm Chứng Động Cơ Phân Bổ Chuyên Môn
+1. Trên thanh tìm kiếm ở đỉnh màn hình (hoặc bấm tổ hợp phím **`Ctrl + K`**), gõ: **`Issue List`** $\rightarrow$ Bấm Enter.
+2. Mặc định ERPNext chỉ hiện các vé đang mở (`Status = Open`). Hãy nhìn lên thanh lọc phía trên, bấm vào chữ **`Open`** và xóa đi (hoặc bấm nút **`Filter [X]`** bên phải) để hiển thị **toàn bộ 6 sự cố**.
+3. **Quan sát cột vòng tròn chữ viết tắt ở mép phải ngoài cùng (Kết quả Skill-based Routing):**
+   * Vé `ISS-2026-00004` (Sự cố tủ điện MSB): Có vòng tròn **`TD`** $\rightarrow$ Đã tự động gán cho **Trần Đình Bình** (Chuyên gia Điện công nghiệp).
+   * Vé `ISS-2026-00001` (Sự cố máy nén khí Hitachi): Có vòng tròn **`NV`** $\rightarrow$ Đã tự động gán cho **Nguyễn Văn An** (Chuyên gia Cơ khí).
+   * Vé `ISS-2026-00003` (Máy in Flexo bị sọc ngang): Có vòng tròn **`NV`** $\rightarrow$ Gán đúng cho **Nguyễn Văn An** (Cơ khí & chế tạo máy in).
+   * Vé `ISS-2026-00005` (Hệ thống Chiller đông đá): Có vòng tròn **`LC`** $\rightarrow$ Đã tự động gán cho **Lê Hoàng Cường** (Chuyên gia Nhiệt Lạnh HVAC).
+4. **Bấm chuột vào xem chi tiết vé `ISS-2026-00002`:**
+   * Góc trên bên phải thanh tiêu đề: Xuất hiện nút màu xanh **`[ Bắt đầu xử lý (Check-in) ]`** $\rightarrow$ KTV bấm vào để lưu vết thời gian có mặt tại xưởng.
+   * Nút menu **`[ Tác vụ hiện trường ]`** $\rightarrow$ Chọn **`[ Xuất linh kiện sửa ]`** để mở nhanh phiếu xuất kho.
+   * Nút màu xanh lá **`[ Hoàn thành ca (Resolve) ]`** $\rightarrow$ KTV bấm vào để mở popup nghiệm thu, chọn nguyên nhân gốc (`Hardware Failure`) và đóng vé.
+
+## Tour 2: Xem Tem Mã QR Code & Kiểm Tra Cách Ly Kế Toán Trên Máy Móc
+1. Bấm **`Ctrl + K`**, gõ: **`Asset List`** $\rightarrow$ Bấm Enter.
+2. Danh sách 5 thiết bị công nghiệp của khách hàng hiện ra. Bấm chuột vào máy **`ACC-ASS-2026-00002`** (Máy nén khí Hitachi 75kW).
+3. **Quan sát các khu vực dữ liệu quan trọng:**
+   * **Ngay đầu trang:** Bạn sẽ thấy **Hình ảnh Tem Mã QR Code** với dòng chữ nổi bật: *"QUÉT ĐỂ BÁO LỖI THIẾT BỊ NÀY"*.
+   * **Khu vực thông tin sở hữu:**
+     * Trường `Customer / Owner`: Hiển thị rõ ràng là **Công ty CP Bao bì Tân Á**.
+     * Trường `Is Customer Equipment`: Được tích chọn cờ màu xanh $\rightarrow$ Khẳng định đây là thiết bị của khách hàng.
+   * **Khu vực Khấu hao (Depreciation):** Kéo xuống dưới, ô `Calculate Depreciation` hoàn toàn **không được tích chọn** $\rightarrow$ Chứng minh hệ thống không trích một đồng khấu hao nào vào sổ sách của công ty AIS.
+
+## Tour 3: Kiểm Tra Xuất Kho Phụ Tùng & Cảnh Báo Tồn Kho An Toàn
+1. Bấm **`Ctrl + K`**, gõ: **`Stock Entry List`** $\rightarrow$ Bấm Enter.
+2. Bấm vào phiếu xuất kho **`MAT-STE-2026-00002`** (Phiếu xuất 2 lọc dầu thay cho máy nén khí):
+   * Quan sát trường `Billing Type`: Đang ghi nhận rõ ràng là **`Under Warranty`** (Bảo hành hợp đồng, AIS chịu chi phí).
+   * Quan sát trường `Helpdesk Issue`: Liên kết chặt chẽ với vé `ISS-2026-00001`.
+   * Quan sát trường `Technician`: Gắn đích danh chuyên viên thực hiện `an.nguyen@smarthelpdesk.local`.
+3. Bấm **`Ctrl + K`**, gõ: **`Item List`** $\rightarrow$ Chọn lọc dầu **`PART-FLT-OIL01`**:
+   * Kéo xuống bảng tồn kho theo từng kho: Số lượng thực tế tại `Kho Linh kien Trung tam - SBN` còn **2.0 cái**.
+   * Trong khi ngưỡng an toàn (`Reorder Level`) cấu hình là **3.0 cái**.
+   * Vì $2.0 < 3.0$, hệ thống tự động kích hoạt trạng thái báo động yêu cầu bộ phận thu mua đặt hàng bù đắp ngay lập tức.
+
+## Tour 4: Kiểm Tra Lịch Bảo Trì Định Kỳ & Nhật Ký Phòng Ngừa
+1. Bấm **`Ctrl + K`**, gõ: **`Asset Maintenance List`** $\rightarrow$ Bấm Enter.
+2. Bạn sẽ thấy 3 kế hoạch bảo trì định kỳ đã được thiết lập cho Máy nén khí, Chiller và Tủ điện.
+3. Bấm **`Ctrl + K`**, gõ: **`Asset Maintenance Log List`** $\rightarrow$ Bấm Enter:
+   * Bạn sẽ thấy nhật ký bảo trì Chiller `ACC-AML-2026-00004` ghi nhận kết quả kiểm tra định kỳ đã phát hiện van tiết lưu hoạt động sai lệch và tự động dẫn truyền liên kết sang vé sự cố `ISS-2026-00005`.
+
+---
+
+# CHƯƠNG 7: ĐÀO SÂU TỐI ƯU HÓA KỸ THUẬT & ĐO LƯỜNG KPI VẬN HÀNH
+
+Nếu muốn tiếp tục nâng cao chất lượng đề tài để đạt điểm tuyệt đối, hệ thống có thể đào sâu thêm 3 cơ chế:
+
+## 7.1. Động Cơ Cảnh Báo Leo Thang Tiền Vi Phạm SLA (Reactive SLA Escalation)
+* **Ý tưởng:** Viết một tiến trình ngầm (Scheduler Event) chạy định kỳ mỗi 15 phút.
+* **Cơ chế hoạt động:** Quét toàn bộ các Issue đang mở (`status == 'Open'`). Nếu thời gian trôi qua đã vượt quá 50% thời hạn cam kết phản hồi (`response_by`) mà KTV vẫn chưa bấm nút `[Check-in]`:
+  $\rightarrow$ Hệ thống tự động bắn một thông báo cảnh báo màu đỏ trực tiếp lên màn hình của Dispatcher (Điều phối viên) để gọi điện giục KTV, ngăn chặn sự cố bị trễ hạn trước khi nó xảy ra.
+
+## 7.2. Quy Trình Vòng Đời Thu Hồi Xác Linh Kiện Cũ (Core Return Verification)
+* **Ý tưởng:** Tránh tình trạng KTV khai khống linh kiện mới để tuồn ra ngoài bán trục lợi.
+* **Cơ chế hoạt động:** Khi KTV xuất 2 cái lọc dầu mới từ kho xe ra thay thế, hệ thống tự động sinh một phiếu thu hồi yêu cầu KTV phải nộp 2 cái lọc dầu cũ hỏng về `Kho Thu hoi Linh kien Hong - SBN`. Thủ kho kiểm tra đúng xác linh kiện cũ mới ký duyệt đóng Ticket.
+
+## 7.3. Bộ Chỉ Số Hiệu Suất Cốt Lõi Cần Báo Cáo (KPI Dashboard)
+1. **SLA Compliance Rate (Tỷ lệ tuân thủ cam kết dịch vụ):**
+   $$\text{SLA Compliance} = \frac{\text{Số vé xử lý đúng hạn (resolution\_date} \leq \text{resolution\_by)}}{\text{Tổng số vé đã đóng}} \times 100\%$$
+   *(Mục tiêu chuẩn quốc tế: $\geq 95\%$)*
+2. **First-Time Fix Rate - FTFR (Tỷ lệ sửa dứt điểm lần đầu):**
+   $$\text{FTFR} = \frac{\text{Số vé hoàn thành không phát sinh ca Callback trong 7 ngày}}{\text{Tổng số vé sửa chữa}} \times 100\%$$
+   *(Mục tiêu chuẩn quốc tế: $75\% - 85\%$)*
+3. **Cost per Asset (Chi phí bảo trì trên từng máy):**
+   $$\text{TCO per Asset} = \sum (\text{Giá trị xuất kho linh kiện}) + \sum (\text{Chi phí nhân công kỹ thuật})$$
+
+---
+
+# CHƯƠNG 8: THIẾT KẾ KIẾN TRÚC MỞ RỘNG PHA CUỐI KỲ (AI AGENT RAG & IOT ROADMAP)
+
+Hệ thống được thiết kế với tính mở rất cao, sẵn sàng tích hợp các công nghệ thông minh trong pha cuối kỳ:
+
+```mermaid
+graph TD
+    UserQuery["Kỹ thuật viên hỏi qua Chatbot / Mobile App"] --> Router{"Bộ Định Tuyến Ý Định (Intent Router)"}
+
+    Router -->|"Hỏi số lượng tồn kho / Trạng thái vé"| TOOL_ERP["ERPNext Tool / MCP Server"]
+    Router -->|"Hỏi cẩm nang sửa máy / Mã lỗi kỹ thuật"| RAG_VEC["Vector Database (Sổ tay Máy nén/Chiller)"]
+    Router -->|"Hỏi câu hỏi phức hợp kỹ thuật + kho"| HYBRID["Hybrid Processing Engine"]
+
+    TOOL_ERP -->|"REST API"| ERP["ERPNext v16 Database"]
+    RAG_VEC -->|"Semantic Search"| CHROMA[("ChromaDB / FAISS Embeddings")]
+
+    HYBRID --> CHROMA
+    CHROMA -.->|"Tìm ra phụ tùng cần thay"| TOOL_ERP
+    TOOL_ERP -.->|"Kiểm tra tồn kho thực tế"| LLM["Mô hình Ngôn ngữ Lớn (LLM Synthesis)"]
+    ERP --> LLM
+
+    LLM --> Answer["Câu trả lời thông minh kèm số liệu kho thực tế"]
+```
+
+## 8.1. Chatbot Trợ Lý Kỹ Thuật AI Agent (RAG + Function Calling / MCP)
+* **Kịch bản thực tế:** KTV Nguyễn Văn An đang đứng trước máy nén khí Hitachi tại xưởng Tân Á. Máy báo lỗi `E-04`. An mở điện thoại hỏi Chatbot:  
+  *"Máy nén khí Hitachi đang báo lỗi E-04 thì nguyên nhân là gì, cách sửa ra sao và kho xe của tôi còn đồ thay không?"*
+* **Cơ chế hoạt động:**
+  1. **Bước 1 (Tra cứu RAG):** AI Agent tra cứu trong Vector Database chứa tài liệu kỹ thuật của Hitachi, tìm ra: *Lỗi E-04 là lỗi quá nhiệt do nghẹt lọc dầu bôi trơn, cần thay thế lọc dầu mã `PART-FLT-OIL01`.*
+  2. **Bước 2 (Gọi Tool ERPNext):** AI Agent tự động kích hoạt Tool (giao thức MCP / REST API) truy vấn vào bảng `Bin` của ERPNext: *Kiểm tra tồn kho `PART-FLT-OIL01` tại `Kho Xe - Nguyen Van An - SBN`.*
+  3. **Bước 3 (Tổng hợp câu trả lời):** Chatbot phản hồi:  
+     *"Lỗi E-04 là do nhiệt độ dầu vượt ngưỡng 105°C vì nghẹt lọc dầu. Bạn cần tháo nắp bên hông máy để thay thế lọc dầu Hitachi. Hiện tại trên xe của bạn đang có sẵn 2 chiếc `PART-FLT-OIL01`. Bạn có muốn tôi tạo sẵn một phiếu xuất kho `Material Issue` không?"*
+
+## 8.2. Cảm Biến IoT / SCADA & Bảo Trì Dự Đoán (Predictive Maintenance)
+* Gắn cảm biến nhiệt độ và độ rung trực tiếp lên vòng bi và đầu nén của máy nén khí Hitachi.
+* Khi nhiệt độ vượt quá 95°C liên tục trong 3 phút $\rightarrow$ Bộ điều khiển IoT tự động phát tín hiệu qua giao thức MQTT / Webhook gọi thẳng vào REST API của ERPNext:
+  $\rightarrow$ **Tự động khởi tạo một Issue mức độ `Urgent`**, áp đặt SLA VIP 30 phút và điều phối ngay cho KTV An trước khi máy bị nổ hoặc bó kẹt trục vít.
+
+## 8.3. Mở Rộng Quy Mô Đa Chi Nhánh (Multi-Site Scaling)
+* Mở rộng mạng lưới phục vụ hàng trăm nhà máy từ Bắc vào Nam.
+* Mỗi khu vực (Đà Nẵng, Bình Dương, Hải Phòng) được quản lý như một Cost Center (Trung tâm chi phí) độc lập với kho bãi và đội ngũ KTV riêng, nhưng số liệu tài chính vẫn hội tụ về một Tổng công ty AIS duy nhất.
+
+---
+
+*Tài liệu được biên soạn và chuẩn hóa bởi Nhóm dự án Smart Helpdesk & Maintenance — DUT.K1N4.*
