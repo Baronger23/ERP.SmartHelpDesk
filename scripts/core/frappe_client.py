@@ -4,15 +4,21 @@ import urllib.parse
 import json
 import time
 
-# Auto-load .env file if present
-_env_path = os.path.join(os.path.dirname(__file__), "..", ".env")
-if os.path.exists(_env_path):
-    with open(_env_path, "r", encoding="utf-8") as _f:
-        for _line in _f:
-            _line = _line.strip()
-            if _line and not _line.startswith("#") and "=" in _line:
-                _k, _v = _line.split("=", 1)
-                os.environ.setdefault(_k.strip(), _v.strip())
+# Auto-load .env file if present (check root, parent, and cwd)
+_candidate_env_paths = [
+    os.path.join(os.path.dirname(__file__), "..", "..", ".env"),
+    os.path.join(os.path.dirname(__file__), "..", ".env"),
+    os.path.join(os.getcwd(), ".env")
+]
+for _env_path in _candidate_env_paths:
+    if os.path.exists(_env_path):
+        with open(_env_path, "r", encoding="utf-8") as _f:
+            for _line in _f:
+                _line = _line.strip()
+                if _line and not _line.startswith("#") and "=" in _line:
+                    _k, _v = _line.split("=", 1)
+                    os.environ.setdefault(_k.strip(), _v.strip())
+        break
 
 BASE_URL = os.getenv("FRAPPE_BASE_URL", "https://smarthelpdesk23mainternace.s.frappe.cloud")
 API_KEY = os.getenv("FRAPPE_API_KEY", "")

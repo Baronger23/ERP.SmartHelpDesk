@@ -1,0 +1,4 @@
+# ERP Smart HelpDesk & Maintenance Automation Requirements
+# Python 3.8+ recommended. All core scripts use Python Standard Library (urllib, json, os, sys, time).
+# Optional development dependencies:
+python-dotenv>=1.0.0

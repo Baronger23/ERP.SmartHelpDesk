@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.dirname(__file__))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "core")))
 import frappe_client as fc
 
 print("=== STARTING 01_SETUP_MASTER_DATA.PY ===")
@@ -130,6 +130,8 @@ asset_cats = [
     "Compressor", "Industrial Printing", "HVAC & Cooling", "Generator", "Electrical Panel", "Calibration Equipment"
 ]
 fixed_asset_acc = f"1750 - Plants and Machineries - {fc.COMPANY_ABBR}"
+if not fc.exists_doc("Account", fixed_asset_acc):
+    fixed_asset_acc = f"Plants and Machineries - {fc.COMPANY_ABBR}"
 for cat in asset_cats:
     if not fc.exists_doc("Asset Category", cat):
         fc.create_doc("Asset Category", {

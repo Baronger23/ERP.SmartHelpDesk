@@ -181,7 +181,7 @@ Thực hiện nghiêm ngặt nguyên tắc phản biện học thuật: **"Docum
 | **Operating System & Runtime** | Linux Container (Debian/Ubuntu x86_64) | Môi trường container hóa của Frappe Cloud |
 | **System Currency & Precision** | `VND` (Precision: 0) | Cấu hình mặc định cho tiền tệ Việt Nam |
 | **Server Timezone** | `Asia/Ho_Chi_Minh` (GMT+7) | Đảm bảo tính chính xác cho các mốc thời gian SLA |
-| **Authentication Mechanism** | REST API Token (`dca4...:80e5...`) | Tự động hóa tích hợp và kiểm chứng dữ liệu |
+| **Authentication Mechanism** | REST API Token (Đã ẩn vì bảo mật) | Tự động hóa tích hợp và kiểm chứng dữ liệu |
 
 ---
 
@@ -363,28 +363,28 @@ Tất cả 6 kịch bản kiểm thử đã được thực thi và xác thực 
 ### Album Ảnh chụp Minh chứng Thực tế từ Hệ thống (Evidence Gallery)
 
 * **Hình 6.1: Danh sách 6 Issue thể hiện đa dạng trạng thái, Priority và gán việc xoay vòng Round Robin:**
-  ![Danh sách 6 Issue](screenshots/01_issue_list.png)
+  ![Danh sách 6 Issue](../assets/screenshots/01_issue_list.png)
 
 * **Hình 6.2: Chi tiết Issue 1 (ISS-2026-00001) đáp ứng SLA VIP 30 phút, liên kết Asset và trạng thái Resolved:**
-  ![Chi tiết Issue 1](screenshots/02_issue_detail_sla.png)
+  ![Chi tiết Issue 1](../assets/screenshots/02_issue_detail_sla.png)
 
 * **Hình 6.3: Cấu hình quy chuẩn SLA Khách hàng VIP với các mốc thời hạn cam kết:**
-  ![Cấu hình SLA VIP](screenshots/07_sla_vip_detail.png)
+  ![Cấu hình SLA VIP](../assets/screenshots/07_sla_vip_detail.png)
 
 * **Hình 6.4: Phiếu xuất kho sửa chữa (Material Issue) gắn định danh Issue, Asset và Kỹ thuật viên:**
-  ![Phiếu xuất kho sửa chữa](screenshots/03_stock_entry_repair.png)
+  ![Phiếu xuất kho sửa chữa](../assets/screenshots/03_stock_entry_repair.png)
 
 * **Hình 6.5: Nhật ký bảo dưỡng định kỳ Chiller (ACC-AML-2026-00004) hoàn thành gắn liên kết Issue phát sinh:**
-  ![Nhật ký bảo dưỡng nối Issue](screenshots/04_asset_maintenance_log.png)
+  ![Nhật ký bảo dưỡng nối Issue](../assets/screenshots/04_asset_maintenance_log.png)
 
 * **Hình 6.6: Danh mục 3 Kế hoạch bảo trì định kỳ cho 3 nhóm tài sản (Monthly, Quarterly, Half-Yearly):**
-  ![Danh mục kế hoạch bảo trì](screenshots/08_asset_maintenance_list.png)
+  ![Danh mục kế hoạch bảo trì](../assets/screenshots/08_asset_maintenance_list.png)
 
 * **Hình 6.7: Danh mục 5 Tài sản công nghiệp đã được quản lý đồng bộ trên ERPNext:**
-  ![Danh mục 5 Tài sản](screenshots/05_asset_list.png)
+  ![Danh mục 5 Tài sản](../assets/screenshots/05_asset_list.png)
 
 * **Hình 6.8: Cấu hình ngưỡng đặt hàng lại tự động (Auto Reorder) và mức tồn kho thực tế của lọc dầu máy nén:**
-  ![Cấu hình Reorder Level](screenshots/06_item_reorder.png)
+  ![Cấu hình Reorder Level](../assets/screenshots/06_item_reorder.png)
 
 ---
 
