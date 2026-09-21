@@ -142,29 +142,185 @@ Mỗi kỹ thuật viên là một chuyên gia trong một hoặc nhiều lĩnh 
 
 # CHƯƠNG 3: BA TRỤ CỘT CHỨC NĂNG CỐT LÕI CỦA DỰ ÁN (CORE DOMAIN PILLARS)
 
-Hệ thống được thiết kế vững chắc dựa trên 3 trụ cột nghiệp vụ:
+Một hệ thống quản lý dịch vụ bảo trì công nghiệp hoàn chỉnh không thể chỉ dừng lại ở việc "sửa máy", mà bắt buộc phải vận hành như một cỗ máy hợp nhất gồm **3 Trụ cột Chức năng cốt lõi**: **Helpdesk & Dịch vụ Khách hàng (SLA)** $\leftrightarrow$ **Quản lý Thiết bị & Lập lịch Bảo dưỡng (CMMS)** $\leftrightarrow$ **Quản trị Kho Vật tư Đa tầng (MRO Inventory)**.
 
-```mermaid
-graph LR
-    subgraph "TRỤ CỘT 1: HELPDESK & SLA"
-        T1["Khách báo sự cố (Web/QR/Hotline)"] --> T2["Ma trận SLA 2 chiều kiểm tra"]
-        T2 --> T3["Skill-based Routing gán đúng KTV"]
-    end
+Dưới đây là đặc tả chi tiết từng trụ cột, cơ chế vận hành nội tại và cách thức chúng tương tác hữu cơ với nhau:
 
-    subgraph "TRỤ CỘT 2: QUẢN LÝ THIẾT BỊ (CMMS)"
-        M1["Hồ sơ máy (Asset Registry)"] --> M2["Kế hoạch bảo trì định kỳ"]
-        M2 --> M3["Phát hiện hư hỏng -> Sinh Issue"]
-        T3 -.-> M1
-    end
+---
 
-    subgraph "TRỤ CỘT 3: KHO VẬT TƯ (INVENTORY)"
-        K1["Kho xe KTV (Van Stock)"] --> K2["Xuất linh kiện gắn Issue + Asset"]
-        K2 --> K3["Trừ tồn kho & Cảnh báo Reorder"]
-        T3 -.-> K1
-    end
+## 3.1. TRỤ CỘT 1: HELPDESK & QUẢN TRỊ CAM KẾT DỊCH VỤ (SERVICE DESK & SLA MANAGEMENT)
 
-    K2 --> F1["Phân loại chi phí: Bảo hành vs Tính tiền"]
+Trụ cột Helpdesk đóng vai trò là **"cửa ngõ tiếp nhận và điều phối duy nhất"** giữa khách hàng nhà máy và công ty AIS. Đây không đơn thuần là một hòm thư tiếp nhận sự cố, mà là một **động cơ kiểm soát cam kết dịch vụ theo chuẩn công nghiệp**:
+
 ```
+[Khách hàng phát hiện sự cố]
+          │
+          ▼
+1. Tiếp nhận Đa kênh (Web Portal / Hotline Dispatcher / Tem quét QR Code)
+          │
+          ▼
+2. Động cơ Ma trận SLA 2 chiều (Kiểm tra Hạng Khách hàng x Mức độ Khẩn cấp)
+   ├── Hạn phản hồi ban đầu (Response Deadline)
+   └── Hạn sửa chữa dứt điểm (Resolution Deadline)
+          │
+          ▼
+3. Động cơ Phân bổ Theo Chuyên Môn (Skill-Based Routing Engine)
+   ├── Nhận diện Danh mục Thiết bị (Asset Category)
+   ├── Tra cứu Ma trận Năng lực KTV (Skill Matrix)
+   └── Bắn vé đích danh vào hộp việc của Chuyên gia phụ trách
+          │
+          ▼
+4. Kiểm soát Chất lượng & Truy vết Tái phát (Callback / Recall Tracking)
+```
+
+### 1. Cơ chế Tiếp nhận Sự cố Đa kênh (Multi-Channel Ingestion):
+* **Cổng Web Portal & Hotline:** Cho phép người phụ trách bảo trì của khách hàng hoặc nhân viên tổng đài (Dispatcher) tạo yêu cầu.
+* **Tem Quét Mã QR Code Hiện Trường:** Được in và dán trực tiếp lên vỏ từng chiếc máy nén khí, Chiller, tủ điện. Khi sự cố xảy ra, công nhân nhà máy chỉ cần giơ điện thoại quét mã QR $\rightarrow$ Hệ thống tự động mở form báo lỗi, tự động điền sẵn mã máy (`custom_asset`) và tên khách hàng (`customer`), người báo chỉ việc chọn hiện tượng lỗi và bấm gửi trong vòng 15 giây.
+* **Phân biệt 2 Mốc Thời gian Quan trọng:**
+  * Thời điểm khách báo sự cố thực tế ($T_0$ lưu tại `custom_incident_time`).
+  * Thời điểm phiếu được tạo trên hệ thống ($T_1$ lưu tại `creation`).
+  * Khoảng chênh lệch $\Delta T = T_1 - T_0$ phản ánh **Độ trễ tiếp nhận thông tin (Logging Latency)**, giúp ban giám đốc đo lường thời gian thông tin bị nghẽn trước khi vào phần mềm.
+
+### 2. Động cơ Ma trận SLA 2 chiều (2D Service Level Agreement Engine):
+ERPNext được cấu hình một ma trận cam kết thời gian dịch vụ nghiêm ngặt, kết hợp giữa **Hạng Hợp đồng Khách hàng** và **Mức độ Ưu tiên của Sự cố**:
+
+| Mức độ Ưu tiên (Priority) | Khách hàng VIP (Bao bì Tân Á) | Khách hàng Standard (Hải Nam, Song Long) |
+| :--- | :--- | :--- |
+| **Urgent (Khẩn cấp — Dừng máy hoàn toàn)** | • Phản hồi: **$\leq$ 30 phút**<br>• Sửa xong: **$\leq$ 4 giờ** | • Phản hồi: **$\leq$ 60 phút**<br>• Sửa xong: **$\leq$ 8 giờ** |
+| **High (Nghiêm trọng — Máy suy giảm tải)** | • Phản hồi: **$\leq$ 60 phút**<br>• Sửa xong: **$\leq$ 8 giờ** | • Phản hồi: **$\leq$ 120 phút**<br>• Sửa xong: **$\leq$ 16 giờ** |
+| **Medium (Bình thường — Lỗi không dừng máy)** | • Phản hồi: **$\leq$ 2 giờ**<br>• Sửa xong: **$\leq$ 16 giờ** | • Phản hồi: **$\leq$ 4 giờ**<br>• Sửa xong: **$\leq$ 24 giờ** |
+| **Low (Thấp — Tư vấn, kiểm tra định kỳ)** | • Phản hồi: **$\leq$ 4 giờ**<br>• Sửa xong: **$\leq$ 36 giờ** | • Phản hồi: **$\leq$ 8 giờ**<br>• Sửa xong: **$\leq$ 48 giờ** |
+
+* Hệ thống tự động tính toán thời gian dựa trên **Lịch làm việc và Nghỉ lễ (`Holiday List`)**, đồng thời chạy đồng hồ đếm ngược trên từng vé. Nếu vượt quá các mốc thời gian trên, hệ thống sẽ tự động chuyển cờ `SLA Breached = True` để phục vụ tính toán phạt hợp đồng.
+
+### 3. Động cơ Phân bổ Theo Chuyên Môn Kỹ Thuật (Skill-Based Routing Engine):
+Thay vì sử dụng thuật toán chia đều xoay vòng ngẫu nhiên (Round Robin mù) làm cho thợ cơ khí bị giao nhầm sang sửa tủ điện, hệ thống tự động hóa luồng phân công dựa trên chuyên môn:
+* Trường `custom_asset_category` trên Issue tự động lấy chuyên ngành của máy hỏng.
+* Hệ thống áp dụng 3 quy tắc `Assignment Rule` chuyên ngành:
+  * **Nhóm Cơ khí & Khí nén:** Hễ sự cố thuộc nhóm `Compressor` hoặc `Industrial Printing` $\rightarrow$ Tự động chuyển vé cho **Nguyễn Văn An**.
+  * **Nhóm Điện & Tự động hóa:** Hễ sự cố thuộc nhóm `Electrical Panel` hoặc `Generator` $\rightarrow$ Tự động chuyển vé cho **Trần Đình Bình**.
+  * **Nhóm Nhiệt - Lạnh HVAC:** Hễ sự cố thuộc nhóm `HVAC & Cooling` $\rightarrow$ Tự động chuyển vé cho **Lê Hoàng Cường**.
+  * **Quy tắc Dự phòng (Fallback):** Nếu sự cố không gắn với máy nào $\rightarrow$ Mới xoay vòng đều cho cả 3 người.
+
+### 4. Kiểm soát Chất lượng & Truy vết Tái phát (Callback Tracking):
+* Nếu một thiết bị vừa sửa xong mà trong vòng 7 ngày lại phát sinh sự cố tương tự:
+* Vé mới được gắn trường `custom_related_issue` trỏ về vé cũ, và vé cũ được tự động đánh dấu `custom_has_callback = 1`.
+* Dữ liệu này giúp đo lường chỉ số **First-Time Fix Rate (FTFR - Tỷ lệ sửa dứt điểm lần đầu)** và ngăn chặn tình trạng KTV sửa ẩu hoặc thay phụ tùng kém chất lượng.
+
+---
+
+## 3.2. TRỤ CỘT 2: QUẢN LÝ THIẾT BỊ & BẢO TRÌ ĐỊNH KỲ (ASSET & MAINTENANCE MANAGEMENT - CMMS)
+
+Trụ cột CMMS đóng vai trò là **"Trái tim kỹ thuật"** của hệ thống, quản lý toàn bộ hồ sơ lý lịch và vòng đời bảo dưỡng của từng máy móc trong nhà máy khách hàng:
+
+```
+[Danh mục Tài sản Số (Asset Registry)]
+          │
+          ├── Hồ sơ Lý lịch Máy (Serial, Vị trí, Thông số kỹ thuật)
+          ├── Cách ly Kế toán Khấu hao (Asset Accounting Isolation)
+          └── Tem Mã QR Code Định Danh
+          │
+          ▼
+[Kế hoạch Bảo trì Phòng ngừa (Preventive Maintenance Plans)]
+          │
+          ├── Chu kỳ 1 Tháng: Kiểm tra trực quan, bôi trơn, siết ốc
+          ├── Chu kỳ 3 Tháng: Vệ sinh lọc gió, kiểm tra dòng tải, thay dầu
+          └── Chu kỳ 6 Tháng: Đại tu, hiệu chuẩn cảm biến, kiểm tra độ rung
+          │
+          ▼
+[Nhật ký Thực hiện (Asset Maintenance Log)] ──(Phát hiện hư hỏng)──> [Tự động Kích hoạt Issue]
+```
+
+### 1. Hồ sơ Lý lịch Thiết bị Số (Digital Asset Registry):
+* Mỗi cỗ máy công nghiệp được cấp một mã quản lý duy nhất (ví dụ: `ACC-ASS-2026-00002` cho Máy nén khí Hitachi).
+* Hồ sơ lưu trữ: Số Serial chính hãng, Hãng sản xuất, Vị trí lắp đặt chi tiết tại xưởng (`Location`), Ngày đưa vào vận hành, và Danh mục phụ tùng thay thế tương thích.
+* **Cơ chế Cách ly Kế toán Tài chính (Accounting Isolation):**
+  * Thiết bị thuộc quyền sở hữu của **khách hàng**, không phải của công ty dịch vụ AIS.
+  * Hệ thống áp dụng cấu hình triệt tiêu tính năng tài chính:
+    * Khóa hoàn toàn tính năng khấu hao: `calculate_depreciation = 0`.
+    * Toàn bộ danh mục thiết bị được đánh dấu: `non_depreciable_category = 1`.
+    * Đánh dấu cờ phân biệt: `custom_is_customer_equipment = 1`.
+    * Gán đích danh khách hàng sở hữu: `custom_customer = "Cong ty CP Bao bi Tan A"`.
+  * *Kết quả:* Máy móc phục vụ đầy đủ công tác quản lý kỹ thuật nhưng **hoàn toàn sạch sẽ trên sổ sách kế toán thuế** của công ty AIS.
+
+### 2. Kế hoạch Bảo trì Ngăn ngừa Định kỳ (Preventive Maintenance - PM Scheduling):
+Hệ thống thiết lập sẵn 3 chương trình bảo dưỡng định kỳ tự động hóa:
+* **Chương trình Bảo dưỡng Máy nén khí trục vít (Hitachi 75kW):** Định kỳ 3 tháng/lần (thay lọc dầu, kiểm tra nhiệt độ dầu làm mát, xả nước bình tích khí).
+* **Chương trình Bảo dưỡng Hệ thống Chiller làm lạnh (Daikin 100RT):** Định kỳ 1 tháng/lần (vệ sinh bình ngưng, đo áp suất gas hút/nén, kiểm tra van tiết lưu Danfoss).
+* **Chương trình Bảo dưỡng Trạm Tủ điện Tổng (MSB 1200A):** Định kỳ 6 tháng/lần (siết chặt thanh cái đồng busbar, kiểm tra độ nhạy Aptomat chống giật, đo nhiệt độ hồng ngoại các tiếp điểm).
+* Định kỳ đến hạn, hệ thống tự động sinh ra các chứng từ `Asset Maintenance Log` và phân bổ cho Đội kỹ thuật (`Asset Maintenance Team`) mà không cần con người phải ghi nhớ bằng sổ tay.
+
+### 3. Cơ chế Kích hoạt Sự cố Từ Bảo dưỡng (PM-to-CM Trigger):
+* Trong quá trình đi kiểm tra định kỳ theo `Asset Maintenance Log`, nếu KTV phát hiện phụ tùng sắp hỏng hoặc thông số suy giảm (ví dụ: van tiết lưu bị đóng băng):
+* KTV không sửa chui, mà hệ thống cung cấp nút bấm liên kết **kích hoạt ngay một vé sự cố đột xuất (`custom_issue`)** gắn chặt với nhật ký bảo trì định kỳ đó.
+* Điều này giúp nhà máy chuyển từ trạng thái "chờ máy hỏng mới sửa" sang trạng thái **"phát hiện sớm trước khi máy dừng"**.
+
+### 4. Quản lý Thiết bị Đo lường & Hiệu chuẩn Nội bộ (Tool Calibration):
+* Hệ thống quản lý cả các công cụ đo kiểm tinh vi của riêng AIS (ví dụ: Máy đo rung SKF `TOOL-VIB01`).
+* Thiết bị này được quản lý lịch hiệu chuẩn định kỳ tại các trung tâm kiểm định nhà nước (Quatest) để đảm bảo các biên bản nghiệm thu bàn giao cho khách hàng có giá trị pháp lý.
+
+---
+
+## 3.3. TRỤ CỘT 3: QUẢN TRỊ KHO VẬT TƯ PHỤ TÙNG ĐA TẦNG (MRO INVENTORY MANAGEMENT)
+
+Trụ cột Kho đóng vai trò là **"Huyết mạch cung ứng vật chất"**, đảm bảo KTV không bao giờ bị thiếu phụ tùng khi đến hiện trường, đồng thời triệt tiêu hoàn toàn tình trạng thất thoát linh kiện:
+
+```
+[Kho Linh kiện Trung tâm (Kho Tổng AIS)]
+          │
+          ▼ (Đầu tuần: Điều chuyển cấp phát xe - Material Transfer)
+[Kho Xe Kỹ thuật Di động (Van Stock của KTV An / Bình / Cường)]
+          │
+          ▼ (Tại hiện trường nhà máy khách: Xuất vào máy hỏng - Material Issue)
+[Lắp vào Máy Hỏng (Asset)] <── Gắn chặt với ──> [Vé Sự Cố (Issue)]
+          │
+          ▼
+[Hạch toán Chi phí: Billing Type]
+   ├── Under Warranty (Bảo hành: AIS chịu chi phí)
+   └── Billable to Customer (Tính tiền: Sinh Sales Invoice đòi khách)
+          │
+          ▼ (Cuối ca: Thu hồi xác phụ tùng cũ hỏng - Core Return)
+[Kho Thu hồi Linh kiện Hỏng - SBN] (Kiểm định độc lập)
+```
+
+### 1. Kiến trúc Cây Kho Đa tầng (Multi-tier Warehouses):
+Hệ thống tổ chức mạng lưới kho bãi theo mô hình FSM chuẩn quốc tế:
+* **Kho Linh kiện Trung tâm - SBN:** Kho tổng đặt tại xưởng dịch vụ, lưu trữ số lượng lớn 12 loại linh kiện kỹ thuật dự trữ an toàn.
+* **Hệ thống Kho Xe KTV (Van Stock):** Gồm 3 kho con độc lập gắn liền với từng xe bán tải của KTV (`Kho Xe - Nguyen Van An`, `Kho Xe - Tran Dinh Binh`, `Kho Xe - Le Hoang Cuong`).
+  * *Nguyên lý trách nhiệm vật chất:* Khi linh kiện rời kho trung tâm lên xe nào, KTV xe đó phải ký nhận điện tử và chịu trách nhiệm bảo quản nếu bị mất mát.
+* **Kho Thu hồi Linh kiện Hỏng - SBN:** Kho phế liệu chuyên dụng để chứa xác linh kiện cũ tháo ra từ máy khách hàng mang về công ty nhập kho để phục vụ kiểm toán nội bộ.
+
+### 2. Quy trình Lưu chuyển Vật tư Khép kín 2 Chặng:
+* **Chặng 1 — Điều chuyển lên xe lưu động (`Material Transfer`):** Đầu mỗi tuần, KTV căn cứ vào kế hoạch bảo trì để làm phiếu đề xuất chuyển một số lượng linh kiện phổ biến (lọc dầu, rơ le, cầu chì) từ Kho Trung tâm lên Kho Xe của mình.
+* **Chặng 2 — Xuất tiêu hao vào máy hỏng (`Material Issue`):** Khi đến nhà máy khách hàng sửa chữa, KTV bấm nút `[Xuất linh kiện sửa]` ngay trên form Issue. Hệ thống tự động tạo phiếu xuất kho trừ số dư trực tiếp tại Kho Xe của KTV đó và ghi nhận lịch sử vào đúng chiếc máy hỏng.
+
+### 3. Định mức Tồn kho An toàn & Cảnh báo Đặt hàng lại Tự động (Safety Stock & Reorder Level):
+* Toàn bộ 12 danh mục phụ tùng kỹ thuật (lọc dầu, lọc gió, dầu máy nén, rơ le nhiệt, contactor, van tiết lưu...) đều được cài đặt ngưỡng tồn kho an toàn (`reorder_level = 3.0 Nos`).
+* **Cơ chế cảnh báo thời gian thực:**
+  * Ban đầu, lọc dầu `PART-FLT-OIL01` có số lượng tồn là 4 cái.
+  * Sau khi KTV An xuất 2 cái để thay cho máy nén khí Hitachi, tồn kho thực tế tại kho trung tâm tụt xuống **2.0 cái**.
+  * Vì số tồn thực tế $2.0 < 3.0$ (Ngưỡng an toàn), hệ thống ERPNext lập tức kích hoạt trạng thái **`Reorder Trigger Condition = TRUE`** để thông báo cho phòng Mua hàng lập tức liên hệ nhà cung cấp Kim Long đặt thêm hàng bù đắp.
+
+### 4. Động cơ Phân định Dòng tiền Thanh toán (Billing Classification Engine):
+Để giải quyết triệt để tranh chấp giữa Kế toán và Khách hàng về việc *"Ai là người trả tiền phụ tùng?"*, trên phiếu xuất kho có trường bắt buộc `custom_billing_type`:
+* **`Under Warranty` (Trong hạn bảo hành):** Dành cho sự cố nằm trong hợp đồng cam kết bảo trì $\rightarrow$ Hệ thống tự động ghi nhận giá trị xuất kho 1.300.000đ vào **Tài khoản Chi phí Bảo hành của AIS**, gắn vào Cost Center của hợp đồng Tân Á để cuối năm tính toán hợp đồng này lời hay lỗ.
+* **`Billable to Customer` (Tính phí khách hàng):** Dành cho sự cố do công nhân nhà máy làm rơi vỡ hoặc vận hành sai quy trình $\rightarrow$ KTV chọn loại này, hệ thống sẽ cho phép kết xuất sang **Hóa đơn Bán hàng (`Sales Invoice`)** để phòng kế toán thu tiền của khách hàng.
+* **`Goodwill` (Thiện chí công ty):** Miễn phí sửa chữa các lỗi nhỏ để giữ gìn mối quan hệ khách hàng.
+
+---
+
+## 3.4. BẢNG MA TRẬN PHỐI HỢP LIÊN HOÀN GIỮA 3 TRỤ CỘT TRONG MỘT CA SỰ CỐ THỰC TẾ
+
+Dưới đây là bảng theo dõi từng giây phút diễn biến của ca sự cố Máy nén khí Hitachi (`ISS-2026-00001`), minh chứng sự đồng bộ 100% giữa 3 trụ cột:
+
+| Bước | Sự kiện Thực tế | Trụ cột 1: Helpdesk | Trụ cột 2: Thiết bị (CMMS) | Trụ cột 3: Kho (Inventory) | Tác động Kế toán (Finance) |
+| :---: | :--- | :--- | :--- | :--- | :--- |
+| **1** | Máy nén khí báo lỗi E-04 quá nhiệt lúc 08:30 | Quản đốc quét mã QR trên máy, Ticket được tạo với SLA VIP 30' | Mã máy `ACC-ASS-2026-00002` tự điền vào phiếu sự cố | Hệ thống kiểm tra số dư tồn kho linh kiện tương thích | Chưa phát sinh bút toán |
+| **2** | Hệ thống điều phối vé lúc 08:31 | Đọc danh mục `Compressor`, tự động bắn vé cho KTV An | Cập nhật trạng thái máy: Đang gặp sự cố | Kho xe KTV An báo sẵn sàng có 2 lọc dầu trên xe | Chưa phát sinh bút toán |
+| **3** | KTV An có mặt tại xưởng lúc 08:55 | An bấm nút `[Check-in]`, chuyển vé sang `In Progress` | Ghi nhận thời điểm KTV tiếp cận hiện trường | Giữ nguyên trạng thái vật tư trên xe | Chưa phát sinh bút toán |
+| **4** | KTV An thay thế 2 lọc dầu Hitachi | An bấm `[Xuất linh kiện sửa]` từ form Issue | Ghi nhận máy được thay 2 lọc dầu `PART-FLT-OIL01` | Tạo phiếu `Stock Entry (Material Issue)` trừ 2 lọc từ Kho Xe An | Giảm giá trị tồn kho 1.300.000đ (Có TK 156) |
+| **5** | Phân loại chi phí sửa chữa | Chọn `custom_warranty_status = In Warranty` | Lưu vết chi phí bảo hành tích lũy của máy | Phiếu kho ghi nhận nhãn `custom_billing_type = Under Warranty` | Tăng Chi phí bảo hành dịch vụ 1.300.000đ (Nợ TK 641) |
+| **6** | Nghiệm thu và đóng ca lúc 10:45 | An bấm `[Hoàn thành ca]`, chọn nguyên nhân `Hardware Failure` | Máy chạy lại ổn định, chuyển trạng thái `Operational` | Tồn kho tổng báo động dưới ngưỡng an toàn (2 < 3) | Kế toán chốt chi phí ca sửa chữa hợp lệ |
 
 ---
 
