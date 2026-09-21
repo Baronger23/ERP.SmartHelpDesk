@@ -1,0 +1,54 @@
+{
+  "report_name": "Maintenance Metrics (MTTR, PM Compliance, Root Cause)",
+  "generated_at": "2026-09-21T11:18:39.165367",
+  "summary": {
+    "overall_mttr_hours": 0,
+    "pm_compliance_percent": 0.0,
+    "total_issues_analyzed": 0,
+    "total_pm_logs": 4
+  },
+  "mttr_details": [],
+  "mttr_by_priority": [],
+  "mttr_by_asset": [],
+  "pm_compliance_details": [
+    {
+      "log": "ACC-AML-2026-00001",
+      "maintenance": "ACC-ASS-2026-00002",
+      "task": "9j5tl82srd",
+      "due_date": "N/A",
+      "completion_date": "N/A",
+      "on_time": false
+    },
+    {
+      "log": "ACC-AML-2026-00002",
+      "maintenance": "ACC-ASS-2026-00003",
+      "task": "9j7ffboass",
+      "due_date": "N/A",
+      "completion_date": "N/A",
+      "on_time": false
+    },
+    {
+      "log": "ACC-AML-2026-00003",
+      "maintenance": "ACC-ASS-2026-00005",
+      "task": "9j8555ujjl",
+      "due_date": "N/A",
+      "completion_date": "N/A",
+      "on_time": false
+    },
+    {
+      "log": "ACC-AML-2026-00004",
+      "maintenance": "ACC-ASS-2026-00003",
+      "task": "9j7ffboass",
+      "due_date": "N/A",
+      "completion_date": "N/A",
+      "on_time": false
+    }
+  ],
+  "root_cause_distribution": [
+    {
+      "root_cause": "Hardware Failure",
+      "count": 6,
+      "percentage": 100.0
+    }
+  ]
+}

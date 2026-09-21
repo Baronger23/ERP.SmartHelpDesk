@@ -2,7 +2,7 @@ import sys
 import os
 import json
 import time
-sys.path.append(os.path.dirname(__file__))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "core")))
 import frappe_client as fc
 
 print("=== STARTING 05_EXECUTE_SCENARIOS.PY ===")
@@ -276,8 +276,10 @@ evidence_data = {
     }
 }
 
-with open("verification_evidence.json", "w", encoding="utf-8") as f:
+evidence_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "data", "verification_evidence.json"))
+os.makedirs(os.path.dirname(evidence_path), exist_ok=True)
+with open(evidence_path, "w", encoding="utf-8") as f:
     json.dump(evidence_data, f, indent=2, ensure_ascii=False)
 
-print("[OK] Evidence saved to verification_evidence.json")
+print(f"[OK] Evidence saved to {evidence_path}")
 print("=== 05_EXECUTE_SCENARIOS.PY COMPLETED SUCCESSFULLY ===")

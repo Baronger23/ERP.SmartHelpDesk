@@ -1,0 +1,244 @@
+{
+  "sla_compliance": {
+    "report_name": "SLA Compliance & Logging Latency",
+    "generated_at": "2026-09-21T11:18:38.766838",
+    "summary": {
+      "total_issues": 6,
+      "total_resolved": 0,
+      "sla_compliance_rate": 0,
+      "avg_logging_latency_minutes": 12004.2,
+      "ftfr_percent": 100.0
+    },
+    "by_tier": [],
+    "sla_details": [],
+    "latency_details": [
+      {
+        "issue": "ISS-2026-00001",
+        "customer": "Cong ty CP Bao bi Tan A",
+        "creation": "2026-09-15 19:16:39.039931",
+        "incident_time": "2026-09-07 10:45:00",
+        "latency_minutes": 12031.7
+      },
+      {
+        "issue": "ISS-2026-00002",
+        "customer": "Xi nghiep Duoc Hai Nam",
+        "creation": "2026-09-15 19:16:39.198633",
+        "incident_time": "2026-09-07 11:00:00",
+        "latency_minutes": 12016.7
+      },
+      {
+        "issue": "ISS-2026-00003",
+        "customer": "Cong ty CP Bao bi Tan A",
+        "creation": "2026-09-15 19:16:39.353616",
+        "incident_time": "2026-09-07 11:15:00",
+        "latency_minutes": 12001.7
+      },
+      {
+        "issue": "ISS-2026-00004",
+        "customer": "Cong ty Nhua & Co khi Song Long",
+        "creation": "2026-09-15 19:16:39.564726",
+        "incident_time": "2026-09-07 11:20:00",
+        "latency_minutes": 11996.7
+      },
+      {
+        "issue": "ISS-2026-00005",
+        "customer": "Xi nghiep Duoc Hai Nam",
+        "creation": "2026-09-15 19:16:39.712575",
+        "incident_time": "2026-09-07 11:25:00",
+        "latency_minutes": 11991.7
+      },
+      {
+        "issue": "ISS-2026-00006",
+        "customer": "Cong ty CP Bao bi Tan A",
+        "creation": "2026-09-15 19:16:39.953896",
+        "incident_time": "2026-09-07 11:30:00",
+        "latency_minutes": 11986.7
+      }
+    ]
+  },
+  "cost_per_asset": {
+    "report_name": "Cost per Asset & Inventory Traceability",
+    "generated_at": "2026-09-21T11:18:39.040609",
+    "cost_per_asset": [
+      {
+        "asset_id": "ACC-ASS-2026-00002",
+        "asset_name": "May nen khi Hitachi 75kW (AST-CMP-02) - Bao bi Tan A",
+        "total_cost_vnd": 1300000.0,
+        "total_parts_qty": 2.0,
+        "unique_issues": [
+          "ISS-2026-00001"
+        ],
+        "parts_used": [
+          "PART-FLT-OIL01"
+        ]
+      }
+    ],
+    "stock_levels": [
+      {
+        "item_code": "PART-AVR-CUM01",
+        "item_name": "Bo mach dieu toc tu dong AVR Stamford SX460",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-BLT-TIM01",
+        "item_name": "Day curoa rang truyen dong ban 50mm",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-CNT-150A",
+        "item_name": "Khoi dong tu Contactor Schneider LC1D150",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-FLT-AIR01",
+        "item_name": "Loc gio may nen khi truc vit 75kW",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-FLT-DSL01",
+        "item_name": "Loc nhien lieu Diesel may phat dien Cummins",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-FLT-OIL01",
+        "item_name": "Loc dau may nen khi Hitachi",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 2.0,
+        "projected_qty": 7.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-FUS-500A",
+        "item_name": "Cau chi ha the gG 500A 690V",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-NOZ-FLX01",
+        "item_name": "Dau phun muc in cong nghiep Piezo 1020",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-OIL-COOL01",
+        "item_name": "Dau lam mat tong hop New Alpha Screw (20L)",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-RLY-THM01",
+        "item_name": "Ro-le nhiet bao ve qua tai Schneider LRD3353",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-SEN-TEMP01",
+        "item_name": "Cam bien nhiet do PT100 cong nghiep",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      },
+      {
+        "item_code": "PART-VAL-EXP01",
+        "item_name": "Van tiet luu dien tu Chiller Danfoss ETS50",
+        "warehouse": "Kho Linh kien Trung tam - SBN",
+        "actual_qty": 5.0,
+        "projected_qty": 5.0,
+        "reserved_qty": 0.0
+      }
+    ],
+    "traceability_chains": [
+      {
+        "stock_entry": "MAT-STE-2026-00002",
+        "issue": "ISS-2026-00001",
+        "asset": "ACC-ASS-2026-00002",
+        "technician": "an.nguyen@smarthelpdesk.local",
+        "items": [
+          {
+            "item": "PART-FLT-OIL01",
+            "qty": 2.0,
+            "cost": 1300000.0
+          }
+        ]
+      }
+    ]
+  },
+  "maintenance_metrics": {
+    "report_name": "Maintenance Metrics (MTTR, PM Compliance, Root Cause)",
+    "generated_at": "2026-09-21T11:18:39.165367",
+    "summary": {
+      "overall_mttr_hours": 0,
+      "pm_compliance_percent": 0.0,
+      "total_issues_analyzed": 0,
+      "total_pm_logs": 4
+    },
+    "mttr_details": [],
+    "mttr_by_priority": [],
+    "mttr_by_asset": [],
+    "pm_compliance_details": [
+      {
+        "log": "ACC-AML-2026-00001",
+        "maintenance": "ACC-ASS-2026-00002",
+        "task": "9j5tl82srd",
+        "due_date": "N/A",
+        "completion_date": "N/A",
+        "on_time": false
+      },
+      {
+        "log": "ACC-AML-2026-00002",
+        "maintenance": "ACC-ASS-2026-00003",
+        "task": "9j7ffboass",
+        "due_date": "N/A",
+        "completion_date": "N/A",
+        "on_time": false
+      },
+      {
+        "log": "ACC-AML-2026-00003",
+        "maintenance": "ACC-ASS-2026-00005",
+        "task": "9j8555ujjl",
+        "due_date": "N/A",
+        "completion_date": "N/A",
+        "on_time": false
+      },
+      {
+        "log": "ACC-AML-2026-00004",
+        "maintenance": "ACC-ASS-2026-00003",
+        "task": "9j7ffboass",
+        "due_date": "N/A",
+        "completion_date": "N/A",
+        "on_time": false
+      }
+    ],
+    "root_cause_distribution": [
+      {
+        "root_cause": "Hardware Failure",
+        "count": 6,
+        "percentage": 100.0
+      }
+    ]
+  }
+}

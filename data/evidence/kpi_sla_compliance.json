@@ -1,0 +1,57 @@
+{
+  "report_name": "SLA Compliance & Logging Latency",
+  "generated_at": "2026-09-21T11:18:38.766838",
+  "summary": {
+    "total_issues": 6,
+    "total_resolved": 0,
+    "sla_compliance_rate": 0,
+    "avg_logging_latency_minutes": 12004.2,
+    "ftfr_percent": 100.0
+  },
+  "by_tier": [],
+  "sla_details": [],
+  "latency_details": [
+    {
+      "issue": "ISS-2026-00001",
+      "customer": "Cong ty CP Bao bi Tan A",
+      "creation": "2026-09-15 19:16:39.039931",
+      "incident_time": "2026-09-07 10:45:00",
+      "latency_minutes": 12031.7
+    },
+    {
+      "issue": "ISS-2026-00002",
+      "customer": "Xi nghiep Duoc Hai Nam",
+      "creation": "2026-09-15 19:16:39.198633",
+      "incident_time": "2026-09-07 11:00:00",
+      "latency_minutes": 12016.7
+    },
+    {
+      "issue": "ISS-2026-00003",
+      "customer": "Cong ty CP Bao bi Tan A",
+      "creation": "2026-09-15 19:16:39.353616",
+      "incident_time": "2026-09-07 11:15:00",
+      "latency_minutes": 12001.7
+    },
+    {
+      "issue": "ISS-2026-00004",
+      "customer": "Cong ty Nhua & Co khi Song Long",
+      "creation": "2026-09-15 19:16:39.564726",
+      "incident_time": "2026-09-07 11:20:00",
+      "latency_minutes": 11996.7
+    },
+    {
+      "issue": "ISS-2026-00005",
+      "customer": "Xi nghiep Duoc Hai Nam",
+      "creation": "2026-09-15 19:16:39.712575",
+      "incident_time": "2026-09-07 11:25:00",
+      "latency_minutes": 11991.7
+    },
+    {
+      "issue": "ISS-2026-00006",
+      "customer": "Cong ty CP Bao bi Tan A",
+      "creation": "2026-09-15 19:16:39.953896",
+      "incident_time": "2026-09-07 11:30:00",
+      "latency_minutes": 11986.7
+    }
+  ]
+}
