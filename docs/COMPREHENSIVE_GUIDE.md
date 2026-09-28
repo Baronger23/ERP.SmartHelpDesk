@@ -144,6 +144,35 @@ Mỗi kỹ thuật viên là một chuyên gia trong một hoặc nhiều lĩnh 
 
 Một hệ thống quản lý dịch vụ bảo trì công nghiệp hoàn chỉnh không thể chỉ dừng lại ở việc "sửa máy", mà bắt buộc phải vận hành như một cỗ máy hợp nhất gồm **3 Trụ cột Chức năng cốt lõi**: **Helpdesk & Dịch vụ Khách hàng (SLA)** $\leftrightarrow$ **Quản lý Thiết bị & Lập lịch Bảo dưỡng (CMMS)** $\leftrightarrow$ **Quản trị Kho Vật tư Đa tầng (MRO Inventory)**.
 
+```mermaid
+flowchart TD
+    subgraph P1["Trụ Cột 1: Helpdesk & Dịch Vụ Khách Hàng (SLA)"]
+        A1["Tiếp nhận sự cố: QR Code / Portal / Hotline"] --> A2["Ma trận SLA 2 Chiều: VIP vs Standard"]
+        A2 --> A3["Skill-Based Routing Engine: Phân công đúng KTV"]
+        A3 --> A4["Theo dõi & Đánh giá: FTFR & Callback Tracking"]
+    end
+
+    subgraph P2["Trụ Cột 2: Quản Lý Thiết Bị & Bảo Trì (CMMS)"]
+        B1["Hồ sơ Thiết bị Số & Cách ly Kế toán"] --> B2["Lập lịch Bảo trì Phòng ngừa: 1M / 3M / 6M"]
+        B2 --> B3["Asset Maintenance Log: Nhật ký thực hiện"]
+        B3 --"Phát hiện sự cố sớm"--> B4["PM-to-CM Trigger: Tự động tạo Issue"]
+    end
+
+    subgraph P3["Trụ Cột 3: Quản Trị Kho MRO Đa Tầng"]
+        C1["Kho Trung Tâm: Dự trữ an toàn & Reorder Level"] -->|Material Transfer| C2["Kho Xe KTV: Van Stock lưu động"]
+        C2 -->|Material Issue| C3["Xuất linh kiện vào Máy & gắn Vé sự cố"]
+        C3 --> C4["Phân loại Billing Type: Bảo hành vs Tính phí"]
+        C3 -->|Core Return| C5["Kho Thu Hồi: Xác linh kiện cũ hỏng"]
+    end
+
+    %% Tương tác liên trụ cột
+    A1 -.->|"Gắn mã máy hỏng"| B1
+    B4 -.->|"Kích hoạt vé khẩn cấp"| A1
+    A3 ==>|"KTV An / Bình / Cường nhận vé"| C2
+    C3 ==>|"Khấu trừ linh kiện & tính TCO"| B1
+    C4 ==>|"Hạch toán sổ cái & Hóa đơn"| ACC["Kế Toán Tài Chính: General Ledger / Sales Invoice"]
+```
+
 Dưới đây là đặc tả chi tiết từng trụ cột, cơ chế vận hành nội tại và cách thức chúng tương tác hữu cơ với nhau:
 
 ---
@@ -152,25 +181,39 @@ Dưới đây là đặc tả chi tiết từng trụ cột, cơ chế vận hà
 
 Trụ cột Helpdesk đóng vai trò là **"cửa ngõ tiếp nhận và điều phối duy nhất"** giữa khách hàng nhà máy và công ty AIS. Đây không đơn thuần là một hòm thư tiếp nhận sự cố, mà là một **động cơ kiểm soát cam kết dịch vụ theo chuẩn công nghiệp**:
 
-```
-[Khách hàng phát hiện sự cố]
-          │
-          ▼
-1. Tiếp nhận Đa kênh (Web Portal / Hotline Dispatcher / Tem quét QR Code)
-          │
-          ▼
-2. Động cơ Ma trận SLA 2 chiều (Kiểm tra Hạng Khách hàng x Mức độ Khẩn cấp)
-   ├── Hạn phản hồi ban đầu (Response Deadline)
-   └── Hạn sửa chữa dứt điểm (Resolution Deadline)
-          │
-          ▼
-3. Động cơ Phân bổ Theo Chuyên Môn (Skill-Based Routing Engine)
-   ├── Nhận diện Danh mục Thiết bị (Asset Category)
-   ├── Tra cứu Ma trận Năng lực KTV (Skill Matrix)
-   └── Bắn vé đích danh vào hộp việc của Chuyên gia phụ trách
-          │
-          ▼
-4. Kiểm soát Chất lượng & Truy vết Tái phát (Callback / Recall Tracking)
+```mermaid
+flowchart TD
+    Start(["Khách hàng phát hiện sự cố"]) --> Scan{"Phương thức tiếp nhận"}
+    
+    Scan -->|"Quét tem QR trên máy"| QR["Tự động điền Mã máy & Khách hàng trong 15s"]
+    Scan -->|"Gọi Hotline / Dispatcher"| Hotline["Tổng đài viên nhập vé thủ công"]
+    Scan -->|"Cổng Web Portal"| Portal["Khách hàng gửi yêu cầu trực tuyến"]
+    
+    QR --> Ingest["Hệ thống ghi nhận T0 (thực tế) & T1 (tạo phiếu)"]
+    Hotline --> Ingest
+    Portal --> Ingest
+    
+    Ingest --> SLA["Động cơ Ma trận SLA 2 Chiều"]
+    SLA -->|"Khách VIP (Tân Á)"| SLA_VIP["Urgent: 30' Phản hồi / 4h Xong<br/>High: 60' Phản hồi / 8h Xong"]
+    SLA -->|"Khách Standard (Hải Nam, Song Long)"| SLA_STD["Urgent: 60' Phản hồi / 8h Xong<br/>High: 120' Phản hồi / 16h Xong"]
+    
+    SLA_VIP --> Route["Skill-Based Routing Engine"]
+    SLA_STD --> Route
+    
+    Route -->|"Category: Compressor / Printing"| An["KTV An: Chuyên gia Cơ khí & Khí nén"]
+    Route -->|"Category: Electrical Panel / Generator"| Binh["KTV Bình: Chuyên gia Điện & Tự động"]
+    Route -->|"Category: HVAC & Cooling"| Cuong["KTV Cường: Chuyên gia Nhiệt - Lạnh"]
+    Route -->|"Không gắn thiết bị"| Fallback["Xoay vòng đều: Round Robin dự phòng"]
+    
+    An --> Exec["KTV đến hiện trường: Bấm Quick Action [Check-in]"]
+    Binh --> Exec
+    Cuong --> Exec
+    Fallback --> Exec
+    
+    Exec --> Fix["Khắc phục & Bấm [Xuất linh kiện] & [Hoàn thành ca]"]
+    Fix --> Audit{"Sự cố tái phát trong 7 ngày?"}
+    Audit -->|"Có"| Callback["Bật cờ has_callback = 1 & Nối related_issue<br/>(Giảm tỷ lệ FTFR)"]
+    Audit -->|"Không"| Success(["Ca sửa dứt điểm thành công (100% FTFR)"])
 ```
 
 ### 1. Cơ chế Tiếp nhận Sự cố Đa kênh (Multi-Channel Ingestion):
@@ -213,22 +256,40 @@ Thay vì sử dụng thuật toán chia đều xoay vòng ngẫu nhiên (Round R
 
 Trụ cột CMMS đóng vai trò là **"Trái tim kỹ thuật"** của hệ thống, quản lý toàn bộ hồ sơ lý lịch và vòng đời bảo dưỡng của từng máy móc trong nhà máy khách hàng:
 
-```
-[Danh mục Tài sản Số (Asset Registry)]
-          │
-          ├── Hồ sơ Lý lịch Máy (Serial, Vị trí, Thông số kỹ thuật)
-          ├── Cách ly Kế toán Khấu hao (Asset Accounting Isolation)
-          └── Tem Mã QR Code Định Danh
-          │
-          ▼
-[Kế hoạch Bảo trì Phòng ngừa (Preventive Maintenance Plans)]
-          │
-          ├── Chu kỳ 1 Tháng: Kiểm tra trực quan, bôi trơn, siết ốc
-          ├── Chu kỳ 3 Tháng: Vệ sinh lọc gió, kiểm tra dòng tải, thay dầu
-          └── Chu kỳ 6 Tháng: Đại tu, hiệu chuẩn cảm biến, kiểm tra độ rung
-          │
-          ▼
-[Nhật ký Thực hiện (Asset Maintenance Log)] ──(Phát hiện hư hỏng)──> [Tự động Kích hoạt Issue]
+```mermaid
+flowchart TD
+    subgraph Registry["1. Quản Trị Hồ Sơ Thiết Bị Số (Digital Registry)"]
+        AssetDoc["Hồ sơ Asset: Serial, Model, Thông số, Vị trí"]
+        ISO["Cách ly Kế toán: calculate_depreciation = 0<br/>Gán customer & is_customer_equipment = 1"]
+        QRGen["Tự động sinh tem QR Code động dán thân máy"]
+        AssetDoc --- ISO --- QRGen
+    end
+
+    subgraph PM["2. Lập Lịch Bảo Trì Phòng Ngừa (Preventive Maintenance)"]
+        P1["Kế hoạch 1 Tháng: Chiller Daikin (Vệ sinh, đo áp suất gas)"]
+        P2["Kế hoạch 3 Tháng: Máy nén Hitachi (Lọc dầu, xả nước, bôi trơn)"]
+        P3["Kế hoạch 6 Tháng: Tủ điện MSB (Siết busbar, đo nhiệt hồng ngoại)"]
+        AutoCron["Động cơ CronJob tự động sinh Asset Maintenance Log"]
+        P1 & P2 & P3 --> AutoCron
+    end
+
+    subgraph Dispatch["3. Phân Công & Thực Hiện Kiểm Tra Hiện Trường"]
+        LogDoc["Bản ghi kiểm tra: Asset Maintenance Log"]
+        TechTeam["Đội Kỹ thuật tiếp nhận & thực hiện bảo dưỡng"]
+        AutoCron --> LogDoc --> TechTeam
+    end
+
+    subgraph Evaluation["4. Đánh Giá & Kích Hoạt Đột Xuất (PM-to-CM)"]
+        CheckResult{"Kết quả kiểm tra?"}
+        TechTeam --> CheckResult
+        CheckResult -->|"Bình thường"| ClosePM["Ký nghiệm thu & Đóng Log định kỳ"]
+        CheckResult -->|"Phát hiện bất thường / Hư hỏng tiềm ẩn"| PM2CM["Kích hoạt PM-to-CM: Bấm nút tạo Issue khẩn cấp"]
+        PM2CM --> AlertHelpdesk["Vé sự cố được tạo: Ưu tiên xử lý trước khi dừng máy"]
+    end
+
+    subgraph ToolMgt["5. Kiểm Chuẩn Thiết Bị Đo Nội Bộ"]
+        Tools["Máy đo rung SKF TOOL-VIB01 nội bộ"] --> Calib["Lịch hiệu chuẩn định kỳ tại Quatest"]
+    end
 ```
 
 ### 1. Hồ sơ Lý lịch Thiết bị Số (Digital Asset Registry):
@@ -265,22 +326,41 @@ Hệ thống thiết lập sẵn 3 chương trình bảo dưỡng định kỳ t
 
 Trụ cột Kho đóng vai trò là **"Huyết mạch cung ứng vật chất"**, đảm bảo KTV không bao giờ bị thiếu phụ tùng khi đến hiện trường, đồng thời triệt tiêu hoàn toàn tình trạng thất thoát linh kiện:
 
-```
-[Kho Linh kiện Trung tâm (Kho Tổng AIS)]
-          │
-          ▼ (Đầu tuần: Điều chuyển cấp phát xe - Material Transfer)
-[Kho Xe Kỹ thuật Di động (Van Stock của KTV An / Bình / Cường)]
-          │
-          ▼ (Tại hiện trường nhà máy khách: Xuất vào máy hỏng - Material Issue)
-[Lắp vào Máy Hỏng (Asset)] <── Gắn chặt với ──> [Vé Sự Cố (Issue)]
-          │
-          ▼
-[Hạch toán Chi phí: Billing Type]
-   ├── Under Warranty (Bảo hành: AIS chịu chi phí)
-   └── Billable to Customer (Tính tiền: Sinh Sales Invoice đòi khách)
-          │
-          ▼ (Cuối ca: Thu hồi xác phụ tùng cũ hỏng - Core Return)
-[Kho Thu hồi Linh kiện Hỏng - SBN] (Kiểm định độc lập)
+```mermaid
+flowchart TD
+    subgraph Central["Kho Linh Kiện Trung Tâm - SBN"]
+        MainStock["Kho Tổng: Dự trữ 12 danh mục phụ tùng kỹ thuật"]
+        ReorderCheck{"Tồn kho thực tế <= 3.0 (Reorder Level)?"}
+        MainStock --> ReorderCheck
+        ReorderCheck -->|"Đúng"| ReorderAlert["Bật cảnh báo Reorder Trigger = TRUE<br/>Gửi PO đặt hàng NCC Kim Long / Minh Phát"]
+        ReorderCheck -->|"Sai"| SafeStock["Đảm bảo mức dự trữ an toàn"]
+    end
+
+    subgraph MobileVan["Hệ Thống Kho Xe KTV Lưu Động (Van Stock)"]
+        Transfer["Chặng 1: Material Transfer (Đầu tuần chuyển kho lên xe)"]
+        VanAn["Kho Xe - Nguyen Van An"]
+        VanBinh["Kho Xe - Tran Dinh Binh"]
+        VanCuong["Kho Xe - Le Hoang Cuong"]
+        MainStock ==>|Phiếu chuyển kho| Transfer
+        Transfer --> VanAn & VanBinh & VanCuong
+    end
+
+    subgraph FieldWork["Hiện Trường Sửa Chữa Tại Nhà Máy Khách"]
+        IssueTrigger["KTV mở Issue, bấm [Xuất linh kiện sửa]"]
+        StockEntry["Chặng 2: Material Issue (Trừ kho xe KTV)"]
+        VanAn & VanBinh & VanCuong --> IssueTrigger --> StockEntry
+        StockEntry --> Mount["Lắp vào máy hỏng & cập nhật chi phí máy"]
+    end
+
+    subgraph BillingFinance["Hạch Toán Chi Phí & Thu Hồi Phế Liệu"]
+        BillChoice{"Phân loại Billing Type?"}
+        StockEntry --> BillChoice
+        BillChoice -->|"Under Warranty"| WarrantyCost["Ghi nhận Chi phí Bảo hành của AIS<br/>(Nợ TK 641 / Có TK 156)"]
+        BillChoice -->|"Billable to Customer"| SalesInv["Kết xuất Hóa đơn bán hàng Sales Invoice<br/>(Thu tiền của khách hàng)"]
+        BillChoice -->|"Goodwill"| GoodwillCost["Chi phí chăm sóc quan hệ khách hàng"]
+        
+        Mount -->|Tháo linh kiện hỏng| CoreReturn["Thu hồi xác phụ tùng cũ về Kho Thu Hồi Phế Liệu"]
+    end
 ```
 
 ### 1. Kiến trúc Cây Kho Đa tầng (Multi-tier Warehouses):

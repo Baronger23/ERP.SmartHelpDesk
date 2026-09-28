@@ -356,22 +356,22 @@ Tất cả 6 kịch bản kiểm thử đã được thực thi và xác thực 
    * Phát hiện lệch cảm biến nhiệt ➔ Gắn liên kết tới Issue `ISS-2026-00005` (Trạng thái: `On Hold` - Chờ van tiết lưu Danfoss).
 4. **Kiểm chứng INV-01 & INV-02 (Xuất kho sửa chữa & Kiểm chứng Reorder Level):**
    * Lập phiếu xuất kho `MAT-STE-2026-00002` (Material Issue) xuất 2 cái lọc dầu `PART-FLT-OIL01` cho sự cố máy nén khí `ISS-2026-00001`.
-   * Phiếu xuất lưu đầy đủ: `custom_issue = ISS-2026-00001`, `custom_asset = ACC-ASS-2026-00001`, `custom_technician = an.nguyen@smarthelpdesk.local`.
+   * Phiếu xuất lưu đầy đủ: `custom_issue = ISS-2026-00001`, `custom_asset = ACC-ASS-2026-00002`, `custom_technician = an.nguyen@smarthelpdesk.local`, `custom_billing_type = Under Warranty`.
    * Số dư thực tế trong kho giảm từ **4.0** xuống **2.0 Nos**.
    * Ngưỡng Reorder Level cấu hình trong Item là **3.0 Nos**. Vì $2.0 < 3.0$, điều kiện kích hoạt yêu cầu mua hàng bổ sung (Reorder Trigger Condition) đạt giá trị **TRUE**.
 
 ### Album Ảnh chụp Minh chứng Thực tế từ Hệ thống (Evidence Gallery)
 
-* **Hình 6.1: Danh sách 6 Issue thể hiện đa dạng trạng thái, Priority và gán việc xoay vòng Round Robin:**
+* **Hình 6.1: Danh sách 6 Issue thể hiện đa dạng trạng thái, Priority và phân bổ kỹ thuật viên theo chuyên môn (Skill-Based Routing):**
   ![Danh sách 6 Issue](../assets/screenshots/01_issue_list.png)
 
-* **Hình 6.2: Chi tiết Issue 1 (ISS-2026-00001) đáp ứng SLA VIP 30 phút, liên kết Asset và trạng thái Resolved:**
+* **Hình 6.2: Chi tiết Issue 1 (ISS-2026-00001) đáp ứng SLA VIP 30 phút, liên kết Asset ACC-ASS-2026-00002, nút tác vụ nhanh hiện trường và trạng thái Resolved:**
   ![Chi tiết Issue 1](../assets/screenshots/02_issue_detail_sla.png)
 
-* **Hình 6.3: Cấu hình quy chuẩn SLA Khách hàng VIP với các mốc thời hạn cam kết:**
+* **Hình 6.3: Cấu hình quy chuẩn SLA Khách hàng VIP với các mốc thời hạn cam kết (Urgent 30m/4h, High 1h/8h, Medium 4h/24h, Low 8h/48h):**
   ![Cấu hình SLA VIP](../assets/screenshots/07_sla_vip_detail.png)
 
-* **Hình 6.4: Phiếu xuất kho sửa chữa (Material Issue) gắn định danh Issue, Asset và Kỹ thuật viên:**
+* **Hình 6.4: Phiếu xuất kho sửa chữa (Material Issue) gắn định danh Issue, Asset, Kỹ thuật viên và phân loại chi phí (Billing Type - Under Warranty):**
   ![Phiếu xuất kho sửa chữa](../assets/screenshots/03_stock_entry_repair.png)
 
 * **Hình 6.5: Nhật ký bảo dưỡng định kỳ Chiller (ACC-AML-2026-00004) hoàn thành gắn liên kết Issue phát sinh:**
