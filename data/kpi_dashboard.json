@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-09-28T15:36:45.588606",
+  "company": "SmartHelpDeskBaro",
+  "service_performance": {
+    "total_tickets": 6,
+    "resolved_tickets": 4,
+    "resolution_rate_percent": 66.66666666666666,
+    "sla_first_response_compliance_percent": 100.0,
+    "sla_resolution_compliance_percent": 100.0,
+    "status_breakdown": {
+      "Resolved": 3,
+      "Open": 1,
+      "On Hold": 1,
+      "Closed": 1
+    },
+    "priority_breakdown": {
+      "Urgent": 1,
+      "Medium": 2,
+      "High": 2,
+      "Low": 1
+    },
+    "warranty_classification": {
+      "In Warranty": 4,
+      "Goodwill": 1,
+      "Out of Warranty": 1
+    }
+  },
+  "technician_performance": {
+    "first_time_fix_rate_percent": 100.0,
+    "callback_rate_percent": 0.0,
+    "technician_workload": {
+      "an.nguyen@smarthelpdesk.local": 3,
+      "binh.tran@smarthelpdesk.local": 2,
+      "cuong.le@smarthelpdesk.local": 1
+    },
+    "billable_service_labor_revenue_vnd": 500000.0
+  },
+  "asset_maintenance": {
+    "total_assets_monitored": 6,
+    "pm_on_time_compliance_percent": 100.0,
+    "total_maintenance_tasks": 4,
+    "completed_pm_tasks": 1,
+    "future_scheduled_pm_tasks": 3,
+    "overdue_pm_tasks": 0,
+    "corrective_maintenance_spend_by_asset_vnd": {
+      "May nen khi Hitachi 75kW (AST-CMP-02) - Bao bi Tan A (ACC-ASS-2026-00002)": 1300000.0,
+      "Tu dien tong MSB 1200A (AST-PNL-05) - Song Long (ACC-ASS-2026-00005)": 3800000.0,
+      "May in Flexo 6 mau (AST-PRN-01) - Bao bi Tan A (ACC-ASS-2026-00001)": 420000.0
+    }
+  },
+  "mro_inventory_and_procurement": {
+    "spare_parts_availability_rate_percent": 100.0,
+    "total_inventory_valuation_vnd": 132730000.0,
+    "ais_internal_absorbed_expense_vnd": 1720000.0,
+    "warranty_cost_vnd": 1300000.0,
+    "goodwill_cost_vnd": 420000.0,
+    "customer_billed_revenue_vnd": 2350000.0,
+    "procurement_replenishment_status": "CLOSED_LOOP_REPLENISHED"
+  }
+}

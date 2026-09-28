@@ -44,8 +44,28 @@ STEPS = [
     },
     {
         "step": "06",
-        "title": "End-to-End Operational Scenarios & Evidence Collection",
+        "title": "Enterprise RBAC & User Permission Data Isolation",
+        "script": os.path.join(PROJECT_ROOT, "scripts", "setup", "06_setup_rbac.py")
+    },
+    {
+        "step": "07",
+        "title": "Core Operational Scenarios & Evidence Collection",
         "script": os.path.join(PROJECT_ROOT, "scripts", "scenarios", "05_execute_scenarios.py")
+    },
+    {
+        "step": "08",
+        "title": "Procurement Flow (Reorder Trigger -> MR -> PO -> PR -> Stock Transfer)",
+        "script": os.path.join(PROJECT_ROOT, "scripts", "scenarios", "07_execute_procurement_flow.py")
+    },
+    {
+        "step": "09",
+        "title": "Finance Touchpoints (Under Warranty, Billable, Goodwill Invoicing)",
+        "script": os.path.join(PROJECT_ROOT, "scripts", "scenarios", "08_execute_finance_touchpoint.py")
+    },
+    {
+        "step": "10",
+        "title": "Executive Management KPI Dashboard & Analytics",
+        "script": os.path.join(PROJECT_ROOT, "scripts", "reports", "generate_kpi_dashboard.py")
     }
 ]
 
@@ -95,10 +115,13 @@ def main():
         
     total_duration = time.time() - pipeline_start
     print("\n" + "=" * 78)
-    print(f"   ALL 5 STEPS COMPLETED SUCCESSFULLY IN {total_duration:.2f}s")
+    print(f"   ALL {len(STEPS)} ENTERPRISE PIPELINE STEPS COMPLETED SUCCESSFULLY IN {total_duration:.2f}s")
     print("=" * 78)
-    print(f"[*] Evidence data: data/verification_evidence.json")
-    print(f"[*] System is fully operational and ready for use.")
+    print(f"[*] Core Evidence data        : data/verification_evidence.json")
+    print(f"[*] Procurement Evidence data : data/procurement_evidence.json")
+    print(f"[*] Finance Evidence data     : data/finance_evidence.json")
+    print(f"[*] KPI Dashboard data        : data/kpi_dashboard.json")
+    print(f"[*] System is fully operational, verified, and enterprise-grade.")
     print("=" * 78)
 
 if __name__ == "__main__":

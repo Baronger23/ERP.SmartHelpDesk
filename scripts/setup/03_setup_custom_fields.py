@@ -147,6 +147,7 @@ custom_fields = [
         "label": "Sales Invoice Ref (Hoa don tinh phi)",
         "fieldtype": "Link",
         "options": "Sales Invoice",
+        "allow_on_submit": 1,
         "insert_after": "custom_billing_type"
     },
     # 12. Issue -> custom_warranty_status
@@ -158,6 +159,25 @@ custom_fields = [
         "options": "In Warranty\nOut of Warranty\nGoodwill",
         "default": "In Warranty",
         "insert_after": "custom_asset"
+    },
+    # 13. Issue -> custom_billing_type (Phân định chính sách chi phí dịch vụ)
+    {
+        "dt": "Issue",
+        "fieldname": "custom_billing_type",
+        "label": "Billing Classification (Chinh sach chi phi)",
+        "fieldtype": "Select",
+        "options": "Under Warranty\nBillable to Customer\nGoodwill",
+        "default": "Under Warranty",
+        "insert_after": "custom_warranty_status"
+    },
+    # 14. Issue -> custom_sales_invoice (Nối hóa đơn tính phí trực tiếp trên Issue)
+    {
+        "dt": "Issue",
+        "fieldname": "custom_sales_invoice",
+        "label": "Sales Invoice Ref (Hoa don tinh phi)",
+        "fieldtype": "Link",
+        "options": "Sales Invoice",
+        "insert_after": "custom_billing_type"
     }
 ]
 

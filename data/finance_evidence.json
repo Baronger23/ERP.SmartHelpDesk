@@ -1,0 +1,82 @@
+{
+  "summary": {
+    "total_ais_absorbed_cost_vnd": 1720000.0,
+    "total_customer_billed_revenue_vnd": 2350000.0,
+    "cases_executed": 3,
+    "status": "VERIFIED_END_TO_END"
+  },
+  "cases": [
+    {
+      "case_id": "CASE_1",
+      "name": "Under Warranty",
+      "issue_id": "ISS-2026-00001",
+      "customer": "Cong ty CP Bao bi Tan A",
+      "asset": "ACC-ASS-2026-00002",
+      "billing_type": "Under Warranty",
+      "parts_issued": [
+        {
+          "item_code": "PART-FLT-OIL01",
+          "qty": 2,
+          "rate": 650000,
+          "amount": 1300000
+        }
+      ],
+      "stock_entry": "MAT-STE-2026-00002",
+      "sales_invoice": null,
+      "ais_absorbed_cost_vnd": 1300000.0,
+      "customer_charged_vnd": 0.0,
+      "policy_rationale": "Thiet bi trong han bao hanh hop dong SLA Gold; linh kien hao mon do loi san pham do AIS tai tro 100%."
+    },
+    {
+      "case_id": "CASE_2",
+      "name": "Billable to Customer",
+      "issue_id": "ISS-2026-00004",
+      "customer": "Cong ty Nhua & Co khi Song Long",
+      "asset": "ACC-ASS-2026-00005",
+      "billing_type": "Billable to Customer",
+      "parts_issued": [
+        {
+          "item_code": "PART-CNT-150A",
+          "qty": 1,
+          "rate": 1850000,
+          "amount": 1850000
+        }
+      ],
+      "labor_service": [
+        {
+          "item_code": "SERV-LBR-01",
+          "qty": 1,
+          "rate": 500000,
+          "amount": 500000
+        }
+      ],
+      "stock_entry": "MAT-STE-2026-00004",
+      "sales_invoice": "ACC-SINV-2026-00001",
+      "invoice_grand_total_vnd": 2350000.0,
+      "ais_absorbed_cost_vnd": 0.0,
+      "customer_charged_vnd": 2350000.0,
+      "policy_rationale": "Thiet bi het han bao hanh; linh kien bi su co do qua tai he thong dien khach hang. Tinh phi vat tu va gio cong ky thuat."
+    },
+    {
+      "case_id": "CASE_3",
+      "name": "Goodwill / Customer Courtesy",
+      "issue_id": "ISS-2026-00003",
+      "customer": "Cong ty CP Bao bi Tan A",
+      "asset": "ACC-ASS-2026-00001",
+      "billing_type": "Goodwill",
+      "parts_issued": [
+        {
+          "item_code": "PART-BLT-TIM01",
+          "qty": 1,
+          "rate": 420000,
+          "amount": 420000
+        }
+      ],
+      "stock_entry": "MAT-STE-2026-00005",
+      "sales_invoice": null,
+      "ais_absorbed_cost_vnd": 420000.0,
+      "customer_charged_vnd": 0.0,
+      "policy_rationale": "Ho tro thien chi giu chan khach hang chien luoc (VIP); mien phi linh kien day curoa va cong hieu chinh nham tang chi so hai long CSAT."
+    }
+  ]
+}

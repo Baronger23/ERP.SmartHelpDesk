@@ -10,7 +10,7 @@
 ## MỤC LỤC CHI TIẾT
 1. [Chương 1: Nền tảng Triết lý ERP & Frappe Framework Dành Cho Người Mới Bắt Đầu](#chương-1-nền-tảng-triết-lý-erp--frappe-framework-dành-cho-người-mới-bắt-đầu)
 2. [Chương 2: Bức tranh Doanh nghiệp & Danh mục Dữ liệu Chủ (Master Data Ecosystem)](#chương-2-bức-tranh-doanh-nghiệp--danh-mục-dữ-liệu-chủ-master-data-ecosystem)
-3. [Chương 3: Ba Trụ Cột Chức Năng Cốt Lõi Của Dự Án (Core Domain Pillars)](#chương-3-ba-trụ-cột-chức-năng-cốt-lõi-của-dự-án-core-domain-pillars)
+3. [Chương 3: Năm Trụ Cột Nghiệp Vụ Doanh Nghiệp Cốt Lõi (Core Enterprise Domain Pillars)](#chương-3-năm-trụ-cột-nghiệp-vụ-doanh-nghiệp-cốt-lõi-core-enterprise-domain-pillars)
 4. [Chương 4: Phân tích Chi tiết 8 Nỗi Đau Doanh Nghiệp Thực Tế (Comprehensive Pain Points)](#chương-4-phân-tích-chi-tiết-8-nỗi-đau-doanh-nghiệp-thực-tế-comprehensive-pain-points)
 5. [Chương 5: Bản Phân Tích Đánh Đổi Kiến Trúc (Architecture Decision Records - ADR & Trade-Offs)](#chương-5-bản-phân-tích-đánh-đổi-kiến-trúc-architecture-decision-records---adr--trade-offs)
 6. [Chương 6: Cẩm Nang Thao Tác Giao Diện Desk Từng Bước (Click-by-Click UI Walkthrough)](#chương-6-cẩm-nang-thao-tác-giao-diện-desk-từng-bước-click-by-click-ui-walkthrough)
@@ -76,6 +76,77 @@
   * `1 = Submitted` (Đã ký duyệt): Đã tác động vào kho và sổ cái, không thể sửa đè.
   * `2 = Cancelled` (Đã hủy): Bị vô hiệu hóa nhưng vẫn lưu vết trong database.
 
+## 1.4. Kiến Trúc Tổng Thể Doanh Nghiệp 6 Lớp (6-Layer Enterprise Architecture)
+
+Để vận hành một hệ thống bảo trì công nghiệp và dịch vụ hiện trường (FSM & MRO) ở quy mô doanh nghiệp thực tế, kiến trúc phần mềm không thể chỉ là vài bảng cơ sở dữ liệu đơn lẻ. Hệ thống Smart Helpdesk & Maintenance được chuẩn hóa theo mô hình **Kiến trúc Doanh nghiệp 6 Lớp (6-Layer Enterprise Architecture)** chuẩn quốc tế:
+
+```mermaid
+flowchart TD
+    subgraph L1["LỚP 1: TRẢI NGHIỆM & GIAO DIỆN ĐA ĐỐI TƯỢNG (EXPERIENCE & ENGAGEMENT)"]
+        U1["Khách hàng Doanh nghiệp<br/>(B2B Customer Portal / Tem QR Code)"]
+        U2["Kỹ thuật viên Hiện trường<br/>(Mobile Desk PWA / Quick Actions)"]
+        U3["Điều phối viên Dịch vụ<br/>(Dispatcher Console / SLA Matrix)"]
+        U4["Thủ kho & Mua sắm<br/>(Warehouse & Procurement Workspace)"]
+        U5["Kế toán Dịch vụ<br/>(Billing & AR Invoicing Workspace)"]
+        U6["Ban Giám đốc & C-Level<br/>(Executive KPI Analytics Dashboard)"]
+    end
+
+    subgraph L2["LỚP 2: ĐIỀU PHỐI QUY TRÌNH NGHIỆP VỤ (BUSINESS PROCESS ORCHESTRATION)"]
+        BP1["Helpdesk & Tiếp nhận sự cố<br/>(Incident Ingestion & 2D SLA Engine)"]
+        BP2["Điều phối & Khắc phục Hiện trường<br/>(Skill-Based Routing & FTFR Tracking)"]
+        BP3["Bảo trì Phòng ngừa Chu kỳ<br/>(Asset Maintenance Plan -> PM-to-CM)"]
+        BP4["Tái bổ sung Vật tư Đa tầng<br/>(Reorder Trigger -> Procure-to-Stock)"]
+        BP5["Quyết toán & Hạch toán Tài chính<br/>(Warranty vs Billable vs Goodwill)"]
+    end
+
+    subgraph L3["LỚP 3: GIAO DỊCH LÕI & THỰC THỂ DỮ LIỆU ERP (TRANSACTIONAL & DOMAIN CORE)"]
+        T_ISS["Issue<br/>(Vé Sự Cố & Cam kết SLA)"]
+        T_AST["Asset & Asset Maintenance<br/>(Lý lịch Máy móc & Lịch Bảo dưỡng)"]
+        T_AML["Asset Maintenance Log<br/>(Nhật ký Bảo trì Hiện trường)"]
+        T_STE["Stock Entry<br/>(Phiếu Nhập / Xuất / Chuyển / Thu hồi)"]
+        T_MR["Material Request<br/>(Yêu cầu Mua sắm Bổ sung Tồn kho)"]
+        T_PO["Purchase Order<br/>(Đơn Đặt hàng Nhà Cung Cấp)"]
+        T_PR["Purchase Receipt<br/>(Phiếu Nhập kho Mua hàng)"]
+        T_SINV["Sales Invoice<br/>(Hóa đơn Dịch vụ & Vật tư Thay thế)"]
+    end
+
+    subgraph L4["LỚP 4: BẢO MẬT, KIỂM SOÁT & CÁCH LY DỮ LIỆU (GOVERNANCE & SECURITY)"]
+        SEC1["Role-Based Access Control<br/>(5 Vai trò RBAC Chuyên biệt: Dispatcher, Tech, Keeper, Accountant, Portal)"]
+        SEC2["Phân tách Nhiệm vụ<br/>(Segregation of Duties - SoD: Kế toán ≠ Thủ kho ≠ Kỹ thuật viên)"]
+        SEC3["Cách ly Đa Khách hàng<br/>(User Permission: Khách hàng chỉ truy cập dữ liệu của chính mình)"]
+        SEC4["Audit Trail & Tính Bất biến<br/>(docstatus: 0 Draft -> 1 Submitted -> 2 Cancelled)"]
+    end
+
+    subgraph L5["LỚP 5: NỀN TẢNG CÔNG NGHỆ & HẠ TẦNG THỰC THI (PLATFORM & RUNTIME INFRASTRUCTURE)"]
+        INF1["Frappe Framework v16 & Python 3.11+ WSGI Backend"]
+        INF2["MariaDB 10.6+ InnoDB Storage Engine (Transactional ACID)"]
+        INF3["Redis (Cache, Key-Value Queue, Celery Background Workers)"]
+        INF4["REST API Client & Automated Python Test Pipeline"]
+        INF5["Docker Compose Containerized Architecture (9 Services)"]
+    end
+
+    subgraph L6["LỚP 6: PHÂN TÍCH & TRÍ TUỆ ĐIỀU HÀNH (EXECUTIVE INTELLIGENCE & ANALYTICS)"]
+        KPI1["Hiệu năng Dịch vụ SLA<br/>(100% On-Time First Response & Resolution)"]
+        KPI2["Năng suất Kỹ thuật Hiện trường<br/>(100% First-Time Fix Rate FTFR, 0% Recall)"]
+        KPI3["Độ tin cậy Thiết bị & Chi phí TCO<br/>(100% PM Compliance, TCO Cost per Machine)"]
+        KPI4["Sức khỏe Kho Phụ tùng MRO<br/>(100% Parts Availability, Procure-to-Stock)"]
+    end
+
+    L1 ==> L2
+    L2 ==> L3
+    L3 --- L4
+    L3 ==> L5
+    L3 ==> L6
+```
+
+### Chi tiết 6 Lớp Chức năng:
+1. **Lớp 1 — Trải nghiệm & Giao tiếp Đa Đối tượng (Experience & Interface):** Cung cấp các giao diện chuyên biệt hóa theo đặc thù công việc: Khách hàng quét mã QR hoặc đăng nhập Portal; Kỹ thuật viên dùng giao diện Mobile Desk với các nút Quick Action 1-chạm; Điều phối viên dùng bảng điều khiển Dispatcher Console; Thủ kho, Kế toán và Ban Giám đốc có Workspace riêng.
+2. **Lớp 2 — Điều phối Quy trình Nghiệp vụ (Business Process Orchestration):** Kết nối các luồng công việc liên phòng ban: từ tiếp nhận sự cố khẩn cấp, tự động định tuyến kỹ thuật viên theo chuyên môn (Skill-Based Routing), kích hoạt bảo trì phòng ngừa (PM-to-CM), tự động phát hiện thiếu hụt phụ tùng kích hoạt mua sắm, đến phân loại quyết toán tài chính 3 hướng.
+3. **Lớp 3 — Giao dịch Lõi & Thực thể Dữ liệu ERP (Transactional & Domain Core):** Trung tâm xử lý dữ liệu với 8 chứng từ giao dịch cốt lõi của ERPNext (`Issue`, `Asset`, `Asset Maintenance Log`, `Stock Entry`, `Material Request`, `Purchase Order`, `Purchase Receipt`, `Sales Invoice`), đảm bảo tính toàn vẹn và nhất quán tuyệt đối của thông tin.
+4. **Lớp 4 — Bảo mật, Kiểm soát & Cách ly Dữ liệu (Governance & Security):** Kiểm soát truy cập nghiêm ngặt thông qua ma trận 5 vai trò (RBAC), áp dụng nguyên tắc Phân tách nhiệm vụ (Segregation of Duties - SoD) để phòng chống gian lận, và thiết lập `User Permission` đảm bảo khách hàng này không bao giờ nhìn thấy sự cố hay thiết bị của khách hàng khác.
+5. **Lớp 5 — Nền tảng Công nghệ & Hạ tầng Thực thi (Platform & Runtime):** Vận hành trên Frappe Framework v16, MariaDB 10.6 InnoDB, Redis Cache & Queue, được đóng gói hoàn chỉnh bằng Docker Compose với 9 container cô lập, hỗ trợ giao tiếp qua REST API chuẩn hóa.
+6. **Lớp 6 — Phân tích & Trí tuệ Điều hành (Executive Intelligence & Analytics):** Khai thác dữ liệu thời gian thực từ Lớp 3 để tổng hợp 4 nhóm chỉ số KPI chiến lược (Service, Technician, Asset, MRO), cung cấp cho Ban Giám đốc cái nhìn toàn cảnh về hiệu quả hoạt động và tài chính dịch vụ.
+
 ---
 
 # CHƯƠNG 2: BỨC TRANH DOANH NGHIỆP & DANH MỤC DỮ LIỆU CHỦ (MASTER DATA)
@@ -138,11 +209,42 @@ Mỗi kỹ thuật viên là một chuyên gia trong một hoặc nhiều lĩnh 
 * **Kho Xe - Le Hoang Cuong - SBN:** Kho di động trên xe bán tải của KTV Cường.
 * **Kho Thu hồi Linh kiện Hỏng - SBN:** Kho phế liệu lưu giữ xác phụ tùng cũ hỏng tháo từ máy khách hàng mang về để kiểm định độc lập.
 
+## 2.5. Ma Trận Phân Quyền Vai Trò & Phân Tách Nhiệm Vụ (Enterprise RBAC & Segregation of Duties - SoD)
+
+Trong môi trường doanh nghiệp công nghiệp thực tế, một lỗ hổng nghiêm trọng của các phần mềm nghiệp vụ tự phát là việc thiếu cơ chế **Phân tách Nhiệm vụ (Segregation of Duties - SoD)**, dẫn tới nguy cơ thông đồng gian lận giữa kỹ thuật viên và thủ kho, hoặc thất thoát tài chính khi kỹ thuật viên tự định giá và thu tiền của khách hàng. Hệ thống Smart Helpdesk & Maintenance thiết lập 5 vai trò nghiệp vụ (Persona Roles) độc lập với phân quyền chi tiết tới từng chứng từ:
+
+### Danh Sách 5 Vai Trò Nghiệp Vụ (Persona Roles) & Tài Khoản Mẫu:
+1. **AIS Dispatcher (`dispatcher@smarthelpdesk.local`):** Chuyên viên tổng đài và điều phối dịch vụ. Tiếp nhận cuộc gọi/sự cố, đánh giá mức độ khẩn cấp, chỉ định kỹ thuật viên hoặc để hệ thống tự động điều phối theo chuyên môn, giám sát đồng hồ đếm ngược SLA.
+2. **AIS Field Technician (`an.nguyen@smarthelpdesk.local`, `binh.tran`, `cuong.le`):** Kỹ thuật viên hiện trường. Nhận thông báo vé, đến nhà máy khách hàng bấm Check-in, lập phiếu xuất kho vật tư sửa chữa trên xe (`Material Issue`), và bấm hoàn thành ca.
+3. **AIS Warehouse Keeper (`warehouse@smarthelpdesk.local`):** Thủ kho trung tâm. Chịu trách nhiệm duyệt các phiếu điều chuyển vật tư lên xe bán tải (`Material Transfer`), tiếp nhận hàng mua mới từ nhà cung cấp (`Purchase Receipt`), kiểm soát định mức an toàn.
+4. **AIS Billing Accountant (`accountant@smarthelpdesk.local`):** Kế toán dịch vụ & công nợ. Chịu trách nhiệm kiểm tra các ca sửa chữa ngoài bảo hành (`Billable to Customer`), lập và phát hành Hóa đơn dịch vụ (`Sales Invoice`) bao gồm tiền phụ tùng và công thợ.
+5. **AIS Customer Portal (`customer.tana@smarthelpdesk.local`):** Người phụ trách bảo trì phía khách hàng (ví dụ: Nhà máy Bao bì Tân Á). Có tài khoản cổng thông tin để gửi yêu cầu hỗ trợ, theo dõi tiến độ xử lý và nghiệm thu biên bản trực tuyến.
+
+### Bảng Ma Trận Phân Quyền Chứng Từ (Custom DocPerm Matrix):
+
+| Phân hệ / Chứng từ (DocType) | AIS Customer Portal | AIS Dispatcher | AIS Field Technician | AIS Warehouse Keeper | AIS Billing Accountant |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Issue (Vé sự cố)** | Xem / Tạo riêng | Xem / Sửa / Tạo | Xem / Cập nhật ca | Xem | Xem |
+| **Stock Entry (Phiếu kho)** | ❌ Không quyền | Xem | Tạo / Ký xuất sửa | Xem / Sửa / Tạo / Ký | Xem |
+| **Material Request (Yêu cầu mua sắm)** | ❌ Không quyền | ❌ Không quyền | ❌ Không quyền | Tạo / Ký đề xuất | Xem |
+| **Purchase Order (Đơn mua hàng PO)** | ❌ Không quyền | ❌ Không quyền | ❌ Không quyền | Xem / Tạo | Xem |
+| **Purchase Receipt (Phiếu nhập kho)** | ❌ Không quyền | ❌ Không quyền | ❌ Không quyền | Tạo / Ký nhập hàng | Xem |
+| **Sales Invoice (Hóa đơn dịch vụ)** | ❌ Không quyền | ❌ Không quyền | ❌ Không quyền | ❌ Không quyền | Xem / Sửa / Tạo / Ký |
+
+### Cơ Chế Bảo Vệ & Cách Ly Dữ Liệu:
+* **Nguyên tắc Phân tách Nhiệm vụ (SoD):**
+  * Kỹ thuật viên hiện trường **tuyệt đối không được cấp quyền** tạo Đơn mua hàng (`Purchase Order`) hay xuất Hóa đơn (`Sales Invoice`), triệt tiêu hoàn toàn khả năng kê khống giá phụ tùng hoặc tự ý thu tiền khách hàng.
+  * Thủ kho **chỉ phụ trách dòng vật chất** (`Stock Entry`, `Purchase Receipt`), không được quyền can thiệp vào dòng tiền hay xóa sửa vé sự cố của khách hàng.
+  * Kế toán **chỉ phụ trách dòng tiền** (`Sales Invoice`), không thể tự ý tạo phiếu xuất kho để tuồn hàng ra ngoài.
+* **Cách ly Đa Khách Hàng Bằng Frappe `User Permission`:**
+  * Tài khoản `customer.tana@smarthelpdesk.local` được gắn ràng buộc dữ liệu: `Customer = "Cong ty CP Bao bi Tan A"`.
+  * Khi đăng nhập vào hệ thống, toàn bộ danh sách Ticket, Thiết bị hay Nhật ký bảo trì của các công ty khác (Dược Hải Nam, Nhựa Song Long) đều bị che giấu 100% ở tầng cơ sở dữ liệu (ORM Query Filter), bảo vệ bí mật kinh doanh tuyệt đối cho từng khách hàng.
+
 ---
 
-# CHƯƠNG 3: BA TRỤ CỘT CHỨC NĂNG CỐT LÕI CỦA DỰ ÁN (CORE DOMAIN PILLARS)
+# CHƯƠNG 3: NĂM TRỤ CỘT NGHIỆP VỤ DOANH NGHIỆP CỐT LÕI (CORE ENTERPRISE DOMAIN PILLARS)
 
-Một hệ thống quản lý dịch vụ bảo trì công nghiệp hoàn chỉnh không thể chỉ dừng lại ở việc "sửa máy", mà bắt buộc phải vận hành như một cỗ máy hợp nhất gồm **3 Trụ cột Chức năng cốt lõi**: **Helpdesk & Dịch vụ Khách hàng (SLA)** $\leftrightarrow$ **Quản lý Thiết bị & Lập lịch Bảo dưỡng (CMMS)** $\leftrightarrow$ **Quản trị Kho Vật tư Đa tầng (MRO Inventory)**.
+Một hệ thống quản lý dịch vụ bảo trì công nghiệp hoàn chỉnh không thể chỉ dừng lại ở việc "sửa máy", mà bắt buộc phải vận hành như một cỗ máy hợp nhất gồm **5 Trụ cột Chức năng cốt lõi**: **Helpdesk & Quản trị SLA** $\leftrightarrow$ **Quản lý Thiết bị & Lập lịch Bảo dưỡng (CMMS)** $\leftrightarrow$ **Quản trị Kho Vật tư Đa tầng (MRO Inventory)** $\leftrightarrow$ **Chu trình Mua sắm & Tái bổ sung Khép kín (Procure-to-Stock)** $\leftrightarrow$ **Điểm chạm Tài chính & Hạch toán Doanh thu/Chi phí (Finance Touchpoints)**.
 
 ```mermaid
 flowchart TD
@@ -389,18 +491,77 @@ Hệ thống tổ chức mạng lưới kho bãi theo mô hình FSM chuẩn qu�
 
 ---
 
-## 3.4. BẢNG MA TRẬN PHỐI HỢP LIÊN HOÀN GIỮA 3 TRỤ CỘT TRONG MỘT CA SỰ CỐ THỰC TẾ
+## 3.4. TRỤ CỘT 4: CHU TRÌNH MUA HÀNG & TÁI BỔ SUNG TỒN KHO KHÉP KÍN (PROCURE-TO-STOCK & REORDER REPLENISHMENT)
 
-Dưới đây là bảng theo dõi từng giây phút diễn biến của ca sự cố Máy nén khí Hitachi (`ISS-2026-00001`), minh chứng sự đồng bộ 100% giữa 3 trụ cột:
+Một điểm yếu chết người của các phần mềm Helpdesk độc lập là: khi kỹ thuật viên xuất linh kiện thay thế, tồn kho bị sụt giảm nhưng hệ thống không có khả năng tự động khởi phát chu trình mua sắm bổ sung. Hệ thống Smart Helpdesk & Maintenance tích hợp chu trình **Procure-to-Stock** khép kín 5 bước tự động hóa:
 
-| Bước | Sự kiện Thực tế | Trụ cột 1: Helpdesk | Trụ cột 2: Thiết bị (CMMS) | Trụ cột 3: Kho (Inventory) | Tác động Kế toán (Finance) |
-| :---: | :--- | :--- | :--- | :--- | :--- |
-| **1** | Máy nén khí báo lỗi E-04 quá nhiệt lúc 08:30 | Quản đốc quét mã QR trên máy, Ticket được tạo với SLA VIP 30' | Mã máy `ACC-ASS-2026-00002` tự điền vào phiếu sự cố | Hệ thống kiểm tra số dư tồn kho linh kiện tương thích | Chưa phát sinh bút toán |
-| **2** | Hệ thống điều phối vé lúc 08:31 | Đọc danh mục `Compressor`, tự động bắn vé cho KTV An | Cập nhật trạng thái máy: Đang gặp sự cố | Kho xe KTV An báo sẵn sàng có 2 lọc dầu trên xe | Chưa phát sinh bút toán |
-| **3** | KTV An có mặt tại xưởng lúc 08:55 | An bấm nút `[Check-in]`, chuyển vé sang `In Progress` | Ghi nhận thời điểm KTV tiếp cận hiện trường | Giữ nguyên trạng thái vật tư trên xe | Chưa phát sinh bút toán |
-| **4** | KTV An thay thế 2 lọc dầu Hitachi | An bấm `[Xuất linh kiện sửa]` từ form Issue | Ghi nhận máy được thay 2 lọc dầu `PART-FLT-OIL01` | Tạo phiếu `Stock Entry (Material Issue)` trừ 2 lọc từ Kho Xe An | Giảm giá trị tồn kho 1.300.000đ (Có TK 156) |
-| **5** | Phân loại chi phí sửa chữa | Chọn `custom_warranty_status = In Warranty` | Lưu vết chi phí bảo hành tích lũy của máy | Phiếu kho ghi nhận nhãn `custom_billing_type = Under Warranty` | Tăng Chi phí bảo hành dịch vụ 1.300.000đ (Nợ TK 641) |
-| **6** | Nghiệm thu và đóng ca lúc 10:45 | An bấm `[Hoàn thành ca]`, chọn nguyên nhân `Hardware Failure` | Máy chạy lại ổn định, chuyển trạng thái `Operational` | Tồn kho tổng báo động dưới ngưỡng an toàn (2 < 3) | Kế toán chốt chi phí ca sửa chữa hợp lệ |
+```mermaid
+flowchart LR
+    A["1. Kích Hoạt Ngưỡng Tồn:<br/>Xuất 2 lọc dầu Hitachi<br/>Tồn kho 2.0 < Reorder 3.0"] ==> B["2. Yêu Cầu Mua Sắm:<br/>Material Request (Purchase)<br/>MAT-MR-2026-00001 (10 cái)"]
+    B ==> C["3. Đơn Đặt Hàng PO:<br/>Purchase Order<br/>PUR-ORD-2026-00001 (Kim Long)"]
+    C ==> D["4. Nhập Kho Mua Hàng:<br/>Purchase Receipt<br/>MAT-PRE-2026-00001 (+10 cái Kho Tổng)"]
+    D ==> E["5. Bổ Sung Xe Lưu Động:<br/>Material Transfer<br/>MAT-STE-2026-00003 (2 cái lên xe An)"]
+    E ==> F["HOÀN TẤT CHU TRÌNH:<br/>Kho Trung Tâm = 10 cái (An toàn)<br/>Kho Xe An = 2 cái (Sẵn sàng 100%)"]
+```
+
+### Các Bước Thực Thi Thực Tế Đã Kiểm Chứng (Evidence Verification):
+1. **Bước 1 — Phát hiện thiếu hụt tức thời (Reorder Level Breach):** Sau khi phiếu xuất kho `MAT-STE-2026-00002` xuất 2 bộ lọc dầu `PART-FLT-OIL01` cho sự cố `ISS-2026-00001`, tồn kho thực tế tại Kho Trung tâm giảm từ 4.0 xuống **2.0 cái**, vi phạm ngưỡng tối thiểu (`reorder_level = 3.0`). Điều kiện bổ sung tự động `Stock < Reorder` được kích hoạt.
+2. **Bước 2 — Sinh Yêu cầu Mua sắm (`Material Request - Purchase`):** Hệ thống tự động tạo và submit phiếu `MAT-MR-2026-00001` yêu cầu mua bổ sung một lô 10 bộ lọc dầu vào Kho Trung tâm theo định mức lô tối ưu (`warehouse_reorder_qty = 10.0`).
+3. **Bước 3 — Phát hành Đơn Mua Hàng (`Purchase Order - PO`):** Từ Material Request đã duyệt, hệ thống kết xuất Đơn mua hàng `PUR-ORD-2026-00001` gửi tới nhà cung cấp chiến lược **Công ty TNHH Thiết bị Khí nén Kim Long** với đơn giá 650.000đ/cái (Tổng giá trị: 6.500.000đ).
+4. **Bước 4 — Tiếp nhận hàng vào Kho Trung tâm (`Purchase Receipt`):** Khi nhà cung cấp Kim Long giao hàng, thủ kho kiểm đếm và ký duyệt Phiếu nhập kho mua hàng `MAT-PRE-2026-00001`. Tồn kho thực tế tại Kho Trung tâm lập tức tăng vọt lên **10.0 cái**, giải tỏa triệt để trạng thái báo động tồn kho.
+5. **Bước 5 — Tái nạp phụ tùng lên xe lưu động (`Material Transfer`):** Để đảm bảo xe bán tải của KTV Nguyễn Văn An luôn sẵn sàng ứng cứu sự cố kế tiếp, thủ kho thực hiện lệnh điều chuyển `MAT-STE-2026-00003` chuyển 2 bộ lọc từ Kho Trung tâm sang `Kho Xe - Nguyen Van An`. Kết thúc chu trình, KTV An sở hữu 2 bộ lọc sẵn sàng, Kho Trung tâm còn 10 bộ an toàn.
+
+---
+
+## 3.5. TRỤ CỘT 5: ĐIỂM CHẠM TÀI CHÍNH & 3 KỊCH BẢN QUYẾT TOÁN DỊCH VỤ (FINANCE TOUCHPOINTS & BILLING CLASSIFICATION)
+
+Không phải mọi ca sửa chữa đều được xử lý tài chính giống nhau. Để phản ánh trung thực mô hình kinh doanh dịch vụ công nghiệp, hệ thống thiết lập **3 Kịch bản Quyết toán Tài chính Chuyên biệt** thông qua trường `custom_billing_type`:
+
+```mermaid
+flowchart TD
+    Issue["Sự Cố Kỹ Thuật Hiện Trường (Issue)"] --> SE["KTV Xuất Kho Linh Kiện (Material Issue)"]
+    SE --> BillType{"Phân loại Quyết toán (custom_billing_type)?"}
+    
+    BillType -->|"1. Under Warranty (Bảo hành chính hãng)"| Case1["Ca 1: Máy nén khí Hitachi (ISS-2026-00001)<br/>• Khách hàng: Công ty CP Bao bì Tân Á<br/>• Vật tư: 2x Lọc dầu PART-FLT-OIL01 = 1.300.000đ<br/>• AIS chịu 100% chi phí nội bộ (Nợ TK 641)<br/>• Hóa đơn bán hàng: Không sinh (0đ thu khách)"]
+    
+    BillType -->|"2. Billable to Customer (Tính phí khách hàng)"| Case2["Ca 2: Tủ điện tổng MSB (ISS-2026-00004)<br/>• Khách hàng: Công ty Nhựa & Cơ khí Song Long<br/>• Vật tư: 1x Contactor Schneider LC1D150 = 1.850.000đ<br/>• Dịch vụ: 1x Nhân công kỹ thuật SERV-LBR-01 = 500.000đ<br/>• Xuất Hóa đơn Sales Invoice ACC-SINV-2026-00001 = 2.350.000đ<br/>• Doanh thu ghi nhận Có TK 511 / Thu tiền khách hàng"]
+    
+    BillType -->|"3. Goodwill (Hỗ trợ thiện chí / Tri ân VIP)"| Case3["Ca 3: Máy in Flexo 6 màu (ISS-2026-00003)<br/>• Khách hàng: Công ty CP Bao bì Tân Á (VIP)<br/>• Vật tư: 1x Dây curoa PART-BLT-TIM01 = 420.000đ<br/>• KTV căn chỉnh đầu phun và thay dây curoa phụ miễn phí<br/>• AIS chịu 100% chi phí CSKH nội bộ (0đ thu khách)<br/>• Tăng chỉ số CSAT và duy trì hợp đồng SLA Gold"]
+```
+
+### Bảng Tổng Hợp Dòng Tiền & Bằng Chứng Hạch Toán Thực Tế:
+
+| Tiêu Chí Phân Tích | Kịch Bản 1: Under Warranty | Kịch Bản 2: Billable to Customer | Kịch Bản 3: Goodwill (Thiện chí) |
+| :--- | :--- | :--- | :--- |
+| **Mã Sự Cố (Issue)** | `ISS-2026-00001` | `ISS-2026-00004` | `ISS-2026-00003` |
+| **Khách Hàng** | Công ty CP Bao bì Tân Á | Công ty Nhựa & Cơ khí Song Long | Công ty CP Bao bì Tân Á |
+| **Thiết Bị Gặp Sự Cố** | Máy nén khí Hitachi 75kW | Tủ điện tổng MSB 1200A | Máy in Flexo 6 màu |
+| **Trạng Thái Bảo Hành** | `In Warranty` | `Out of Warranty` | `Goodwill` |
+| **Phiếu Xuất Kho Vật Tư** | `MAT-STE-2026-00002` | `MAT-STE-2026-00004` | `MAT-STE-2026-00005` |
+| **Linh Kiện Xuất Dùng** | 2x Lọc dầu `PART-FLT-OIL01` | 1x Contactor `PART-CNT-150A` | 1x Dây curoa `PART-BLT-TIM01` |
+| **Phí Dịch Vụ Nhân Công** | 0đ (Bao gồm trong hợp đồng) | 500.000đ (`SERV-LBR-01`: 2 giờ công) | 0đ (Miễn phí tri ân) |
+| **Hóa Đơn Thu Tiền** | ❌ Không xuất | ✅ `ACC-SINV-2026-00001` | ❌ Không xuất |
+| **Chi Phí AIS Gánh Chịu** | **1.300.000đ** (Chi phí bảo hành) | **0đ** (Khách hàng chi trả) | **420.000đ** (Chi phí CSKH) |
+| **Doanh Thu Thu Về** | **0đ** | **2.350.000đ** | **0đ** |
+
+* **Tổng kết Dòng tiền Tài chính Dịch vụ:**
+  * **Tổng chi phí nội bộ AIS gánh chịu:** $1.300.000đ + 420.000đ = \mathbf{1.720.000đ}$.
+  * **Tổng doanh thu dịch vụ & phụ tùng thu từ khách hàng:** $\mathbf{2.350.000đ}$ (Hóa đơn `ACC-SINV-2026-00001`).
+
+---
+
+## 3.6. BẢNG MA TRẬN PHỐI HỢP LIÊN HOÀN GIỮA 5 TRỤ CỘT TRONG MỘT CA SỰ CỐ THỰC TẾ
+
+Dưới đây là bảng theo dõi từng giây phút diễn biến của ca sự cố Máy nén khí Hitachi (`ISS-2026-00001`), minh chứng sự đồng bộ 100% giữa cả 5 trụ cột:
+
+| Bước | Sự kiện Thực tế | Trụ cột 1: Helpdesk | Trụ cột 2: Thiết bị (CMMS) | Trụ cột 3: Kho (MRO) | Trụ cột 4: Mua hàng (Procurement) | Trụ cột 5: Tài chính (Finance) |
+| :---: | :--- | :--- | :--- | :--- | :--- | :--- |
+| **1** | Máy nén khí báo lỗi E-04 quá nhiệt lúc 08:30 | Quản đốc quét mã QR trên máy, Ticket được tạo với SLA VIP 30' | Mã máy `ACC-ASS-2026-00002` tự điền vào phiếu sự cố | Hệ thống kiểm tra số dư tồn kho linh kiện tương thích | Chưa phát sinh | Chưa phát sinh bút toán |
+| **2** | Hệ thống điều phối vé lúc 08:31 | Đọc danh mục `Compressor`, tự động bắn vé cho KTV An | Cập nhật trạng thái máy: Đang gặp sự cố | Kho xe KTV An báo sẵn sàng có 2 lọc dầu trên xe | Chưa phát sinh | Chưa phát sinh bút toán |
+| **3** | KTV An có mặt tại xưởng lúc 08:55 | An bấm nút `[Check-in]`, chuyển vé sang `In Progress` | Ghi nhận thời điểm KTV tiếp cận hiện trường | Giữ nguyên trạng thái vật tư trên xe | Chưa phát sinh | Chưa phát sinh bút toán |
+| **4** | KTV An thay thế 2 lọc dầu Hitachi | An bấm `[Xuất linh kiện sửa]` từ form Issue | Ghi nhận máy được thay 2 lọc dầu `PART-FLT-OIL01` | Tạo phiếu `Stock Entry (Material Issue)` trừ 2 lọc từ Kho Xe An | Tồn kho tụt ngưỡng (2 < 3) kích hoạt Reorder Alert | Giảm giá trị tồn kho 1.300.000đ (Có TK 156) |
+| **5** | Phân loại chi phí sửa chữa | Chọn `custom_warranty_status = In Warranty` | Lưu vết chi phí bảo hành tích lũy của máy | Phiếu kho ghi nhận nhãn `custom_billing_type = Under Warranty` | Tự động sinh Material Request `MAT-MR-2026-00001` | Tăng Chi phí bảo hành dịch vụ 1.300.000đ (Nợ TK 641) |
+| **6** | Nghiệm thu và đóng ca lúc 10:45 | An bấm `[Hoàn thành ca]`, chọn nguyên nhân `Hardware Failure` | Máy chạy lại ổn định, chuyển trạng thái `Operational` | Tồn kho tổng được tái bổ sung sau PO và PR | Phát hành PO `PUR-ORD-2026-00001` tới NCC Kim Long | Kế toán chốt chi phí bảo hành 1.300.000đ, không xuất hóa đơn |
 
 ---
 
@@ -538,12 +699,53 @@ Nếu muốn tiếp tục nâng cao chất lượng đề tài để đạt đi�
 ## 7.3. Bộ Chỉ Số Hiệu Suất Cốt Lõi Cần Báo Cáo (KPI Dashboard)
 1. **SLA Compliance Rate (Tỷ lệ tuân thủ cam kết dịch vụ):**
    $$\text{SLA Compliance} = \frac{\text{Số vé xử lý đúng hạn (resolution\_date} \leq \text{resolution\_by)}}{\text{Tổng số vé đã đóng}} \times 100\%$$
-   *(Mục tiêu chuẩn quốc tế: $\geq 95\%$)*
+   *(Mục tiêu chuẩn quốc tế: $\geq 95\%$ — Hiện tại hệ thống đạt: **100.0%**)*
 2. **First-Time Fix Rate - FTFR (Tỷ lệ sửa dứt điểm lần đầu):**
    $$\text{FTFR} = \frac{\text{Số vé hoàn thành không phát sinh ca Callback trong 7 ngày}}{\text{Tổng số vé sửa chữa}} \times 100\%$$
-   *(Mục tiêu chuẩn quốc tế: $75\% - 85\%$)*
-3. **Cost per Asset (Chi phí bảo trì trên từng máy):**
+   *(Mục tiêu chuẩn quốc tế: $75\% - 85\%$ — Hiện tại hệ thống đạt: **100.0%**)*
+3. **Preventive Maintenance Compliance (Tỷ lệ tuân thủ bảo trì phòng ngừa):**
+   $$\text{PM Compliance} = \frac{\text{Số lượt bảo dưỡng hoàn thành đúng hạn}}{\text{Tổng số lượt bảo dưỡng đến hạn}} \times 100\%$$
+   *(Mục tiêu chuẩn quốc tế: $\geq 90\%$ — Hiện tại hệ thống đạt: **100.0%**)*
+4. **Total Maintenance Cost per Asset (Chi phí bảo trì trên từng máy - TCO):**
    $$\text{TCO per Asset} = \sum (\text{Giá trị xuất kho linh kiện}) + \sum (\text{Chi phí nhân công kỹ thuật})$$
+
+## 7.4. Bảng Điều Khiển Quản Trị & Báo Cáo Hiệu Năng Vận Hành Thực Tế (Executive Management KPI Dashboard)
+
+Dữ liệu dưới đây được trích xuất và tính toán tự động trực tiếp từ cơ sở dữ liệu thời gian thực của hệ thống ERPNext v16 (`scripts/reports/generate_kpi_dashboard.py` kết xuất ra `data/kpi_dashboard.json`), chứng minh năng lực quản trị doanh nghiệp toàn diện:
+
+### Nhóm 1: Hiệu Quả Dịch Vụ & Tuân Thủ Cam Kết SLA (Service Performance)
+* **Tổng số vé sự cố tiếp nhận:** 6 vé.
+* **Tỷ lệ giải quyết dứt điểm:** 4/6 vé (66.7% — gồm 3 vé `Resolved`, 1 vé `Closed`; 1 vé `Open` đang xếp lịch; 1 vé `On Hold` chờ nhập van tiết lưu).
+* **Tỷ lệ phản hồi ban đầu đúng hạn (First Response SLA):** **100.0%** (Toàn bộ 6/6 vé đều có chuyên viên tiếp nhận trong khung thời gian quy định).
+* **Tỷ lệ xử lý hoàn thành đúng hạn (Resolution SLA):** **100.0%** (Tất cả các ca hoàn thành đều đáp ứng chuẩn SLA VIP và Standard).
+* **Phân bổ theo mức độ ưu tiên:** 1 Urgent, 2 High, 2 Medium, 1 Low.
+* **Phân bổ theo chính sách dịch vụ:** 4 Trong hạn bảo hành (`In Warranty`), 1 Hỗ trợ thiện chí (`Goodwill`), 1 Tính phí ngoài bảo hành (`Out of Warranty`).
+
+### Nhóm 2: Năng Suất Kỹ Thuật Viên Hiện Trường (Field Technician Performance)
+* **Tỷ lệ sửa dứt điểm lần đầu (First-Time Fix Rate - FTFR):** **100.0%** (Không có ca nào bị khách hàng khiếu nại hoặc phải cử người đi sửa lại lỗi cũ).
+* **Tỷ lệ sự cố tái phát (Callback / Recall Rate):** **0.0%** (`custom_has_callback = 0`).
+* **Phân bổ khối lượng công việc theo Kỹ thuật viên:**
+  * **Nguyễn Văn An:** 3 vé (Máy nén khí Hitachi x2, Máy in công nghiệp Flexo).
+  * **Trần Đình Bình:** 2 vé (Máy phát điện Cummins, Tủ điện phân phối tổng MSB).
+  * **Lê Hoàng Cường:** 1 vé (Hệ thống Chiller giải nhiệt nước Daikin).
+* **Doanh thu nhân công dịch vụ tạo ra:** **500.000đ** (2.0 giờ công kỹ thuật điện tủ MSB).
+
+### Nhóm 3: Độ Tin Cậy Thiết Bị & Kế Hoạch Bảo Trì (Asset Maintenance & Reliability)
+* **Tổng số thiết bị công nghiệp giám sát:** 6 thiết bị (5 máy khách hàng + 1 máy đo kiểm nội bộ).
+* **Tỷ lệ tuân thủ kế hoạch bảo dưỡng (PM Compliance):** **100.0%** (0 ca bảo trì bị quá hạn).
+* **Tình trạng nhật ký bảo trì:** 1 ca đã hoàn thành nghiệm thu (`ACC-AML-2026-00004` kiểm tra Chiller phát hiện van hỏng), 3 ca đã được lên lịch tự động cho các chu kỳ kế tiếp.
+* **Chi phí vật tư thay thế tích lũy theo từng máy:**
+  * *Tủ điện tổng MSB 1200A (`ACC-ASS-2026-00005`):* **3.800.000đ** (Thay contactor Schneider LC1D150).
+  * *Máy nén khí trục vít Hitachi 75kW (`ACC-ASS-2026-00002`):* **1.300.000đ** (Thay 2 bộ lọc dầu chính hãng).
+  * *Máy in công nghiệp Flexo 6 màu (`ACC-ASS-2026-00001`):* **420.000đ** (Thay dây curoa truyền động phụ).
+
+### Nhóm 4: Quản Trị Kho Phụ Tùng MRO & Chu Kỳ Cung Ứng (MRO Inventory & Procurement)
+* **Tỷ lệ đáp ứng phụ tùng sẵn sàng (Parts Availability):** **100.0%** (Không có ca khẩn cấp nào bị hoãn do thiếu phụ tùng trên xe lưu động).
+* **Tổng giá trị tài sản kho phụ tùng dự trữ:** **132.730.000đ** (Tại Kho Trung tâm và 3 Kho Xe).
+* **Trạng thái chu trình Mua sắm (Procurement Replenishment):** **`CLOSED_LOOP_REPLENISHED`** (Chu trình khép kín: Tồn kho tụt ngưỡng $\rightarrow$ Material Request $\rightarrow$ Purchase Order $\rightarrow$ Purchase Receipt $\rightarrow$ Điều chuyển bù kho xe KTV đã hoàn tất 100%).
+* **Tổng hợp dòng tiền tài chính dịch vụ:**
+  * **Chi phí nội bộ AIS gánh chịu (Bảo hành + Thiện chí):** **1.720.000đ** (Bảo hành 1.300.000đ + Thiện chí 420.000đ).
+  * **Doanh thu dịch vụ thu từ khách hàng:** **2.350.000đ** (Hóa đơn `ACC-SINV-2026-00001`: Vật tư 1.850.000đ + Nhân công 500.000đ).
 
 ---
 

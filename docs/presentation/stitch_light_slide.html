@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart Helpdesk &amp; Maintenance ERP - Executive Slide Dashboard</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Hanken Grotesk, Inter, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration Verbatim from Design System -->
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "tertiary-container": "#b15106",
+          "surface-container-high": "#e2e7ff",
+          "tertiary-fixed-dim": "#ffb68e",
+          "error-container": "#ffdad6",
+          "on-primary-fixed-variant": "#003ea8",
+          "on-surface-variant": "#434655",
+          "inverse-primary": "#b4c5ff",
+          "surface-tint": "#0053db",
+          "on-tertiary-fixed": "#331200",
+          "surface-container-highest": "#dae2fd",
+          "surface-container": "#eaedff",
+          "on-primary": "#ffffff",
+          "on-error": "#ffffff",
+          "surface-dim": "#d2d9f4",
+          "primary-container": "#2563eb",
+          "secondary-fixed-dim": "#7bd8b1",
+          "surface-variant": "#dae2fd",
+          "surface-container-lowest": "#ffffff",
+          "on-tertiary-container": "#ffece4",
+          "on-surface": "#131b2e",
+          "on-tertiary-fixed-variant": "#763300",
+          "error": "#ba1a1a",
+          "surface": "#faf8ff",
+          "on-error-container": "#93000a",
+          "on-secondary-fixed": "#002115",
+          "surface-container-low": "#f2f3ff",
+          "on-secondary": "#ffffff",
+          "primary-fixed": "#dbe1ff",
+          "on-primary-fixed": "#00174b",
+          "outline": "#737686",
+          "on-secondary-fixed-variant": "#00513a",
+          "inverse-surface": "#283044",
+          "secondary-fixed": "#97f5cc",
+          "tertiary-fixed": "#ffdbca",
+          "tertiary": "#8c3d00",
+          "outline-variant": "#c3c6d7",
+          "secondary-container": "#97f5cc",
+          "background": "#faf8ff",
+          "on-tertiary": "#ffffff",
+          "on-secondary-container": "#007353",
+          "primary-fixed-dim": "#b4c5ff",
+          "secondary": "#006c4e",
+          "primary": "#004ac6",
+          "surface-bright": "#faf8ff",
+          "inverse-on-surface": "#eef0ff",
+          "on-background": "#131b2e",
+          "on-primary-container": "#eeefff"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        "spacing": {
+          "gutter-desktop": "1.5rem",
+          "space-xs": "0.25rem",
+          "gutter": "1rem",
+          "space-md": "0.75rem",
+          "space-xl": "2rem",
+          "space-sm": "0.5rem",
+          "margin": "1rem",
+          "margin-desktop": "2rem",
+          "space-lg": "1.25rem"
+        },
+        "fontFamily": {
+          "metric-sm": [
+            "JetBrains Mono"
+          ],
+          "headline-sm": [
+            "Hanken Grotesk"
+          ],
+          "headline-xl": [
+            "Hanken Grotesk"
+          ],
+          "metric-display": [
+            "JetBrains Mono"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "display-lg": [
+            "Hanken Grotesk"
+          ],
+          "headline-xl-mobile": [
+            "Hanken Grotesk"
+          ],
+          "headline-lg": [
+            "Hanken Grotesk"
+          ],
+          "headline-md": [
+            "Hanken Grotesk"
+          ],
+          "body-lg": [
+            "Inter"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "display-lg-mobile": [
+            "Hanken Grotesk"
+          ],
+          "code-badge": [
+            "JetBrains Mono"
+          ],
+          "label-md": [
+            "Inter"
+          ]
+        },
+        "fontSize": {
+          "metric-sm": [
+            "1.125rem",
+            {
+              "lineHeight": "1.5rem",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-sm": [
+            "1.125rem",
+            {
+              "lineHeight": "1.5rem",
+              "letterSpacing": "-0.005em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-xl": [
+            "2rem",
+            {
+              "lineHeight": "2.5rem",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "700"
+            }
+          ],
+          "metric-display": [
+            "2rem",
+            {
+              "lineHeight": "2.25rem",
+              "letterSpacing": "-0.03em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "0.875rem",
+            {
+              "lineHeight": "1.375rem",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg": [
+            "3rem",
+            {
+              "lineHeight": "3.5rem",
+              "letterSpacing": "-0.025em",
+              "fontWeight": "700"
+            }
+          ],
+          "headline-xl-mobile": [
+            "1.5rem",
+            {
+              "lineHeight": "2rem",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "700"
+            }
+          ],
+          "headline-lg": [
+            "1.5rem",
+            {
+              "lineHeight": "2rem",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-md": [
+            "1.25rem",
+            {
+              "lineHeight": "1.75rem",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "1rem",
+            {
+              "lineHeight": "1.5rem",
+              "fontWeight": "400"
+            }
+          ],
+          "body-sm": [
+            "0.75rem",
+            {
+              "lineHeight": "1.125rem",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg-mobile": [
+            "2rem",
+            {
+              "lineHeight": "2.5rem",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "700"
+            }
+          ],
+          "code-badge": [
+            "0.6875rem",
+            {
+              "lineHeight": "0.875rem",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "label-md": [
+            "0.75rem",
+            {
+              "lineHeight": "1rem",
+              "letterSpacing": "0.025em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      },
+    },
+  }
+</script>
+<style>
+    /* Pristine Engineering Light Mode Grid Pattern */
+    .blueprint-grid-light {
+      background-color: #f8fafc;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.05) 0%, transparent 65%),
+        linear-gradient(to right, rgba(100, 116, 139, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(100, 116, 139, 0.07) 1px, transparent 1px);
+      background-size: 100% 100%, 36px 36px, 36px 36px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-body-md antialiased min-h-screen blueprint-grid-light flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+<!-- ==================== TOP NAVIGATION BAR ==================== -->
+<header class="w-full px-space-xl flex justify-between items-center h-16 max-w-full bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm sticky top-0 z-50">
+<!-- Left: Identity & Live ERPNext v16 Badge -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 shadow-xs">
+<span class="material-symbols-outlined text-lg" data-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm font-bold text-slate-900 tracking-tight">Alpha Industrial Services // ERPNext v16</span>
+<span class="text-xs font-mono text-slate-500 flex items-center gap-1.5">
+            Smart Helpdesk &amp; Industrial Maintenance Core
+          </span>
+</div>
+</div>
+<div class="hidden lg:flex items-center gap-2 pl-3 border-l border-slate-200"><span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-emerald-50 border border-emerald-200 text-emerald-700"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>LOCAL DOCKER • PORT 8080</span><span class="text-xs font-mono text-slate-700 px-2 py-0.5 rounded bg-slate-100 border border-slate-200">Node: localhost:8080</span></div>
+</div>
+<!-- Center: Presentation Step Navigation Pills -->
+<nav class="hidden md:flex items-center gap-1 bg-slate-100/90 p-1 rounded-xl border border-slate-200">
+<button class="px-3.5 py-1 rounded-lg text-blue-700 bg-white border border-blue-200 font-semibold text-xs flex items-center gap-1.5 shadow-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+        01 Executive Overview
+      </button>
+<button class="px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-colors text-xs font-medium">
+        02 Architecture &amp; Workflows
+      </button>
+<button class="px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-colors text-xs font-medium">
+        03 Telemetry &amp; SLA
+      </button>
+<button class="px-3 py-1 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 transition-colors text-xs font-medium">04 Local Docker Demo</button>
+</nav>
+<!-- Right: Presentation Timers & Trailing Primary Actions -->
+<div class="flex items-center gap-3">
+<!-- Presentation Timer Badge -->
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-100/80 border border-slate-200 text-slate-800">
+<span class="material-symbols-outlined text-base text-blue-600" data-icon="timer">timer</span>
+<span class="font-mono text-xs tracking-wide font-medium">04:30 / 15:00</span>
+</div>
+<!-- Action: Slide Fullscreen -->
+<button class="p-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-all shadow-xs" id="fullscreenToggle" title="Toggle Fullscreen">
+<span class="material-symbols-outlined text-lg block" data-icon="fullscreen">fullscreen</span>
+</button>
+<!-- Action: Notifications & Settings -->
+<button class="p-2 rounded-lg bg-white border border-slate-200 text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-all shadow-xs">
+<span class="material-symbols-outlined text-lg block" data-icon="notifications">notifications</span>
+</button>
+<!-- Trailing Actions -->
+<a class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-800 font-medium text-xs shadow-xs transition-all" href="index.html" title="Xem 12 Slide Báo Cáo Đầy Đủ">
+<span class="material-symbols-outlined text-base text-blue-600" data-icon="slideshow">slideshow</span>
+<span>12 Slide Báo Cáo</span>
+</a>
+<a class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs shadow-sm transition-all active:scale-[0.98]" href="http://localhost:8080/desk" target="_blank"><span class="material-symbols-outlined text-base" data-icon="rocket_launch">rocket_launch</span><span>Open Local ERP (Port 8080)</span></a>
+</div>
+</header>
+<!-- ==================== MAIN PRESENTATION CANVAS (16:9 RATIO CONTAINER) ==================== -->
+<main class="w-full flex-1 max-w-[1840px] mx-auto px-6 lg:px-12 py-6 flex flex-col justify-between gap-6">
+<!-- HERO HEADER & BANNER SECTION -->
+<section class="flex flex-col gap-2">
+<div class="flex flex-wrap items-center justify-between gap-3">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 font-semibold"><span class="material-symbols-outlined text-sm text-blue-600" data-icon="verified">verified</span><span class="text-xs uppercase tracking-wider font-bold">BÁO CÁO NGHIỆM THU KIẾN TRÚC DOANH NGHIỆP • LOCAL DOCKER DEPLOYMENT (PORT 8080)</span></div>
+<div class="flex items-center gap-4 text-xs font-mono text-slate-600">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>PostgreSQL 16.4</span>
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-500"></span>Redis Cache In-Memory</span>
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-600"></span>Zero-Downtime Pipeline</span>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 pt-1">
+<div>
+<h1 class="text-3xl lg:text-4xl font-headline-xl font-bold text-slate-900 tracking-tight leading-tight">
+            Triển Khai Hệ Thống Smart Helpdesk &amp; Maintenance trên Nền Tảng <span class="text-blue-600 font-extrabold">ERPNext v16</span>
+</h1>
+<p class="text-base text-slate-600 max-w-5xl mt-1">
+            Tối ưu hóa quản lý vòng đời thiết bị công nghiệp, tự động hóa quy trình phản hồi cấp tốc SLA 2D và quản trị chuỗi cung ứng vật tư đa tầng.
+          </p>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<span class="text-xs font-mono text-slate-700 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-xs flex items-center gap-2"><span class="material-symbols-outlined text-blue-600 text-base" data-icon="terminal">terminal</span>Stack: Frappe v16 // Docker Compose // Local Port 8080</span>
+</div>
+</div>
+</section>
+<!-- THREE MAJOR ARCHITECTURAL PILLAR CARDS (3-COLUMN GRID) -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- PILLAR 1: HELPDESK & 2D SLA MATRIX -->
+<article class="relative flex flex-col justify-between p-space-lg rounded-xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow group">
+<!-- Top Status Accent Line -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-sky-500 rounded-t-xl"></div>
+<div>
+<!-- Header & Badge -->
+<div class="flex items-start justify-between gap-2 mb-3">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-2xl" data-icon="support_agent">support_agent</span>
+</div>
+<div>
+<span class="text-slate-500 font-bold text-xs tracking-wider uppercase">Pillar 01 • Kiến Trúc Phản Hồi</span>
+<h2 class="text-xl font-headline-sm font-bold text-slate-900">Helpdesk &amp; 2D SLA Matrix VIP 30min</h2>
+</div>
+</div>
+</div>
+<p class="text-sm text-blue-700 font-medium mb-3">
+            Định tuyến thông minh &amp; Cam kết dịch vụ
+          </p>
+<!-- Descriptive Body -->
+<p class="text-sm text-slate-600 leading-relaxed mb-4">
+            Matrix 2D phân cấp mức độ nghiêm trọng <span class="text-slate-900 font-semibold">(Critical / High / Normal)</span> kết hợp cấp độ Khách hàng VIP; Tự động kích hoạt phản hồi cứu hộ kỹ thuật trong vòng 30 phút; Cảnh báo quá hạn đa kênh <span class="text-blue-600 font-semibold">(Telegram Bot, SMS, Webhook)</span> trực tiếp tới Lead Engineer.
+          </p>
+<!-- Capability Pills -->
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-semibold text-xs font-mono flex items-center gap-1.5">
+<span class="material-symbols-outlined text-xs" data-icon="schedule">schedule</span>
+              SLA Cam Kết: 30 Phút VIP
+            </span>
+<span class="px-2.5 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 text-xs font-mono flex items-center gap-1.5">
+<span class="material-symbols-outlined text-xs text-blue-600" data-icon="alt_route">alt_route</span>
+              Tự động Escalate 3 Cấp
+            </span>
+</div>
+</div>
+<!-- Metric Footer Callout -->
+<div class="pt-3 border-t border-slate-200 flex items-center justify-between">
+<div>
+<span class="text-slate-500 text-xs font-medium block">First Response Compliance</span>
+<span class="text-2xl font-black text-slate-900">100% On-time First Touch</span>
+</div>
+<div class="text-right">
+<span class="text-xs font-mono text-slate-700 bg-slate-100 px-2 py-1 rounded border border-slate-200 font-medium">
+              Mean Ping: 12.4m
+            </span>
+</div>
+</div>
+</article>
+<!-- PILLAR 2: CMMS PREVENTIVE MAINTENANCE -->
+<article class="relative flex flex-col justify-between p-space-lg rounded-xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow group">
+<!-- Top Status Accent Line -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-t-xl"></div>
+<div>
+<!-- Header & Badge -->
+<div class="flex items-start justify-between gap-2 mb-3">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined text-2xl" data-icon="sensors">sensors</span>
+</div>
+<div>
+<span class="text-slate-500 font-bold text-xs tracking-wider uppercase">Pillar 02 • Giám Sát IoT CMMS</span>
+<h2 class="text-xl font-headline-sm font-bold text-slate-900">CMMS Preventive Maintenance &amp; Telemetry</h2>
+</div>
+</div>
+</div>
+<p class="text-sm text-emerald-700 font-medium mb-3">
+            Bảo trì ngăn ngừa &amp; Giám sát thiết bị thời gian thực
+          </p>
+<!-- Descriptive Body -->
+<p class="text-sm text-slate-600 leading-relaxed mb-4">
+            Quản lý lý lịch máy móc tự động <span class="text-slate-900 font-semibold">(Asset Lifecycle)</span>; Lập lịch kiểm định định kỳ dựa trên chu kỳ vận hành <span class="text-slate-900 font-semibold">(Run-hours &amp; Cycle Count)</span>; Telemetry cảm biến rung chấn &amp; nhiệt độ cảnh báo sớm hỏng hóc; Tự sinh Work Order tự động khi chỉ số vượt ngưỡng.
+          </p>
+<!-- Capability Pills -->
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-2.5 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-mono font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-xs" data-icon="trending_down">trending_down</span>
+              Downtime Giảm: -42%
+            </span>
+<span class="px-2.5 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 text-xs font-mono flex items-center gap-1.5">
+<span class="material-symbols-outlined text-xs text-emerald-600" data-icon="speed">speed</span>
+              Run-hour Triggers
+            </span>
+</div>
+</div>
+<!-- Metric Footer Callout -->
+<div class="pt-3 border-t border-slate-200 flex items-center justify-between">
+<div>
+<span class="text-slate-500 text-xs font-medium block">Chỉ số Hiệu suất Thiết bị Tổng thể</span>
+<span class="text-2xl font-black text-emerald-600">OEE: 94.6% (+12.4%)</span>
+</div>
+<div class="text-right">
+<span class="text-xs font-mono text-slate-700 bg-slate-100 px-2 py-1 rounded border border-slate-200 font-medium">
+              Sensor Nodes: 128 Live
+            </span>
+</div>
+</div>
+</article>
+<!-- PILLAR 3: MULTI-TIER INVENTORY & VAN STOCK -->
+<article class="relative flex flex-col justify-between p-space-lg rounded-xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow group"><div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-600 to-amber-500 rounded-t-xl"></div><div><div class="flex items-start justify-between gap-2 mb-3"><div class="flex items-center gap-2.5"><div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700"><span class="material-symbols-outlined text-2xl" data-icon="local_shipping">local_shipping</span></div><div><span class="text-slate-500 font-bold text-xs tracking-wider uppercase">Pillar 03 • Quản Trị Chuỗi Cung Ứng</span><h2 class="text-xl font-headline-sm font-bold text-slate-900">Multi-tier Inventory &amp; Mobile Van Stock</h2></div></div></div><p class="text-sm text-amber-700 font-medium mb-3">Kho vật tư đa tầng &amp; Tồn kho di động xe kỹ thuật</p><p class="text-sm text-slate-600 leading-relaxed mb-4">Hệ thống kho tổng kết nối liền mạch với Mobile Van Stock của từng kỹ thuật viên; Tự động kích hoạt Material Request <span class="text-slate-900 font-semibold">(Auto Reorder)</span> khi phụ tùng chạm Min-Stock; Mã vạch QR Code quét xuất kho tức thời tại hiện trường hiện trạng.</p><div class="flex flex-wrap gap-2 mb-4"><span class="px-2.5 py-1 rounded bg-amber-50 border border-amber-200 text-amber-800 text-xs font-mono font-semibold flex items-center gap-1.5"><span class="material-symbols-outlined text-xs" data-icon="sync">sync</span>Van Stock Đồng Bộ 100%</span><span class="px-2.5 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 text-xs font-mono flex items-center gap-1.5"><span class="material-symbols-outlined text-xs text-emerald-600" data-icon="check_circle">check_circle</span>Zero Stockout</span></div></div><div class="pt-3 border-t border-slate-200 flex items-center justify-between"><div><span class="text-slate-500 text-xs font-medium block">Độ Sẵn Sàng Phụ Tùng Bảo Trì</span><span class="text-2xl font-black text-amber-700">99.8% Sẵn sàng phụ tùng</span></div><div class="text-right"><span class="text-xs font-mono text-slate-700 bg-slate-100 px-2 py-1 rounded border border-slate-200 font-medium">Auto PO: Active</span></div></div></article>
+</section>
+<!-- METRICS & PERFORMANCE TELEMETRY GRID (4-CARD HORIZONTAL KPI SECTION) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+<!-- Metric Card 1 -->
+<div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs relative overflow-hidden group hover:border-slate-300 transition-colors">
+<div class="flex items-center justify-between text-slate-500 mb-1">
+<span class="text-slate-500 font-bold text-xs uppercase tracking-wider">Test Scenarios Verified</span>
+<span class="material-symbols-outlined text-emerald-600 text-lg" data-icon="task_alt">task_alt</span>
+</div>
+<div class="text-3xl font-black font-metric-display text-slate-900 tracking-tight">
+          6 / 6
+        </div>
+<p class="text-xs text-slate-600 mt-2 line-clamp-2">
+          Toàn bộ 6 kịch bản thử nghiệm tải &amp; nghiệp vụ hoàn thành 100% không phát sinh lỗi trọng yếu.
+        </p>
+<div class="w-full bg-slate-100 h-1.5 mt-3 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full w-full"></div>
+</div>
+</div>
+<!-- Metric Card 2 -->
+<div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs relative overflow-hidden group hover:border-slate-300 transition-colors">
+<div class="flex items-center justify-between text-slate-500 mb-1">
+<span class="text-slate-500 font-bold text-xs uppercase tracking-wider">ERPNext Schema Extensions</span>
+<span class="material-symbols-outlined text-blue-600 text-lg" data-icon="data_object">data_object</span>
+</div>
+<div class="text-3xl font-black font-metric-display text-blue-600 tracking-tight">
+          9 Custom Fields
+        </div>
+<p class="text-xs text-slate-600 mt-2 line-clamp-2">
+          Bổ sung định danh Asset Telemetry, Mã định vị Van Stock, Phân loại SLA đa chiều không can thiệp core.
+        </p>
+<div class="w-full bg-slate-100 h-1.5 mt-3 rounded-full overflow-hidden">
+<div class="bg-blue-600 h-full w-[85%]"></div>
+</div>
+</div>
+<!-- Metric Card 3 -->
+<div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs relative overflow-hidden group hover:border-slate-300 transition-colors">
+<div class="flex items-center justify-between text-slate-500 mb-1">
+<span class="text-slate-500 font-bold text-xs uppercase tracking-wider">Operational Efficiency KPIs</span>
+<span class="material-symbols-outlined text-emerald-600 text-lg" data-icon="insights">insights</span>
+</div>
+<div class="text-xl font-extrabold font-metric-sm text-emerald-600 tracking-tight pt-1.5 pb-1">
+          FTFR 88.5% | MTTR 1.4h
+        </div>
+<p class="text-xs text-slate-600 mt-2 line-clamp-2">
+          First Time Fix Rate tăng từ 64% lên 88.5%; Mean Time To Repair giảm 58% so với quy trình cũ.
+        </p>
+<div class="w-full bg-slate-100 h-1.5 mt-3 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full w-[88%]"></div>
+</div>
+</div>
+<!-- Metric Card 4 -->
+<div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs relative overflow-hidden group hover:border-slate-300 transition-colors">
+<div class="flex items-center justify-between text-slate-500 mb-1">
+<span class="text-slate-500 font-bold text-xs uppercase tracking-wider">Trợ lý Sổ tay Kỹ thuật</span>
+<span class="material-symbols-outlined text-indigo-600 text-lg" data-icon="psychology">psychology</span>
+</div>
+<div class="text-xl font-extrabold font-metric-sm text-indigo-600 tracking-tight pt-1.5 pb-1">
+          Hybrid AI RAG Foundation
+        </div>
+<p class="text-xs text-slate-600 mt-2 line-clamp-2">
+          Tích hợp vector knowledge base sơ đồ mạch &amp; mã lỗi thiết bị, hỗ trợ kỹ thuật viên tra cứu tức thì.
+        </p>
+<div class="w-full bg-slate-100 h-1.5 mt-3 rounded-full overflow-hidden">
+<div class="bg-indigo-600 h-full w-[94%]"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- ==================== SLIDE FOOTER ==================== -->
+<footer class="w-full px-space-xl py-3 flex flex-col sm:flex-row justify-between items-center text-xs bg-white/80 backdrop-blur-md border-t border-slate-200 text-slate-600 gap-3">
+<!-- Left: Live Instance URL link pill -->
+<div class="flex items-center gap-2"><a class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-100 border border-slate-200 hover:border-blue-400 text-slate-700 hover:text-blue-600 transition-colors font-mono text-xs group" href="http://localhost:8080/desk" target="_blank"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-sm"></span><span class="font-medium group-hover:text-blue-600 transition-colors">http://localhost:8080/desk</span><span class="material-symbols-outlined text-xs text-slate-500 group-hover:text-blue-600" data-icon="open_in_new">open_in_new</span></a><span class="hidden md:inline-flex items-center gap-1 text-xs font-mono font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200"><span class="material-symbols-outlined text-xs" data-icon="dns">dns</span>CONTAINER HEALTHY • DOCKER COMPOSE</span></div>
+<!-- Center: Enterprise Release Badge -->
+<div class="text-center font-medium text-slate-500 text-xs uppercase tracking-wider">Alpha Industrial Services • ERPNext v16 Local Docker Edition (Port 8080)</div>
+<!-- Right: Engineering Credits -->
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-600">Nghiên cứu &amp; Kỹ thuật triển khai bởi</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-mono text-xs font-semibold">
+<span class="material-symbols-outlined text-sm text-blue-600" data-icon="engineering">engineering</span>
+        DUT.K1N4
+      </span>
+</div>
+</footer>
+<!-- Light Presentation Interactive Script -->
+<script>
+    document.getElementById('fullscreenToggle').addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn(`Fullscreen error: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    });
+  </script>
+</body></html>
