@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="vi" class="h-full bg-white">
+<html lang="vi" class="h-full bg-slate-50">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cẩm Nang Toàn Diện: Smart Helpdesk & Maintenance ERP | Alpha Industrial Services (AIS)</title>
+  <title>Smart Helpdesk & Maintenance ERP | Hệ Thống Quản Trị Bảo Trì & Dịch Vụ Hiện Trường</title>
   <!-- Google Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons CDN -->
@@ -24,13 +24,14 @@
             brand: {
               primary: '#1D4ED8',      /* Tech Cobalt Blue */
               secondary: '#0F172A',    /* Deep Slate */
-              tertiary: '#0284C7',     /* Sky / Cyan */
+              accent: '#0284C7',       /* Sky / Cyan */
               neutral: '#F8FAFC',      /* Light Canvas */
               surface: '#FFFFFF',      /* Crisp Pure White */
               border: '#E2E8F0',       /* Hairline Border */
               borderDark: '#CBD5E1',
               success: '#047857',      /* Emerald 700 */
               warning: '#B45309',      /* Amber 700 */
+              purple: '#6D28D9',       /* Violet 700 */
               error: '#DC2626'         /* Red 600 */
             }
           }
@@ -41,20 +42,20 @@
   <style>
     /* Fullscreen Slide Transition */
     .slide {
-      display: none;
+      display: none !important;
       opacity: 0;
       transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .slide.active {
-      display: flex;
+      display: flex !important;
       opacity: 1;
     }
 
     /* Custom Scrollbar for Dense Content */
     .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
     }
     .custom-scrollbar::-webkit-scrollbar-track {
       background: #F8FAFC;
@@ -68,44 +69,44 @@
     }
   </style>
 </head>
-<body class="h-full flex flex-col bg-white text-slate-800 antialiased font-sans selection:bg-blue-600 selection:text-white overflow-hidden">
+<body class="h-full flex flex-col bg-slate-50 text-slate-800 antialiased font-sans selection:bg-blue-600 selection:text-white overflow-hidden">
 
   <!-- ==================== TOP NAVIGATION BAR ==================== -->
-  <header class="h-14 bg-white border-b border-slate-200 px-6 lg:px-8 flex items-center justify-between shrink-0 z-30 shadow-xs">
+  <header class="h-14 bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 flex items-center justify-between shrink-0 z-30 shadow-xs">
     <!-- Left: Identity & ERPNext v16 Local Badge -->
     <div class="flex items-center space-x-3">
       <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-md shadow-blue-500/20">
-        <i data-lucide="wrench" class="w-4 h-4"></i>
+        <i data-lucide="shield-check" class="w-4 h-4"></i>
       </div>
       <div>
         <h1 class="text-sm font-bold tracking-tight text-slate-900 flex items-center gap-2">
-          <span>Smart Helpdesk &amp; Maintenance</span>
-          <span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono font-medium flex items-center gap-1">
+          <span>SMART HELPDESK &amp; MAINTENANCE</span>
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono font-semibold flex items-center gap-1">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             ERPNext v16 &bull; Local 8080
           </span>
         </h1>
-        <p class="text-[11px] text-slate-500">Cẩm Nang Toàn Diện Nghiệp Vụ &amp; Kiến Trúc (COMPREHENSIVE_GUIDE.md) &bull; DUT.K1N4</p>
+        <p class="text-[11px] text-slate-500">Hệ Thống Quản Trị Bảo Trì &amp; Dịch Vụ Hiện Trường &bull; DUT.K1N4</p>
       </div>
     </div>
 
-    <!-- Center/Right: Slide Controls & Action Buttons (NO STITCH BUTTON) -->
+    <!-- Center/Right: Slide Controls & Action Buttons -->
     <div class="flex items-center space-x-2 sm:space-x-3">
       <!-- Slide navigation controls -->
       <div class="flex items-center bg-slate-100 rounded-lg p-1 border border-slate-200 text-xs font-mono">
         <button id="prevBtn" class="p-1.5 hover:bg-white hover:shadow-xs text-slate-700 rounded transition" title="Slide trước (Phím Mũi Tên Trái)">
           <i data-lucide="chevron-left" class="w-4 h-4"></i>
         </button>
-        <span class="px-3.5 py-1 font-bold text-blue-700" id="slideCounter">01 / 10</span>
+        <span class="px-3.5 py-1 font-bold text-blue-700 tracking-wide" id="slideCounter">01 / 13</span>
         <button id="nextBtn" class="p-1.5 hover:bg-white hover:shadow-xs text-slate-700 rounded transition" title="Slide sau (Phím Mũi Tên Phải / Phím Cách)">
           <i data-lucide="chevron-right" class="w-4 h-4"></i>
         </button>
       </div>
 
       <!-- Overview Modal Button -->
-      <button id="overviewBtn" class="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg border border-slate-200 hover:border-slate-300 transition flex items-center gap-1.5 text-xs font-semibold shadow-xs" title="Xem tất cả slide (Phím O)">
+      <button id="overviewBtn" class="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg border border-slate-200 hover:border-slate-300 transition flex items-center gap-1.5 text-xs font-semibold shadow-xs" title="Xem tất cả 13 slide (Phím O)">
         <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i>
-        <span>Tổng quan</span>
+        <span class="hidden sm:inline">Tổng quan</span>
       </button>
 
       <!-- Fullscreen Toggle -->
@@ -114,1088 +115,1614 @@
       </button>
 
       <!-- Primary Action: Open Local ERPNext Instance -->
-      <a href="http://localhost:8080/desk" target="_blank" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-md shadow-blue-600/20 active:scale-95" title="Mở hệ thống ERPNext Local tại http://localhost:8080/desk">
-        <i data-lucide="rocket" class="w-3.5 h-3.5"></i>
-        <span>Local ERP (Port 8080)</span>
+      <a href="http://localhost:8080/desk" target="_blank" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-sm shadow-blue-600/20 active:scale-95" title="Mở hệ thống ERPNext Local tại http://localhost:8080/desk">
+        <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        <span>Desk Local (8080)</span>
       </a>
     </div>
   </header>
 
   <!-- PROGRESS BAR -->
   <div class="w-full bg-slate-200 h-1 shrink-0">
-    <div id="progressBar" class="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 h-1 transition-all duration-300" style="width: 10%;"></div>
+    <div id="progressBar" class="bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 h-1 transition-all duration-300" style="width: 7.7%;"></div>
   </div>
 
   <!-- ==================== MAIN SLIDES VIEWPORT: TRUE FULLSCREEN ==================== -->
-  <main class="flex-1 w-full h-[calc(100vh-3.5rem-4px)] relative overflow-hidden bg-white">
+  <main class="flex-1 w-full h-[calc(100vh-3.5rem-4px)] relative overflow-hidden bg-slate-50">
     
-    <!-- ==================== SLIDE 1: TRANG BÌA & TỔNG QUAN HỆ THỐNG ==================== -->
-    <section class="slide active w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 overflow-y-auto custom-scrollbar bg-white text-slate-800" data-slide="1">
+    <!-- ==================== SLIDE 01: COVER ==================== -->
+    <section class="slide active w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="1">
       <!-- Header Badge -->
-      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wide shadow-xs">
-          <i data-lucide="award" class="w-4 h-4 text-blue-600"></i>
-          <span>CẨM NANG TOÀN DIỆN VÀ CHI TIẾT • MASTER REFERENCE GUIDE</span>
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold tracking-wide">
+          <i data-lucide="shield" class="w-3.5 h-3.5 text-blue-600"></i>
+          <span>BÁO CÁO BẢO VỆ ĐỒ ÁN HỆ THỐNG THÔNG TIN &bull; DUT.K1N4</span>
         </div>
-        <div class="inline-flex items-center gap-2 text-xs text-slate-500 font-mono font-medium">
+        <div class="inline-flex items-center gap-2 text-xs text-slate-500 font-mono">
           <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>Docker Local: port 8080 &bull; ERPNext v16 &bull; DUT.K1N4</span>
+          <span>Instance: ERPNext v16 &bull; Frappe Framework v16 &bull; Port 8080</span>
         </div>
       </div>
 
       <!-- Main Body -->
-      <div class="my-auto py-6 space-y-6">
+      <div class="my-auto py-4 space-y-6 max-w-6xl mx-auto w-full text-center">
         <div class="space-y-3">
-          <div class="inline-block px-3 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-mono font-bold border border-slate-200">
-            DỰ ÁN: ERP.SmartHelpDesk &bull; FIELD SERVICE MANAGEMENT (FSM) &amp; INDUSTRIAL MRO
+          <div class="inline-block px-3 py-1 rounded-md bg-blue-100 text-blue-800 text-xs font-mono font-bold tracking-wider uppercase">
+            ENTERPRISE FIELD SERVICE MANAGEMENT (FSM) &amp; INDUSTRIAL MRO
           </div>
-          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Giải Mã Dự Án <br/>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-600 to-sky-600">Smart Helpdesk &amp; Maintenance</span> <br/>
-            trên Nền Tảng ERPNext v16
+          <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+            SMART HELPDESK &amp; MAINTENANCE
           </h2>
-          <p class="text-base sm:text-lg text-slate-600 max-w-4xl font-normal leading-relaxed">
-            Số hóa toàn diện chu trình Quản lý Dịch vụ Hiện trường và Bảo trì Thiết bị Công nghiệp, tích hợp liên thông 3 Trụ Cột:
-            <span class="text-blue-700 font-bold bg-blue-50 px-2 py-0.5 rounded border border-blue-200">Helpdesk (SLA 2 chiều)</span> &harr; 
-            <span class="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Bảo trì Máy móc (CMMS)</span> &harr; 
-            <span class="text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Kho Phụ tùng (Van Stock)</span>.
+          <p class="text-lg sm:text-xl text-slate-600 font-medium max-w-3xl mx-auto leading-relaxed">
+            Hệ thống Quản trị Bảo trì &amp; Dịch vụ Hiện trường Toàn diện trên Nền tảng ERPNext
           </p>
+          <div class="text-xs text-slate-500 font-mono">
+            Pháp nhân: <strong class="text-slate-800 font-bold">SmartHelpDeskBaro (SBN)</strong> &bull; Đơn vị vận hành: <strong class="text-slate-800 font-bold">Alpha Industrial Services (AIS - Đà Nẵng)</strong>
+          </div>
         </div>
 
-        <!-- 3 Highlight cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
-          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 shadow-xs flex items-start gap-4 hover:border-blue-300 transition">
-            <div class="p-3 rounded-xl bg-blue-100 text-blue-700 shrink-0">
-              <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+        <!-- Clean Architecture Positioning Visual -->
+        <div class="pt-4 pb-2">
+          <div class="inline-block p-6 rounded-2xl bg-white border border-slate-200 shadow-sm max-w-4xl mx-auto w-full">
+            <div class="text-xs font-mono font-bold uppercase tracking-wider text-slate-500 mb-4">
+              Định vị Bài toán: Hệ Thống Hợp Nhất 3 Trụ Cột Hiện Trường
             </div>
-            <div>
-              <div class="text-base font-bold text-slate-900">100% Thực Nghiệm Live</div>
-              <div class="text-xs text-slate-600 mt-1 leading-relaxed">Xác thực trọn vẹn 6 kịch bản trên container ERPNext v16 tại <code class="font-mono text-blue-700 font-semibold">http://localhost:8080/desk</code>.</div>
-            </div>
-          </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative">
+              <!-- Pillar 1 -->
+              <div class="p-4 rounded-xl bg-blue-50/70 border border-blue-200 text-center hover:shadow-xs transition">
+                <div class="w-10 h-10 mx-auto rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold mb-2 shadow-xs">
+                  <i data-lucide="headphones" class="w-5 h-5"></i>
+                </div>
+                <div class="text-sm font-bold text-blue-900">HELPDESK</div>
+                <div class="text-xs font-mono font-semibold text-blue-700 mt-0.5">SLA MATRIX (2D)</div>
+                <p class="text-[11px] text-slate-600 mt-1">Tiếp nhận đa kênh, cam kết phản hồi 30 phút, định tuyến KTV đúng chuyên môn</p>
+              </div>
 
-          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 shadow-xs flex items-start gap-4 hover:border-indigo-300 transition">
-            <div class="p-3 rounded-xl bg-indigo-100 text-indigo-700 shrink-0">
-              <i data-lucide="layers" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <div class="text-base font-bold text-slate-900">09 Custom Fields Chuẩn Hóa</div>
-              <div class="text-xs text-slate-600 mt-1 leading-relaxed">Khắc phục ranh giới phân mảnh DocType, liên kết khép kín vòng đời sự cố, máy móc và kho vật tư.</div>
-            </div>
-          </div>
+              <!-- Pillar 2 -->
+              <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 text-center hover:shadow-xs transition">
+                <div class="w-10 h-10 mx-auto rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold mb-2 shadow-xs">
+                  <i data-lucide="cpu" class="w-5 h-5"></i>
+                </div>
+                <div class="text-sm font-bold text-emerald-900">CMMS</div>
+                <div class="text-xs font-mono font-semibold text-emerald-700 mt-0.5">ASSET MAINTENANCE</div>
+                <p class="text-[11px] text-slate-600 mt-1">Lý lịch thiết bị số, cách ly kế toán thuế, lập lịch bảo dưỡng phòng ngừa định kỳ</p>
+              </div>
 
-          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 shadow-xs flex items-start gap-4 hover:border-emerald-300 transition">
-            <div class="p-3 rounded-xl bg-emerald-100 text-emerald-700 shrink-0">
-              <i data-lucide="cpu" class="w-6 h-6"></i>
+              <!-- Pillar 3 -->
+              <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-center hover:shadow-xs transition">
+                <div class="w-10 h-10 mx-auto rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold mb-2 shadow-xs">
+                  <i data-lucide="truck" class="w-5 h-5"></i>
+                </div>
+                <div class="text-sm font-bold text-amber-900">MRO INVENTORY</div>
+                <div class="text-xs font-mono font-semibold text-amber-700 mt-0.5">MOBILE VAN STOCK</div>
+                <p class="text-[11px] text-slate-600 mt-1">Kho xe di động 2 chặng, cảnh báo tồn an toàn, phân định dòng tiền bảo hành vs tính phí</p>
+              </div>
             </div>
-            <div>
-              <div class="text-base font-bold text-slate-900">Sẵn Sàng Mở Rộng AI/RAG</div>
-              <div class="text-xs text-slate-600 mt-1 leading-relaxed">Thiết kế phân tách dữ liệu cấu trúc (SQL) vs phi cấu trúc (Vector DB) cho trợ lý KTV thông minh.</div>
+
+            <!-- Convergence to ERPNext Core -->
+            <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-center gap-3 text-xs text-slate-600 font-medium">
+              <i data-lucide="arrow-down" class="w-4 h-4 text-blue-600 animate-bounce"></i>
+              <span>Hội tụ và điều phối khép kín trên nền tảng</span>
+              <span class="px-2.5 py-0.5 rounded bg-slate-900 text-white font-mono font-bold text-xs">ERPNEXT v16 TRANSACTION CORE</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Footer Info -->
-      <div class="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-600">
+      <div class="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between text-xs text-slate-500 font-mono">
+        <div>Nhóm thực hiện: <span class="text-slate-800 font-semibold">Dự Án Smart Helpdesk &amp; Maintenance</span></div>
+        <div class="flex items-center gap-4">
+          <span>Khách hàng: 03 B2B</span>
+          <span>Thiết bị: 05 Assets</span>
+          <span>KTV: 03 Kỹ sư</span>
+          <span>Kho: 06 Warehouses</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 02: BUSINESS PROBLEM ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="2">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
-          <span class="text-slate-500 font-mono">Doanh nghiệp:</span> <strong class="text-slate-900 font-bold">Alpha Industrial Services (AIS)</strong> &bull; Pháp nhân ERPNext: <span class="font-mono font-bold text-blue-700">SmartHelpDeskBaro (SBN)</span>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200">BÀI TOÁN KINH DOANH</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">NỖI ĐAU THỰC TẾ: MÁY HỎNG KHÔNG CHỈ LÀ MỘT "TICKET"</h2>
         </div>
-        <div class="flex items-center gap-6">
-          <span><span class="text-slate-500">Giảng viên hướng dẫn:</span> <strong class="text-slate-900 font-semibold">Khoa HTTT</strong></span>
-          <span><span class="text-slate-500">Nhóm thực hiện:</span> <strong class="text-slate-900 font-semibold">DUT.K1N4 Team</strong></span>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 02 / 13</div>
+      </div>
+
+      <!-- Main Grid: 6 Problems & Ripple Diagram -->
+      <div class="my-auto py-4 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <!-- Left: 6 Problems & Consequences Table (7 Cols) -->
+        <div class="lg:col-span-7 space-y-3">
+          <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide">6 Khoảng Trống Nguy Hiểm Khi Dùng Công Cụ Rời Rạc</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <!-- Box 1 -->
+            <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-red-300 transition">
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-900">
+                <span class="p-1 rounded bg-red-100 text-red-700"><i data-lucide="phone-call" class="w-3.5 h-3.5"></i></span>
+                <span>1. Ticket Phân Tán (Zalo/Hotline)</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-1 leading-snug"><strong class="text-red-700">Hậu quả:</strong> Trôi tin nhắn, ghi chép sổ tay, không có đồng hồ đếm ngược dẫn đến mất kiểm soát SLA.</p>
+            </div>
+
+            <!-- Box 2 -->
+            <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-red-300 transition">
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-900">
+                <span class="p-1 rounded bg-red-100 text-red-700"><i data-lucide="user-x" class="w-3.5 h-3.5"></i></span>
+                <span>2. Giao Sai Chuyên Môn KTV</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-1 leading-snug"><strong class="text-red-700">Hậu quả:</strong> Giao việc ngẫu nhiên khiến thợ cơ khí phải đi sửa tủ điện &rarr; Chậm xử lý, dễ hỏng thêm máy.</p>
+            </div>
+
+            <!-- Box 3 -->
+            <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-red-300 transition">
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-900">
+                <span class="p-1 rounded bg-red-100 text-red-700"><i data-lucide="file-question" class="w-3.5 h-3.5"></i></span>
+                <span>3. Không Có Asset History</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-1 leading-snug"><strong class="text-red-700">Hậu quả:</strong> Không biết 1 năm qua máy móc đã hỏng bao nhiêu lần, chi phí sửa chữa tích lũy (TCO) mù mờ.</p>
+            </div>
+
+            <!-- Box 4 -->
+            <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-red-300 transition">
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-900">
+                <span class="p-1 rounded bg-red-100 text-red-700"><i data-lucide="package-x" class="w-3.5 h-3.5"></i></span>
+                <span>4. Kho Bãi Tách Rời Hiện Trường</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-1 leading-snug"><strong class="text-red-700">Hậu quả:</strong> Đến nơi mới biết thiếu linh kiện, chạy 40km về kho lấy đồ &rarr; Lãng phí Truck-roll cost, thất thoát kho xe.</p>
+            </div>
+
+            <!-- Box 5 -->
+            <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-red-300 transition">
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-900">
+                <span class="p-1 rounded bg-red-100 text-red-700"><i data-lucide="badge-dollar-sign" class="w-3.5 h-3.5"></i></span>
+                <span>5. Nhập Nhèm Dòng Tiền Billing</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-1 leading-snug"><strong class="text-red-700">Hậu quả:</strong> Xuất phụ tùng 1.3 triệu đồng nhưng không rõ ai chịu: Bảo hành công ty gánh hay xuất hóa đơn thu khách?</p>
+            </div>
+
+            <!-- Box 6 -->
+            <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-red-300 transition">
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-900">
+                <span class="p-1 rounded bg-red-100 text-red-700"><i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i></span>
+                <span>6. Thiếu Cơ Chế Replenishment</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-1 leading-snug"><strong class="text-red-700">Hậu quả:</strong> Kho cạn dần sau các ca sửa nhưng không có trigger mua bù &rarr; Đứt gãy chuỗi cung ứng sửa chữa khẩn cấp.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: The Ripple Effect Diagram (5 Cols) -->
+        <div class="lg:col-span-5 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-center text-center">
+          <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide mb-3">Hiệu Ứng Dây Chuyền Khi Sự Cố Phát Sinh</div>
+          
+          <div class="space-y-2">
+            <div class="p-2.5 rounded-lg bg-red-50 border border-red-200 text-red-800 font-bold text-xs">
+              MÁY HỎNG TẠI NHÀ XƯỞNG KHÁCH HÀNG
+            </div>
+            
+            <div class="grid grid-cols-3 gap-1.5 py-1">
+              <div class="p-2 rounded bg-blue-50 border border-blue-200 text-[11px] font-semibold text-blue-800">1. SLA Clock</div>
+              <div class="p-2 rounded bg-indigo-50 border border-indigo-200 text-[11px] font-semibold text-indigo-800">2. KTV Skill</div>
+              <div class="p-2 rounded bg-emerald-50 border border-emerald-200 text-[11px] font-semibold text-emerald-800">3. Asset TCO</div>
+            </div>
+
+            <div class="p-2 rounded bg-amber-50 border border-amber-200 text-xs font-semibold text-amber-900">
+              &darr; 4. XUẤT PHỤ TÙNG KHO XE (PARTS)
+            </div>
+
+            <div class="p-2 rounded bg-purple-50 border border-purple-200 text-xs font-semibold text-purple-900">
+              &darr; 5. TỰ ĐỘNG BÙ TỒN (PROCUREMENT)
+            </div>
+
+            <div class="p-2 rounded bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-900">
+              &darr; 6. QUYẾT TOÁN TÀI CHÍNH (FINANCE)
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-600 leading-relaxed italic">
+            "Nếu chỉ dùng công cụ Ticketing đơn lẻ, bạn chỉ giải quyết được 1/6 bài toán!"
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Statement Callout Box -->
+      <div class="p-4 rounded-xl bg-slate-900 text-white flex items-center gap-4 shadow-sm">
+        <div class="p-2.5 rounded-lg bg-blue-600 shrink-0">
+          <i data-lucide="key" class="w-5 h-5 text-white"></i>
+        </div>
+        <div class="text-xs sm:text-sm font-medium leading-relaxed">
+          <strong class="text-blue-400 font-bold">KẾT LUẬN CHIẾN LƯỢC:</strong> Một sự cố không chỉ là "Ticket". Nó tác động đồng thời đến <span class="text-blue-300 font-semibold">SLA &rarr; Kỹ Thuật Viên &rarr; Thiết Bị &rarr; Tồn Kho &rarr; Mua Sắm &rarr; Tài Chính</span>. Đây chính là lý do doanh nghiệp bắt buộc phải cần tới một giải pháp ERP khép kín!
         </div>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 2: CHƯƠNG 1 - TRIẾT LÝ ERP & FRAPPE FRAMEWORK ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 overflow-y-auto custom-scrollbar bg-white text-slate-800" data-slide="2">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold text-blue-700 tracking-wider uppercase bg-blue-50 px-2.5 py-1 rounded border border-blue-200">Chương 1 &bull; Nền Tảng Triết Lý ERP</span>
-          <span class="text-xs font-mono text-slate-500 font-medium">Slide 02 / 10</span>
+    <!-- ==================== SLIDE 03: AS-IS -> TO-BE ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="3">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">CHUYỂN ĐỔI SỐ HÓA</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">CHUYỂN ĐỔI QUY TRÌNH: AS-IS &rarr; TO-BE</h2>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Bản Chất: Frappe Framework vs. ERPNext &amp; Triết Lý Single Source of Truth</h2>
-        <p class="text-sm text-slate-600 mt-1">Phân định rõ ràng giữa tầng Khung gầm nền tảng (Engine) và tầng Ứng dụng nghiệp vụ (Application) trong kiến trúc ERP hiện đại.</p>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 03 / 13</div>
       </div>
 
-      <!-- Main Comparison & Architectural Stack -->
-      <div class="my-auto py-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- Left: 3-tier Stack Diagram (5 cols) -->
-        <div class="lg:col-span-5 bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-between shadow-xs">
-          <div class="font-bold text-slate-900 text-sm mb-3 flex items-center gap-2">
-            <i data-lucide="layers-3" class="w-4 h-4 text-blue-600"></i>
-            <span>Mô Hình 3 Tầng Kiến Trúc Hệ Thống</span>
+      <!-- Comparative Flow Container -->
+      <div class="my-auto py-4 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <!-- LEFT: AS-IS (Red / Broken) (5 Cols) -->
+        <div class="lg:col-span-5 p-5 rounded-2xl bg-white border border-red-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-2 border-b border-red-100 mb-3">
+              <span class="text-xs font-mono font-bold text-red-700 uppercase flex items-center gap-1.5">
+                <i data-lucide="x-circle" class="w-4 h-4"></i> QUY TRÌNH HIỆN TRẠNG (AS-IS)
+              </span>
+              <span class="text-[10px] bg-red-50 text-red-700 px-2 py-0.5 rounded font-mono font-semibold">Thủ công &bull; Rời rạc</span>
+            </div>
+
+            <!-- Step by step As-Is -->
+            <div class="space-y-2 text-xs">
+              <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center font-bold text-[10px]">1</span>
+                <span>Khách gọi điện thoại hoặc nhắn tin Zalo khi máy hỏng</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center font-bold text-[10px]">2</span>
+                <span>Nhân viên trực ghi sổ tay / file Excel cá nhân</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center font-bold text-[10px]">3</span>
+                <span>Gọi điện thoại hỏi dò từng KTV ai đang rảnh để gán việc</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center font-bold text-[10px]">4</span>
+                <span>KTV đến hiện trường kiểm tra, thiếu phụ tùng viết phiếu giấy</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center font-bold text-[10px]">5</span>
+                <span>Chạy xe về kho chính lấy linh kiện mang đi thay</span>
+              </div>
+              <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center font-bold text-[10px]">6</span>
+                <span>Ghi biên bản giấy bàn giao &rarr; Cuối tháng nộp kế toán</span>
+              </div>
+            </div>
           </div>
-          <div class="space-y-3 font-mono text-xs">
-            <div class="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 shadow-2xs">
-              <div class="font-bold text-xs uppercase tracking-wider text-blue-700">Tầng Ứng Dụng: ERPNext v16</div>
-              <div class="text-[11px] text-slate-600 font-sans mt-1">Modules nghiệp vụ: Support (Helpdesk), Assets (CMMS), Stock (Kho MRO), Accounting (Kế toán).</div>
-            </div>
-            <div class="text-center text-slate-400 font-sans text-xs">&darr; Vận hành trên khung gầm</div>
-            <div class="p-3.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-900 shadow-2xs">
-              <div class="font-bold text-xs uppercase tracking-wider text-indigo-700">Tầng Khung Gầm: Frappe Framework v16</div>
-              <div class="text-[11px] text-slate-600 font-sans mt-1">DocType ORM, Giao diện Desk, Phân quyền RBAC chi tiết tới từng trường, REST API, Client/Server Script.</div>
-            </div>
-            <div class="text-center text-slate-400 font-sans text-xs">&darr; Triển khai trên hạ tầng</div>
-            <div class="p-3.5 rounded-xl bg-slate-100 border border-slate-300 text-slate-800 shadow-2xs">
-              <div class="font-bold text-xs uppercase tracking-wider text-slate-700">Tầng Cơ Sở Dữ Liệu &amp; Hạ Tầng</div>
-              <div class="text-[11px] text-slate-600 font-sans mt-1">MariaDB 10.6+ (ACID), Redis Cache/Queue (Celery Background Jobs), Python 3.12, Docker Local Container.</div>
-            </div>
+
+          <div class="mt-3 pt-2 border-t border-red-100 text-[11px] text-red-700 font-medium">
+            &times; Độ trễ ghi nhận cao, trôi cam kết SLA, thất thoát phụ tùng không rõ trách nhiệm.
           </div>
         </div>
 
-        <!-- Right: Comparison Table & Core Terms (7 cols) -->
-        <div class="lg:col-span-7 flex flex-col justify-between space-y-4">
-          <!-- Why ERPNext table -->
-          <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-2xs">
-            <table class="w-full text-xs text-left border-collapse">
-              <thead class="bg-slate-100 text-slate-800 uppercase font-mono border-b border-slate-200">
-                <tr>
-                  <th class="p-3 border-r border-slate-200">Tiêu Chí</th>
-                  <th class="p-3 border-r border-slate-200">Tự Code Web App (Custom)</th>
-                  <th class="p-3 bg-blue-50/50 text-blue-900 font-bold">Nền Tảng ERPNext v16</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200 text-slate-700 bg-white">
-                <tr class="hover:bg-slate-50">
-                  <td class="p-2.5 font-bold text-slate-900 border-r border-slate-200">Tính liên kết dữ liệu</td>
-                  <td class="p-2.5 border-r border-slate-200 text-red-600"><strong>Dữ liệu phân mảnh (Silo):</strong> Bảng Tickets ghi thay lọc dầu nhưng Kho không biết trừ, Kế toán không thấy chi phí.</td>
-                  <td class="p-2.5 bg-blue-50/20 font-medium text-slate-900"><strong>Single Source of Truth:</strong> Xuất kho sửa máy thì Kho tự trừ số dư, Kế toán tự sinh bút toán sổ cái.</td>
-                </tr>
-                <tr class="hover:bg-slate-50">
-                  <td class="p-2.5 font-bold text-slate-900 border-r border-slate-200">Tính bất biến sổ sách</td>
-                  <td class="p-2.5 border-r border-slate-200 text-slate-600">Có thể xóa sửa tùy tiện bằng lệnh SQL, dễ làm mất dấu vết gian lận hoặc sai lệch số tồn.</td>
-                  <td class="p-2.5 bg-blue-50/20 font-medium text-slate-900"><strong>DocStatus kế toán khắt khe:</strong> Chứng từ sau khi Ký duyệt (Submit = 1) là bất biến; sửa phải qua thủ tục Hủy (Cancel = 2) và Audit Trail.</td>
-                </tr>
-                <tr class="hover:bg-slate-50">
-                  <td class="p-2.5 font-bold text-slate-900 border-r border-slate-200">Thời gian triển khai</td>
-                  <td class="p-2.5 border-r border-slate-200 text-slate-600">Mất 6-12 tháng chỉ để làm các tính năng CRUD, phân quyền, đăng nhập, in ấn PDF.</td>
-                  <td class="p-2.5 bg-blue-50/20 font-medium text-slate-900">Có sẵn toàn bộ khung quản trị, tập trung 100% thời gian vào giải quyết bài toán nghiệp vụ công nghiệp.</td>
-                </tr>
-              </tbody>
-            </table>
+        <!-- CENTER: The Transformation Arrow (2 Cols) -->
+        <div class="lg:col-span-2 flex flex-col items-center justify-center text-center p-2">
+          <div class="w-12 h-12 rounded-full bg-blue-100 border border-blue-200 text-blue-700 flex items-center justify-center shadow-xs mb-2">
+            <i data-lucide="arrow-right" class="w-6 h-6"></i>
+          </div>
+          <div class="text-xs font-mono font-bold text-slate-900 leading-tight">CHUYỂN ĐỔI SỐ</div>
+          <div class="text-[10px] text-slate-500 font-mono mt-1">From fragmented operations &rarr; closed-loop ERP process</div>
+        </div>
+
+        <!-- RIGHT: TO-BE (Green / Integrated) (5 Cols) -->
+        <div class="lg:col-span-5 p-5 rounded-2xl bg-white border border-emerald-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-2 border-b border-emerald-100 mb-3">
+              <span class="text-xs font-mono font-bold text-emerald-800 uppercase flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-4 h-4"></i> QUY TRÌNH MỤC TIÊU TRÊN ERPNEXT (TO-BE)
+              </span>
+              <span class="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-mono font-semibold">Khép kín &bull; Tự động</span>
+            </div>
+
+            <!-- Step by step To-Be -->
+            <div class="space-y-2 text-xs">
+              <div class="p-2 rounded-lg bg-emerald-50/50 border border-emerald-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[10px]">1</span>
+                <span>Quét tem QR trên máy / Portal / Hotline tự lưu mốc thời gian T0</span>
+              </div>
+              <div class="p-2 rounded-lg bg-emerald-50/50 border border-emerald-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[10px]">2</span>
+                <span>Động cơ SLA 2 chiều tự kích hoạt đếm ngược (VIP 30m / Standard 60m)</span>
+              </div>
+              <div class="p-2 rounded-lg bg-emerald-50/50 border border-emerald-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[10px]">3</span>
+                <span>Skill Routing phân công đúng chuyên môn (Cơ khí / Điện / Lạnh)</span>
+              </div>
+              <div class="p-2 rounded-lg bg-emerald-50/50 border border-emerald-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[10px]">4</span>
+                <span>KTV Check-in 1-chạm &amp; xuất phụ tùng ngay trên kho xe (Van Stock)</span>
+              </div>
+              <div class="p-2 rounded-lg bg-emerald-50/50 border border-emerald-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[10px]">5</span>
+                <span>Tự động kích hoạt cảnh báo Reorder Level &rarr; Sinh đơn mua sắm bù kho</span>
+              </div>
+              <div class="p-2 rounded-lg bg-emerald-50/50 border border-emerald-200 flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[10px]">6</span>
+                <span>Phân loại Billing Type tự hạch toán sổ cái hoặc xuất hóa đơn thu khách</span>
+              </div>
+            </div>
           </div>
 
-          <!-- 5 Core Terms Pills -->
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs">
-            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-center">
-              <span class="font-bold text-slate-900 block font-mono">DocType</span>
-              <span class="text-[10px] text-slate-500">Thực thể dữ liệu / Bảng CSDL</span>
-            </div>
-            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-center">
-              <span class="font-bold text-slate-900 block font-mono">Child Table</span>
-              <span class="text-[10px] text-slate-500">Bảng con chi tiết (items)</span>
-            </div>
-            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-center">
-              <span class="font-bold text-slate-900 block font-mono">Link Field</span>
-              <span class="text-[10px] text-slate-500">Khóa ngoại Foreign Key</span>
-            </div>
-            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-center">
-              <span class="font-bold text-slate-900 block font-mono">Fetch From</span>
-              <span class="text-[10px] text-slate-500">Kéo dữ liệu tự động</span>
-            </div>
-            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-center">
-              <span class="font-bold text-slate-900 block font-mono">DocStatus</span>
-              <span class="text-[10px] text-slate-500">0=Draft, 1=Sub, 2=Can</span>
-            </div>
+          <div class="mt-3 pt-2 border-t border-emerald-100 text-[11px] text-emerald-800 font-medium">
+            &check; 100% thời gian thực, trách nhiệm rõ ràng, kiểm soát TCO từng cỗ máy.
           </div>
         </div>
       </div>
 
-      <!-- Bottom takeaway -->
-      <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
-        <span>Triết lý: ERPNext không phải là một "phần mềm ghi chú sửa máy", mà là hệ thống kiểm soát nguồn lực khép kín chuẩn kế toán.</span>
-        <span class="font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">Architecture Certified</span>
+      <!-- Memorable Presentation Statement -->
+      <div class="p-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 flex items-center gap-3">
+        <i data-lucide="quote" class="w-6 h-6 text-blue-600 shrink-0"></i>
+        <div class="text-xs sm:text-sm font-semibold italic">
+          "Chúng em không chỉ số hóa Ticket. Chúng em biến một sự cố hiện trường thành một Transaction xuyên suốt trong ERP."
+        </div>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 3: CHƯƠNG 2 - BỨC TRANH DOANH NGHIỆP & MASTER DATA ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 overflow-y-auto custom-scrollbar bg-white text-slate-800" data-slide="3">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold text-blue-700 tracking-wider uppercase bg-blue-50 px-2.5 py-1 rounded border border-blue-200">Chương 2 &bull; Cơ Sở Dữ Liệu Thực Nghiệm</span>
-          <span class="text-xs font-mono text-slate-500 font-medium">Slide 03 / 10</span>
+    <!-- ==================== SLIDE 04: ENTERPRISE ARCHITECTURE ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="4">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">KIẾN TRÚC HỆ THỐNG</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">ENTERPRISE ARCHITECTURE: ERPNext ĐỨNG Ở ĐÂU?</h2>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Bức Tranh Doanh Nghiệp AIS &amp; Hệ Sinh Thái Master Data</h2>
-        <p class="text-sm text-slate-600 mt-1">Dự án nói không với dữ liệu rác — Toàn bộ 5 thực thể cốt lõi được chuẩn hóa thành mạng lưới Master Data có tính truy vết cao.</p>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 04 / 13</div>
       </div>
 
-      <!-- 4 Columns Master Data Grid -->
-      <div class="my-auto py-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- Col 1: 3 B2B Customers -->
-        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col justify-between shadow-xs">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-bold text-blue-800 uppercase tracking-wider">03 Khách Hàng B2B</span>
-              <div class="p-1.5 rounded-lg bg-blue-100 text-blue-700"><i data-lucide="building-2" class="w-4 h-4"></i></div>
-            </div>
-            <ul class="space-y-2 text-xs text-slate-700">
-              <li class="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                <span class="font-bold text-slate-900">1. Bao bì Tân Á</span>
-                <span class="block text-amber-800 font-mono text-[11px] font-semibold mt-0.5">&starf; Hợp đồng VIP (SLA &le;30p)</span>
-                <span class="text-[10px] text-slate-500">Sở hữu máy in Flexo &amp; Máy nén Hitachi</span>
-              </li>
-              <li class="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                <span class="font-bold text-slate-900">2. Dược Hải Nam</span>
-                <span class="block text-slate-500 font-mono text-[11px] mt-0.5">Hợp đồng Standard (SLA &le;4h)</span>
-                <span class="text-[10px] text-slate-500">Sở hữu Chiller Daikin &amp; Máy phát Cummins</span>
-              </li>
-              <li class="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                <span class="font-bold text-slate-900">3. Nhựa &amp; Cơ khí Song Long</span>
-                <span class="block text-slate-500 font-mono text-[11px] mt-0.5">Hợp đồng Standard (SLA &le;4h)</span>
-                <span class="text-[10px] text-slate-500">Sở hữu Trạm Tủ điện Tổng MSB 1200A</span>
-              </li>
-            </ul>
+      <!-- 6-Layer Simplified Architecture Stack -->
+      <div class="my-auto py-3 space-y-2.5 max-w-5xl mx-auto w-full">
+        <!-- Layer 1 -->
+        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-between gap-4 hover:border-blue-400 transition">
+          <div class="w-32 shrink-0 text-xs font-mono font-bold text-blue-700 uppercase flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-blue-600"></span> L1: EXPERIENCE
           </div>
-          <div class="text-[11px] text-slate-500 mt-3 pt-2.5 border-t border-slate-200 font-medium">Cam kết dịch vụ phân tầng minh bạch.</div>
+          <div class="flex-1 text-xs text-slate-700 font-medium flex flex-wrap gap-2">
+            <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">B2B Customer Portal</span>
+            <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">Tem QR Code Hiện Trường</span>
+            <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">Dispatcher Console</span>
+            <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">Mobile Desk KTV</span>
+            <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">Warehouse &amp; Accounting Workspace</span>
+          </div>
         </div>
 
-        <!-- Col 2: KTV & Skill Matrix -->
-        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col justify-between shadow-xs">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider">3 KTV &amp; Skill Matrix</span>
-              <div class="p-1.5 rounded-lg bg-emerald-100 text-emerald-700"><i data-lucide="users" class="w-4 h-4"></i></div>
-            </div>
-            <ul class="space-y-2 text-xs text-slate-700">
-              <li class="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                <span class="font-bold text-slate-900">Nguyễn Văn An</span>
-                <span class="block text-emerald-700 font-mono text-[11px] font-semibold mt-0.5">Cơ khí chính xác &amp; Khí nén</span>
-                <span class="text-[10px] text-slate-500">Phụ trách: Compressor &bull; Printing (Xe V01)</span>
-              </li>
-              <li class="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                <span class="font-bold text-slate-900">Trần Đình Bình</span>
-                <span class="block text-emerald-700 font-mono text-[11px] font-semibold mt-0.5">Điện công nghiệp &amp; Tự động hóa</span>
-                <span class="text-[10px] text-slate-500">Phụ trách: Electrical Panel &bull; Generator (Xe V02)</span>
-              </li>
-              <li class="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                <span class="font-bold text-slate-900">Lê Hoàng Cường</span>
-                <span class="block text-emerald-700 font-mono text-[11px] font-semibold mt-0.5">Nhiệt - Lạnh công nghiệp (HVAC)</span>
-                <span class="text-[10px] text-slate-500">Phụ trách: Chiller &bull; Generator (Xe V03)</span>
-              </li>
-            </ul>
+        <!-- Layer 2 -->
+        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-between gap-4 hover:border-indigo-400 transition">
+          <div class="w-32 shrink-0 text-xs font-mono font-bold text-indigo-700 uppercase flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-indigo-600"></span> L2: PROCESS
           </div>
-          <div class="text-[11px] text-slate-500 mt-3 pt-2.5 border-t border-slate-200 font-medium">Định tuyến đúng chuyên gia theo kỹ năng.</div>
+          <div class="flex-1 text-xs text-slate-700 font-medium flex flex-wrap gap-2">
+            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">Incident Intake (T0/T1)</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">2D SLA Engine</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">Skill-Based Routing</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">PM-to-CM Trigger</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">Van Stock Logistics</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">Procure-to-Stock</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">3-Way Billing</span>
+          </div>
         </div>
 
-        <!-- Col 3: 5 Thiết bị trọng yếu + Máy đo SKF -->
-        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col justify-between shadow-xs">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-bold text-amber-800 uppercase tracking-wider">5 Thiết Bị + 1 Dụng Cụ</span>
-              <div class="p-1.5 rounded-lg bg-amber-100 text-amber-700"><i data-lucide="server" class="w-4 h-4"></i></div>
-            </div>
-            <div class="space-y-1.5 text-[11px] text-slate-700">
-              <div class="p-2 rounded-lg bg-white border border-slate-200 flex justify-between items-center shadow-2xs">
-                <span class="font-semibold text-slate-900">Máy in Flexo 6 màu</span>
-                <span class="font-mono text-slate-500 bg-slate-100 px-1 rounded">AST-PRN-01</span>
-              </div>
-              <div class="p-2 rounded-lg bg-white border border-slate-200 flex justify-between items-center shadow-2xs">
-                <span class="font-semibold text-slate-900">Máy nén Hitachi 75kW</span>
-                <span class="font-mono text-slate-500 bg-slate-100 px-1 rounded">AST-CMP-02</span>
-              </div>
-              <div class="p-2 rounded-lg bg-white border border-slate-200 flex justify-between items-center shadow-2xs">
-                <span class="font-semibold text-slate-900">Chiller Daikin 100RT</span>
-                <span class="font-mono text-slate-500 bg-slate-100 px-1 rounded">AST-CHL-03</span>
-              </div>
-              <div class="p-2 rounded-lg bg-white border border-slate-200 flex justify-between items-center shadow-2xs">
-                <span class="font-semibold text-slate-900">Máy phát Cummins 250kVA</span>
-                <span class="font-mono text-slate-500 bg-slate-100 px-1 rounded">AST-GEN-04</span>
-              </div>
-              <div class="p-2 rounded-lg bg-white border border-slate-200 flex justify-between items-center shadow-2xs">
-                <span class="font-semibold text-slate-900">Tủ điện tổng MSB 1200A</span>
-                <span class="font-mono text-slate-500 bg-slate-100 px-1 rounded">AST-PNL-05</span>
-              </div>
-              <div class="p-2 rounded-lg bg-blue-50/50 border border-blue-200 flex justify-between items-center shadow-2xs">
-                <span class="font-semibold text-blue-900">Máy đo rung SKF nội bộ</span>
-                <span class="font-mono text-blue-700 bg-white px-1 rounded border border-blue-200">TOOL-VIB01</span>
-              </div>
-            </div>
+        <!-- Layer 3: Highlighted Core -->
+        <div class="p-3.5 rounded-xl bg-blue-50/70 border-2 border-blue-500 shadow-sm flex items-center justify-between gap-4">
+          <div class="w-32 shrink-0 text-xs font-mono font-bold text-blue-900 uppercase flex items-center gap-1.5">
+            <i data-lucide="database" class="w-4 h-4 text-blue-600"></i> L3: ERP TRANSACTION
           </div>
-          <div class="text-[11px] text-slate-500 mt-2.5 pt-2 border-t border-slate-200 font-medium">Toàn bộ máy dán Tem mã QR động.</div>
+          <div class="flex-1 text-xs font-mono font-bold text-blue-800 flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Issue</span>
+            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Asset</span>
+            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Asset Maintenance Log</span>
+            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Stock Entry</span>
+            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Material Request</span>
+            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Purchase Order</span>
+            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Purchase Receipt</span>
+            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Sales Invoice</span>
+          </div>
         </div>
 
-        <!-- Col 4: Cây kho 6 tầng & Phụ tùng -->
-        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col justify-between shadow-xs">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-bold text-indigo-800 uppercase tracking-wider">Cây Kho &amp; 12 Phụ Tùng</span>
-              <div class="p-1.5 rounded-lg bg-indigo-100 text-indigo-700"><i data-lucide="boxes" class="w-4 h-4"></i></div>
-            </div>
-            <ul class="space-y-2 text-xs text-slate-700">
-              <li class="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                <span class="font-bold text-slate-900">Kho Linh Kiện Trung Tâm</span>
-                <span class="block text-slate-500 text-[11px] mt-0.5">Kho tổng trụ sở &bull; Quản lý Reorder Level</span>
-              </li>
-              <li class="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                <span class="font-bold text-slate-900">3 Kho Xe KTV (Van Stock)</span>
-                <span class="block text-slate-500 text-[11px] mt-0.5">Kho Xe An, Bình, Cường &bull; KTV chịu vật chất</span>
-              </li>
-              <li class="p-2.5 rounded-xl bg-white border border-slate-200 shadow-2xs">
-                <span class="font-bold text-slate-900">Kho Thu Hồi Xác Hỏng</span>
-                <span class="block text-slate-500 text-[11px] mt-0.5">Lưu xác linh kiện cũ chờ kiểm toán nội bộ</span>
-              </li>
-            </ul>
+        <!-- Layer 4 -->
+        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-between gap-4 hover:border-emerald-400 transition">
+          <div class="w-32 shrink-0 text-xs font-mono font-bold text-emerald-700 uppercase flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-600"></span> L4: GOVERNANCE
           </div>
-          <div class="text-[11px] text-slate-500 mt-3 pt-2.5 border-t border-slate-200 font-medium">12 phụ tùng kỹ thuật (lọc, dầu, rơ le, van).</div>
+          <div class="flex-1 text-xs text-slate-700 font-medium flex flex-wrap gap-2">
+            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">5 RBAC Roles</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Segregation of Duties (SoD)</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">User Permission Isolation</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Audit Trail (docstatus: 0&rarr;1&rarr;2)</span>
+          </div>
+        </div>
+
+        <!-- Layer 5 -->
+        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-between gap-4 hover:border-slate-400 transition">
+          <div class="w-32 shrink-0 text-xs font-mono font-bold text-slate-700 uppercase flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-slate-600"></span> L5: PLATFORM
+          </div>
+          <div class="flex-1 text-xs text-slate-600 font-mono flex flex-wrap gap-2">
+            <span>Frappe Framework v16</span> &bull;
+            <span>Python 3.11+ WSGI</span> &bull;
+            <span>MariaDB 10.6+ InnoDB</span> &bull;
+            <span>Redis Cache &amp; Queue</span> &bull;
+            <span>REST API</span> &bull;
+            <span>Docker Compose (9 Containers)</span>
+          </div>
+        </div>
+
+        <!-- Layer 6 -->
+        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-between gap-4 hover:border-purple-400 transition">
+          <div class="w-32 shrink-0 text-xs font-mono font-bold text-purple-700 uppercase flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-purple-600"></span> L6: INTELLIGENCE
+          </div>
+          <div class="flex-1 text-xs text-slate-700 font-medium flex flex-wrap gap-2">
+            <span class="px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">Executive KPI Engine</span>
+            <span class="px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">AI / RAG Technical Assistant</span>
+            <span class="px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">IoT / MQTT Telemetry</span>
+            <span class="px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">Predictive Maintenance</span>
+          </div>
         </div>
       </div>
 
-      <!-- Bottom Summary -->
-      <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
-        <span class="flex items-center gap-2">
-          <i data-lucide="info" class="w-4 h-4 text-blue-600 shrink-0"></i>
-          <span>Mọi thực thể đều có mã định danh duy nhất (Identifier) theo chuẩn ERPNext, bảo đảm tính truy vết trọn vẹn (End-to-End Traceability).</span>
-        </span>
-        <span class="font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">Company: SBN</span>
+      <!-- Key Message Banner -->
+      <div class="p-3.5 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs sm:text-sm font-medium">
+        <div class="flex items-center gap-3">
+          <i data-lucide="layers" class="w-5 h-5 text-blue-400 shrink-0"></i>
+          <span><strong class="text-blue-400 font-bold">KEY MESSAGE:</strong> ERPNext là <strong>Transactional Core</strong>; Frappe là <strong>Platform Khung gầm</strong>; AI/RAG là <strong>Intelligence Layer</strong>.</span>
+        </div>
+        <span class="text-xs text-slate-400 font-mono hidden md:inline">Single Source of Truth</span>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 4: CHƯƠNG 3.1 - TRỤ CỘT 1: HELPDESK & MA TRẬN SLA 2D ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 overflow-y-auto custom-scrollbar bg-white text-slate-800" data-slide="4">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold text-blue-700 tracking-wider uppercase bg-blue-50 px-2.5 py-1 rounded border border-blue-200">Chương 3.1 &bull; Trụ Cột 1</span>
-          <span class="text-xs font-mono text-slate-500 font-medium">Slide 04 / 10</span>
+    <!-- ==================== SLIDE 05: 5 CORE ENTERPRISE PILLARS ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="5">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">BẢN ĐỒ DOANH NGHIỆP</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">NĂM TRỤ CỘT NGHIỆP VỤ DOANH NGHIỆP CỐT LÕI</h2>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Helpdesk &amp; Quản Trị Cam Kết Dịch Vụ: Ma Trận SLA 2D &amp; Skill Routing</h2>
-        <p class="text-sm text-slate-600 mt-1">Cửa ngõ tiếp nhận sự cố đa kênh, phân định độ trễ tiếp nhận, cam kết SLA theo giá trị hợp đồng và điều phối đúng chuyên môn.</p>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 05 / 13</div>
       </div>
 
-      <div class="my-auto py-3 space-y-4">
-        <!-- 2D SLA Table -->
-        <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-2xs">
-          <table class="w-full text-xs text-left border-collapse">
-            <thead class="bg-slate-100 text-slate-800 uppercase font-mono border-b border-slate-200">
-              <tr>
-                <th class="p-3 border-r border-slate-200">Mức Độ Ưu Tiên (Priority)</th>
-                <th class="p-3 border-r border-slate-200 bg-blue-50/50 text-blue-900 font-bold">Khách Hàng VIP (Bao Bì Tân Á)</th>
-                <th class="p-3 border-r border-slate-200">Khách Hàng Standard (Hải Nam, Song Long)</th>
-                <th class="p-3">Quy Tắc Đếm Giờ &amp; Lịch Nghỉ (Holiday List)</th>
+      <!-- 5 Pillars Connected Lifecycle -->
+      <div class="my-auto py-3">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3.5">
+          <!-- Pillar 1 -->
+          <div class="p-4 rounded-xl bg-white border border-blue-200 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+            <div>
+              <div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs mb-3 shadow-xs">
+                P1
+              </div>
+              <div class="text-xs font-mono font-bold text-blue-700 uppercase">HELPDESK &amp; DỊCH VỤ</div>
+              <h3 class="text-sm font-bold text-slate-900 mt-0.5">Tiếp Nhận &amp; SLA</h3>
+              <ul class="text-xs text-slate-600 space-y-1.5 mt-2.5">
+                <li>&bull; Tiếp nhận đa kênh (QR 15s)</li>
+                <li>&bull; Tách biệt mốc giờ T0 vs T1</li>
+                <li>&bull; Ma trận SLA 2 chiều khắt khe</li>
+                <li>&bull; Skill Routing định tuyến KTV</li>
+              </ul>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100 text-[10px] text-blue-700 font-mono font-semibold">
+              DocType: Issue, SLA
+            </div>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="p-4 rounded-xl bg-white border border-emerald-200 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+            <div>
+              <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-xs mb-3 shadow-xs">
+                P2
+              </div>
+              <div class="text-xs font-mono font-bold text-emerald-700 uppercase">BẢO TRÌ THIẾT BỊ</div>
+              <h3 class="text-sm font-bold text-slate-900 mt-0.5">CMMS &amp; Lịch PM</h3>
+              <ul class="text-xs text-slate-600 space-y-1.5 mt-2.5">
+                <li>&bull; Hồ sơ bệnh án 5 cỗ máy</li>
+                <li>&bull; Cách ly khấu hao thuế</li>
+                <li>&bull; 3 Kế hoạch PM định kỳ</li>
+                <li>&bull; PM-to-CM kích hoạt Issue</li>
+              </ul>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100 text-[10px] text-emerald-700 font-mono font-semibold">
+              DocType: Asset, Maintenance
+            </div>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="p-4 rounded-xl bg-white border border-amber-200 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+            <div>
+              <div class="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-xs mb-3 shadow-xs">
+                P3
+              </div>
+              <div class="text-xs font-mono font-bold text-amber-700 uppercase">KHO PHỤ TÙNG MRO</div>
+              <h3 class="text-sm font-bold text-slate-900 mt-0.5">Mobile Van Stock</h3>
+              <ul class="text-xs text-slate-600 space-y-1.5 mt-2.5">
+                <li>&bull; Cây kho phân cấp 6 tầng</li>
+                <li>&bull; 2 Chặng: Transfer &rarr; Issue</li>
+                <li>&bull; Trách nhiệm vật chất KTV</li>
+                <li>&bull; Giảm 65% Truck-roll cost</li>
+              </ul>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100 text-[10px] text-amber-700 font-mono font-semibold">
+              DocType: Stock Entry, Item
+            </div>
+          </div>
+
+          <!-- Pillar 4 -->
+          <div class="p-4 rounded-xl bg-white border border-purple-200 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+            <div>
+              <div class="w-8 h-8 rounded-lg bg-purple-600 text-white flex items-center justify-center font-bold text-xs mb-3 shadow-xs">
+                P4
+              </div>
+              <div class="text-xs font-mono font-bold text-purple-700 uppercase">CHU TRÌNH MUA HÀNG</div>
+              <h3 class="text-sm font-bold text-slate-900 mt-0.5">Procure-to-Stock</h3>
+              <ul class="text-xs text-slate-600 space-y-1.5 mt-2.5">
+                <li>&bull; Ngưỡng tồn an toàn Reorder</li>
+                <li>&bull; Tồn 2.0 &lt; 3.0 kích hoạt MR</li>
+                <li>&bull; Đơn mua hàng PO Kim Long</li>
+                <li>&bull; Nhập kho PR bù phụ tùng xe</li>
+              </ul>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100 text-[10px] text-purple-700 font-mono font-semibold">
+              DocType: MR, PO, PR
+            </div>
+          </div>
+
+          <!-- Pillar 5 -->
+          <div class="p-4 rounded-xl bg-white border border-slate-300 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+            <div>
+              <div class="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center font-bold text-xs mb-3 shadow-xs">
+                P5
+              </div>
+              <div class="text-xs font-mono font-bold text-slate-700 uppercase">ĐIỂM CHẠM TÀI CHÍNH</div>
+              <h3 class="text-sm font-bold text-slate-900 mt-0.5">Billing Classification</h3>
+              <ul class="text-xs text-slate-600 space-y-1.5 mt-2.5">
+                <li>&bull; <strong>Under Warranty:</strong> AIS chịu</li>
+                <li>&bull; <strong>Billable:</strong> Hóa đơn bán</li>
+                <li>&bull; <strong>Goodwill:</strong> Miễn phí tri ân</li>
+                <li>&bull; Bóc tách chi phí TCO máy</li>
+              </ul>
+            </div>
+            <div class="mt-3 pt-2 border-t border-slate-100 text-[10px] text-slate-700 font-mono font-semibold">
+              DocType: Sales Invoice, GL
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal Flow Arrow Footer -->
+        <div class="mt-4 p-3 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-between text-xs text-slate-600 font-medium">
+          <div class="flex items-center gap-2">
+            <i data-lucide="git-commit" class="w-4 h-4 text-blue-600"></i>
+            <span>Vòng đời khép kín: Sự cố tiếp nhận &rarr; Khảo sát thiết bị &rarr; Xuất kho xe &rarr; Tự động mua bù &rarr; Quyết toán tài chính</span>
+          </div>
+          <span class="font-mono text-blue-700 font-bold">&rarr; Báo cáo KPI Ban Giám Đốc</span>
+        </div>
+      </div>
+
+      <!-- Identity note -->
+      <div class="text-xs text-slate-500 font-mono text-center">
+        Identity: Smart Maintenance ERP &bull; Chuyển từ "Ticketing kèm vài module" thành "Giải pháp ERP chuyên biệt cho FSM &amp; MRO"
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 06: DATA / TRANSACTION ARCHITECTURE ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="6">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">KIẾN TRÚC DỮ LIỆU</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">DỮ LIỆU &amp; CHỨNG TỪ GIAO DỊCH ERP LIÊN KẾT</h2>
+        </div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 06 / 13</div>
+      </div>
+
+      <!-- Transaction Architecture Diagram -->
+      <div class="my-auto py-3 grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+        <!-- Visual Flow Column (8 Cols) -->
+        <div class="lg:col-span-8 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+          <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide mb-3 flex items-center justify-between">
+            <span>Sơ Đồ Chuỗi Giao Dịch Chứng Từ ERP (Transaction Flow)</span>
+            <span class="text-blue-700 font-semibold">Single Source of Truth</span>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <!-- Row 1: Customer -> Issue -> SLA -->
+            <div class="p-2.5 rounded-xl bg-blue-50/70 border border-blue-200 flex items-center justify-between gap-3">
+              <div class="font-bold text-blue-900 flex items-center gap-1.5">
+                <i data-lucide="building" class="w-4 h-4 text-blue-600"></i> Customer
+              </div>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-blue-400"></i>
+              <div class="font-bold text-slate-900 bg-white px-2 py-1 rounded border border-blue-300">
+                Issue (Vé Sự Cố)
+              </div>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-blue-400"></i>
+              <div class="font-bold text-indigo-900 bg-indigo-50 px-2 py-1 rounded border border-indigo-200">
+                SLA Matrix (VIP vs Std)
+              </div>
+            </div>
+
+            <!-- Row 2: Asset & Maintenance Bridge -->
+            <div class="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between gap-3">
+              <div class="font-bold text-emerald-900 flex items-center gap-1.5">
+                <i data-lucide="tool" class="w-4 h-4 text-emerald-600"></i> Asset
+              </div>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <div class="text-slate-800 bg-white px-2 py-1 rounded border border-emerald-300">
+                Asset Maintenance
+              </div>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <div class="text-slate-800 bg-white px-2 py-1 rounded border border-emerald-300">
+                Maintenance Log
+              </div>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <div class="font-bold text-red-700 bg-red-50 px-2 py-1 rounded border border-red-200">
+                PM-to-CM Issue
+              </div>
+            </div>
+
+            <!-- Row 3: Stock Entry & Billing -->
+            <div class="p-2.5 rounded-xl bg-amber-50/70 border border-amber-200 flex items-center justify-between gap-3">
+              <div class="font-bold text-amber-900 flex items-center gap-1.5">
+                <i data-lucide="boxes" class="w-4 h-4 text-amber-600"></i> Stock Entry
+              </div>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-amber-400"></i>
+              <div class="grid grid-cols-3 gap-1 text-[11px] font-semibold text-center flex-1">
+                <span class="bg-white p-1 rounded border border-amber-200 text-blue-800">Under Warranty</span>
+                <span class="bg-white p-1 rounded border border-amber-200 text-emerald-800">Billable to Cust</span>
+                <span class="bg-white p-1 rounded border border-amber-200 text-slate-700">Goodwill</span>
+              </div>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-amber-400"></i>
+              <div class="font-bold text-slate-800 bg-white px-2 py-1 rounded border border-slate-300">
+                Sales Invoice / GL
+              </div>
+            </div>
+
+            <!-- Row 4: Procure-to-Stock Chain -->
+            <div class="p-2.5 rounded-xl bg-purple-50/70 border border-purple-200 flex items-center justify-between gap-2 text-[11px]">
+              <span class="font-bold text-purple-900">Reorder (2 &lt; 3)</span> &rarr;
+              <span class="bg-white px-1.5 py-0.5 rounded border border-purple-200">Material Request</span> &rarr;
+              <span class="bg-white px-1.5 py-0.5 rounded border border-purple-200">Purchase Order</span> &rarr;
+              <span class="bg-white px-1.5 py-0.5 rounded border border-purple-200">Purchase Receipt</span> &rarr;
+              <span class="bg-purple-900 text-white px-1.5 py-0.5 rounded font-bold">Bù Van Stock</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: 9 Custom Fields Summary (4 Cols) -->
+        <div class="lg:col-span-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+          <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide">
+            09 Custom Fields Phá Vỡ "Silo Dữ Liệu"
+          </div>
+          <div class="space-y-1.5 text-[11px]">
+            <div class="p-1.5 rounded bg-slate-50 border border-slate-200 font-mono flex items-center justify-between">
+              <span>Issue.custom_asset</span> <strong class="text-blue-700 font-sans">Nối máy hỏng</strong>
+            </div>
+            <div class="p-1.5 rounded bg-slate-50 border border-slate-200 font-mono flex items-center justify-between">
+              <span>Issue.custom_incident_time</span> <strong class="text-blue-700 font-sans">Mốc T0 thực tế</strong>
+            </div>
+            <div class="p-1.5 rounded bg-slate-50 border border-slate-200 font-mono flex items-center justify-between">
+              <span>Issue.custom_asset_category</span> <strong class="text-blue-700 font-sans">Skill Routing</strong>
+            </div>
+            <div class="p-1.5 rounded bg-slate-50 border border-slate-200 font-mono flex items-center justify-between">
+              <span>Issue.custom_related_issue</span> <strong class="text-blue-700 font-sans">Truy vết Callback</strong>
+            </div>
+            <div class="p-1.5 rounded bg-slate-50 border border-slate-200 font-mono flex items-center justify-between">
+              <span>Issue.custom_has_callback</span> <strong class="text-blue-700 font-sans">Cờ đo FTFR</strong>
+            </div>
+            <div class="p-1.5 rounded bg-slate-50 border border-slate-200 font-mono flex items-center justify-between">
+              <span>Asset.custom_is_customer_eq</span> <strong class="text-emerald-700 font-sans">Cách ly thuế</strong>
+            </div>
+            <div class="p-1.5 rounded bg-slate-50 border border-slate-200 font-mono flex items-center justify-between">
+              <span>Stock.custom_billing_type</span> <strong class="text-amber-700 font-sans">3 Dòng tiền</strong>
+            </div>
+            <div class="p-1.5 rounded bg-slate-50 border border-slate-200 font-mono flex items-center justify-between">
+              <span>Stock.custom_issue + asset</span> <strong class="text-purple-700 font-sans">TCO từng máy</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Question-Answer Banner -->
+      <div class="p-3 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs font-medium">
+        <span>Hội đồng hỏi: <em>"ERP Integration của nhóm em nằm ở đâu?"</em></span>
+        <span class="text-emerald-400 font-semibold">&check; Nằm ở chuỗi chứng từ liên hoàn: Issue &harr; Asset &harr; Stock Entry &harr; MR/PO &harr; Sales Invoice</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 07: MASTER DATA + RBAC ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="7">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">QUẢN TRỊ DỮ LIỆU &amp; BẢO MẬT</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">DỮ LIỆU CHỦ (MASTER DATA) &amp; PHÂN TÁCH NHIỆM VỤ (RBAC / SoD)</h2>
+        </div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 07 / 13</div>
+      </div>
+
+      <!-- Split Container: Left Master Data, Right RBAC -->
+      <div class="my-auto py-3 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <!-- LEFT: Master Data Ecosystem (6 Cols) -->
+        <div class="lg:col-span-6 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide pb-2 border-b border-slate-100 flex items-center justify-between">
+              <span>Hệ Sinh Thái Master Data (Pháp Nhân SBN)</span>
+              <span class="text-blue-700 font-mono text-[10px]">Alpha Industrial Services</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5 mt-3 text-xs">
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-bold text-slate-900 flex items-center gap-1.5"><i data-lucide="users" class="w-3.5 h-3.5 text-blue-600"></i> 03 Khách Hàng B2B</div>
+                <div class="text-slate-600 text-[11px] mt-1 space-y-0.5">
+                  <div>&bull; Tân Á (VIP - Khí nén &amp; In)</div>
+                  <div>&bull; Hải Nam (Standard - Chiller)</div>
+                  <div>&bull; Song Long (Standard - MSB)</div>
+                </div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-bold text-slate-900 flex items-center gap-1.5"><i data-lucide="wrench" class="w-3.5 h-3.5 text-indigo-600"></i> 03 Kỹ Thuật Viên</div>
+                <div class="text-slate-600 text-[11px] mt-1 space-y-0.5">
+                  <div>&bull; Nguyễn Văn An (Cơ khí &amp; Khí)</div>
+                  <div>&bull; Trần Đình Bình (Điện &amp; Tự động)</div>
+                  <div>&bull; Lê Hoàng Cường (Nhiệt - Lạnh)</div>
+                </div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-bold text-slate-900 flex items-center gap-1.5"><i data-lucide="cpu" class="w-3.5 h-3.5 text-emerald-600"></i> 05 Máy + 1 Thiết Bị Đo</div>
+                <div class="text-slate-600 text-[11px] mt-1 space-y-0.5">
+                  <div>&bull; Hitachi 75kW &bull; In Flexo 6 màu</div>
+                  <div>&bull; Chiller Daikin &bull; Cummins 250kVA</div>
+                  <div>&bull; Tủ MSB 1200A &bull; Đo rung SKF</div>
+                </div>
+              </div>
+
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+                <div class="font-bold text-slate-900 flex items-center gap-1.5"><i data-lucide="truck" class="w-3.5 h-3.5 text-amber-600"></i> 06 Kho Phân Cấp</div>
+                <div class="text-slate-600 text-[11px] mt-1 space-y-0.5">
+                  <div>&bull; Kho Linh kiện Trung tâm</div>
+                  <div>&bull; 3 Kho Xe KTV (An, Bình, Cường)</div>
+                  <div>&bull; Kho Thu hồi Linh kiện Hỏng</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 p-2 rounded-lg bg-blue-50/70 border border-blue-200 text-[11px] text-blue-900">
+            Dữ liệu không rác &bull; 100% Master Data khép kín hỗ trợ truy xuất End-to-End.
+          </div>
+        </div>
+
+        <!-- RIGHT: RBAC Matrix & SoD (6 Cols) -->
+        <div class="lg:col-span-6 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide pb-2 border-b border-slate-100 flex items-center justify-between">
+              <span>Phân Quyền Vai Trò &amp; Phân Tách Nhiệm Vụ (SoD)</span>
+              <span class="text-emerald-700 font-mono text-[10px]">5 Persona Roles</span>
+            </div>
+
+            <!-- DocPerm Matrix Table -->
+            <div class="mt-2.5 overflow-x-auto text-[11px]">
+              <table class="w-full border-collapse">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                    <th class="p-1.5 text-left">Chứng từ</th>
+                    <th class="p-1.5 text-center">Customer</th>
+                    <th class="p-1.5 text-center">Dispatcher</th>
+                    <th class="p-1.5 text-center">Technician</th>
+                    <th class="p-1.5 text-center">Warehouse</th>
+                    <th class="p-1.5 text-center">Accountant</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-600">
+                  <tr>
+                    <td class="p-1.5 font-mono font-bold text-slate-900">Issue</td>
+                    <td class="p-1.5 text-center text-blue-600 font-semibold">Tạo/Xem</td>
+                    <td class="p-1.5 text-center text-emerald-600 font-semibold">Toàn quyền</td>
+                    <td class="p-1.5 text-center text-blue-600 font-semibold">Xử lý</td>
+                    <td class="p-1.5 text-center text-slate-400">Xem</td>
+                    <td class="p-1.5 text-center text-slate-400">Xem</td>
+                  </tr>
+                  <tr>
+                    <td class="p-1.5 font-mono font-bold text-slate-900">Stock Entry</td>
+                    <td class="p-1.5 text-center text-red-500">&times;</td>
+                    <td class="p-1.5 text-center text-slate-400">Xem</td>
+                    <td class="p-1.5 text-center text-blue-600 font-semibold">Xuất xe</td>
+                    <td class="p-1.5 text-center text-emerald-600 font-semibold">Toàn quyền</td>
+                    <td class="p-1.5 text-center text-slate-400">Xem</td>
+                  </tr>
+                  <tr>
+                    <td class="p-1.5 font-mono font-bold text-slate-900">MR / PO / PR</td>
+                    <td class="p-1.5 text-center text-red-500">&times;</td>
+                    <td class="p-1.5 text-center text-red-500">&times;</td>
+                    <td class="p-1.5 text-center text-red-500">&times;</td>
+                    <td class="p-1.5 text-center text-emerald-600 font-semibold">Tạo &amp; Nhập</td>
+                    <td class="p-1.5 text-center text-slate-400">Xem</td>
+                  </tr>
+                  <tr>
+                    <td class="p-1.5 font-mono font-bold text-slate-900">Sales Invoice</td>
+                    <td class="p-1.5 text-center text-red-500">&times;</td>
+                    <td class="p-1.5 text-center text-red-500">&times;</td>
+                    <td class="p-1.5 text-center text-red-500">&times;</td>
+                    <td class="p-1.5 text-center text-red-500">&times;</td>
+                    <td class="p-1.5 text-center text-emerald-600 font-semibold">Xuất thu tiền</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Segregation of Duties Banner -->
+          <div class="mt-3 p-2 rounded-lg bg-slate-900 text-white text-[11px] flex items-center justify-between">
+            <span class="font-bold text-amber-400">NGUYÊN TẮC BẤT BIẾN (SoD):</span>
+            <span class="font-mono">Kỹ Thuật Viên &ne; Thủ Kho &ne; Kế Toán</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Permission Note -->
+      <div class="p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
+        <span>Cách ly đa khách hàng: Tài khoản Portal Tân Á chỉ nhìn thấy Ticket và Thiết bị của Tân Á (Frappe User Permission).</span>
+        <span class="font-mono text-slate-800 font-semibold">&check; Zero Data Leakage</span>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 08: DEEP DIVE: HELPDESK + SLA + ROUTING ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="8">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">CHUYÊN SÂU 1: DỊCH VỤ</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">HELPDESK &bull; MA TRẬN SLA 2 CHIỀU &bull; SKILL ROUTING</h2>
+        </div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 08 / 13</div>
+      </div>
+
+      <!-- Main Layout: Ingestion Flow & SLA Table -->
+      <div class="my-auto py-3 grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+        <!-- LEFT: The Ingestion & Routing Flow (7 Cols) -->
+        <div class="lg:col-span-7 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+          <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide">
+            Luồng Tiếp Nhận &amp; Thuật Toán Điều Phối Kết Hợp
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-between">
+              <span class="font-bold text-blue-900">1. Kênh Tiếp Nhận: Tem QR 15s / Portal / Hotline</span>
+              <span class="text-[10px] bg-white text-blue-700 px-2 py-0.5 rounded border font-mono">T0 = Thực tế khách báo</span>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <span class="font-bold text-slate-800">2. Nạp Vào Hệ Thống (Mốc T1) &rarr; Đo Logging Latency</span>
+              <span class="text-[10px] text-slate-500 font-mono">&Delta;T = T1 - T0 (Đo trễ tác nghiệp)</span>
+            </div>
+
+            <div class="p-3 rounded-xl bg-indigo-50 border border-indigo-200 space-y-1.5">
+              <div class="font-bold text-indigo-950 flex items-center justify-between">
+                <span>3. Thuật Toán Điều Phối Kết Hợp (Skill + Round Robin)</span>
+                <span class="text-[10px] bg-indigo-600 text-white px-2 py-0.5 rounded font-mono">Hybrid Routing</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-snug">
+                Fetch <code class="font-mono text-indigo-800">custom_asset_category</code> &rarr; <strong>Skill Filter</strong> lọc KTV đủ năng lực &rarr; <strong>Round Robin</strong> chỉ xoay vòng đều trong nhóm chuyên môn phù hợp!
+              </p>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
+              <span class="font-bold text-emerald-900">4. KTV Bấm Quick Action [Check-in] &rarr; Khóa SLA Response</span>
+              <span class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded font-mono font-bold">In Progress</span>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <span class="font-bold text-slate-800">5. Nghiệm Thu &amp; Callback Window (72h - 7 ngày)</span>
+              <span class="text-[10px] bg-white text-purple-700 px-2 py-0.5 rounded border font-mono">Tái phát &rarr; has_callback = 1</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: 2D SLA Matrix Table (5 Cols) -->
+        <div class="lg:col-span-5 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+          <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide">
+            Ma Trận Cam Kết SLA 2 Chiều Chuẩn Công Nghiệp
+          </div>
+
+          <table class="w-full text-xs border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <th class="p-2 text-left">Độ Ưu Tiên</th>
+                <th class="p-2 text-center text-blue-700">VIP Tân Á</th>
+                <th class="p-2 text-center text-slate-700">Standard</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-200 text-slate-700 bg-white">
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold text-red-700 flex items-center gap-1.5 border-r border-slate-200">
-                  <span class="w-2 h-2 rounded-full bg-red-600"></span>
-                  Urgent (Dừng máy hoàn toàn)
-                </td>
-                <td class="p-2.5 font-mono font-bold text-blue-800 bg-blue-50/30 border-r border-slate-200">
-                  Phản hồi: &le; 30 phút &bull; Xử lý: &le; 4 giờ
-                </td>
-                <td class="p-2.5 font-mono text-slate-800 border-r border-slate-200">
-                  Phản hồi: &le; 60 phút &bull; Xử lý: &le; 8 giờ
-                </td>
-                <td class="p-2.5 text-[11px] text-slate-600">
-                  Đếm ngược 24/7 không phụ thuộc giờ hành chính đối với sự cố khẩn VIP.
-                </td>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="p-2 font-bold text-red-600">Urgent (Dừng máy)</td>
+                <td class="p-2 text-center font-bold text-blue-700 bg-blue-50/50">30m / 4h</td>
+                <td class="p-2 text-center text-slate-600">60m / 8h</td>
               </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold text-amber-700 flex items-center gap-1.5 border-r border-slate-200">
-                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                  High (Suy giảm tải / Rủi ro)
-                </td>
-                <td class="p-2.5 font-mono font-bold text-blue-800 bg-blue-50/30 border-r border-slate-200">
-                  Phản hồi: &le; 60 phút &bull; Xử lý: &le; 8 giờ
-                </td>
-                <td class="p-2.5 font-mono text-slate-800 border-r border-slate-200">
-                  Phản hồi: &le; 120 phút &bull; Xử lý: &le; 16 giờ
-                </td>
-                <td class="p-2.5 text-[11px] text-slate-600">
-                  Cảnh báo Dispatcher nếu trôi qua quá 50% thời hạn cam kết phản hồi.
-                </td>
+              <tr>
+                <td class="p-2 font-bold text-amber-600">High (Giảm tải)</td>
+                <td class="p-2 text-center font-semibold text-blue-700 bg-blue-50/50">60m / 8h</td>
+                <td class="p-2 text-center text-slate-600">120m / 16h</td>
               </tr>
-              <tr class="hover:bg-slate-50">
-                <td class="p-2.5 font-bold text-slate-700 flex items-center gap-1.5 border-r border-slate-200">
-                  <span class="w-2 h-2 rounded-full bg-slate-400"></span>
-                  Medium &bull; Low (Bình thường / Tư vấn)
-                </td>
-                <td class="p-2.5 font-mono text-slate-800 bg-blue-50/20 border-r border-slate-200">
-                  Phản hồi: &le; 2h - 4h &bull; Xử lý: &le; 16h - 36h
-                </td>
-                <td class="p-2.5 font-mono text-slate-800 border-r border-slate-200">
-                  Phản hồi: &le; 4h - 8h &bull; Xử lý: &le; 24h - 48h
-                </td>
-                <td class="p-2.5 text-[11px] text-slate-600">
-                  Tính toán theo giờ làm việc thực tế, loại trừ ngày nghỉ lễ theo cấu hình.
-                </td>
+              <tr>
+                <td class="p-2 font-bold text-blue-600">Medium (Phụ trợ)</td>
+                <td class="p-2 text-center text-slate-600 bg-blue-50/50">2h / 16h</td>
+                <td class="p-2 text-center text-slate-600">4h / 24h</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-slate-600">Low (Kiểm tra)</td>
+                <td class="p-2 text-center text-slate-600 bg-blue-50/50">4h / 36h</td>
+                <td class="p-2 text-center text-slate-600">8h / 48h</td>
               </tr>
             </tbody>
           </table>
-        </div>
 
-        <!-- 3 Feature Cards of Pillar 1 -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
-            <div class="font-bold text-slate-900 text-xs mb-1.5 flex items-center gap-2">
-              <i data-lucide="qr-code" class="w-4 h-4 text-blue-600"></i>
-              <span>Tem Quét QR &amp; Đo Độ Trễ Tiếp Nhận</span>
-            </div>
-            <p class="text-[11px] text-slate-600 leading-relaxed">
-              Quét tem QR dán trên máy tự động điền mã máy và khách hàng trong 15s. Hệ thống tách biệt mốc $T_0$ (`custom_incident_time`) và $T_1$ (`creation`) để đo thời gian thông tin bị nghẽn (Logging Latency).
-            </p>
-          </div>
-
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
-            <div class="font-bold text-slate-900 text-xs mb-1.5 flex items-center gap-2">
-              <i data-lucide="route" class="w-4 h-4 text-emerald-600"></i>
-              <span>Động Cơ Phân Bổ Skill-Based Routing</span>
-            </div>
-            <p class="text-[11px] text-slate-600 leading-relaxed">
-              Tự động đọc chuyên ngành thiết bị (`custom_asset_category`): Sự cố máy nén &rarr; KTV An (Cơ khí); Sự cố tủ điện &rarr; KTV Bình (Điện); Chiller &rarr; KTV Cường (Lạnh). Tránh chia việc mù Round Robin.
-            </p>
-          </div>
-
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 shadow-xs">
-            <div class="font-bold text-slate-900 text-xs mb-1.5 flex items-center gap-2">
-              <i data-lucide="rotate-ccw" class="w-4 h-4 text-amber-600"></i>
-              <span>Callback Tracking &amp; Tỷ Lệ FTFR</span>
-            </div>
-            <p class="text-[11px] text-slate-600 leading-relaxed">
-              Máy sửa xong tái phát lỗi trong 7 ngày sẽ tự nối `custom_related_issue` và bật cờ `custom_has_callback = 1`, làm giảm tỷ lệ sửa dứt điểm lần đầu (FTFR), ngăn chặn KTV sửa ẩu hoặc linh kiện kém.
-            </p>
+          <div class="p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-[11px] text-amber-900 leading-snug">
+            <strong>Trục kép:</strong> Severity (Mức độ sự cố) &times; Customer Tier (Hạng hợp đồng) = Hạn chót cam kết chuẩn xác đến từng giây.
           </div>
         </div>
       </div>
 
-      <!-- Bottom Banner -->
-      <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
-        <span>Thực nghiệm Scenario 1: Ticket dừng máy in Flexo tại Tân Á được phản hồi và điều phối đúng KTV An sau đúng <strong>12 phút</strong> (Cam kết &le; 30p).</span>
-        <span class="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">SLA 100% Met</span>
+      <!-- Core Message Callout -->
+      <div class="p-3.5 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs sm:text-sm font-medium">
+        <span><strong class="text-indigo-400 font-bold">TRIẾT LÝ ĐIỀU PHỐI:</strong> <em>"Skill determines who is eligible; Round Robin distributes within the eligible group."</em></span>
+        <span class="text-emerald-400 font-mono hidden md:inline">Đúng người &bull; Đúng việc</span>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 5: CHƯƠNG 3.2 - TRỤ CỘT 2: QUẢN LÝ THIẾT BỊ & BẢO TRÌ CMMS ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 overflow-y-auto custom-scrollbar bg-white text-slate-800" data-slide="5">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold text-emerald-800 tracking-wider uppercase bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200">Chương 3.2 &bull; Trụ Cột 2</span>
-          <span class="text-xs font-mono text-slate-500 font-medium">Slide 05 / 10</span>
+    <!-- ==================== SLIDE 09: DEEP DIVE: CMMS + MRO + FIELD SERVICE ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="9">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">CHUYÊN SÂU 2: HIỆN TRƯỜNG</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">CMMS &bull; MOBILE VAN STOCK &bull; TÁC NGHIỆP HIỆN TRƯỜNG</h2>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Quản Lý Thiết Bị &amp; Bảo Trì Phòng Ngừa (CMMS): Cách Ly Kế Toán &amp; PM-to-CM</h2>
-        <p class="text-sm text-slate-600 mt-1">Trái tim kỹ thuật quản lý lý lịch thiết bị, triệt tiêu rủi ro kế toán tài chính và chuyển từ sửa chữa bị động sang bảo trì ngăn ngừa.</p>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 09 / 13</div>
       </div>
 
-      <div class="my-auto py-3 grid grid-cols-1 md:grid-cols-3 gap-5">
-        <!-- Feature 1: Accounting Isolation -->
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between shadow-xs">
+      <!-- 3 Columns Layout: Asset, Field Service, Van Stock -->
+      <div class="my-auto py-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Col 1: ASSET (CMMS) -->
+        <div class="p-4 rounded-2xl bg-white border border-emerald-200 shadow-sm flex flex-col justify-between">
           <div>
-            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3">
-              <i data-lucide="shield-alert" class="w-5 h-5"></i>
+            <div class="flex items-center gap-2 pb-2 border-b border-emerald-100 mb-3 text-emerald-800 font-bold text-xs font-mono uppercase">
+              <i data-lucide="cpu" class="w-4 h-4 text-emerald-600"></i> THIẾT BỊ (CMMS)
             </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2">Cách Ly Kế Toán Thuế (Accounting Isolation)</h3>
-            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
-              Thiết bị là tài sản của <strong>khách hàng</strong>, không thuộc quyền sở hữu của công ty dịch vụ AIS. Cần cấu hình triệt tiêu tính năng tài chính:
-            </p>
-            <ul class="space-y-2 text-xs text-slate-700 font-mono">
-              <li class="p-2 rounded-lg bg-white border border-slate-200">
-                <span class="text-blue-700 font-bold">calculate_depreciation = 0</span>
-                <span class="block text-[11px] text-slate-500 font-sans">Khóa hoàn toàn tính năng khấu hao</span>
-              </li>
-              <li class="p-2 rounded-lg bg-white border border-slate-200">
-                <span class="text-emerald-700 font-bold">custom_is_customer_equipment = 1</span>
-                <span class="block text-[11px] text-slate-500 font-sans">Đánh dấu rõ ràng là máy của khách</span>
-              </li>
-              <li class="p-2 rounded-lg bg-white border border-slate-200">
-                <span class="text-indigo-700 font-bold">custom_customer = [Khách hàng]</span>
-                <span class="block text-[11px] text-slate-500 font-sans">Gán đích danh chủ sở hữu hợp pháp</span>
-              </li>
-            </ul>
+            
+            <div class="space-y-2 text-xs text-slate-600">
+              <div class="p-2 rounded-lg bg-emerald-50/50 border border-emerald-200">
+                <strong class="text-emerald-950 font-bold">1. Tem QR Code Thân Máy:</strong>
+                <p class="text-[11px] mt-0.5">Dán trực tiếp vỏ máy, công nhân quét camera là form tự điền mã máy.</p>
+              </div>
+
+              <div class="p-2 rounded-lg bg-emerald-50/50 border border-emerald-200">
+                <strong class="text-emerald-950 font-bold">2. Cách Ly Kế Toán Thuế:</strong>
+                <p class="text-[11px] mt-0.5"><code class="font-mono">calculate_depreciation = 0</code> &bull; Không trích khấu hao vào sổ AIS.</p>
+              </div>
+
+              <div class="p-2 rounded-lg bg-emerald-50/50 border border-emerald-200">
+                <strong class="text-emerald-950 font-bold">3. Lập Lịch PM Tự Động:</strong>
+                <p class="text-[11px] mt-0.5">1 tháng (Chiller), 3 tháng (Máy nén), 6 tháng (Tủ MSB) tự sinh Maintenance Log.</p>
+              </div>
+
+              <div class="p-2 rounded-lg bg-emerald-50/50 border border-emerald-200">
+                <strong class="text-emerald-950 font-bold">4. PM-to-CM Trigger:</strong>
+                <p class="text-[11px] mt-0.5">Bảo dưỡng thấy hỏng ngầm &rarr; Kích hoạt tạo Issue gắn liên kết ngay.</p>
+              </div>
+            </div>
           </div>
-          <div class="mt-4 pt-2.5 border-t border-slate-200 text-[11px] text-emerald-800 font-semibold">
-            Bảo vệ tuyệt đối sổ sách kế toán thuế của AIS.
+
+          <div class="mt-3 pt-2 border-t border-emerald-100 text-[10px] text-emerald-800 font-mono">
+            Hồ sơ bệnh án &bull; TCO per Asset
           </div>
         </div>
 
-        <!-- Feature 2: PM Schedules -->
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between shadow-xs">
+        <!-- Col 2: FIELD SERVICE -->
+        <div class="p-4 rounded-2xl bg-white border border-blue-200 shadow-sm flex flex-col justify-between">
           <div>
-            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-3">
-              <i data-lucide="calendar-check" class="w-5 h-5"></i>
+            <div class="flex items-center gap-2 pb-2 border-b border-blue-100 mb-3 text-blue-800 font-bold text-xs font-mono uppercase">
+              <i data-lucide="smartphone" class="w-4 h-4 text-blue-600"></i> FIELD SERVICE KTV
             </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2">3 Kế Hoạch Bảo Trì Ngăn Ngừa (PM)</h3>
-            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
-              Tự động sinh các bản ghi kiểm tra định kỳ (`Asset Maintenance Log`) mà không cần con người nhớ sổ tay:
-            </p>
-            <ul class="space-y-2 text-xs text-slate-700">
-              <li class="p-2 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">1 Tháng / Lần &bull; Chiller Daikin:</strong> Vệ sinh bình ngưng, đo áp suất gas hút/nén, kiểm tra van tiết lưu.
-              </li>
-              <li class="p-2 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">3 Tháng / Lần &bull; Máy nén Hitachi:</strong> Thay lọc dầu, kiểm tra nhiệt độ dầu bôi trơn, xả nước bình tích khí.
-              </li>
-              <li class="p-2 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">6 Tháng / Lần &bull; Tủ điện tổng MSB:</strong> Siết thanh cái đồng busbar, đo nhiệt hồng ngoại tiếp điểm.
-              </li>
-            </ul>
+
+            <div class="space-y-2 text-xs text-slate-600">
+              <div class="p-2 rounded-lg bg-blue-50/50 border border-blue-200">
+                <strong class="text-blue-950 font-bold">1. Nhận Việc Trên Mobile Desk:</strong>
+                <p class="text-[11px] mt-0.5">Thông báo tức thời, xem vị trí máy và lịch sử hỏng trước đó.</p>
+              </div>
+
+              <div class="p-2 rounded-lg bg-blue-50/50 border border-blue-200">
+                <strong class="text-blue-950 font-bold">2. Nút [Check-in Hiện Trường]:</strong>
+                <p class="text-[11px] mt-0.5">Chuyển vé sang <code class="font-mono font-semibold">In Progress</code>, khóa giờ phản hồi SLA.</p>
+              </div>
+
+              <div class="p-2 rounded-lg bg-blue-50/50 border border-blue-200">
+                <strong class="text-blue-950 font-bold">3. Nút [Xuất Linh Kiện Sửa]:</strong>
+                <p class="text-[11px] mt-0.5">Tạo nhanh phiếu xuất kho gắn thẳng mã Issue và Asset trong 1-chạm.</p>
+              </div>
+
+              <div class="p-2 rounded-lg bg-blue-50/50 border border-blue-200">
+                <strong class="text-blue-950 font-bold">4. Nút [Hoàn Thành Ca]:</strong>
+                <p class="text-[11px] mt-0.5">Bắt buộc chọn 1 trong 5 danh mục nguyên nhân gốc (<code class="font-mono">root_cause</code>).</p>
+              </div>
+            </div>
           </div>
-          <div class="mt-4 pt-2.5 border-t border-slate-200 text-[11px] text-blue-700 font-semibold">
-            Động cơ CronJob tự động sinh việc khi đến hạn.
+
+          <div class="mt-3 pt-2 border-t border-blue-100 text-[10px] text-blue-800 font-mono">
+            Client Script Desk &bull; 1-Touch Actions
           </div>
         </div>
 
-        <!-- Feature 3: PM-to-CM Trigger -->
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between shadow-xs">
+        <!-- Col 3: VAN STOCK -->
+        <div class="p-4 rounded-2xl bg-white border border-amber-200 shadow-sm flex flex-col justify-between">
           <div>
-            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold mb-3">
-              <i data-lucide="zap" class="w-5 h-5"></i>
+            <div class="flex items-center gap-2 pb-2 border-b border-amber-100 mb-3 text-amber-800 font-bold text-xs font-mono uppercase">
+              <i data-lucide="truck" class="w-4 h-4 text-amber-600"></i> KHO XE LƯU ĐỘNG (VAN)
             </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2">Cơ Chế Kích Hoạt PM-to-CM Trigger</h3>
-            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
-              Trong quá trình kiểm tra định kỳ, nếu KTV phát hiện thông số suy giảm hoặc phụ tùng sắp hỏng:
-            </p>
-            <div class="space-y-2 text-xs text-slate-700">
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">Không sửa chui:</strong> Hệ thống cung cấp nút bấm kích hoạt ngay một vé sự cố đột xuất (`custom_issue`).
+
+            <div class="space-y-2 text-xs text-slate-600">
+              <div class="p-2 rounded-lg bg-amber-50/50 border border-amber-200">
+                <strong class="text-amber-950 font-bold">1. Chặng 1: Material Transfer</strong>
+                <p class="text-[11px] mt-0.5">Đầu tuần chuyển linh kiện phổ biến từ Kho Tổng lên Kho Xe từng KTV.</p>
               </div>
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">Liên kết nhật ký:</strong> Vé sự cố gắn chặt với bản ghi bảo trì định kỳ, lưu thông số đo rung SKF.
+
+              <div class="p-2 rounded-lg bg-amber-50/50 border border-amber-200">
+                <strong class="text-amber-950 font-bold">2. Chặng 2: Material Issue</strong>
+                <p class="text-[11px] mt-0.5">Xuất trực tiếp từ kho xe vào máy khách tại chỗ, trừ tồn tức thời.</p>
               </div>
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">Hiệu chuẩn thiết bị:</strong> Quản lý lịch kiểm định Quatest cho máy đo rung SKF nội bộ `TOOL-VIB01`.
+
+              <div class="p-2 rounded-lg bg-amber-50/50 border border-amber-200">
+                <strong class="text-amber-950 font-bold">3. Trách Nhiệm Vật Chất Rõ Ràng:</strong>
+                <p class="text-[11px] mt-0.5">Linh kiện trên xe nào KTV đó ký nhận, chấm dứt tình trạng thất thoát.</p>
+              </div>
+
+              <div class="p-2 rounded-lg bg-amber-50/50 border border-amber-200">
+                <strong class="text-amber-950 font-bold">4. Core Return (Thu Hồi):</strong>
+                <p class="text-[11px] mt-0.5">Thu hồi xác phụ tùng hỏng về Kho Thu Hồi phục vụ kiểm toán nội bộ.</p>
               </div>
             </div>
           </div>
-          <div class="mt-4 pt-2.5 border-t border-slate-200 text-[11px] text-amber-800 font-semibold">
-            Phát hiện sớm sự cố trước khi nhà máy dừng máy.
+
+          <div class="mt-3 pt-2 border-t border-amber-100 text-[10px] text-amber-800 font-mono">
+            First-Time Fix Rate &bull; Giảm 65% Truck-roll
           </div>
         </div>
       </div>
 
-      <!-- Bottom takeaway -->
-      <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
-        <span>Thực nghiệm Scenario 3: KTV Cường bảo trì Chiller phát hiện van tiết lưu đóng băng &rarr; Bấm nút sinh Issue `ISS-2026-00005` xử lý kịp thời.</span>
-        <span class="font-mono font-bold text-emerald-800 bg-white px-2 py-0.5 rounded border border-emerald-200">PM-to-CM: Verified</span>
+      <!-- Connecting Triad Banner -->
+      <div class="p-3 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs font-medium">
+        <span>Tam giác hiện trường: <strong>Thiết Bị (Asset) &harr; Kỹ Thuật Viên (Technician) &harr; Kho Xe (Inventory)</strong></span>
+        <span class="text-blue-400 font-mono font-semibold">Tích hợp native không qua API trung gian</span>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 6: CHƯƠNG 3.3 - TRỤ CỘT 3: KHO MRO & VAN STOCK ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 overflow-y-auto custom-scrollbar bg-white text-slate-800" data-slide="6">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold text-amber-800 tracking-wider uppercase bg-amber-50 px-2.5 py-1 rounded border border-amber-200">Chương 3.3 &bull; Trụ Cột 3</span>
-          <span class="text-xs font-mono text-slate-500 font-medium">Slide 06 / 10</span>
+    <!-- ==================== SLIDE 10: ⭐ E2E LIVE CASE: ISS-2026-00001 ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="10">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">HERO SLIDE &bull; KIỂM CHỨNG LIVE</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">DIỄN BIẾN CA SỰ CỐ THỰC TẾ: MÁY NÉN KHÍ HITACHI (ISS-2026-00001)</h2>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Quản Trị Kho MRO Đa Tầng: Mô Hình Mobile Van Stock &amp; Billing Engine</h2>
-        <p class="text-sm text-slate-600 mt-1">Cung ứng vật tư tức thì tại hiện trường, quản lý trách nhiệm vật chất theo từng KTV, tự động cảnh báo tồn kho và phân định chi phí.</p>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 10 / 13</div>
       </div>
 
-      <div class="my-auto py-3 grid grid-cols-1 md:grid-cols-3 gap-5">
-        <!-- Col 1: Van Stock Architecture -->
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between shadow-xs">
-          <div>
-            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold mb-3">
-              <i data-lucide="truck" class="w-5 h-5"></i>
+      <!-- Timeline Hero Flow -->
+      <div class="my-auto py-3">
+        <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <span class="text-xs font-mono font-bold text-slate-500 uppercase">Hành Trình Giao Dịch Xuyên Suốt 5 Phân Hệ</span>
+            <span class="text-xs font-mono font-bold text-blue-700">Khách Hàng: Công ty CP Bao bì Tân Á (VIP)</span>
+          </div>
+
+          <!-- Step-by-Step Horizontal Timeline -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 text-xs">
+            <!-- Node 1 -->
+            <div class="p-3 rounded-xl bg-blue-50 border border-blue-200 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-blue-700 font-bold">
+                  <span>08:30</span>
+                  <span class="px-1.5 py-0.2 rounded bg-blue-200 text-blue-900">INTAKE</span>
+                </div>
+                <div class="font-bold text-slate-900 mt-1">Lỗi Quá Nhiệt E-04</div>
+                <p class="text-[11px] text-slate-600 mt-1 leading-snug">Quản đốc quét tem QR trên máy Hitachi. SLA VIP 30' được áp đặt tự động.</p>
+              </div>
+              <div class="mt-2 text-[10px] font-mono text-blue-800 font-semibold">ISS-2026-00001</div>
             </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2">Kiến Trúc Cây Kho &amp; Van Stock</h3>
-            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
-              Tổ chức kho bãi theo mô hình FSM chuẩn quốc tế nhằm triệt tiêu thất thoát phụ tùng lưu động:
+
+            <!-- Node 2 -->
+            <div class="p-3 rounded-xl bg-indigo-50 border border-indigo-200 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-indigo-700 font-bold">
+                  <span>08:31</span>
+                  <span class="px-1.5 py-0.2 rounded bg-indigo-200 text-indigo-900">ROUTING</span>
+                </div>
+                <div class="font-bold text-slate-900 mt-1">Gán Đúng Chuyên Gia</div>
+                <p class="text-[11px] text-slate-600 mt-1 leading-snug">Đọc máy nhóm <code class="font-mono">Compressor</code> &rarr; Tự động giao cho KTV Cơ khí Nguyễn Văn An.</p>
+              </div>
+              <div class="mt-2 text-[10px] font-mono text-indigo-800 font-semibold">KTV: Nguyễn Văn An</div>
+            </div>
+
+            <!-- Node 3 -->
+            <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-emerald-700 font-bold">
+                  <span>08:55</span>
+                  <span class="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900">CHECK-IN</span>
+                </div>
+                <div class="font-bold text-slate-900 mt-1">Có Mặt Hiện Trường</div>
+                <p class="text-[11px] text-slate-600 mt-1 leading-snug">An đến nơi bấm Check-in lúc 08:55 &rarr; Đáp ứng SLA phản hồi 24' (trước hạn 6').</p>
+              </div>
+              <div class="mt-2 text-[10px] font-mono text-emerald-800 font-semibold">SLA Met (100%)</div>
+            </div>
+
+            <!-- Node 4 -->
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-amber-700 font-bold">
+                  <span>09:15</span>
+                  <span class="px-1.5 py-0.2 rounded bg-amber-200 text-amber-900">VAN STOCK</span>
+                </div>
+                <div class="font-bold text-slate-900 mt-1">Xuất 2 Lọc Dầu</div>
+                <p class="text-[11px] text-slate-600 mt-1 leading-snug">Xuất từ Kho Xe An vào máy. Cờ <code class="font-mono">Under Warranty</code> (AIS chịu 1.3 triệu đồng).</p>
+              </div>
+              <div class="mt-2 text-[10px] font-mono text-amber-800 font-semibold">MAT-STE-2026-00002</div>
+            </div>
+
+            <!-- Node 5 -->
+            <div class="p-3 rounded-xl bg-red-50 border border-red-200 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-red-700 font-bold">
+                  <span>09:20</span>
+                  <span class="px-1.5 py-0.2 rounded bg-red-200 text-red-900">REORDER</span>
+                </div>
+                <div class="font-bold text-slate-900 mt-1">Báo Động Tồn Kho</div>
+                <p class="text-[11px] text-slate-600 mt-1 leading-snug">Tồn kho tổng tụt xuống 2.0 &lt; 3.0 &rarr; Hệ thống kích hoạt sinh Yêu cầu mua sắm.</p>
+              </div>
+              <div class="mt-2 text-[10px] font-mono text-red-800 font-semibold">Trigger Condition: TRUE</div>
+            </div>
+
+            <!-- Node 6 -->
+            <div class="p-3 rounded-xl bg-purple-50 border border-purple-200 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-[10px] font-mono text-purple-700 font-bold">
+                  <span>10:45</span>
+                  <span class="px-1.5 py-0.2 rounded bg-purple-200 text-purple-900">RESOLVED</span>
+                </div>
+                <div class="font-bold text-slate-900 mt-1">Nghiệm Thu Khép Kín</div>
+                <p class="text-[11px] text-slate-600 mt-1 leading-snug">Máy chạy êm, đóng ca <code class="font-mono">Hardware Failure</code>. Mua bù 10 lọc nạp lại kho xe An.</p>
+              </div>
+              <div class="mt-2 text-[10px] font-mono text-purple-800 font-semibold">Closed-loop Complete</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Statement: The Core Punchline -->
+      <div class="p-4 rounded-xl bg-slate-900 text-white flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-3">
+          <div class="p-2 rounded-lg bg-emerald-600 text-white font-bold text-xs shrink-0">
+            HERO CASE
+          </div>
+          <div class="text-xs sm:text-sm font-bold tracking-tight">
+            1 INCIDENT &rarr; ISSUE &rarr; TECHNICIAN &rarr; ASSET &rarr; STOCK &rarr; PROCUREMENT &rarr; FINANCE
+          </div>
+        </div>
+        <a href="http://localhost:8080/desk#Form/Issue/ISS-2026-00001" target="_blank" class="text-xs font-mono text-emerald-400 hover:text-emerald-300 underline font-semibold shrink-0">
+          Xem vé ISS-2026-00001 trên Desk &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== SLIDE 11: FIT-GAP + ADR ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="11">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">PHÂN TÍCH GIẢI PHÁP</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">PHÂN TÍCH FIT-GAP &amp; 3 QUYẾT ĐỊNH KIẾN TRÚC ĐÁNH ĐỔI (ADR)</h2>
+        </div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 11 / 13</div>
+      </div>
+
+      <!-- Main Layout: Fit-Gap Table & 3 ADRs -->
+      <div class="my-auto py-3 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <!-- LEFT: Fit-Gap Table (7 Cols) -->
+        <div class="lg:col-span-7 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide pb-2 border-b border-slate-100 flex items-center justify-between">
+              <span>Bảng Đối Chiếu Fit-Gap (Năng Lực Native vs Tùy Biến)</span>
+              <span class="text-blue-700 font-mono text-[10px]">ERPNext v16 Core</span>
+            </div>
+
+            <div class="mt-2.5 overflow-x-auto text-xs">
+              <table class="w-full border-collapse">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200 text-[11px]">
+                    <th class="p-2 text-left">Nghiệp Vụ Yêu Cầu</th>
+                    <th class="p-2 text-center">ERPNext Native</th>
+                    <th class="p-2 text-left">Giải Pháp Triển Khai Thực Tế</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-[11px] text-slate-600">
+                  <tr>
+                    <td class="p-1.5 font-bold text-slate-900">1. Issue &amp; Asset Management</td>
+                    <td class="p-1.5 text-center text-emerald-600 font-bold">&check; Native</td>
+                    <td class="p-1.5">Tận dụng trọn vẹn DocType chuẩn của ERPNext Core</td>
+                  </tr>
+                  <tr>
+                    <td class="p-1.5 font-bold text-slate-900">2. Asset Maintenance Plans</td>
+                    <td class="p-1.5 text-center text-emerald-600 font-bold">&check; Native</td>
+                    <td class="p-1.5">Lập lịch PM tự động theo chu kỳ tuần/tháng/quý</td>
+                  </tr>
+                  <tr>
+                    <td class="p-1.5 font-bold text-slate-900">3. Mobile Van Stock Logistics</td>
+                    <td class="p-1.5 text-center text-blue-600 font-bold">&param; Config</td>
+                    <td class="p-1.5">Cây kho phân cấp &amp; lệnh Material Transfer</td>
+                  </tr>
+                  <tr>
+                    <td class="p-1.5 font-bold text-slate-900">4. Skill-Based Routing</td>
+                    <td class="p-1.5 text-center text-blue-600 font-bold">&param; Config</td>
+                    <td class="p-1.5">Fetch Category &amp; 3 Assignment Rules chuyên ngành</td>
+                  </tr>
+                  <tr>
+                    <td class="p-1.5 font-bold text-slate-900">5. FSM SLA Incident Time (T0 vs T1)</td>
+                    <td class="p-1.5 text-center text-red-500 font-bold">&times; Gap</td>
+                    <td class="p-1.5 text-blue-700 font-semibold">Custom Field <code class="font-mono">custom_incident_time</code></td>
+                  </tr>
+                  <tr>
+                    <td class="p-1.5 font-bold text-slate-900">6. Phân Định Dòng Tiền (Billing Type)</td>
+                    <td class="p-1.5 text-center text-red-500 font-bold">&times; Gap</td>
+                    <td class="p-1.5 text-blue-700 font-semibold">Custom Field <code class="font-mono">custom_billing_type</code> (3 loại)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-1.5 font-bold text-slate-900">7. Nút Tác Vụ Nhanh Hiện Trường</td>
+                    <td class="p-1.5 text-center text-red-500 font-bold">&times; Gap</td>
+                    <td class="p-1.5 text-blue-700 font-semibold">Client Script Desk (Check-in, Xuất kho, Nghiệm thu)</td>
+                  </tr>
+                  <tr>
+                    <td class="p-1.5 font-bold text-slate-900">8. Quản Trị Tái Phát (Callback &bull; FTFR)</td>
+                    <td class="p-1.5 text-center text-red-500 font-bold">&times; Gap</td>
+                    <td class="p-1.5 text-blue-700 font-semibold">Trường <code class="font-mono">related_issue</code> &amp; cờ <code class="font-mono">has_callback</code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="mt-2.5 p-2 rounded-lg bg-slate-100 text-[11px] text-slate-700 italic">
+            "Không custom những gì ERPNext đã có sẵn; chỉ custom nơi nghiệp vụ thực sự có Gap!"
+          </div>
+        </div>
+
+        <!-- RIGHT: 3 Typical ADRs (5 Cols) -->
+        <div class="lg:col-span-5 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2.5">
+          <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide">
+            3 Quyết Định Kiến Trúc Đánh Đổi (ADR)
+          </div>
+
+          <!-- ADR 1 -->
+          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>ADR-01: Asset Native + Cách Ly Kế Toán</span>
+              <span class="text-[10px] text-emerald-700 font-mono font-semibold">100% Core CMMS</span>
+            </div>
+            <p class="text-[11px] text-slate-600 mt-1">
+              <strong>Đánh đổi:</strong> Chấp nhận tên gọi DocType là `Asset`, bù lại tận dụng toàn bộ module bảo trì định kỳ có sẵn mà không làm sai lệch sổ sách thuế của AIS.
             </p>
-            <ul class="space-y-2 text-xs text-slate-700">
-              <li class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">Kho Linh Kiện Trung Tâm:</strong> Lưu trữ an toàn 12 danh mục phụ tùng kỹ thuật.
-              </li>
-              <li class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">Kho Xe KTV (Van Stock):</strong> 3 kho di động trên xe bán tải của An, Bình, Cường. Hàng lên xe nào KTV chịu trách nhiệm vật chất.
-              </li>
-              <li class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">Kho Thu Hồi Xác Hỏng:</strong> Lưu xác linh kiện cũ tháo từ máy khách để phục vụ kiểm toán nội bộ.
-              </li>
-            </ul>
           </div>
-          <div class="mt-4 pt-2.5 border-t border-slate-200 text-[11px] text-amber-800 font-semibold">
-            Không còn "lỗ hổng đen" thất thoát phụ tùng.
-          </div>
-        </div>
 
-        <!-- Col 2: 2-stage Flow & Reorder -->
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between shadow-xs">
-          <div>
-            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3">
-              <i data-lucide="arrow-right-left" class="w-5 h-5"></i>
+          <!-- ADR 2 -->
+          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>ADR-02: Skill Filter + Round Robin</span>
+              <span class="text-[10px] text-blue-700 font-mono font-semibold">Skill-First</span>
             </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2">Lưu Chuyển 2 Chặng &amp; Auto Reorder</h3>
-            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
-              Quy trình xuất nhập kho đồng bộ thời gian thực với phiếu sự cố:
+            <p class="text-[11px] text-slate-600 mt-1">
+              <strong>Đánh đổi:</strong> Đúng chuyên môn là yếu tố sống còn trong bảo trì nhà máy. Giao việc cho chuyên gia có thể bận hơn nhưng đảm bảo không làm hỏng máy.
             </p>
-            <div class="space-y-2 text-xs text-slate-700">
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">Chặng 1 (Material Transfer):</strong> Đầu tuần chuyển phụ tùng từ Kho Tổng lên Kho Xe của KTV.
-              </div>
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">Chặng 2 (Material Issue):</strong> Đến máy khách, KTV bấm nút xuất kho trừ thẳng số dư trên xe vào máy hỏng.
-              </div>
-              <div class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <strong class="text-slate-900">Cảnh Báo Reorder Tự Động:</strong> Tồn kho lọc dầu tụt xuống 2.0 &le; 3.0 (ngưỡng an toàn) &rarr; tự kích hoạt `Reorder Trigger = TRUE` để đặt hàng NCC.
-              </div>
-            </div>
           </div>
-          <div class="mt-4 pt-2.5 border-t border-slate-200 text-[11px] text-blue-700 font-semibold">
-            Đảm bảo KTV luôn sẵn sàng phụ tùng trên xe.
-          </div>
-        </div>
 
-        <!-- Col 3: Billing Engine -->
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between shadow-xs">
-          <div>
-            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-3">
-              <i data-lucide="receipt" class="w-5 h-5"></i>
+          <!-- ADR 3 -->
+          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span>ADR-03: Van Stock 2 Chặng</span>
+              <span class="text-[10px] text-amber-700 font-mono font-semibold">Zero Parts Loss</span>
             </div>
-            <h3 class="text-base font-bold text-slate-900 mb-2">Động Cơ Phân Định Dòng Tiền (Billing Type)</h3>
-            <p class="text-xs text-slate-600 mb-3 leading-relaxed">
-              Giải quyết dứt điểm tranh chấp giữa Kế toán và Khách hàng về việc ai trả tiền linh kiện:
+            <p class="text-[11px] text-slate-600 mt-1">
+              <strong>Đánh đổi:</strong> Thêm 1 bước lệnh điều chuyển (Material Transfer) nhưng KTV có đồ sẵn trên xe, sửa dứt điểm lần đầu và triệt tiêu thất thoát kho lưu động.
             </p>
-            <ul class="space-y-2 text-xs text-slate-700 font-mono">
-              <li class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <span class="text-blue-700 font-bold">Under Warranty:</span>
-                <span class="block text-[11px] text-slate-600 font-sans mt-0.5">Sự cố trong hợp đồng &rarr; AIS chịu chi phí (Nợ TK 641 / Có TK 156: 1.300.000đ).</span>
-              </li>
-              <li class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <span class="text-emerald-700 font-bold">Billable to Customer:</span>
-                <span class="block text-[11px] text-slate-600 font-sans mt-0.5">Khách làm rơi vỡ &rarr; Kết xuất Hóa đơn bán hàng `Sales Invoice` để thu tiền.</span>
-              </li>
-              <li class="p-2.5 rounded-lg bg-white border border-slate-200">
-                <span class="text-slate-700 font-bold">Goodwill:</span>
-                <span class="block text-[11px] text-slate-600 font-sans mt-0.5">Miễn phí sửa các lỗi nhỏ để chăm sóc quan hệ khách hàng.</span>
-              </li>
-            </ul>
-          </div>
-          <div class="mt-4 pt-2.5 border-t border-slate-200 text-[11px] text-emerald-800 font-semibold">
-            Bóc tách lợi nhuận từng hợp đồng minh bạch.
           </div>
         </div>
       </div>
 
-      <!-- Bottom takeaway -->
-      <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
-        <span>Thực nghiệm Scenario 4 &amp; 5: KTV An xuất 2 lọc dầu từ Kho Xe V01 &rarr; Kho Tổng báo động Reorder Level (2.0 < 3.0) &bull; Sổ cái cập nhật tức thì.</span>
-        <span class="font-mono font-bold text-amber-800 bg-white px-2 py-0.5 rounded border border-amber-200">Stock Sync: 100%</span>
+      <!-- Bottom Principle Callout -->
+      <div class="p-3.5 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs sm:text-sm font-medium">
+        <span><strong class="text-blue-400 font-bold">NGUYÊN TẮC THIẾT KẾ ERP:</strong> Tuân thủ triệt để Best Practices của Frappe/ERPNext, đảm bảo hệ thống có thể nâng cấp mượt mà lên các bản v17/v18 trong tương lai.</span>
+        <span class="text-emerald-400 font-mono hidden md:inline">Upgrade-Ready</span>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 7: CHƯƠNG 3.4 - DIỄN BIẾN 1 CA SỰ CỐ THỰC TẾ ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 overflow-y-auto custom-scrollbar bg-white text-slate-800" data-slide="7">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold text-blue-700 tracking-wider uppercase bg-blue-50 px-2.5 py-1 rounded border border-blue-200">Chương 3.4 &bull; Kịch Bản Thực Nghiệm</span>
-          <span class="text-xs font-mono text-slate-500 font-medium">Slide 07 / 10</span>
+    <!-- ==================== SLIDE 12: KPI + EVIDENCE ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="12">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">ĐO LƯỜNG HIỆU QUẢ</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">KẾT QUẢ ĐO LƯỜNG VẬN HÀNH &amp; MINH CHỨNG HỆ THỐNG (KPI)</h2>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Ma Trận Phối Hợp Liên Hoàn 3 Trụ Cột Trong Ca Sự Cố Thực Tế</h2>
-        <p class="text-sm text-slate-600 mt-1">Theo dõi từng giây phút diễn biến của ca sự cố Máy nén khí Hitachi (ISS-2026-00001), minh chứng sự đồng bộ 100% giữa Helpdesk, CMMS, Kho và Kế toán.</p>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 12 / 13</div>
       </div>
 
-      <!-- 6-step Matrix Table -->
-      <div class="my-auto py-3 overflow-x-auto rounded-xl border border-slate-200 shadow-2xs">
-        <table class="w-full text-xs text-left border-collapse">
-          <thead class="bg-slate-100 text-slate-800 uppercase font-mono border-b border-slate-200">
-            <tr>
-              <th class="p-3 border-r border-slate-200 text-center w-12">Bước</th>
-              <th class="p-3 border-r border-slate-200 w-1/4">Sự Kiện Hiện Trường</th>
-              <th class="p-3 border-r border-slate-200">Trụ Cột 1: Helpdesk</th>
-              <th class="p-3 border-r border-slate-200">Trụ Cột 2: Thiết Bị (CMMS)</th>
-              <th class="p-3 border-r border-slate-200">Trụ Cột 3: Kho (Inventory)</th>
-              <th class="p-3">Tác Động Kế Toán (Finance)</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-200 text-slate-700 bg-white">
-            <tr class="hover:bg-slate-50">
-              <td class="p-2.5 font-bold font-mono text-blue-700 text-center border-r border-slate-200">1</td>
-              <td class="p-2.5 font-semibold text-slate-900 border-r border-slate-200">08:30 &bull; Máy nén báo lỗi E-04 quá nhiệt</td>
-              <td class="p-2.5 border-r border-slate-200">Quản đốc quét tem QR trên máy, Ticket tạo với SLA VIP 30'.</td>
-              <td class="p-2.5 font-mono text-slate-600 border-r border-slate-200">Mã máy `ACC-ASS-2026-00002` tự điền vào phiếu sự cố.</td>
-              <td class="p-2.5 border-r border-slate-200">Hệ thống kiểm tra số dư linh kiện tương thích trên xe.</td>
-              <td class="p-2.5 text-slate-400">Chưa phát sinh bút toán</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2.5 font-bold font-mono text-blue-700 text-center border-r border-slate-200">2</td>
-              <td class="p-2.5 font-semibold text-slate-900 border-r border-slate-200">08:31 &bull; Điều phối vé tự động</td>
-              <td class="p-2.5 border-r border-slate-200">Đọc `Compressor`, tự động bắn vé cho KTV Nguyễn Văn An.</td>
-              <td class="p-2.5 border-r border-slate-200">Cập nhật trạng thái máy: Đang gặp sự cố (Broken).</td>
-              <td class="p-2.5 border-r border-slate-200">Kho Xe KTV An báo sẵn sàng có 2 lọc dầu trên xe.</td>
-              <td class="p-2.5 text-slate-400">Chưa phát sinh bút toán</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2.5 font-bold font-mono text-blue-700 text-center border-r border-slate-200">3</td>
-              <td class="p-2.5 font-semibold text-slate-900 border-r border-slate-200">08:55 &bull; KTV An có mặt tại xưởng</td>
-              <td class="p-2.5 border-r border-slate-200">An bấm `[Check-in]`, vé chuyển sang `In Progress`.</td>
-              <td class="p-2.5 border-r border-slate-200">Ghi nhận thời điểm KTV tiếp cận hiện trường thực tế.</td>
-              <td class="p-2.5 border-r border-slate-200">Giữ nguyên trạng thái vật tư trên xe.</td>
-              <td class="p-2.5 text-slate-400">Chưa phát sinh bút toán</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2.5 font-bold font-mono text-blue-700 text-center border-r border-slate-200">4</td>
-              <td class="p-2.5 font-semibold text-slate-900 border-r border-slate-200">09:20 &bull; Thay thế 2 lọc dầu Hitachi</td>
-              <td class="p-2.5 border-r border-slate-200">An bấm `[Xuất linh kiện sửa]` từ form Issue.</td>
-              <td class="p-2.5 font-mono text-slate-600 border-r border-slate-200">Ghi nhận máy được thay 2 lọc `PART-FLT-OIL01`.</td>
-              <td class="p-2.5 border-r border-slate-200">Tạo phiếu `Stock Entry` trừ 2 lọc từ Kho Xe An.</td>
-              <td class="p-2.5 font-mono font-semibold text-slate-800">Giảm tồn kho 1.300.000đ (Có TK 156)</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2.5 font-bold font-mono text-blue-700 text-center border-r border-slate-200">5</td>
-              <td class="p-2.5 font-semibold text-slate-900 border-r border-slate-200">09:40 &bull; Phân loại chi phí sửa chữa</td>
-              <td class="p-2.5 border-r border-slate-200">Chọn `custom_warranty_status = In Warranty`.</td>
-              <td class="p-2.5 border-r border-slate-200">Lưu vết chi phí bảo hành tích lũy của máy Hitachi.</td>
-              <td class="p-2.5 border-r border-slate-200">Phiếu kho ghi `Billing Type = Under Warranty`.</td>
-              <td class="p-2.5 font-mono font-semibold text-blue-700">Tăng Chi phí bảo hành 1.300.000đ (Nợ TK 641)</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2.5 font-bold font-mono text-blue-700 text-center border-r border-slate-200">6</td>
-              <td class="p-2.5 font-semibold text-slate-900 border-r border-slate-200">10:45 &bull; Nghiệm thu và đóng ca</td>
-              <td class="p-2.5 border-r border-slate-200">An bấm `[Hoàn thành ca]`, chọn `Hardware Failure`.</td>
-              <td class="p-2.5 border-r border-slate-200">Máy chuyển `Operational`, chạy thử tải 100%.</td>
-              <td class="p-2.5 border-r border-slate-200">Kho tổng báo động Reorder Level (2.0 < 3.0).</td>
-              <td class="p-2.5 font-mono font-semibold text-emerald-700">Kế toán chốt chi phí hợp lệ</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- 4 Big Metric Cards -->
+      <div class="my-auto py-3 space-y-4">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Card 1 -->
+          <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm text-center hover:border-blue-400 transition">
+            <div class="text-xs font-mono font-bold text-blue-700 uppercase tracking-wide">SERVICE PERFORMANCE</div>
+            <div class="text-4xl sm:text-5xl font-black text-slate-900 my-2">100%</div>
+            <div class="text-xs font-bold text-slate-800">First Response SLA</div>
+            <p class="text-[11px] text-slate-500 mt-1">Toàn bộ 6/6 vé tiếp nhận và phản hồi đúng khung giờ cam kết</p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm text-center hover:border-emerald-400 transition">
+            <div class="text-xs font-mono font-bold text-emerald-700 uppercase tracking-wide">RESOLUTION SLA</div>
+            <div class="text-4xl sm:text-5xl font-black text-slate-900 my-2">100%</div>
+            <div class="text-xs font-bold text-slate-800">Resolution SLA Met</div>
+            <p class="text-[11px] text-slate-500 mt-1">100% ca hoàn thành đáp ứng chuẩn thời hạn hợp đồng VIP và Std</p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm text-center hover:border-indigo-400 transition">
+            <div class="text-xs font-mono font-bold text-indigo-700 uppercase tracking-wide">FIELD QUALITY</div>
+            <div class="text-4xl sm:text-5xl font-black text-slate-900 my-2">100%</div>
+            <div class="text-xs font-bold text-slate-800">First-Time Fix Rate (FTFR)</div>
+            <p class="text-[11px] text-slate-500 mt-1">0% ca tái phát trong cửa sổ 7 ngày (<code class="font-mono">has_callback = 0</code>)</p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm text-center hover:border-purple-400 transition">
+            <div class="text-xs font-mono font-bold text-purple-700 uppercase tracking-wide">PM COMPLIANCE</div>
+            <div class="text-4xl sm:text-5xl font-black text-slate-900 my-2">100%</div>
+            <div class="text-xs font-bold text-slate-800">Bảo Trì Phòng Ngừa</div>
+            <p class="text-[11px] text-slate-500 mt-1">0 ca bảo dưỡng định kỳ bị quá hạn &bull; Đầy đủ nhật ký kiểm định</p>
+          </div>
+        </div>
+
+        <!-- Verification Dataset Breakdown -->
+        <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2 mb-3">
+            <span class="text-xs font-mono font-bold text-slate-700 uppercase">Chi Tiết Bộ Dữ Liệu Thực Nghiệm (Verification Dataset)</span>
+            <span class="text-[11px] text-slate-500 italic font-medium">Measured on current verification dataset (6 Issues sample)</span>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+              <div class="text-slate-500 text-[11px]">Trạng Thái Vé Sự Cố</div>
+              <div class="font-bold text-slate-900 mt-0.5">4 Resolved / 1 Open / 1 On Hold</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+              <div class="text-slate-500 text-[11px]">Phân Bổ KTV</div>
+              <div class="font-bold text-slate-900 mt-0.5">An: 3 vé &bull; Bình: 2 vé &bull; Cường: 1 vé</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+              <div class="text-slate-500 text-[11px]">Kho &amp; Mua Sắm Bù</div>
+              <div class="font-bold text-slate-900 mt-0.5">132.73 tr &bull; 100% Replenished</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+              <div class="text-slate-500 text-[11px]">Dòng Tiền Dịch Vụ</div>
+              <div class="font-bold text-slate-900 mt-0.5">AIS gánh: 1.72 tr &bull; Thu: 2.35 tr</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Bottom takeaway -->
-      <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
-        <span>Minh chứng: Mọi thao tác của KTV tại hiện trường đều tác động tức thì lên toàn bộ phân hệ ERPNext, không có độ trễ nhập liệu.</span>
-        <span class="font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">End-to-End Orchestrated</span>
+      <!-- Academic Honesty Disclaimer -->
+      <div class="p-3 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-600 flex items-center justify-between font-mono">
+        <span>Tuyên ngôn khoa học: Chỉ số 100% được ghi nhận trên tập dữ liệu kiểm chứng mẫu của đồ án; tạo tiền đề cho mở rộng quy mô lớn.</span>
+        <span class="text-slate-800 font-semibold">DUT.K1N4 Certified</span>
       </div>
     </section>
 
-    <!-- ==================== SLIDE 8: CHƯƠNG 4 - PHÂN TÍCH 8 NỖI ĐAU DOANH NGHIỆP ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 overflow-y-auto custom-scrollbar bg-white text-slate-800" data-slide="8">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold text-red-700 tracking-wider uppercase bg-red-50 px-2.5 py-1 rounded border border-red-200">Chương 4 &bull; Phân Tích Thực Tiễn</span>
-          <span class="text-xs font-mono text-slate-500 font-medium">Slide 08 / 10</span>
+    <!-- ==================== SLIDE 13: AI/RAG + IOT ROADMAP ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="13">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+        <div>
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">ĐỊNH HƯỚNG TƯƠNG LAI</span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">ĐỊNH HƯỚNG MỞ RỘNG: HYBRID AI / RAG &amp; BẢO TRÌ DỰ ĐOÁN (IoT)</h2>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Phân Tích Chi Tiết 8 Nỗi Đau Doanh Nghiệp &amp; Lời Giải ERPNext</h2>
-        <p class="text-sm text-slate-600 mt-1">Đối chiếu trực tiếp giữa phương thức vận hành truyền thống gây lãng phí hàng trăm triệu và giải pháp kiến trúc trong hệ thống.</p>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 13 / 13</div>
       </div>
 
-      <!-- 8 Pain Points Matrix Table -->
-      <div class="my-auto py-3 overflow-x-auto rounded-xl border border-slate-200 shadow-2xs">
-        <table class="w-full text-xs text-left border-collapse">
-          <thead class="bg-slate-100 text-slate-800 uppercase font-mono border-b border-slate-200">
-            <tr>
-              <th class="p-2.5 border-r border-slate-200 w-16 text-center">Mã</th>
-              <th class="p-2.5 border-r border-slate-200 w-1/5">Hiện Trạng Truyền Thống</th>
-              <th class="p-2.5 border-r border-slate-200 w-1/3">Thiệt Hại Thực Tế Cho Doanh Nghiệp</th>
-              <th class="p-2.5 bg-blue-50/50 text-blue-900 font-bold">Giải Pháp Trong Hệ Thống ERPNext</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-200 text-slate-700 bg-white">
-            <tr class="hover:bg-slate-50">
-              <td class="p-2 font-mono font-bold text-red-700 text-center border-r border-slate-200">PP-01</td>
-              <td class="p-2 border-r border-slate-200 font-medium text-slate-900">Khách báo hỏng qua Zalo/Hotline, dễ trôi tin</td>
-              <td class="p-2 border-r border-slate-200 text-red-600">Khách VIP bị dừng máy 2 giờ, thiệt hại 200tr. AIS bị phạt vi phạm cam kết và mất khách hàng.</td>
-              <td class="p-2 bg-blue-50/20 font-medium text-slate-900"><strong>Ma trận SLA 2 chiều:</strong> Phân biệt SLA VIP (30' phản hồi) vs Standard, tự động đếm ngược giờ.</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2 font-mono font-bold text-red-700 text-center border-r border-slate-200">PP-02</td>
-              <td class="p-2 border-r border-slate-200 font-medium text-slate-900">Giao việc chia đều ngẫu nhiên (Round Robin mù)</td>
-              <td class="p-2 border-r border-slate-200 text-red-600">Sự cố cháy tủ điện giao thợ cơ khí; KTV đến nơi không sửa được, mất cả buổi chờ cứu viện &rarr; trễ SLA.</td>
-              <td class="p-2 bg-blue-50/20 font-medium text-slate-900"><strong>Skill-based Routing:</strong> 3 quy tắc tự động tra chuyên ngành máy để gán thẳng vé đúng chuyên gia.</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2 font-mono font-bold text-red-700 text-center border-r border-slate-200">PP-03</td>
-              <td class="p-2 border-r border-slate-200 font-medium text-slate-900">Máy sửa xong 2-3 ngày sau lại hỏng đúng lỗi cũ</td>
-              <td class="p-2 border-r border-slate-200 text-slate-600">Không quy được trách nhiệm KTV sửa ẩu, không đo lường được tỷ lệ sửa dứt điểm lần đầu (FTFR).</td>
-              <td class="p-2 bg-blue-50/20 font-medium text-slate-900"><strong>Callback Tracking:</strong> Tái phát trong 7 ngày tự nối `custom_related_issue` và bật `has_callback=1`.</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2 font-mono font-bold text-red-700 text-center border-r border-slate-200">PP-04</td>
-              <td class="p-2 border-r border-slate-200 font-medium text-slate-900">Theo dõi lịch bảo trì định kỳ trên file Excel</td>
-              <td class="p-2 border-r border-slate-200 text-red-600">Nhân viên quên lịch, máy nén khí cạn dầu kẹt trục vít, chi phí sửa đắt gấp 5 lần tiền bảo dưỡng.</td>
-              <td class="p-2 bg-blue-50/20 font-medium text-slate-900"><strong>Asset Maintenance Plans:</strong> Tự động sinh lịch định kỳ 1M, 3M, 6M và tạo sẵn bản ghi kiểm tra.</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2 font-mono font-bold text-red-700 text-center border-r border-slate-200">PP-05</td>
-              <td class="p-2 border-r border-slate-200 font-medium text-slate-900">Máy móc không có hồ sơ lý lịch bệnh án</td>
-              <td class="p-2 border-r border-slate-200 text-slate-600">Không biết 1 năm qua máy hỏng bao nhiêu lần, tốn bao nhiêu tiền; TCO mờ mịt không tư vấn được khách.</td>
-              <td class="p-2 bg-blue-50/20 font-medium text-slate-900"><strong>Liên kết Issue &harr; Asset:</strong> Mọi phiếu xuất kho và sự cố gắn chặt mã máy, bóc tách TCO trọn vòng đời.</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2 font-mono font-bold text-red-700 text-center border-r border-slate-200">PP-06</td>
-              <td class="p-2 border-r border-slate-200 font-medium text-slate-900">Khai báo máy khách bị phần mềm trích khấu hao</td>
-              <td class="p-2 border-r border-slate-200 text-red-600">Làm sai lệch Bảng cân đối kế toán và Báo cáo tài chính gửi thuế &rarr; Vi phạm luật kế toán Việt Nam.</td>
-              <td class="p-2 bg-blue-50/20 font-medium text-slate-900"><strong>Asset Accounting Isolation:</strong> Khóa khấu hao `calculate_depreciation=0`, gắn `is_customer_equipment`.</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2 font-mono font-bold text-red-700 text-center border-r border-slate-200">PP-07</td>
-              <td class="p-2 border-r border-slate-200 font-medium text-slate-900">KTV chạy 40km đến xưởng mới biết thiếu linh kiện</td>
-              <td class="p-2 border-r border-slate-200 text-slate-600">Lãng phí gấp đôi chi phí xăng xe và công thợ (Truck-roll cost). KTV lấm lem ngại gõ form máy tính.</td>
-              <td class="p-2 bg-blue-50/20 font-medium text-slate-900"><strong>Van Stock &amp; Tem QR Code:</strong> KTV luôn có đồ sẵn trên xe, tem QR quét báo lỗi và bấm nút 1-chạm.</td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-2 font-mono font-bold text-red-700 text-center border-r border-slate-200">PP-08</td>
-              <td class="p-2 border-r border-slate-200 font-medium text-slate-900">Linh kiện mang đi sửa bị hụt kho, không ai nhận</td>
-              <td class="p-2 border-r border-slate-200 text-red-600">Thất thoát hàng chục triệu tiền phụ tùng. Nửa đêm kho hết sạch đồ thay gây đứt gãy sửa chữa.</td>
-              <td class="p-2 bg-blue-50/20 font-medium text-slate-900"><strong>Cây Kho Đa Tầng &amp; Reorder Level:</strong> Hàng lên xe nào KTV chịu trách nhiệm; Ngưỡng an toàn báo động tự động.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Bottom takeaway -->
-      <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
-        <span>Tiết kiệm ước tính 180.000.000 VNĐ / năm chi phí phụ tùng thất thoát và giảm thiểu 142 giờ dừng máy ngoài kế hoạch cho các nhà máy.</span>
-        <span class="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">ROI: 4.2 Tháng</span>
-      </div>
-    </section>
-
-    <!-- ==================== SLIDE 9: CHƯƠNG 5 - PHÂN TÍCH ĐÁNH ĐỔI KIẾN TRÚC (5 ADR) ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 overflow-y-auto custom-scrollbar bg-white text-slate-800" data-slide="9">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold text-indigo-800 tracking-wider uppercase bg-indigo-50 px-2.5 py-1 rounded border border-indigo-200">Chương 5 &bull; Kiến Trúc Phần Mềm</span>
-          <span class="text-xs font-mono text-slate-500 font-medium">Slide 09 / 10</span>
-        </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Bản Phân Tích Đánh Đổi Kiến Trúc (5 Architecture Decision Records - ADR)</h2>
-        <p class="text-sm text-slate-600 mt-1">Trong kỹ thuật phần mềm, mọi kiến trúc sư đều phải cân nhắc: Được gì và Mất gì cho từng quyết định kỹ thuật.</p>
-      </div>
-
-      <!-- 5 ADR Table -->
-      <div class="my-auto py-3 overflow-x-auto rounded-xl border border-slate-200 shadow-2xs">
-        <table class="w-full text-xs text-left border-collapse">
-          <thead class="bg-slate-100 text-slate-800 uppercase font-mono border-b border-slate-200">
-            <tr>
-              <th class="p-3 border-r border-slate-200 w-1/4">Quyết Định Kỹ Thuật (ADR)</th>
-              <th class="p-3 border-r border-slate-200 w-1/3 bg-emerald-50/50 text-emerald-900 font-bold">Cái ĐƯỢC Lớn Nhất (Ưu Điểm)</th>
-              <th class="p-3 bg-amber-50/50 text-amber-900 font-bold">Cái MẤT Lớn Nhất (Nhược Điểm / Đánh Đổi)</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-200 text-slate-700 bg-white">
-            <tr class="hover:bg-slate-50">
-              <td class="p-3 font-bold text-slate-900 border-r border-slate-200">
-                1. Cách ly Kế toán DocType Asset<br/>
-                <span class="font-normal text-[11px] text-slate-500">Thay vì viết một DocType riêng "Customer Equipment"</span>
-              </td>
-              <td class="p-3 border-r border-slate-200 text-emerald-800 font-medium">
-                Tận dụng 100% module Bảo trì `Asset Maintenance` có sẵn của ERPNext, không phải viết lại tính năng lập lịch, tạo log và đội bảo trì.
-              </td>
-              <td class="p-3 text-amber-900">
-                Tên gọi `Asset` trong hệ thống dễ gây nhầm lẫn ban đầu với tài sản sở hữu nội bộ của doanh nghiệp.
-              </td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-3 font-bold text-slate-900 border-r border-slate-200">
-                2. Động cơ Skill-based Routing<br/>
-                <span class="font-normal text-[11px] text-slate-500">Thay vì thuật toán Round Robin chia việc xoay vòng</span>
-              </td>
-              <td class="p-3 border-r border-slate-200 text-emerald-800 font-medium">
-                Đúng chuyên môn 100% (An: Cơ khí, Bình: Điện, Cường: Lạnh). Cấu hình trực quan dạng no-code thông qua Assignment Rules.
-              </td>
-              <td class="p-3 text-amber-900">
-                Chưa tự động cân bằng tải công việc nếu xảy ra dồn dập sự cố cùng một chuyên ngành trong cùng một ngày.
-              </td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-3 font-bold text-slate-900 border-r border-slate-200">
-                3. Tem Mã QR Code Web Form<br/>
-                <span class="font-normal text-[11px] text-slate-500">Thay vì bắt người dùng cài Native Mobile App</span>
-              </td>
-              <td class="p-3 border-r border-slate-200 text-emerald-800 font-medium">
-                Chi phí triển khai 0đ, không cần tải app 100MB, công nhân hay KTV chỉ cần giơ điện thoại quét camera là mở form điền sẵn.
-              </td>
-              <td class="p-3 text-amber-900">
-                Bắt buộc phải có kết nối mạng Internet tại hiện trường (Online-only), chưa hỗ trợ hoạt động offline hoàn toàn.
-              </td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-3 font-bold text-slate-900 border-r border-slate-200">
-                4. Mô hình Kho Xe KTV (Van Stock)<br/>
-                <span class="font-normal text-[11px] text-slate-500">Thay vì KTV đi sửa tự lấy đồ xuất thẳng Kho tổng</span>
-              </td>
-              <td class="p-3 border-r border-slate-200 text-emerald-800 font-medium">
-                Gắn trách nhiệm vật chất rõ ràng cho từng KTV, có sẵn phụ tùng trên xe giúp tăng tỷ lệ sửa dứt điểm lần đầu (FTFR).
-              </td>
-              <td class="p-3 text-amber-900">
-                Quy trình bị thêm 1 bước chứng từ trung gian: Phải làm phiếu chuyển kho xe đầu tuần trước khi xuất kho máy hỏng.
-              </td>
-            </tr>
-            <tr class="hover:bg-slate-50">
-              <td class="p-3 font-bold text-slate-900 border-r border-slate-200">
-                5. Cờ Phân Loại Billing Type Trên Kho<br/>
-                <span class="font-normal text-[11px] text-slate-500">Thay vì bắt làm đơn bán hàng chờ kế toán duyệt</span>
-              </td>
-              <td class="p-3 border-r border-slate-200 text-emerald-800 font-medium">
-                Cứu dây chuyền sản xuất của khách hàng trước, thủ tục giấy tờ giải quyết sau; không làm trễ hạn cam kết thời gian SLA.
-              </td>
-              <td class="p-3 text-amber-900">
-                Phụ thuộc vào tính trung thực và cẩn thận của người thao tác khi chọn phân loại `Under Warranty` hay `Billable`.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Bottom takeaway -->
-      <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
-        <span>Nguyên lý kiến trúc: Không có giải pháp hoàn hảo tuyệt đối, chỉ có giải pháp phù hợp nhất với nguồn lực và bài toán thực tế của doanh nghiệp.</span>
-        <span class="font-mono font-bold text-indigo-800 bg-white px-2 py-0.5 rounded border border-indigo-200">ADR Documented</span>
-      </div>
-    </section>
-
-    <!-- ==================== SLIDE 10: CHƯƠNG 6 & 8 - CẨM NANG DESK & KIẾN TRÚC MỞ RỘNG AI RAG ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 overflow-y-auto custom-scrollbar bg-white text-slate-800" data-slide="10">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-mono font-bold text-blue-700 tracking-wider uppercase bg-blue-50 px-2.5 py-1 rounded border border-blue-200">Chương 6 &amp; 8 &bull; Thực Nghiệm &amp; Mở Rộng</span>
-          <span class="text-xs font-mono text-slate-500 font-medium">Slide 10 / 10</span>
-        </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Cẩm Nang Thao Tác Desk (4 Tours) &amp; Kiến Trúc Mở Rộng AI RAG</h2>
-        <p class="text-sm text-slate-600 mt-1">Hướng dẫn kiểm chứng trực tiếp trên hệ thống Local :8080 và thiết kế kiến trúc Trợ lý Kỹ thuật Thông minh (Hybrid AI Agent RAG).</p>
-      </div>
-
-      <div class="my-auto py-3 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Left: 4 Tours on Local Desk -->
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between shadow-xs">
+      <!-- Main Content: AI Architecture Diagram & 4-Phase Roadmap -->
+      <div class="my-auto py-3 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <!-- LEFT: Hybrid AI/RAG Architecture (6 Cols) -->
+        <div class="lg:col-span-6 p-4 rounded-2xl bg-white border border-purple-200 shadow-sm flex flex-col justify-between">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-bold text-blue-800 uppercase tracking-wider flex items-center gap-1.5">
-                <i data-lucide="compass" class="w-4 h-4 text-blue-600"></i>
-                <span>4 Tour Thao Tác Thực Nghiệm Tại http://localhost:8080/desk</span>
-              </span>
-              <span class="font-mono text-[11px] text-blue-700 bg-white px-2 py-0.5 rounded border border-blue-200">Ctrl + K</span>
+            <div class="text-xs font-mono font-bold text-purple-900 uppercase tracking-wide pb-2 border-b border-purple-100 flex items-center justify-between">
+              <span>Kiến Trúc Hybrid Retrieval Với Intent Router</span>
+              <span class="text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-mono font-bold">Zero Hallucination</span>
             </div>
-            <div class="space-y-2.5 text-xs text-slate-700">
-              <div class="p-2.5 rounded-xl bg-white border border-slate-200">
-                <span class="font-bold text-slate-900">Tour 1: Quản Trị Sự Cố &amp; Skill Routing</span>
-                <span class="block text-[11px] text-slate-600 mt-0.5">Gõ <code class="font-mono text-blue-700">Issue List</code> &rarr; Xem vòng tròn KTV An (Cơ khí), Bình (Điện), Cường (Lạnh) &bull; Bộ nút Check-in, Xuất linh kiện, Hoàn thành.</span>
-              </div>
-              <div class="p-2.5 rounded-xl bg-white border border-slate-200">
-                <span class="font-bold text-slate-900">Tour 2: Tem QR Code &amp; Cách Ly Kế Toán Trên Máy</span>
-                <span class="block text-[11px] text-slate-600 mt-0.5">Gõ <code class="font-mono text-blue-700">Asset List</code> &rarr; Mở máy nén Hitachi: Tem QR dán máy, chủ sở hữu Tân Á, ô <code class="font-mono text-slate-700">calculate_depreciation = 0</code>.</span>
-              </div>
-              <div class="p-2.5 rounded-xl bg-white border border-slate-200">
-                <span class="font-bold text-slate-900">Tour 3: Phiếu Kho &amp; Cảnh Báo Tồn An Toàn</span>
-                <span class="block text-[11px] text-slate-600 mt-0.5">Gõ <code class="font-mono text-blue-700">Stock Entry List</code> &rarr; Phiếu xuất 2 lọc dầu gán nhãn <code class="font-mono text-slate-700">Under Warranty</code> &bull; Lọc dầu còn 2.0 &lt; 3.0 tự kích hoạt Reorder.</span>
-              </div>
-              <div class="p-2.5 rounded-xl bg-white border border-slate-200">
-                <span class="font-bold text-slate-900">Tour 4: Lập Lịch Bảo Trì &amp; Nhật Ký Phòng Ngừa</span>
-                <span class="block text-[11px] text-slate-600 mt-0.5">Gõ <code class="font-mono text-blue-700">Asset Maintenance List</code> &rarr; 3 lịch PM định kỳ &bull; Nhật ký Chiller ghi nhận van tiết lưu và tự sinh Issue.</span>
-              </div>
-            </div>
-          </div>
-          <div class="mt-3 pt-2.5 border-t border-slate-200 text-[11px] text-slate-500">
-            Dễ dàng đối soát trực quan trên giao diện Desk mà không cần cài đặt phức tạp.
-          </div>
-        </div>
 
-        <!-- Right: AI Agent RAG Architecture -->
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between shadow-xs">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs font-bold text-indigo-800 uppercase tracking-wider flex items-center gap-1.5">
-                <i data-lucide="bot" class="w-4 h-4 text-indigo-600"></i>
-                <span>Kiến Trúc Mở Rộng: AI Agent RAG + MCP Tool</span>
-              </span>
-              <span class="font-mono text-[11px] text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-200">Hybrid Model</span>
-            </div>
-            <div class="space-y-2.5 text-xs text-slate-700">
-              <div class="p-2.5 rounded-xl bg-white border border-slate-200">
-                <strong class="text-slate-900">Bộ Định Tuyến Ý Định (Intent Router):</strong>
-                <span class="block text-[11px] text-slate-600 mt-0.5">Tự động phân biệt câu hỏi: Tra cứu tồn kho / trạng thái vé &rarr; gọi ERPNext Tool; Tra cứu cẩm nang sửa máy / mã lỗi &rarr; gọi Vector DB (ChromaDB).</span>
+            <!-- Flow Schema -->
+            <div class="mt-3 space-y-2.5 text-xs text-center">
+              <div class="p-2 rounded-lg bg-slate-100 border border-slate-200 font-semibold text-slate-800">
+                Câu hỏi của Kỹ thuật viên hiện trường (Mobile App / Chatbot)
               </div>
-              <div class="p-2.5 rounded-xl bg-white border border-slate-200">
-                <strong class="text-slate-900">Kịch Bản Thực Tế Máy Nén Khí Báo Lỗi E-04:</strong>
-                <div class="text-[11px] text-slate-600 mt-0.5 space-y-1">
-                  <div>&bull; <em>Bước 1 (RAG):</em> AI tra cứu sách kỹ thuật Hitachi &rarr; Lỗi E-04 quá nhiệt do nghẹt lọc dầu `PART-FLT-OIL01`.</div>
-                  <div>&bull; <em>Bước 2 (ERP Tool):</em> AI gọi REST API truy vấn tồn kho &rarr; Xác nhận trên xe KTV An đang có sẵn 2 lọc dầu.</div>
-                  <div>&bull; <em>Bước 3 (Tổng hợp):</em> Chatbot phản hồi KTV hướng tháo lắp và đề xuất tạo sẵn phiếu xuất kho `Material Issue`.</div>
+              
+              <div class="p-2 rounded-lg bg-purple-50 border border-purple-200 font-bold text-purple-900">
+                &darr; Intent Router (Phân loại ý định thông minh)
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 text-[11px] text-left">
+                <div class="p-2 rounded-lg bg-blue-50 border border-blue-200">
+                  <div class="font-bold text-blue-900 flex items-center gap-1"><i data-lucide="book-open" class="w-3.5 h-3.5"></i> RAG Knowledge Base</div>
+                  <div class="text-slate-600 mt-0.5">Vector DB &bull; Sổ tay kỹ thuật Hitachi, Daikin, sơ đồ mạch MSB.</div>
+                </div>
+
+                <div class="p-2 rounded-lg bg-emerald-50 border border-emerald-200">
+                  <div class="font-bold text-emerald-900 flex items-center gap-1"><i data-lucide="database" class="w-3.5 h-3.5"></i> ERPNext Tool / MCP</div>
+                  <div class="text-slate-600 mt-0.5">REST API &bull; Tồn kho xe An, số dư kho tổng, trạng thái máy.</div>
                 </div>
               </div>
-              <div class="p-2.5 rounded-xl bg-white border border-slate-200">
-                <strong class="text-slate-900">Cảm Biến IoT &amp; Bảo Trì Dự Đoán:</strong>
-                <span class="block text-[11px] text-slate-600 mt-0.5">Cảm biến nhiệt/rung MQTT vượt ngưỡng &rarr; gọi Webhook ERPNext tự động sinh Issue mức Urgent áp đặt SLA 30 phút.</span>
+
+              <div class="p-2.5 rounded-xl bg-slate-900 text-white font-medium text-xs leading-relaxed text-left">
+                <strong class="text-purple-300">Ví dụ Hybrid Query:</strong> <em>"Lỗi E-04 cần thay gì và kho xe An còn hàng không?"</em><br/>
+                &rarr; RAG tìm mã lọc <code class="font-mono text-purple-200">PART-FLT-OIL01</code> &rarr; Gọi ERP API kiểm tra kho xe An còn 2 cái &rarr; Trả lời chính xác 100%!
               </div>
             </div>
           </div>
-          <div class="mt-3 pt-2.5 border-t border-slate-200 text-[11px] text-indigo-700 font-semibold">
-            Tận dụng trọn vẹn dữ liệu Master Data và Schema chuẩn hóa của đề tài.
+
+          <div class="mt-2 text-[10px] text-slate-500 italic">
+            LLM chỉ đóng vai trò Reasoning Layer; không bao giờ tự ý bịa đặt số liệu kho.
+          </div>
+        </div>
+
+        <!-- RIGHT: 4-Phase Evolution Roadmap (6 Cols) -->
+        <div class="lg:col-span-6 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wide pb-2 border-b border-slate-100 flex items-center justify-between">
+              <span>Lộ Trình Phát Triển 4 Giai Đoạn (Evolution Roadmap)</span>
+              <span class="text-emerald-700 font-mono text-[10px]">Phát Triển Bền Vững</span>
+            </div>
+
+            <div class="mt-2.5 space-y-2 text-xs">
+              <!-- Phase 1 -->
+              <div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-emerald-950 flex items-center gap-2">
+                    <span class="px-1.5 py-0.5 rounded bg-emerald-600 text-white font-mono text-[10px]">P1</span>
+                    <span>HIỆN TẠI: ERPNext Transactional Core</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 mt-0.5">Hoàn thiện 100% 5 trụ cột FSM &amp; MRO, 9 custom fields, xác thực 6 kịch bản live.</p>
+                </div>
+                <span class="text-[10px] font-mono text-emerald-700 font-bold">HOÀN TẤT</span>
+              </div>
+
+              <!-- Phase 2 -->
+              <div class="p-2.5 rounded-xl bg-purple-50 border border-purple-200 flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-purple-950 flex items-center gap-2">
+                    <span class="px-1.5 py-0.5 rounded bg-purple-600 text-white font-mono text-[10px]">P2</span>
+                    <span>CUỐI KỲ: AI Agent &amp; RAG Assistant</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 mt-0.5">Chatbot hỗ trợ KTV hiện trường tra cứu tài liệu và soạn sẵn phiếu xuất kho.</p>
+                </div>
+                <span class="text-[10px] font-mono text-purple-700 font-bold">KẾ TIẾP</span>
+              </div>
+
+              <!-- Phase 3 -->
+              <div class="p-2.5 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-blue-950 flex items-center gap-2">
+                    <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white font-mono text-[10px]">P3</span>
+                    <span>TƯƠNG LAI: IoT Telemetry &amp; Cảm Biến</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 mt-0.5">Gắn cảm biến rung nhiệt MQTT tự động phát hiện nguy cơ trước khi dừng máy.</p>
+                </div>
+                <span class="text-[10px] font-mono text-blue-700 font-bold">QUÝ 1/2027</span>
+              </div>
+
+              <!-- Phase 4 -->
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-slate-900 flex items-center gap-2">
+                    <span class="px-1.5 py-0.5 rounded bg-slate-700 text-white font-mono text-[10px]">P4</span>
+                    <span>MỞ RỘNG: Multi-Site &amp; Đa Chi Nhánh</span>
+                  </div>
+                  <p class="text-[11px] text-slate-600 mt-0.5">Phục vụ hàng trăm nhà máy liên tỉnh với các Cost Center độc lập.</p>
+                </div>
+                <span class="text-[10px] font-mono text-slate-600 font-bold">TẦM NHÌN</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-2 text-[10px] text-slate-500 font-mono">
+            Hạ tầng mở rộng &bull; API-First Architecture
           </div>
         </div>
       </div>
 
-      <!-- Bottom takeaway -->
-      <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+      <!-- Concluding Statement Callout -->
+      <div class="p-3.5 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs sm:text-sm font-medium">
         <div class="flex items-center gap-3">
-          <a href="http://localhost:8080/desk" target="_blank" class="px-3.5 py-1.5 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition flex items-center gap-1.5 shadow-md shadow-blue-600/20">
-            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-            <span>Mở Trực Tiếp ERPNext Local (:8080)</span>
-          </a>
+          <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+          <span><strong class="text-emerald-400 font-bold">KẾT LUẬN TOÀN ĐỀ TÀI:</strong> ERPNext là <strong>Single Source of Truth</strong>. AI là lớp hỗ trợ ra quyết định thông minh, không thay thế transaction core của doanh nghiệp!</span>
         </div>
-        <div class="text-slate-600 font-mono">
-          Nhóm sinh viên thực hiện: <strong class="text-slate-900 font-bold">DUT.K1N4 Team</strong> &bull; Đồ Án Hệ Thống Thông Tin 2026
-        </div>
+        <span class="text-xs text-blue-400 font-mono hidden md:inline">DUT.K1N4 &bull; 09/2026</span>
       </div>
     </section>
 
   </main>
 
-  <!-- ==================== OVERVIEW MODAL ==================== -->
-  <div id="overviewModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 md:p-8">
-    <div class="bg-white border border-slate-200 rounded-2xl max-w-5xl w-full max-h-[85vh] flex flex-col p-6 shadow-2xl">
-      <div class="flex items-center justify-between pb-4 border-b border-slate-200">
-        <div class="flex items-center gap-2">
-          <i data-lucide="layout-grid" class="w-5 h-5 text-blue-600"></i>
-          <h3 class="text-base font-extrabold text-slate-900">Tổng Quan Toàn Bộ 10 Slide Báo Cáo (COMPREHENSIVE_GUIDE.md)</h3>
+  <!-- ==================== OVERVIEW MODAL (13 SLIDES GRID) ==================== -->
+  <div id="overviewModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div class="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div>
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i>
+            <span>Tổng Quan 13 Slide Thuyết Trình</span>
+          </h3>
+          <p class="text-xs text-slate-500">Bấm vào slide bất kỳ để chuyển đến nhanh (Phím tắt: O hoặc Esc để đóng)</p>
         </div>
-        <button id="closeOverviewBtn" class="p-1.5 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition">
+        <button id="closeOverviewBtn" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-      <div id="overviewGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 py-4 overflow-y-auto custom-scrollbar flex-1">
-        <!-- Rendered by JS -->
-      </div>
-      <div class="pt-3 border-t border-slate-200 text-xs text-slate-500 text-center font-mono">
-        Nhấn phím O hoặc Escape để đóng &bull; Nhấp vào ô bất kỳ để chuyển đến slide tương ứng
+
+      <!-- Modal Body Grid -->
+      <div class="p-6 overflow-y-auto custom-scrollbar flex-1">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5" id="overviewGrid">
+          <!-- Populated by JavaScript -->
+        </div>
       </div>
     </div>
   </div>
 
   <!-- ==================== INTERACTIVE JAVASCRIPT ==================== -->
   <script>
-    const totalSlides = 10;
+    const totalSlides = 13;
     let currentSlide = 1;
 
     const slideTitles = [
-      "01. Bìa Báo Cáo & Tổng Quan Đề Tài",
-      "02. Chương 1: Triết Lý ERP vs. Frappe",
-      "03. Chương 2: Doanh Nghiệp & Master Data",
-      "04. Chương 3.1: Helpdesk & Ma Trận SLA 2D",
-      "05. Chương 3.2: Quản Lý Thiết Bị CMMS",
-      "06. Chương 3.3: Kho MRO & Van Stock",
-      "07. Chương 3.4: Diễn Biến Ca Sự Cố Live",
-      "08. Chương 4: Phân Tích 8 Nỗi Đau Thực Tế",
-      "09. Chương 5: Đánh Đổi Kiến Trúc 5 ADR",
-      "10. Chương 6 & 8: Thao Tác Desk & AI RAG"
+      "01. Trang Bìa: Tổng Quan Smart Helpdesk & Maintenance ERP",
+      "02. Bài Toán Kinh Doanh: Máy Hỏng Không Chỉ Là Một Ticket",
+      "03. Chuyển Đổi Quy Trình: As-Is &rarr; To-Be Trên ERPNext",
+      "04. Enterprise Architecture: ERPNext Đứng Ở Đâu?",
+      "05. Năm Trụ Cột Nghiệp Vụ Doanh Nghiệp Cốt Lõi",
+      "06. Kiến Trúc Dữ Liệu & Giao Dịch Chứng Từ ERP Liên Kết",
+      "07. Dữ Liệu Chủ (Master Data) & Phân Tách Nhiệm Vụ (RBAC/SoD)",
+      "08. Chuyên Sâu 1: Helpdesk, Ma Trận SLA 2D & Skill Routing",
+      "09. Chuyên Sâu 2: CMMS, Kho Xe Lưu Động & Tác Nghiệp Hiện Trường",
+      "10. Kịch Bản Thực Nghiệm: Ca Máy Nén Khí Hitachi (ISS-2026-00001)",
+      "11. Phân Tích Fit-Gap & 3 Quyết Định Kiến Trúc Đánh Đổi (ADR)",
+      "12. Kết Quả Đo Lường Vận Hành & Minh Chứng Thực Nghiệm (KPI)",
+      "13. Định Hướng Tương Lai: Hybrid AI / RAG & Bảo Trì Dự Đoán IoT"
     ];
 
-    function updateSlide(index) {
-      if (index < 1) index = 1;
-      if (index > totalSlides) index = totalSlides;
-      currentSlide = index;
+    function updateSlide(targetIndex) {
+      if (targetIndex < 1 || targetIndex > totalSlides) return;
+      
+      const slides = document.querySelectorAll('.slide');
+      slides.forEach(s => s.classList.remove('active'));
+      
+      currentSlide = targetIndex;
+      const targetSlideEl = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+      if (targetSlideEl) {
+        targetSlideEl.classList.add('active');
+      }
 
-      // Update slide elements
-      document.querySelectorAll('.slide').forEach(slide => {
-        slide.classList.remove('active');
-        if (parseInt(slide.getAttribute('data-slide')) === currentSlide) {
-          slide.classList.add('active');
-        }
-      });
-
-      // Update counter
+      // Update Top Counter
       document.getElementById('slideCounter').textContent = `${String(currentSlide).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
 
-      // Update progress bar
-      const percent = (currentSlide / totalSlides) * 100;
-      document.getElementById('progressBar').style.width = `${percent}%`;
+      // Update Progress Bar
+      const percentage = (currentSlide / totalSlides) * 100;
+      document.getElementById('progressBar').style.width = `${percentage}%`;
 
-      // Update prev/next button states
-      document.getElementById('prevBtn').disabled = (currentSlide === 1);
-      document.getElementById('nextBtn').disabled = (currentSlide === totalSlides);
-      document.getElementById('prevBtn').style.opacity = (currentSlide === 1) ? '0.4' : '1';
-      document.getElementById('nextBtn').style.opacity = (currentSlide === totalSlides) ? '0.4' : '1';
-
-      // Refresh icons
+      // Re-initialize Lucide Icons for dynamic content
       lucide.createIcons();
     }
 
@@ -1205,7 +1732,8 @@
 
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
-      if (!document.getElementById('overviewModal').classList.contains('hidden')) {
+      const modal = document.getElementById('overviewModal');
+      if (!modal.classList.contains('hidden')) {
         if (e.key === 'Escape' || e.key === 'o' || e.key === 'O') toggleOverview();
         return;
       }
@@ -1232,7 +1760,7 @@
     // Fullscreen Toggle
     function toggleFullscreen() {
       if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => alert(`Error: ${err.message}`));
+        document.documentElement.requestFullscreen().catch(err => alert(`Lỗi: ${err.message}`));
       } else {
         document.exitFullscreen();
       }
@@ -1258,13 +1786,14 @@
       grid.innerHTML = '';
       for (let i = 1; i <= totalSlides; i++) {
         const item = document.createElement('div');
-        item.className = `p-3.5 rounded-xl border cursor-pointer transition ${i === currentSlide ? 'bg-blue-50 border-blue-500 shadow-md ring-2 ring-blue-500/20' : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50'}`;
+        const isActive = (i === currentSlide);
+        item.className = `p-3 rounded-xl border cursor-pointer transition text-left ${isActive ? 'bg-blue-50 border-blue-500 shadow-sm ring-2 ring-blue-500/20' : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50'}`;
         item.innerHTML = `
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-mono font-bold text-blue-700">SLIDE ${String(i).padStart(2, '0')}</span>
-            ${i === currentSlide ? '<span class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded-full font-mono font-semibold">Đang Xem</span>' : ''}
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-[11px] font-mono font-bold ${isActive ? 'text-blue-700' : 'text-slate-500'}">SLIDE ${String(i).padStart(2, '0')}</span>
+            ${isActive ? '<span class="text-[10px] bg-blue-600 text-white px-2 py-0.2 rounded-full font-mono font-semibold">Đang Xem</span>' : ''}
           </div>
-          <h4 class="text-xs font-bold text-slate-900 leading-snug">${slideTitles[i - 1]}</h4>
+          <h4 class="text-xs font-bold text-slate-900 leading-snug line-clamp-2">${slideTitles[i - 1]}</h4>
         `;
         item.onclick = () => {
           updateSlide(i);
@@ -1279,7 +1808,6 @@
 
     // Initialize on page load
     updateSlide(1);
-    lucide.createIcons();
   </script>
 </body>
 </html>
