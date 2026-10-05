@@ -1,460 +1,351 @@
-# THIẾT KẾ KIẾN TRÚC HỆ THỐNG TỔNG THỂ (ENTERPRISE SYSTEM ARCHITECTURE BLUEPRINT)
-> **Dự án:** Hệ thống Smart HelpDesk & Quản trị Bảo trì Công nghiệp (Field Service Management - FSM, CMMS & MRO)  
-> **Nền tảng chủ đạo:** ERPNext v16 / Frappe Framework v16 kết hợp Trợ lý Trí tuệ Nhân tạo (Enterprise AI Copilot & RAG Engine)  
+# THIẾT KẾ TÍNH NĂNG NGHIỆP VỤ & KIẾN TRÚC HỆ THỐNG
+## (BẢN NÂNG CẤP, BÁM SÁT PAIN POINT DOANH NGHIỆP THỰC TẾ)
+
+> **Dự án:** Smart HelpDesk & Industrial Maintenance Management trên nền tảng ERPNext  
+> **Doanh nghiệp áp dụng (giả định):** Alpha Industrial Services (AIS) — Đơn vị dịch vụ bảo trì cơ điện và thiết bị công nghiệp  
+> **Nguyên tắc thiết kế tối thượng:** Mọi tính năng phải truy vết trực tiếp về một Pain Point (nỗi đau nghiệp vụ) hoặc Yêu cầu đã xác nhận ở Chương 1-2 của báo cáo giữa kỳ. **Không có pain point $\rightarrow$ Không thiết kế**, chỉ ghi nhận vào *"Hướng mở rộng"*.  
 > **Đơn vị thực hiện:** Nhóm sinh viên DUT.K1N4  
-> **Tài liệu quy chuẩn thiết kế:** Phỏng theo mô hình kiến trúc chuẩn mực của **Microsoft Teams Architecture** và **Azure Enterprise Generative AI / RAG Architecture**.
 
 ---
 
 ## MỤC LỤC TỔNG QUAN
 
-1. [Phần 1: Nguyên Tắc Thiết Kế & 4 Góc Nhìn Kiến Trúc Chuẩn Mực](#phần-1-nguyên-tắc-thiết-kế--4-góc-nhìn-kiến-trúc-chuẩn-mực)
-2. [Sơ Đồ 1: Kiến Trúc Hệ Thống & Các Khối Dịch Vụ Tổng Thể (System & Component Architecture)](#sơ-đồ-1-kiến-trúc-hệ-thống--các-khối-dịch-vụ-tổng-thể-system--component-architecture)
-3. [Sơ Đồ 2: Kiến Trúc Logic & Phả Hệ Thực Thể Nghiệp Vụ (Logical Architecture & Entity Hierarchy)](#sơ-đồ-2-kiến-trúc-logic--phả-hệ-thực-thể-nghiệp-vụ-logical-architecture--entity-hierarchy)
-4. [Sơ Đồ 3: Kiến Trúc Pipeline Dữ Liệu Tri Thức Kỹ Thuật (RAG Data Ingestion & Query Pipeline)](#sơ-đồ-3-kiến-trúc-pipeline-dữ-liệu-tri-thức-kỹ-thuật-rag-data-ingestion--query-pipeline)
-5. [Sơ Đồ 4: Kiến Trúc Điều Phối AI Agent Tích Hợp Nghiệp Vụ Doanh Nghiệp (Enterprise AI Agent & LOB ERP Integration)](#sơ-đồ-4-kiến-trúc-điều-phối-ai-agent-tích-hợp-nghiệp-vụ-doanh-nghiệp-enterprise-ai-agent--lob-erp-integration)
-6. [Phần 6: Bảng Quy Chuẩn Đồ Họa, Mã Màu & Ký Hiệu Để Vẽ Sơ Đồ (Diagramming & Styling Guide)](#phần-6-bảng-quy-chuẩn-đồ-họa-mã-màu--ký-hiệu-để-vẽ-sơ-đồ-diagramming--styling-guide)
+1. [Phần 1: Nguyên Tắc Tinh Gọn & Loại Bỏ Tính Năng Không Phù Hợp](#phần-1-nguyên-tắc-tinh-gọn--loại-bỏ-tính-năng-không-phù-hợp)
+2. [Phần 2: Bảng Ma Trận Truy Vết Nghiệp Vụ (Pain Point $\rightarrow$ Feature $\rightarrow$ ERPNext Implementation)](#phần-2-bảng-ma-trận-truy-vết-nghiệp-vụ-pain-point--feature--erpnext-implementation)
+3. [Phần 3: Kiến Trúc Hệ Thống Thực Tế (Pragmatic Component Architecture)](#phần-3-kiến-trúc-hệ-thống-thực-tế-pragmatic-component-architecture)
+4. [Phần 4: Nguyên Lý Nghiệp Vụ Bất Biến & Kiến Trúc Luồng Thực Thể (Logical Flow)](#phần-4-nguyên-lý-nghiệp-vụ-bất-biến--kiến-trúc-luồng-thực-thể-logical-flow)
+5. [Phần 5: Thiết Kế Phân Hệ AI Copilot & 4 Công Cụ Tool Calling Cho Pha Cuối Kỳ](#phần-5-thiết-kế-phân-hệ-ai-copilot--4-công-cụ-tool-calling-cho-pha-cuối-kỳ)
+6. [Phần 6: Thiết Kế Báo Cáo Đo Lường Vận Hành (KPI Engine & Dashboard Trên ERPNext)](#phần-6-thiết-kế-báo-cáo-đo-lường-vận-hành-kpi-engine--dashboard-trên-erpnext)
+7. [Phần 7: Hướng Mở Rộng Ngoài Phạm Vi Đồ Án (Future Roadmap)](#phần-7-hướng-mở-rộng-ngoài-phạm-vi-đồ-án-future-roadmap)
 
 ---
 
-# PHẦN 1: NGUYÊN TẮC THIẾT KẾ & 4 GÓC NHÌN KIẾN TRÚC CHUẨN MỰC
+# PHẦN 1: NGUYÊN TẮC TINH GỌN & LOẠI BỎ TÍNH NĂNG KHÔNG PHÙ HỢP
 
-Để thiết kế một đồ án Hệ thống Thông tin (HTTT) chuẩn doanh nghiệp, kiến trúc không thể chỉ mô tả những gì đã code được ở hiện tại mà phải cung cấp **Bản vẽ Quy hoạch Tổng thể (Master Blueprint)** hoàn chỉnh cho toàn bộ vòng đời sản phẩm.
+Bản thiết kế này khắc phục triệt để các hạn chế của bản phác thảo trước đây bằng cách loại bỏ toàn bộ các khái niệm "vẽ thêm", không có căn cứ từ thực tế khảo sát hoặc mâu thuẫn với phạm vi đã tuyên bố trong báo cáo giữa kỳ:
 
-Dựa trên tài liệu tham chiếu chuẩn công nghiệp (Microsoft Teams & Azure Enterprise Architecture), hệ thống Smart HelpDesk & Maintenance được thiết kế qua **4 Góc Nhìn Kiến Trúc (4 Architectural Views)**:
+### 1.1. Bảng Đối Chiếu Các Hạng Mục Bị Loại Bỏ:
 
-```
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                   BỘ TỨ GÓC NHÌN KIẾN TRÚC TỔNG THỂ (ENTERPRISE ARCHITECTURE SUITE)              │
-├────────────────────────────────┬─────────────────────────────────────────────────────────────────┤
-│ GÓC NHÌN 1: SYSTEM ARCHITECTURE│ Cấu trúc các tầng (Tiers), các ứng dụng Client, Gateway,        │
-│ (Tương ứng Page 1 & 2 mẫu)     │ Khối dịch vụ lõi (Services), Tích hợp mở rộng & Hạ tầng máy chủ.│
-├────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
-│ GÓC NHÌN 2: LOGICAL ARCHITECTURE│ Phả hệ quan hệ đối tượng (Entities), quan hệ sở hữu (Ownership),│
-│ (Tương ứng Page 3 mẫu)         │ Luồng thông tin logic xuyên suốt từ Khách hàng -> Máy -> Kho.   │
-├────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
-│ GÓC NHÌN 3: RAG PIPELINE       │ Pipeline nạp tri thức kỹ thuật (Ingestion) và Pipeline truy vấn │
-│ (Tương ứng Page 4 mẫu)         │ thông tin đa tầng (Query, Retrieval, Rerank, Generation).       │
-├────────────────────────────────┼─────────────────────────────────────────────────────────────────┤
-│ GÓC NHÌN 4: ENTERPRISE AI AGENT│ Kiến trúc tích hợp giữa Chat Front-end, AI Orchestrator,        │
-│ (Tương ứng Page 5 mẫu)         │ Function Calling / Tool Registry và LOB ERPNext REST API.       │
-└────────────────────────────────┴─────────────────────────────────────────────────────────────────┘
-```
+| Hạng Mục Bị Loại Bỏ | Lý Do Loại Bỏ & Căn Cứ Thực Tế |
+| :--- | :--- |
+| **Gateway Cảm Biến IoT Thời Gian Thực** | **Mâu thuẫn với Scope Boundary đã cam kết:** Trong báo cáo giữa kỳ, nhóm đã xác định rõ thông số kỹ thuật (nhiệt độ, áp suất) là do KTV ghi chép tay hoặc công nhân đọc đồng hồ báo lỗi, không có hạ tầng phần cứng IoT thời gian thực. |
+| **GPS Check-in Định Vị Toàn Cầu** | **Không có Pain Point tương ứng:** Khách hàng không yêu cầu theo dõi vị trí tọa độ của KTV. KTV chỉ cần bấm xác nhận thời điểm tiếp cận hiện trường để tính mốc SLA phản hồi. |
+| **Multi-Tenancy Isolation Engine** | **Hiểu sai bản chất kiến trúc:** Hệ thống của AIS là hệ thống nội bộ phục vụ việc cung cấp dịch vụ cho các khách hàng của mình. Việc phân quyền để khách hàng Tân Á chỉ thấy vé của Tân Á được giải quyết bằng cơ chế `User Permission` chuẩn của Frappe, không phải xây dựng nền tảng Multi-tenant SaaS đa khách thuê. |
+| **Supplier Portal & Nhà Cung Cấp Tự Chấm Điểm** | **Vượt quá phạm vi cần thiết:** AIS chỉ mua phụ tùng từ các NCC quen thuộc (Kim Long, Minh Phát...) qua kênh liên hệ trực tiếp; chưa có nhu cầu mở portal cho NCC tự vào đăng thầu hay chấm điểm KPI nhà cung ứng. |
+| **Mô tả 9 Microcontainers, Nginx, OAuth2 như các tầng thiết kế riêng** | **Không phản ánh đúng công việc thực tế của nhóm:** Frappe Bench đã đóng gói sẵn Nginx, MariaDB, Redis, Worker. Đây là hạ tầng nền tảng có sẵn của Framework, không phải do nhóm tự nghiên cứu thiết kế từ đầu. |
+| **Quy chuẩn mã màu đồ họa & kịch bản trình bày đối phó** | **Không phục vụ thiết kế kỹ thuật:** Tránh sa đà vào hình thức; tập trung 100% vào tính logic của luồng dữ liệu và giải quyết bài toán nghiệp vụ. |
+
+### 1.2. Các Tính Năng Cốt Lõi Được Giữ Lại Và Làm Rõ Căn Cứ:
+* **Skill-based Routing (Phân công theo chuyên môn):** Giải quyết triệt để việc giao nhầm thợ cơ khí đi sửa tủ điện.
+* **Ma trận SLA 2 chiều (Hạng hợp đồng $\times$ Độ khẩn cấp):** Phân định rạch ròi cam kết thời gian cho khách VIP vs Standard.
+* **Callback & FTFR Tracking:** Theo dõi sự cố lặp lại trong 7-14 ngày để kiểm soát chất lượng sửa chữa.
+* **PM-to-CM Trigger:** Cầu nối tự động biến phát hiện bất thường khi khám định kỳ thành vé sửa chữa khẩn cấp có hạn SLA.
+* **Van Stock (Kho xe KTV):** Xác lập trách nhiệm vật chất cá nhân của thợ trên xe lưu động.
+* **Reorder Trigger & Mua sắm bổ sung:** Ngăn chặn đứt gãy phụ tùng thay thế.
+* **Billing Classification:** Phân loại rõ ràng 3 nguồn chi trả chi phí sửa chữa.
+* **AI Tool Calling cho KTV:** Hỗ trợ thợ tra cứu nhanh tồn kho và tạo nháp phiếu xuất phụ tùng khi chẩn đoán mã lỗi.
 
 ---
 
-# SƠ ĐỒ 1: KIẾN TRÚC HỆ THỐNG & CÁC KHỐI DỊCH VỤ TỔNG THỂ (SYSTEM & COMPONENT ARCHITECTURE)
-*(Tương ứng cấu trúc phân tầng tại Trang 1 & 2 của tài liệu mẫu Microsoft Teams)*
+# PHẦN 2: BẢNG MA TRẬN TRUY VẾT NGHIỆP VỤ (PAIN POINT $\rightarrow$ FEATURE $\rightarrow$ MODULE $\rightarrow$ ƯU TIÊN)
 
-Sơ đồ này thể hiện sự phân tách rõ ràng giữa: **Giao diện Client** $\rightarrow$ **Cửa ngõ API & Bảo mật** $\rightarrow$ **Các khối Dịch vụ Nghiệp vụ lõi (Core Business Services)** $\rightarrow$ **Dịch vụ Hỗ trợ & Xử lý Nền (Auxiliary & Background Services)** $\rightarrow$ **Tầng Lưu trữ & Hạ tầng Nền tảng (Platform & Storage Tier)**.
+Toàn bộ 10 tính năng của hệ thống được neo chặt vào 10 nỗi đau thực tế của doanh nghiệp dịch vụ bảo trì công nghiệp:
+
+| Mã | Nỗi Đau Doanh Nghiệp (Pain Point) | Tính Năng Giải Quyết | Cơ Chế Triển Khai Trên ERPNext | Ưu Tiên | Trạng Thái |
+| :---: | :--- | :--- | :--- | :---: | :---: |
+| **PP-01** | KTV nhận vé sai chuyên môn do chia việc ngẫu nhiên (Round Robin mù). Thợ cơ khí bị giao sửa tủ điện, thợ điện đi sửa máy nén khí $\rightarrow$ Trễ SLA. | **Skill-based Routing Engine** | Server Script / Assignment Rule trên `Issue`, lọc theo chuyên môn thiết bị `custom_asset_category` $\leftrightarrow$ Kỹ năng KTV. | **Must** | Đã cấu hình & Kiểm chứng |
+| **PP-02** | Không phân biệt được cam kết SLA giữa khách hàng lớn trả phí cao (VIP) và khách hàng tiêu chuẩn $\rightarrow$ Dễ vi phạm hợp đồng VIP. | **Ma Trận SLA 2 Chiều** | DocType `Service Level Agreement` kết hợp bảng con `priorities` phân chia mức phản hồi & xử lý cho VIP vs Standard. | **Must** | Đã làm (Fit-Gap Báo cáo Giữa kỳ) |
+| **PP-03** | Máy sửa xong 2-3 ngày sau lại hỏng đúng lỗi cũ. Không theo dõi được sự cố tái phát $\rightarrow$ Không đo được tỷ lệ sửa dứt điểm lần đầu (FTFR). | **Callback / Recall Tracking** | Custom field `custom_related_issue` trỏ vé cũ + cờ `custom_has_callback = 1`. Script Report đo lường FTFR. | **Must** | Đã làm (Fit-Gap Báo cáo Giữa kỳ) |
+| **PP-04** | KTV đi bảo trì định kỳ phát hiện linh kiện sắp nổ/hỏng nhưng chỉ ghi chú vào nhật ký giấy, không ai theo dõi $\rightarrow$ Máy phát nổ dừng dây chuyền. | **PM-to-CM Trigger** | Nút bấm hoặc Server Script trên `Asset Maintenance Log` tự động khởi tạo vé khẩn cấp `Issue` có cam kết SLA. | **Must** | Đã làm (Fit-Gap Báo cáo Giữa kỳ) |
+| **PP-05** | KTV chạy xe 30km đến nhà máy khách mới biết xe hết đồ, kho hết hàng $\rightarrow$ Lãng phí chi phí đi lại, kéo dài thời gian dừng máy. | **AI Tool Calling:** `get_stock_balance`, `create_draft_material_issue` | Function Calling qua REST API truy vấn `Bin` và sinh nháp chứng từ `Stock Entry` trực tiếp cho KTV. | **Should** | Trọng tâm nghiên cứu pha AI cuối kỳ |
+| **PP-06** | KTV hiện trường mất 1-2 tiếng lật tìm sổ tay kỹ thuật dày cộp để tra mã lỗi và mã phụ tùng tương thích $\rightarrow$ Chậm trễ khắc phục sự cố. | **RAG Tra Cứu Tri Thức Kỹ Thuật** | Vector search trên tài liệu kỹ thuật sổ tay máy nén/chiller kết hợp BM25 keyword search cho mã lỗi chính xác. | **Should** | Trọng tâm nghiên cứu pha AI cuối kỳ |
+| **PP-07** | Nhập nhèm chi phí: Xuất linh kiện 1.300.000đ nhưng kế toán không biết ai trả tiền (hãng bảo hành, khách thanh toán hay công ty chịu). | **Billing Classification** | Custom Select `custom_billing_type` trên `Stock Entry` & `Issue` (Under Warranty / Billable / Goodwill), liên kết `Sales Invoice`. | **Should** | Đã triển khai trên dữ liệu kịch bản giả định |
+| **PP-08** | Xuất kho linh kiện mang đi sửa chữa không ai ký nhận trách nhiệm, mất mát không rõ nguyên nhân $\rightarrow$ Thất thoát tài sản phụ tùng. | **Kho Xe KTV (Van Stock)** | Cây kho đa tầng: mỗi KTV sở hữu một `Warehouse` riêng (`Kho Xe - KTV`), luân chuyển hàng bằng `Material Transfer`. | **Must** | Đã làm (Fit-Gap Báo cáo Giữa kỳ) |
+| **PP-09** | Tồn kho phụ tùng cập nhật trễ, đến khi máy hỏng khẩn cấp mới phát hiện hết hàng $\rightarrow$ Đứt gãy dịch vụ. | **Reorder Trigger Tự Động** | Cấu hình `reorder_level` trên từng `Item` + đối soát số dư thời gian thực tại `Bin` để kích hoạt đề xuất mua sắm. | **Must** | Đã làm (Fit-Gap Báo cáo Giữa kỳ) |
+| **PP-10** | Ban giám đốc không nắm được công ty sửa chữa tốt hay tệ, tỷ lệ đúng hạn hợp đồng bao nhiêu, máy nào "ngốn" nhiều tiền nhất. | **Dashboard Quản Trị KPI** | Trích xuất dữ liệu đo lường trực tiếp từ CSDL ERPNext: SLA Compliance, MTTR, FTFR, và Chi phí linh kiện lũy kế từng máy. | **Must** | Đã có kịch bản tính toán dữ liệu thực tế |
+
+---
+
+# PHẦN 3: KIẾN TRÚC HỆ THỐNG THỰC TẾ (PRAGMATIC COMPONENT ARCHITECTURE)
+
+Thay vì vẽ ra một kiến trúc "đám mây 6 tầng lý thuyết", sơ đồ dưới đây mô tả chính xác những gì nhóm đồ án **thực sự triển khai và cấu hình** trên nền tảng ERPNext Local / Docker:
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        TẦNG GIAO DIỆN NGƯỜI DÙNG (USER CLIENTS)                        │
+│                                                                                        │
+│   ┌────────────────────────┐  ┌────────────────────────┐  ┌────────────────────────┐   │
+│   │  Web Portal Khách Hàng │  │      ERPNext Desk      │  │ Giao Diện AI Copilot   │   │
+│   │ (Báo hỏng qua Web/QR)  │  │(Dispatcher/Kho/Kế toán)│  │ (Trợ lý di động KTV)   │   │
+│   └───────────┬────────────┘  └───────────┬────────────┘  └───────────┬────────────┘   │
+└───────────────┼───────────────────────────┼───────────────────────────┼────────────────┘
+                │                           │                           │
+                │ (HTTP Form / Session)     │ (Desk Framework UI)       │ (Prompt / Chat)
+                ▼                           ▼                           ▼
+┌────────────────────────────────────────────────────────┐  ┌────────────────────────────┐
+│                  HỆ THỐNG ERPNEXT LÕI                  │  │     PHÂN HỆ AI COPILOT     │
+│             (Vận hành trong Frappe Bench)              │  │      (Service Phụ Trợ)     │
+│                                                        │  │                            │
+│ ┌────────────────────────────────────────────────────┐ │  │ ┌────────────────────────┐ │
+│ │ PHÂN HỆ HELPDESK & VẬN HÀNH HIỆN TRƯỜNG            │ │  │ │ AI Agent Orchestrator  │ │
+│ │ • Issue (Vé sự cố) & SLA Policy                    │ │  │ │ • Xử lý ngôn ngữ tự    │ │
+│ │ • Server Script: Skill-based Routing, Callback     │ │  │ │   nhiên & Intent       │ │
+│ └────────────────────────────────────────────────────┘ │  │ │ • Điều phối gọi Tool   │ │
+│                                                        │  │ └───────────┬────────────┘ │
+│ ┌────────────────────────────────────────────────────┐ │  │             │              │
+│ │ PHÂN HỆ QUẢN LÝ THIẾT BỊ (CMMS)                    │ │  │ (REST API   │ (Tra cứu     │
+│ │ • Asset (Máy móc khách hàng, khóa khấu hao)        │ │  │  Calls)     │  Vector)     │
+│ │ • Asset Maintenance (Kế hoạch định kỳ 1M/3M/6M)    │ │  │             ▼              │
+│ │ • Asset Maintenance Log & PM-to-CM Trigger         │ │  │ ┌────────────────────────┐ │
+│ └────────────────────────────────────────────────────┘ │◄─┤ │ Vector Database        │ │
+│                                                        │  │ │ (ChromaDB / Qdrant)    │ │
+│ ┌────────────────────────────────────────────────────┐ │  │ │ • Embeddings sổ tay    │ │
+│ │ PHÂN HỆ KHO VẬT TƯ & MUA HÀNG (MRO)                │ │  │ │   kỹ thuật máy nén/    │ │
+│ │ • Warehouse Tree: Kho Trung Tâm, Kho Xe KTV        │ │  │ │   chiller & mã lỗi     │ │
+│ │ • Stock Entry: Material Transfer, Material Issue   │ │  │ └────────────────────────┘ │
+│ │ • Bin: Tồn kho thời gian thực & Reorder Trigger    │ │  └────────────────────────────┘
+│ │ • Material Request & Purchase Order                │ │
+│ └────────────────────────────────────────────────────┘ │
+│                                                        │
+│ ┌────────────────────────────────────────────────────┐ │
+│ │ PHÂN HỆ TÀI CHÍNH & HÓA ĐƠN                        │ │
+│ │ • custom_billing_type (Warranty / Billable / GW)   │ │
+│ │ • Sales Invoice (Hóa đơn thu tiền ngoài bảo hành)  │ │
+│ └────────────────────────────────────────────────────┘ │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            │ (SQL Query qua Frappe ORM)
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│               CƠ SỞ DỮ LIỆU MARIADB 10.6+              │
+│       (Lưu trữ toàn bộ bảng giao dịch chuẩn ACID)       │
+│  tabIssue | tabAsset | tabStock Entry | tabBin | ...   │
+└────────────────────────────────────────────────────────┘
+```
 
 ```mermaid
 flowchart TD
-    %% TẦNG CLIENTS
-    subgraph TIER_CLIENTS["1. TẦNG TRẢI NGHIỆM ĐA KÊNH (CLIENTS & TOUCHPOINTS)"]
-        CL_WEB["Web Portal Khách Hàng<br/>(B2B Customer Self-Service)"]
-        CL_TECH["Mobile Desk PWA (KTV)<br/>(Check-in, Xuất kho, GPS)"]
-        CL_DISP["Dispatcher Desk<br/>(Bàn Điều phối & Theo dõi SLA)"]
-        CL_WH["Warehouse Desk<br/>(Thủ kho & Quản lý Xuất/Nhập)"]
-        CL_ACC["Billing & Finance Desk<br/>(Kế toán Dịch vụ & Hóa đơn)"]
-        CL_EXEC["Executive Dashboard<br/>(Ban Giám đốc & Phân tích KPI)"]
-        CL_QR["Tem Quét QR Hiện Trường<br/>(Quét mã thân máy 15s)"]
-        CL_IOT["Gateway Cảm Biến IoT<br/>(Nhiệt độ, Rung động, Áp suất)"]
+    subgraph CLIENTS["Giao Diện Người Dùng"]
+        C1["Web Portal Khách Hàng<br/>(Báo hỏng, Quét tem QR)"]
+        C2["Desk ERPNext<br/>(Dispatcher, Thủ kho, Kế toán)"]
+        C3["Giao Diện AI Copilot<br/>(Chat di động của KTV)"]
     end
 
-    %% TẦNG GATEWAY & AUTH
-    subgraph TIER_GATEWAY["2. CỬA NGÕ TRUY CẬP, XÁC THỰC & BẢO VỆ (API GATEWAY & SECURITY)"]
-        GW_REV["Nginx Reverse Proxy & SSL Termination"]
-        GW_AUTH["Xác Thực & Quản Lý Phiên (OAuth2 / JWT / Session)"]
-        GW_RBAC["Bộ Kiểm Soát Vai Trò & Phân Tách Nhiệm Vụ (RBAC & SoD)"]
-        GW_ISO["Động Cơ Cách Ly Dữ Liệu Khách Hàng (User Permission Multi-Tenancy)"]
-        GW_LIMIT["Rate Limiting, CORS & Audit Trail Logger"]
-    end
-
-    %% TẦNG DỊCH VỤ LÕI (CORE SERVICES)
-    subgraph TIER_SERVICES["3. CÁC KHỐI DỊCH VỤ NGHIỆP VỤ LÕI (CORE ERP SERVICES & BUSINESS MODULES)"]
-        subgraph MOD_HELPDESK["Khối Helpdesk & Quản Trị SLA"]
-            S_INGEST["Incident Ingestion Engine<br/>(Đa kênh QR/Portal/Hotline)"]
-            S_SLA["2D SLA Matrix Engine<br/>(Đếm ngược SLA VIP vs Standard)"]
-            S_ROUTE["Skill-Based Routing Engine<br/>(Phân công theo Chuyên môn Máy)"]
-            S_FTFR["Callback & FTFR Audit Engine<br/>(Truy vết Lỗi Tái phát 7-14 ngày)"]
+    subgraph ERPNEXT["Hệ Thống ERPNext (Frappe Bench)"]
+        subgraph F_HD["Helpdesk & SLA"]
+            M_ISSUE["Issue (Vé sự cố)"]
+            M_SLA["SLA Policy (VIP vs Standard)"]
+            M_SCRIPTS["Server Scripts:<br/>- Skill-based Routing<br/>- Callback Tracking"]
         end
 
-        subgraph MOD_CMMS["Khối Quản Lý Thiết Bị & Bảo Trì (CMMS)"]
-            S_ASSET["Digital Asset Registry<br/>(Hồ sơ Lý lịch & Mã QR Động)"]
-            S_ISO_ACC["Asset Accounting Isolation<br/>(Khóa Khấu hao Máy Khách)"]
-            S_PM_PLAN["PM Schedule Engine<br/>(Kế hoạch Bảo trì 1M / 3M / 6M)"]
-            S_PM2CM["PM-to-CM Anomaly Trigger<br/>(Tự sinh Vé khi Khám phát hiện Lỗi)"]
-            S_TOOL["Tool Calibration Tracking<br/>(Quản lý Kiểm định Thiết bị Đo)"]
+        subgraph F_CMMS["Quản Lý Thiết Bị (CMMS)"]
+            M_ASSET["Asset (Máy móc, Khóa khấu hao)"]
+            M_PM["Asset Maintenance (Kế hoạch 1M/3M/6M)"]
+            M_LOG["Asset Maintenance Log (PM-to-CM Trigger)"]
         end
 
-        subgraph MOD_MRO["Khối Quản Trị Kho Vật Tư MRO"]
-            S_CENTRAL["Kho Tổng Trung Tâm (SBN)<br/>(Dự trữ An toàn 12 Loại Phụ tùng)"]
-            S_VAN["Kho Xe KTV Lưu Động (Van Stock)<br/>(Trách nhiệm Vật chất Cá nhân)"]
-            S_TRANSFER["Material Transfer Engine<br/>(Điều chuyển Vật tư Lên Xe)"]
-            S_ISSUE_MAT["Material Issue Engine<br/>(Xuất Linh kiện vào Máy hỏng)"]
-            S_REORDER["Reorder Trigger Engine<br/>(Cảnh báo Tồn thực tế < Ngưỡng)"]
-            S_SCRAP["Core Return / Scrap Warehouse<br/>(Kho Thu hồi Xác Phụ tùng Hỏng)"]
+        subgraph F_MRO["Kho MRO & Mua Sắm"]
+            M_WH["Cây Kho: Kho Tổng & Kho Xe KTV"]
+            M_STE["Stock Entry (Transfer, Issue)"]
+            M_BIN["Bin (Tồn kho thực & Reorder Trigger)"]
+            M_PURCHASE["Material Request & Purchase Order"]
         end
 
-        subgraph MOD_PROCURE["Khối Mua Sắm & Bổ Sung Tồn Kho"]
-            S_MR["Material Request Engine<br/>(Yêu cầu Mua hàng Tự động)"]
-            S_PO["Purchase Order Management<br/>(Quản lý Đơn Đặt Hàng NCC)"]
-            S_PR["Purchase Receipt Engine<br/>(Tiếp nhận & Tăng Tồn Kho Tổng)"]
-            S_SUPPLIER["Supplier Portal & Rating<br/>(Quản lý Danh bạ & Báo giá NCC)"]
-        end
-
-        subgraph MOD_FINANCE["Khối Quyết Toán Chi Phí & Doanh Thu"]
-            S_BILL_CLS["Billing Classification Engine<br/>(Under Warranty / Billable / Goodwill)"]
-            S_SINV["Sales Invoice Generator<br/>(Hóa đơn Vật tư + Giờ công Kỹ thuật)"]
-            S_TCO["Asset TCO & Cost Center Ledger<br/>(Bóc tách Chi phí Sửa chữa Từng Máy)"]
+        subgraph F_FIN["Tài Chính Dịch Vụ"]
+            M_BILL["custom_billing_type<br/>(Warranty / Billable / Goodwill)"]
+            M_SINV["Sales Invoice (Hóa đơn dịch vụ)"]
         end
     end
 
-    %% TẦNG DỊCH VỤ NỀN & TÍCH HỢP
-    subgraph TIER_INTEGRATION["4. DỊCH VỤ NỀN, SỰ KIỆN & TÍCH HỢP (INTEGRATION & ASYNC SERVICES)"]
-        ASYNC_REDIS["Redis Message Broker & Celery Task Queue"]
-        ASYNC_CRON["Scheduled Cron Jobs (Lập lịch Tự động chạy Định kỳ)"]
-        ASYNC_NOTIF["Notification Hub (Gửi Email SMTP, Zalo ZNS, Web Push)"]
-        ASYNC_TELEMETRY["Telemetry & Sensor Ingestion Listener (MQTT / HTTP)"]
-        ASYNC_SEARCH["Full-Text Global Search Indexer"]
-        ASYNC_AUDIT["Immutable Audit Trail & Version Control Engine"]
+    subgraph AISERVICE["Dịch Vụ AI Copilot (Phụ Trợ)"]
+        AI_AGENT["AI Agent Orchestrator<br/>(Xử lý Intent, Gọi Tool)"]
+        AI_VEC[("Vector DB: Sổ tay máy & Mã lỗi<br/>(ChromaDB / Qdrant)")]
+        AI_AGENT <--> AI_VEC
     end
 
-    %% TẦNG AI COPILOT
-    subgraph TIER_AI["5. PHÂN HỆ TRÍ TUỆ NHÂN TẠO (AI COPILOT & RAG SUBSYSTEM)"]
-        AI_ORCH["AI Agent Orchestrator (LangChain / Semantic Kernel)"]
-        AI_PLAN["Planner & Dynamic Tool Execution Registry"]
-        AI_RAG["RAG Retrieval Engine (Vector Search + BM25 Hybrid)"]
-        AI_VEC["Vector Database (Qdrant / ChromaDB Embeddings)"]
-        AI_LLM["Large Language Model (GPT-4o / Claude 3.5 / Gemini)"]
+    subgraph DB["Cơ Sở Dữ Liệu"]
+        MARIADB[("MariaDB 10.6+<br/>(Lưu trữ dữ liệu quan hệ giao dịch)")]
     end
 
-    %% TẦNG HẠ TẦNG & LƯU TRỮ
-    subgraph TIER_INFRA["6. HẠ TẦNG NỀN TẢNG & CƠ SỞ DỮ LIỆU (PLATFORM & STORAGE)"]
-        INFRA_DB["MariaDB 10.6+ InnoDB Storage Engine (ACID Transactional Data)"]
-        INFRA_CACHE["Redis In-Memory Key-Value Store (Cache & Session)"]
-        INFRA_FILES["Object Storage / File System (Ảnh chụp hiện trường, PDF)"]
-        INFRA_DOCKER["Docker Compose Container Runtime (9 Isolated Micro-containers)"]
-    end
+    C1 --> M_ISSUE
+    C2 --> ERPNEXT
+    C3 --> AI_AGENT
 
-    %% LIÊN KẾT GIỮA CÁC TẦNG
-    TIER_CLIENTS ==> TIER_GATEWAY
-    TIER_GATEWAY ==> TIER_SERVICES
-    TIER_SERVICES <==> TIER_INTEGRATION
-    TIER_SERVICES <==> TIER_AI
-    TIER_SERVICES ==> TIER_INFRA
-    TIER_INTEGRATION ==> TIER_INFRA
-    TIER_AI ==> TIER_INFRA
+    AI_AGENT -.->|"Gọi REST API làm Tool<br/>(get_stock_balance, create_draft_material_issue)"| ERPNEXT
+    ERPNEXT --> MARIADB
 ```
 
-### Bảng Đặc Tả Thành Phần Hệ Thống (Component Catalog):
-
-| Nhóm Tầng | Thành Phần / Module | Chức Năng Chính | Công Nghệ / Giao Thức |
-| :--- | :--- | :--- | :--- |
-| **Clients** | B2B Customer Portal | Cho phép đại diện nhà máy báo hỏng, xem tiến độ, nghiệm thu số. | Web App / Frappe Portal, Responsive HTML5. |
-| **Clients** | Field Tech Mobile PWA | Giao diện hiện trường cho thợ: Check-in GPS, xuất kho phụ tùng, hoàn thành vé. | PWA Mobile Desk, Quick Actions Client Script. |
-| **Clients** | Dispatcher Console | Màn hình điều phối trung tâm: Bản đồ, đồng hồ đếm ngược SLA, phân công KTV. | ERPNext Desk Workspace, Real-time List View. |
-| **Gateway** | Nginx & Security | Điều hướng tải, chấm dứt SSL, kiểm tra xác thực và phân quyền RBAC/SoD. | Nginx 1.25+, OAuth2 Bearer Tokens, Frappe Auth. |
-| **Core Services** | Helpdesk & SLA Engine | Tiếp nhận sự cố, tính toán SLA 2 chiều (VIP vs Std), định tuyến KTV theo chuyên môn. | Frappe DocType ORM (`Issue`, `Assignment Rule`). |
-| **Core Services** | CMMS & Maintenance | Quản lý vòng đời máy, cách ly khấu hao, lập lịch bảo trì 1M/3M/6M, kích hoạt PM-to-CM. | `Asset`, `Asset Maintenance`, `Asset Maintenance Log`. |
-| **Core Services** | MRO Inventory | Quản lý kho đa tầng (Kho Trung tâm, Kho Xe KTV), trừ kho theo ca sửa, cảnh báo Reorder. | `Stock Entry`, `Bin`, `Warehouse Tree`. |
-| **Core Services** | Procurement Loop | Tự động sinh Material Request khi chạm ngưỡng an toàn, phát hành PO, nhập kho PR. | `Material Request`, `Purchase Order`, `Purchase Receipt`. |
-| **Core Services** | Finance Touchpoints | Phân định chi phí: Trong bảo hành (AIS chịu), Tính phí (Xuất hóa đơn), Thiện chí (AIS chịu). | `Sales Invoice`, `Cost Center`, Custom Billing Fields. |
-| **Integration** | Celery / Redis Queue | Chạy tiến trình ngầm: Quét kiểm tra vi phạm SLA, sinh lịch bảo dưỡng, gửi email/SMS. | Redis 7.0, Python Celery Workers, Cron Scheduler. |
-| **AI Subsystem** | Agent & RAG Copilot | Tra cứu sổ tay máy nén/chiller, chẩn đoán mã lỗi hiện trường, tự động điền form xuất kho. | LangChain, Vector DB (Qdrant), LLM API. |
-| **Storage** | MariaDB 10.6+ InnoDB | Lưu trữ toàn bộ dữ liệu quan hệ giao dịch doanh nghiệp với độ toàn vẹn ACID cao. | MariaDB InnoDB, UTF8MB4 Collation. |
+### Điểm Khác Biệt Quan Trọng So Với Bản Thiết Kế Cũ:
+1. **Không coi Nginx, Redis, Celery là các "tầng tự thiết kế":** Đây là cơ chế có sẵn của Frappe bench. Chúng ta không tự viết lại hay cấu hình cụm microservices độc lập; hệ thống tận dụng trọn vẹn sức mạnh nguyên bản của framework.
+2. **AI Copilot được định vị đúng vai trò:** Là một **service phụ trợ bên ngoài** (External Helper Service), không can thiệp sâu vào nhân ERPNext mà chỉ giao tiếp an toàn qua **REST API chuẩn**.
 
 ---
 
-# SƠ ĐỒ 2: KIẾN TRÚC LOGIC & PHẢ HỆ THỰC THỂ NGHIỆP VỤ (LOGICAL ARCHITECTURE & ENTITY HIERARCHY)
-*(Tương ứng cấu trúc quan hệ logic tại Trang 3 của tài liệu mẫu Microsoft Teams)*
+# PHẦN 4: NGUYÊN LÝ NGHIỆP VỤ BẤT BIẾN & KIẾN TRÚC LUỒNG THỰC THỂ (LOGICAL FLOW)
 
-Sơ đồ này mô tả **"Bản đồ quan hệ logic"** giữa các thực thể cốt lõi trong hệ sinh thái FSM & MRO, làm rõ cách thức dữ liệu liên kết từ thực thể trung tâm (**Customer & Asset**) lan tỏa sang 3 nhánh nghiệp vụ: **Dịch vụ Hiện trường (Helpdesk)**, **Bảo dưỡng Định kỳ (CMMS)**, và **Chuỗi Cung ứng - Tài chính (Supply Chain & Finance)**.
+Dù hệ thống có mở rộng đến đâu, toàn bộ dữ liệu phải luôn tuân thủ nghiêm ngặt **3 Nguyên Lý Nghiệp Vụ Bất Biến**:
+
+### 4.1. Ba Nguyên Lý Bất Biến (Business Invariants):
+
+1. **Nguyên Lý 1 — Một Máy, Một Hồ Sơ Duy Nhất (Single Asset History):**
+   * Thiết bị (`Asset`) là điểm tựa trung tâm của toàn bộ dữ liệu kỹ thuật.
+   * Mọi vé sự cố (`Issue`), nhật ký bảo dưỡng định kỳ (`Asset Maintenance Log`), và phụ tùng thay thế (`Stock Entry`) bắt buộc phải gắn mã máy.
+   * *Mục tiêu:* Cho phép Ban Giám đốc bấm vào một chiếc máy là thấy toàn bộ "bệnh án" suốt 5 năm, tính toán chính xác tổng chi phí bảo dưỡng (TCO) để tư vấn khách hàng nên sửa tiếp hay thay mới.
+2. **Nguyên Lý 2 — Kho Đi Theo Người (Van Stock Accountability):**
+   * Mỗi kỹ thuật viên chịu trách nhiệm vật chất đối với một kho xe lưu động gắn với tài khoản của mình (`Kho Xe - KTV`).
+   * Khi thay thế linh kiện tại nhà máy khách hàng, KTV chỉ được phép xuất kho trừ số dư từ chính kho xe của mình qua phiếu `Stock Entry (Material Issue)`.
+   * *Mục tiêu:* Chấm dứt tình trạng thất thoát linh kiện, không ai đổ lỗi cho ai khi kiểm kê cuối tháng.
+3. **Nguyên Lý 3 — Nhãn Tài Chính Bắt Buộc Trước Khi Ký Duyệt Kho:**
+   * Mọi phiếu xuất kho sửa chữa đều phải mang một nhãn xác định nguồn chi trả (`custom_billing_type`):
+     - `Under Warranty` (Bảo hành hợp đồng): AIS chịu 100% chi phí nội bộ $\rightarrow$ 0đ thu khách.
+     - `Billable to Customer` (Tính phí ngoài bảo hành): Khách thanh toán $\rightarrow$ Bắt buộc kết xuất Hóa đơn `Sales Invoice`.
+     - `Goodwill` (Hỗ trợ thiện chí): AIS chịu chi phí CSKH nội bộ $\rightarrow$ 0đ thu khách.
+   * *Lưu ý về kiểm chứng:* 3 nhãn này hiện đang được mô phỏng theo kịch bản hợp đồng dịch vụ FSM tiêu biểu; khi bàn giao chính thức cho khách hàng cụ thể cần đối soát lại với điều khoản hợp đồng thực tế.
+
+### 4.2. Sơ Đồ Phả Hệ & Luồng Liên Kết Thực Thể (Entity Flow):
 
 ```mermaid
-flowchart TD
-    %% THỰC THỂ TRUNG TÂM
-    subgraph ENTITY_CORE["1. THỰC THỂ GỐC TRUNG TÂM (CORE ROOT ENTITIES)"]
-        CUST["Customer<br/>(Khách hàng Doanh nghiệp B2B)"]
-        SLA_POL["SLA Policy<br/>(Hạng SLA: VIP vs Standard)"]
-        ASSET["Asset<br/>(Máy Móc Công Nghiệp Tại Xưởng)"]
-        QR["Equipment QR Code<br/>(Tem Quét Mã Nhận Diện Máy)"]
-        TECH["Technician (User/Employee)<br/>(Chuyên Gia Kỹ Thuật Hiện Trường)"]
-        
-        CUST -->|Sở hữu & Đăng ký| ASSET
-        CUST -->|Ký kết hợp đồng dịch vụ| SLA_POL
-        ASSET ---|Dán tem định danh| QR
+flowchart LR
+    subgraph CORE["Thực Thể Gốc"]
+        ASSET["Asset (Máy Móc Khách Hàng)"]
+        TECH["Technician (KTV Chuyên Môn)"]
     end
 
-    %% NHÁNH 1: HELPDESK & VẬN HÀNH SỰ CỐ
-    subgraph BRANCH_HELPDESK["2. NHÁNH SỰ CỐ & VẬN HÀNH HIỆN TRƯỜNG (CORRECTIVE SERVICE)"]
-        ISSUE["Issue (Ticket Sự Cố)<br/>- custom_incident_time (T0)<br/>- resolution_by (Hạn SLA)<br/>- custom_asset_category"]
-        TODO["ToDo Assignment<br/>(Phân bổ theo Skill Routing)"]
-        CHECKIN["Check-in Timestamp<br/>(KTV tiếp cận hiện trường)"]
-        CALLBACK["Callback Audit Record<br/>(custom_has_callback / related_issue)"]
-
-        QR -.->|Quét mã tự điền| ISSUE
-        SLA_POL ==>|Áp đặt thời hạn| ISSUE
-        ISSUE ==>|Tự động gán vé| TODO
-        TODO -->|Chỉ định thực thi| TECH
-        TECH -->|Bấm nút ghi nhận| CHECKIN
-        CHECKIN --> ISSUE
-        ISSUE -.->|Truy vết tái phát trong 7-14 ngày| CALLBACK
+    subgraph OP_FLOW["Luồng Sự Cố & Hiện Trường"]
+        ISSUE["Issue (Vé Sự Cố)<br/>- custom_asset<br/>- custom_asset_category<br/>- custom_has_callback"]
+        AML["Asset Maintenance Log<br/>(Bảo trì định kỳ)"]
+        
+        AML -.->|"PM-to-CM Trigger<br/>(Phát hiện hư hỏng)"| ISSUE
+        ISSUE -->|"Skill-based Routing"| TECH
     end
 
-    %% NHÁNH 2: CMMS & BẢO DƯỠNG ĐỊNH KỲ
-    subgraph BRANCH_CMMS["3. NHÁNH BẢO DƯỠNG ĐỊNH KỲ (PREVENTIVE MAINTENANCE)"]
-        PM_PLAN["Asset Maintenance Plan<br/>(Lập lịch 1 Tháng / 3 Tháng / 6 Tháng)"]
-        PM_TASK["Maintenance Task Checklist<br/>(Hạng mục: Vệ sinh, đo áp, bôi trơn)"]
-        PM_LOG["Asset Maintenance Log<br/>(Nhật ký Kiểm tra Thực địa)"]
-        PM_ALERT["PM-to-CM Trigger<br/>(Phát hiện Hư hỏng Tiềm ẩn)"]
+    subgraph STOCK_FLOW["Luồng Vật Tư Đa Tầng"]
+        WH_CEN["Kho Trung Tâm"]
+        WH_VAN["Kho Xe KTV"]
+        STE_ISSUE["Stock Entry<br/>(Material Issue)"]
+        REORDER{"Tồn kho < Ngưỡng?"}
+        MR["Material Request / PO"]
 
-        ASSET ==>|Khai báo kế hoạch| PM_PLAN
-        PM_PLAN -->|Quy định nội dung| PM_TASK
-        PM_TASK -->|Đến chu kỳ tự sinh| PM_LOG
-        TECH -->|Thực hiện & Nghiệm thu| PM_LOG
-        PM_LOG -.->|Bất thường vượt ngưỡng| PM_ALERT
-        PM_ALERT ==>|Kích hoạt tạo khẩn cấp| ISSUE
+        WH_CEN -->|"Material Transfer"| WH_VAN
+        TECH -->|"Xuất thay thế"| STE_ISSUE
+        STE_ISSUE -->|"Ghi nhận chi phí"| ASSET
+        WH_CEN --> REORDER
+        REORDER -->|"Kích hoạt"| MR
+        MR -->|"Nhập hàng bù"| WH_CEN
     end
 
-    %% NHÁNH 3: MRO KHO VẬT TƯ & CUNG ỨNG
-    subgraph BRANCH_MRO["4. NHÁNH KHO VẬT TƯ & TÁI BỔ SUNG (MRO & PROCUREMENT)"]
-        WH_CEN["Kho Trung Tâm (Central WH)<br/>(Dự trữ An toàn Công ty)"]
-        WH_VAN["Kho Xe KTV (Van Stock WH)<br/>(Vật tư Mang theo Xe Bán tải)"]
-        STE_TRANS["Stock Entry (Material Transfer)<br/>(Đầu tuần nạp hàng lên xe)"]
-        STE_ISSUE["Stock Entry (Material Issue)<br/>(Xuất linh kiện thay thế vào máy)"]
-        WH_SCRAP["Kho Thu Hồi Xác Phụ Tùng (Core Return)"]
-        
-        ITEM_BIN["Bin (Tồn kho Thời gian thực)<br/>(Ngưỡng Reorder Level)"]
-        MAT_REQ["Material Request (Purchase)<br/>(Yêu cầu Mua Hàng Tự Động)"]
-        PUR_ORD["Purchase Order (PO)<br/>(Đơn Đặt Hàng Gửi Nhà Cung Cấp)"]
-        PUR_REC["Purchase Receipt (PR)<br/>(Nhập Hàng Vào Kho Trung Tâm)"]
-        SUPPLIER["Supplier (Nhà Cung Cấp Linh Kiện)"]
+    subgraph FIN_FLOW["Luồng Tài Chính"]
+        BILL["custom_billing_type"]
+        SINV["Sales Invoice (Hóa Đơn)"]
 
-        WH_CEN ==>|Chuyển kho| STE_TRANS ==>|Tăng tồn| WH_VAN
-        TECH ==>|Cầm đồ từ xe| STE_ISSUE
-        ISSUE ==>|Gắn liên kết chứng từ| STE_ISSUE
-        STE_ISSUE ==>|Khấu trừ linh kiện & ghi nhận chi phí| ASSET
-        STE_ISSUE -.->|Thu hồi xác phụ tùng cũ| WH_SCRAP
-        
-        WH_CEN --- ITEM_BIN
-        ITEM_BIN -.->|Tồn kho < 3.0 cái| MAT_REQ
-        MAT_REQ ==>|Kết xuất đơn mua| PUR_ORD
-        SUPPLIER ==>|Giao hàng theo PO| PUR_REC
-        PUR_REC ==>|Nhập kho bù đắp| WH_CEN
-    end
-
-    %% NHÁNH 4: TÀI CHÍNH & HÓA ĐƠN
-    subgraph BRANCH_FINANCE["5. NHÁNH TÀI CHÍNH & HẠCH TOÁN (FINANCE & BILLING)"]
-        BILL_TYPE{"Phân Loại Chi Phí<br/>(custom_billing_type)"}
-        COST_WARR["AIS Internal Warranty Cost<br/>(Chi phí Bảo hành Hợp đồng)"]
-        COST_GW["AIS Customer Goodwill Cost<br/>(Chi phí Hỗ trợ Thiện chí VIP)"]
-        SALES_INV["Sales Invoice<br/>(Hóa đơn Thu tiền Khách hàng)"]
-        GL_ENTRY["General Ledger (Sổ Cái)<br/>(Bút toán Kế toán Tự động)"]
-
-        STE_ISSUE ==>|Xác định chính sách| BILL_TYPE
-        BILL_TYPE -->|"Under Warranty"| COST_WARR
-        BILL_TYPE -->|"Goodwill"| COST_GW
-        BILL_TYPE -->|"Billable to Customer"| SALES_INV
-        
-        SALES_INV -->|Vật tư thay thế + Nhân công| CUST
-        COST_WARR --> GL_ENTRY
-        COST_GW --> GL_ENTRY
-        SALES_INV --> GL_ENTRY
+        STE_ISSUE --> BILL
+        BILL -->|"Billable to Customer"| SINV
     end
 ```
 
-### Nguyên Lý Vận Hành Logic (Logical Invariants):
-1. **Một Máy - Một Hồ Sơ Duy Nhất:** Máy móc (`Asset`) là điểm tựa kết nối trung tâm; mọi lịch sử hỏng hóc (`Issue`), nhật ký bảo dưỡng (`Asset Maintenance Log`), và phụ tùng đã thay (`Stock Entry`) đều gắn chặt vào mã máy để tính tổng chi phí sở hữu (Total Cost of Ownership - TCO).
-2. **Kho Đi Theo Người:** Mỗi KTV sở hữu một kho xe ảo (`Warehouse Type = Transit / Van Stock`). Mọi thao tác xuất dùng phụ tùng hiện trường bắt buộc trừ từ kho xe của KTV đó để xác lập trách nhiệm cá nhân.
-3. **Phân Định Tài Chính Bất Biến:** Mọi phiếu xuất kho sửa chữa đều phải mang một trong ba nhãn tài chính (`Under Warranty`, `Billable to Customer`, `Goodwill`) trước khi ký duyệt, đảm bảo dòng vật chất không bao giờ bị xuất đi mà không rõ ai là người thanh toán.
-
 ---
 
-# SƠ ĐỒ 3: KIẾN TRÚC PIPELINE DỮ LIỆU TRI THỨC KỸ THUẬT (RAG DATA INGESTION & QUERY PIPELINE)
-*(Tương ứng kiến trúc chuẩn tại Trang 4 của tài liệu mẫu Basic RAG Architecture)*
+# PHẦN 5: THIẾT KẾ PHÂN HỆ AI COPILOT & 4 CÔNG CỤ TOOL CALLING CHO PHA CUỐI KỲ
 
-Trong môi trường bảo trì công nghiệp, các kỹ thuật viên phải đối mặt với hàng nghìn trang sổ tay kỹ thuật dày đặc (Manuals), mã lỗi phức tạp (Error Codes) và sơ đồ đấu dây điện. Sơ đồ này mô tả **2 Pipeline song song khép kín**: **Data Ingestion Pipeline** (Chuẩn bị và số hóa tri thức) và **Query Pipeline** (Tiếp nhận câu hỏi và sinh giải pháp hỗ trợ KTV tức thời).
+Đây là phần giá trị công nghệ cao nhất của pha phát triển cuối kỳ, giải quyết trực tiếp **PP-05** (KTV thiếu đồ) và **PP-06** (Mất thời gian tra sổ tay mã lỗi).
+
+### 5.1. Danh Sách 4 AI Tools Tối Thiểu (Function Calling APIs):
+
+Thay vì xây dựng hệ thống tác tử ReAct hoặc Planner phức tạp dễ sinh lỗi ảo giác, hệ thống chỉ cần trang bị **4 Tool nghiệp vụ tuần tự** gọi vào ERPNext REST API:
+
+| Tên Tool | Tham Số Đầu Vào | Mục Đích Nghiệp Vụ | Nỗi Đau Khắc Phục |
+| :--- | :--- | :--- | :---: |
+| **`get_stock_balance`** | `item_code`: Mã linh kiện<br>`warehouse`: Tên kho cần kiểm tra | Tra cứu tức thì số lượng tồn khả dụng tại kho xe KTV hoặc Kho Trung tâm. | **PP-05** |
+| **`query_issue_sla`** | `issue_id`: Mã vé sự cố | Tra cứu hạn chót SLA phản hồi/xử lý và trạng thái điều phối của ca sửa chữa. | Hỗ trợ KTV bám sát SLA |
+| **`create_draft_material_issue`** | `issue_id`: Mã vé sự cố<br>`items`: Danh sách mã & số lượng | Tạo sẵn bản nháp chứng từ xuất kho trên xe KTV gắn với máy hỏng (KTV chỉ việc kiểm tra và bấm ký). | **PP-05** |
+| **`get_asset_maintenance_history`** | `asset_id`: Mã thiết bị | Lấy lịch sử 3 lần sửa chữa và thay thế linh kiện gần nhất của cỗ máy. | Hỗ trợ chẩn đoán gốc rễ |
+
+### 5.2. Sơ Đồ Quy Trình Xử Lý RAG & Tool Calling Tuần Tự:
 
 ```mermaid
-flowchart TD
-    %% PIPELINE NẠP DỮ LIỆU (INGESTION)
-    subgraph INGESTION_PIPE["1. DATA INGESTION PIPELINE (QUY TRÌNH NẠP & XỬ LÝ TRI THỨC KỸ THUẬT)"]
-        DOCS["Tài Liệu Nguồn (Knowledge Base / Source Documents)<br/>• Sổ tay vận hành máy nén Hitachi, Chiller Daikin<br/>• Bảng tra cứu mã lỗi thiết bị (E-01 -> E-99)<br/>• Quy trình bảo trì chuẩn (SOP), Sơ đồ điện MSB<br/>• Danh mục phụ tùng chính hãng & Mã tra cứu (Catalog)"]
-        
-        EXTRACT["Document Extraction & Layout Parsing<br/>(Bóc tách Văn bản, Bảng thông số, Biểu đồ kỹ thuật)"]
-        
-        CHUNKING["Semantic Chunking (Cắt Khúc Ngữ Cảnh Kỹ Thuật)<br/>• Cắt theo Cụm Lỗi - Nguyên Nhân - Khắc Phục<br/>• Giữ nguyên Bảng Định Mức Áp Suất/Nhiệt Độ<br/>• Kích thước: 512 - 1024 tokens + Overlap 128 tokens"]
-        
-        METADATA["Metadata Enrichment (Gắn Siêu Dữ Liệu Chuyên Ngành)<br/>• asset_category: Compressor / Chiller / Panel<br/>• manufacturer: Hitachi / Daikin / Schneider<br/>• error_code: E-04, Overheat, Phase Loss<br/>• part_code_compat: PART-FLT-OIL01, PART-CNT-150A"]
-        
-        EMB_INGEST["Embedding Model (Mô Hình Nhúng Vector)<br/>(Chuyển đổi văn bản thành Vector 1536/3072 chiều)<br/>Model: text-embedding-3-large / BGE-M3"]
-        
-        INDEXING["Indexing & Vector Storage<br/>(Lập chỉ mục HNSW & Lưu trữ vào CSDL Vector)"]
-        
-        DOCS ==> EXTRACT ==> CHUNKING ==> METADATA ==> EMB_INGEST ==> INDEXING
+sequenceDiagram
+    autonumber
+    actor Tech as Kỹ Thuật Viên Hiện Trường
+    participant UI as Giao Diện Chat AI Copilot
+    participant Agent as AI Service (FastAPI / LangChain)
+    participant VectorDB as Vector DB (Sổ Tay Kỹ Thuật)
+    participant ERP as ERPNext REST API (Frappe)
+
+    Tech->>UI: "Máy nén Hitachi báo lỗi E-04, xe tôi có đồ thay không? Tạo nháp phiếu kho."
+    UI->>Agent: Chuyển câu hỏi & ngữ cảnh đăng nhập KTV
+    
+    rect rgb(240, 248, 255)
+    note right of Agent: BƯỚC 1: TRA CỨU TRI THỨC KỸ THUẬT (RAG)
+    Agent->>VectorDB: Hybrid Search (Vector + từ khóa 'E-04' & 'Hitachi')
+    VectorDB-->>Agent: Trích đoạn sổ tay: "E-04 = Quá nhiệt do nghẹt lọc dầu. Cần thay PART-FLT-OIL01."
     end
 
-    %% CƠ SỞ DỮ LIỆU VECTOR
-    VEC_DB[("VECTOR DATABASE<br/>(Qdrant / ChromaDB / Azure AI Search)<br/>• Vector Embeddings<br/>• Full-Text BM25 Inverted Index<br/>• Metadata Filter Store")]
-
-    INDEXING ==> VEC_DB
-
-    %% PIPELINE TRUY VẤN (QUERY)
-    subgraph QUERY_PIPE["2. QUERY PIPELINE (QUY TRÌNH TRUY VẤN & SINH GIẢI PHÁP HỖ TRỢ KTV)"]
-        USER(["Kỹ Thuật Viên Hiện Trường (User)<br/>(Gặp sự cố, nhập câu hỏi hoặc đọc mã lỗi)"])
-        
-        U_QUERY["User Query (Câu Hỏi Đầu Vào)<br/>Ví dụ: 'Máy nén khí Hitachi báo lỗi quá nhiệt E-04 ca sáng,<br/>cần kiểm tra linh kiện gì và xe An có đồ thay không?'"]
-        
-        AUGMENT["Query Augmentation & Rewrite<br/>(Mở rộng & Chuẩn hóa Câu truy vấn)<br/>• Nhận diện Ý định (Intent Classification)<br/>• Bổ sung: Model Hitachi 75kW, Oil Filter code"]
-        
-        EMB_QUERY["Query Embedding<br/>(Chuyển câu truy vấn thành Vector)"]
-        
-        RETRIEVAL["Hybrid Retrieval (Truy Vấn Kép)<br/>• Dense Semantic Vector Search (Top-k = 20)<br/>• Sparse BM25 Keyword Search (Khớp mã 'E-04')<br/>• Lọc theo Metadata: category = 'Compressor'"]
-        
-        RERANK["Cross-Encoder Reranking Model<br/>(Tái chấm điểm độ liên quan kỹ thuật)<br/>Lọc lấy Top-3 đoạn chuẩn xác nhất (Top-k = 3)"]
-        
-        PROMPT_BUILD["Prompt Augmentation (Ghép Ngữ Cảnh Khắt Khe)<br/>Prompt = [Hệ thống] + [Ngữ cảnh sổ tay kỹ thuật]<br/>+ [Dữ liệu tồn kho ERPNext tức thời] + [Câu hỏi KTV]"]
-        
-        LLM_GEN["Generation LLM (Mô Hình Ngôn Ngữ Chuyên Biệt)<br/>(GPT-4o / Claude 3.5 Sonnet / Gemini Pro)<br/>Áp dụng Răn đe Ảo giác: Không bịa đặt thông số an toàn"]
-        
-        FINAL_ANS["Final Actionable Answer (Giải Pháp Hành Động Hoàn Chỉnh)<br/>1. Nguyên nhân: Nhiệt độ dầu vượt 105°C do nghẹt lọc.<br/>2. Bước xử lý: Xả áp suất, mở van xả, thay thế 2 lọc dầu.<br/>3. Phụ tùng: Mã PART-FLT-OIL01. Kho xe An ĐANG CÓ SẴN 2 cái.<br/>[ Nút Bấm 1-Chạm: TẠO PHIẾU XUẤT KHO NGAY ]"]
-
-        USER ==> U_QUERY ==> AUGMENT ==> EMB_QUERY ==> RETRIEVAL
-        RETRIEVAL <==> VEC_DB
-        RETRIEVAL ==> RERANK ==> PROMPT_BUILD ==> LLM_GEN ==> FINAL_ANS ==> USER
+    rect rgb(255, 250, 240)
+    note right of Agent: BƯỚC 2: TRA CỨU TỒN KHO THỰC TẾ (TOOL 1)
+    Agent->>ERP: Gọi get_stock_balance(item='PART-FLT-OIL01', warehouse='Kho Xe An')
+    ERP-->>Agent: actual_qty = 2.0 cái (ĐỦ HÀNG)
     end
+
+    rect rgb(240, 255, 240)
+    note right of Agent: BƯỚC 3: TẠO BẢN NHÁP PHIẾU XUẤT KHO (TOOL 2)
+    Agent->>ERP: Gọi create_draft_material_issue(issue='ISS-2026-00001', qty=2)
+    ERP-->>Agent: Trả về mã phiếu nháp MAT-STE-DRAFT-01
+    end
+
+    Agent->>UI: Phản hồi hành động: "Lỗi E-04 do nghẹt lọc dầu. Xe bạn đang có 2 lọc PART-FLT-OIL01. Đã tạo nháp phiếu kho MAT-STE-DRAFT-01."
+    UI-->>Tech: Hiển thị giải pháp kèm nút bấm [Xác Nhận Ký Xuất Kho]
 ```
-
-### Các Đặc Điểm Kỹ Thuật Trọng Yếu Của RAG Pipeline Công Nghiệp:
-1. **Phân Đoạn Theo Cấu Trúc Kỹ Thuật (Domain Semantic Chunking):** Không cắt ngẫu nhiên theo số từ. Mỗi chunk bắt buộc gom trọn: *Hiện tượng lỗi $\rightarrow$ Nguyên nhân gốc rễ $\rightarrow$ Biện pháp an toàn $\rightarrow$ Mã phụ tùng khuyến nghị*.
-2. **Truy Vấn Lai Hai Tầng (Hybrid Retrieval: Vector + Keyword BM25):** 
-   * Vector Search giỏi hiểu ngữ cảnh (*"máy nóng ran bốc khói"* $\approx$ *"quá nhiệt"*).
-   * BM25 Keyword Search bắt buộc phải có để khớp chính xác 100% các mã kỹ thuật ngắn như `E-04`, `PT100`, `LC1D150`, nơi mà vector thuần túy dễ bị nhầm lẫn.
-3. **Cơ Chế Reranking (Tái Xếp Hạng):** Sử dụng Cross-Encoder để loại bỏ các đoạn tài liệu tương tự nhưng sai đời máy (ví dụ: máy nén khí Piston thay vì trục vít).
 
 ---
 
-# SƠ ĐỒ 4: KIẾN TRÚC ĐIỀU PHỐI AI AGENT TÍCH HỢP NGHIỆP VỤ DOANH NGHIỆP (ENTERPRISE AI AGENT & LOB INTEGRATION)
-*(Tương ứng kiến trúc đám mây chuẩn doanh nghiệp tại Trang 5 của tài liệu mẫu Azure OpenAI Enterprise Architecture)*
+# PHẦN 6: THIẾT KẾ BÁO CÁO ĐO LƯỜNG VẬN HÀNH (KPI ENGINE & DASHBOARD TRÊN ERPNEXT)
 
-Sơ đồ này mô tả cách một **Hệ Thống Trợ Lý AI Đa Tác Vụ (Agentic Workflow)** không chỉ dừng lại ở việc "trò chuyện", mà thực sự kết nối trực tiếp vào các giao diện lập trình ứng dụng nghiệp vụ (**Line of Business - LOB APIs / ERPNext REST API**) để tra cứu số liệu thực tế, kiểm tra số dư tồn kho và tạo giao dịch tự động.
+Giải quyết trực tiếp **PP-10** (Không đo lường được hiệu quả vận hành). Báo cáo không dùng số liệu giả định 0%, mà phản ánh dữ liệu giao dịch thực tế đã phát sinh trong quá trình vận hành hệ thống:
 
-```mermaid
-flowchart TD
-    %% PHÍA CLIENT & CHAT FRONT-END
-    subgraph CLIENT_ZONE["PHÍA GIAO DIỆN NGƯỜI DÙNG (FRONT-END)"]
-        CHAT_UI["Chat UI / Mobile Copilot Interface<br/>(Tích hợp sẵn trong Mobile Desk của KTV)"]
-    end
+### 6.1. Bốn Chỉ Số Hiệu Suất Cốt Lõi:
 
-    %% PHÍA ĐIỀU PHỐI AI (ORCHESTRATION & AGENT CORE)
-    subgraph AI_ORCH_ZONE["TRUNG TÂM ĐIỀU PHỐI AI AGENT (ORCHESTRATE AI CONVERSATION)"]
-        ORCH_CORE["AI Orchestration Engine<br/>(LangChain / Semantic Kernel Agent)"]
-        
-        CHAT_STATE["Chat State & Memory<br/>(Lưu vết Ngữ cảnh Hội thoại Ca sửa)"]
-        
-        PLANNER["Agent Planner & ReAct Loop<br/>(Lập kế hoạch phân rã tác vụ phức hợp)"]
-        
-        PLUGIN_REG["Plugin / Tool Execution Registry<br/>(Bộ Công Cụ Thao Tác Hệ Thống)"]
-        
-        TOOL_INV["Tool 1: get_stock_balance()<br/>(Tra cứu số dư Kho Trung tâm & Kho Xe)"]
-        TOOL_TICK["Tool 2: query_issue_sla()<br/>(Tra cứu thông tin vé & Hạn SLA)"]
-        TOOL_CREATE_SE["Tool 3: create_draft_material_issue()<br/>(Tạo nháp Phiếu xuất kho sửa chữa)"]
-        TOOL_HIST["Tool 4: get_asset_maintenance_history()<br/>(Xem lý lịch hỏng hóc của máy)"]
-        
-        PLUGIN_REG --- TOOL_INV & TOOL_TICK & TOOL_CREATE_SE & TOOL_HIST
-        
-        LLM_CHAT["Foundation Model Service<br/>(Azure OpenAI / OpenAI ChatGPT-4o)<br/>Function Calling & Tool Calling Enabled"]
-    end
+1. **SLA Compliance Rate (Tỷ lệ tuân thủ cam kết dịch vụ):**
+   $$\text{SLA Compliance} = \frac{\text{Số vé hoàn thành đúng hạn (resolution\_date} \leq \text{resolution\_by)}}{\text{Tổng số vé đã xử lý}} \times 100\%$$
+2. **First-Time Fix Rate - FTFR (Tỷ lệ sửa dứt điểm lần đầu):**
+   $$\text{FTFR} = \frac{\text{Số ca sửa chữa không phát sinh vé Callback trong 7-14 ngày}}{\text{Tổng số ca sửa chữa}} \times 100\%$$
+3. **Preventive Maintenance Compliance (Tỷ lệ tuân thủ bảo trì phòng ngừa):**
+   $$\text{PM Compliance} = \frac{\text{Số lượt bảo dưỡng hoàn thành đúng lịch}}{\text{Tổng số lượt bảo dưỡng đến hạn}} \times 100\%$$
+4. **TCO Cost per Asset (Chi phí bảo dưỡng lũy kế theo từng máy):**
+   $$\text{TCO per Asset} = \sum (\text{Giá trị vật tư xuất kho}) + \sum (\text{Chi phí nhân công kỹ thuật})$$
 
-    %% TẦNG TÌM KIẾM TRI THỨC KỸ THUẬT
-    subgraph SEARCH_ZONE["DỊCH VỤ TRUY VẤN TRI THỨC TẬP TRUNG"]
-        AI_SEARCH["Azure AI Search / Qdrant Vector Index<br/>(Text & Vector Index | Sổ tay máy & SOP)"]
-    end
+### 6.2. Bảng Số Liệu Vận Hành Thực Tế (Trích Xuất Từ ERPNext Local Pipeline):
 
-    %% TẦNG PIPELINE NẠP DỮ LIỆU TỰ ĐỘNG
-    subgraph INGEST_ZONE["DATA INGESTION | PROCESSING | STORAGE (TỰ ĐỘNG HÓA NẠP DỮ LIỆU)"]
-        DOC_INTEL["AI Document Intelligence<br/>(Bóc tách tài liệu kỹ thuật định kỳ)"]
-        FUNC_APP["Function App / Celery Ingestion Worker<br/>(Tiến trình đồng bộ tài liệu nền)"]
-        ADA_EMB["Text Embeddings Model<br/>(Mô hình tạo vector nhúng)"]
-    end
-
-    %% TẦNG DỮ LIỆU DOANH NGHIỆP LOB (ERPNEXT)
-    subgraph LOB_ZONE["HỆ THỐNG DỮ LIỆU NGHIỆP VỤ DOANH NGHIỆP (LOB SYSTEMS & DATABASES)"]
-        BLOB_STORE["Document Storage / Blob<br/>(Chứa các file PDF Catalog & Manuals)"]
-        SQL_DB["MariaDB ERPNext Database<br/>(Chứa bảng Issue, Bin, Asset, Stock Entry)"]
-        LOB_APIS["ERPNext REST APIs<br/>(/api/resource/Issue, /api/resource/Stock Entry...)"]
-    end
-
-    %% LUỒNG KẾT NỐI ĐƯỢC ĐÁNH SỐ THEO CHUẨN MICROSOFT AZURE ARCHITECTURE
-    CHAT_UI ==>|"1. Gửi câu hỏi / lệnh hiện trường"| ORCH_CORE
-    
-    ORCH_CORE <==>|"2. Đọc & Lưu ngữ cảnh hội thoại"| CHAT_STATE
-    ORCH_CORE ==>|"3. Lập kế hoạch hành động"| PLANNER
-    
-    PLANNER ==>|"4. Quyết định gọi Tìm kiếm hoặc Tool"| ORCH_CORE
-    
-    ORCH_CORE ==>|"5. Truy vấn sổ tay kỹ thuật"| AI_SEARCH
-    AI_SEARCH ==>|"6. Trả về đoạn trích dẫn kỹ thuật"| ORCH_CORE
-    
-    ORCH_CORE ==>|"7. Thực thi Tool qua LOB APIs"| PLUGIN_REG
-    PLUGIN_REG ==>|"8. Gọi REST API an toàn"| LOB_APIS
-    LOB_APIS ==>|"9. Trả về số dư tồn kho, thông tin máy"| PLUGIN_REG
-    
-    ORCH_CORE ==>|"10. Ghép toàn bộ dữ liệu & Sinh phản hồi"| LLM_CHAT
-    LLM_CHAT ==>|"11. Kết quả hành động hoàn chỉnh"| ORCH_CORE
-    ORCH_CORE ==>|"12. Trả về giao diện kèm nút bấm thao tác"| CHAT_UI
-
-    %% LUỒNG NẠP DỮ LIỆU NỀN
-    BLOB_STORE -.->|"Nạp file PDF mới"| FUNC_APP
-    SQL_DB -.->|"Nạp danh mục phụ tùng mới"| FUNC_APP
-    FUNC_APP --> DOC_INTEL --> ADA_EMB --> AI_SEARCH
-```
-
-### Kịch Bản Tác Vụ Thực Tế Minh Họa (End-to-End Walkthrough):
-1. **Bước 1 (User Prompt):** KTV Nguyễn Văn An giơ điện thoại nói với Copilot: *"Máy nén khí Hitachi của Tân Á báo lỗi E-04, xe tôi còn lọc dầu không? Tạo giúp tôi phiếu xuất kho 2 cái."*
-2. **Bước 2 (Agent Planning & RAG Retrieval):** 
-   * Orchestrator nhận diện có 2 ý định: (1) Kiểm tra kỹ thuật lỗi E-04, (2) Kiểm tra kho và xuất hàng.
-   * Gọi `AI_SEARCH` tra cứu mã `E-04`: Xác định nguyên nhân do nghẹt dầu, phụ tùng tương thích là `PART-FLT-OIL01`.
-3. **Bước 3 (Tool Execution via ERPNext REST API):** 
-   * Gọi `TOOL_INV` truy vấn ERPNext: `Bin` tại `Kho Xe - Nguyen Van An - SBN` có `actual_qty = 2.0`.
-   * Gọi `TOOL_CREATE_SE`: Gửi request tạo bản nháp `Stock Entry (Material Issue)` gắn vào vé `ISS-2026-00001`, thiết bị `ACC-ASS-2026-00002`.
-4. **Bước 4 (Phản hồi Hành động):** Copilot trả lời:  
-   *"Lỗi E-04 đã được xác nhận là nghẹt lọc dầu Hitachi. Xe của bạn đang có đúng 2 chiếc `PART-FLT-OIL01`. Tôi đã tạo sẵn bản nháp Phiếu xuất kho `MAT-STE-DRAFT-01`. Bạn chỉ cần bấm nút [Xác nhận Ký xuất] bên dưới để hoàn tất ca."*
+| Nhóm Chỉ Số | Tên Chỉ Số Cụ Thể | Kết Quả Đo Lường Thực Tế | Ý Nghĩa Nghiệp Vụ Doanh Nghiệp |
+| :--- | :--- | :---: | :--- |
+| **Dịch Vụ (Service)** | Tổng số vé sự cố tiếp nhận | **6 vé** | Đầy đủ các mức độ khẩn cấp (Urgent, High, Medium, Low). |
+| **Dịch Vụ (Service)** | Tỷ lệ tuân thủ hạn phản hồi SLA | **100.0%** | Toàn bộ các ca đều có KTV tiếp nhận đúng cam kết hợp đồng. |
+| **Dịch Vụ (Service)** | Tỷ lệ tuân thủ hạn hoàn thành SLA | **100.0%** | 4/4 ca đã đóng/giải quyết đều đáp ứng thời hạn cam kết. |
+| **Kỹ Thuật Viên** | First-Time Fix Rate (FTFR) | **100.0%** | Chưa có ca nào bị khiếu nại sửa ẩu phải phát sinh ca Recall. |
+| **Kỹ Thuật Viên** | Tỷ lệ sự cố lặp lại (Callback Rate) | **0.0%** | Cờ `custom_has_callback = 0` trên toàn bộ các vé đã nghiệm thu. |
+| **Bảo Trì (CMMS)** | Tỷ lệ hoàn thành bảo dưỡng đúng hạn | **100.0%** | 1 ca hoàn thành nghiệm thu đúng lịch; 3 ca lên lịch tự động. |
+| **Chi Phí Theo Máy** | Chi phí sửa Tủ điện MSB (`ACC-ASS-2026-00005`) | **3.800.000đ** | Thay contactor Schneider (tính phí khách hàng Song Long). |
+| **Chi Phí Theo Máy** | Chi phí sửa Máy nén Hitachi (`ACC-ASS-2026-00002`) | **1.300.000đ** | Thay 2 bộ lọc dầu (AIS chịu theo diện bảo hành Tân Á). |
+| **Chi Phí Theo Máy** | Chi phí sửa Máy in Flexo (`ACC-ASS-2026-00001`) | **420.000đ** | Thay dây curoa căn chỉnh (AIS chịu theo diện thiện chí VIP). |
+| **Kho Vận (MRO)** | Trạng thái chu trình Mua sắm Bù đắp | **Đã khép kín** | Tồn tụt (2 < 3) $\rightarrow$ Material Request $\rightarrow$ PO $\rightarrow$ Nhập kho 10 cái $\rightarrow$ Bù xe 2 cái. |
 
 ---
 
-# PHẦN 6: BẢNG QUY CHUẨN ĐỒ HỌA, MÃ MÀU & KÝ HIỆU ĐỂ VẼ SƠ ĐỒ (DIAGRAMMING & STYLING GUIDE)
+# PHẦN 7: HƯỚNG MỞ RỘNG NGOÀI PHẠM VI ĐỒ ÁN (FUTURE ROADMAP)
 
-Khi đem bản thiết kế này lên các công cụ vẽ đồ họa chuyên nghiệp (**Draw.io, Microsoft Visio, Canva, Lucidchart hoặc Stitch**), sinh viên cần tuân thủ bảng quy chuẩn màu sắc và hình khối để sơ đồ đạt tính thẩm mỹ và chuẩn mực công nghiệp cao nhất:
+Để bảo vệ đồ án một cách chặt chẽ trước Hội đồng, nhóm tuyên bố rõ ràng các tính năng sau đây là **"Hướng nghiên cứu mở rộng trong tương lai"**, không thuộc phạm vi cam kết của giai đoạn hiện tại:
 
-### 1. Bảng Mã Màu Tiêu Chuẩn (Enterprise Hex Color Palette):
-
-```
-┌─────────────────────────┬─────────────┬─────────────┬────────────────────────────────────────────┐
-│ Khối Phân Tầng          │ Màu Viền    │ Màu Nền Box │ Ý Nghĩa Trực Quan                          │
-├─────────────────────────┼─────────────┼─────────────┼────────────────────────────────────────────┤
-│ Tầng 1: Clients         │ #0284C7     │ #E0F2FE     │ Xanh Biển (Sky Blue): Người dùng & Thiết bị│
-│ Tầng 2: Gateway & Auth  │ #475569     │ #F1F5F9     │ Xám Đậm (Slate Gray): Bảo mật & Cửa ngõ    │
-│ Tầng 3: Core Helpdesk   │ #4F46E5     │ #EEF2FF     │ Tím Indigo: Xương sống điều phối dịch vụ   │
-│ Tầng 3: CMMS / Asset    │ #059669     │ #ECFDF5     │ Xanh Lá (Emerald): Máy móc & Vận hành bền  │
-│ Tầng 3: MRO / Inventory │ #D97706     │ #FEF3C7     │ Vàng Hổ Phách (Amber): Kho bãi & Vật tư    │
-│ Tầng 3: Finance / Bill  │ #0D9488     │ #F0FDFA     │ Xanh Mòng Két (Teal): Dòng tiền & Hóa đơn  │
-│ Tầng 4: AI & RAG Subsys │ #DB2777     │ #FDF2F8     │ Hồng Đào (Pink): Trí tuệ nhân tạo & Vector │
-│ Tầng 5: Platform & DB   │ #1E293B     │ #F8FAFC     │ Xanh Than Tối: Cơ sở dữ liệu & Máy chủ ảo  │
-└─────────────────────────┴─────────────┴─────────────┴────────────────────────────────────────────┘
-```
-
-### 2. Quy Chuẩn Ký Hiệu Mũi Tên (Connector Conventions):
-* **Mũi tên Nét liền Đậm (`==>`):** Dòng dữ liệu giao dịch đồng bộ chính (Synchronous Transactional Flow / CRUD / REST Calls).
-* **Mũi tên Nét đứt (`-.->`):** Luồng sự kiện kích hoạt bất đồng bộ (Asynchronous Event / Trigger / Webhook / Celery Job).
-* **Mũi tên Hai chiều (`<==>`):** Giao tiếp hai chiều đối soát trạng thái (Two-way Handshake / State Validation).
-
-### 3. Hướng Dẫn Trình Bày Khi Báo Cáo Với Giảng Viên Hướng Dẫn:
-1. **Khi thầy hỏi về Tính Tổng Thể:** Mở **Sơ Đồ 1** để chứng minh dự án có đầy đủ 6 tầng của một Enterprise Application (Client $\rightarrow$ Gateway $\rightarrow$ Core ERP $\rightarrow$ Integration $\rightarrow$ AI Copilot $\rightarrow$ Infrastructure), không phải một web app nghiệp vụ chắp vá.
-2. **Khi thầy hỏi về Mối Liên Kết Giữa Các Nghiệp Vụ:** Mở **Sơ Đồ 2** để chứng minh dòng dữ liệu khép kín: Khách hàng báo hỏng $\rightarrow$ Hệ thống tra chuyên môn giao thợ $\rightarrow$ Thợ kiểm tra máy $\rightarrow$ Xuất kho xe $\rightarrow$ Kích hoạt mua sắm bù đắp $\rightarrow$ Hạch toán tài chính 3 hướng rõ ràng.
-3. **Khi thầy hỏi về Tính Năng Thông Minh / Hiện Đại (AI):** Mở **Sơ Đồ 3 & Sơ Đồ 4** để chứng minh định hướng phát triển AI Agent thực thụ (RAG Hybrid Search kết hợp Function Calling tương tác trực tiếp CSDL ERPNext), vượt trội so với các chatbot hỏi đáp thông thường.
+1. **Cảm biến IoT Thời Gian Thực & Bảo Trì Dự Đoán (Predictive Maintenance):**  
+   * *Mô tả:* Lắp đặt cảm biến rung động/nhiệt độ gắn trên máy nén khí để truyền dữ liệu thời gian thực qua giao thức MQTT.  
+   * *Lý do ngoài phạm vi:* Đòi hỏi đầu tư hạ tầng phần cứng công nghiệp đắt đỏ và đường truyền vật lý tại nhà máy khách hàng.
+2. **GPS Check-in & Định Vị Hành Trình Kỹ Thuật Viên:**  
+   * *Mô tả:* Tự động ghi lại tọa độ GPS của điện thoại KTV khi bấm nút Check-in để chống gian lận vị trí.  
+   * *Lý do ngoài phạm vi:* Chưa ghi nhận pain point về việc KTV khai khống địa điểm trong hồ sơ yêu cầu nghiệp vụ của AIS.
+3. **Cổng Thông Tin Nhà Cung Cấp Tự Động (Supplier Self-Service Portal):**  
+   * *Mô tả:* Cho phép nhà cung cấp Kim Long tự đăng nhập chào giá và cập nhật tiến độ giao hàng.  
+   * *Lý do ngoài phạm vi:* Số lượng nhà cung cấp của AIS hiện tại ít, việc mua hàng qua điện thoại/email và nhập thủ công Purchase Receipt là đủ hiệu quả.
+4. **Kiến Trúc Multi-Tenant SaaS Cho Nhiều Công Ty Dịch Vụ Dùng Chung:**  
+   * *Mô tả:* Biến phần mềm thành nền tảng đám mây bán cho nhiều công ty bảo trì khác nhau thuê bao tháng.  
+   * *Lý do ngoài phạm vi:* Hệ thống hiện tại được thiết kế như một phần mềm quản trị nội bộ chuyên biệt cho duy nhất công ty Alpha Industrial Services (AIS).
 
 ---
-*Tài liệu thiết kế kiến trúc chuẩn mực được biên soạn bởi Nhóm dự án DUT.K1N4 — Smart HelpDesk & Maintenance System.*
+*Tài liệu thiết kế tính năng và kiến trúc chuẩn mực được biên soạn bởi Nhóm sinh viên DUT.K1N4 — Đồ án Hệ Thống Thông Tin Doanh Nghiệp.*
