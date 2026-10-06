@@ -97,9 +97,10 @@ flowchart TD
 * **Lời thoại:**
   > *"Trước tiên, nhìn vào dải trên cùng của sơ đồ, hệ thống cung cấp **5 điểm vào (Entry Points)** phục vụ độc lập cho 4 đối tượng người dùng khác nhau:*
   > 
-  > 1. *Khách hàng báo hỏng qua **Web Portal** bằng cách quét mã QR dán trên thân máy.*
+  > 1. *Khách hàng báo hỏng qua **Web Portal** bằng cách quét mã QR dán trên thân máy (Kênh tự phục vụ - Self-service).*
   > 2. *Nhân sự vận hành (Điều phối viên Dispatcher, Thủ kho, Kế toán) làm việc tập trung trên **Desk ERPNext**.*
-  > 3. *Kỹ thuật viên tại hiện trường thao tác xử lý công việc qua **Mobile Desk PWA**.*
+  >    - *(Lưu ý thực tế): Khi khách hàng **gọi điện thoại hotline hoặc nhắn Zalo khẩn cấp**, khách không chạm vào phần mềm mà Dispatcher sẽ nghe máy và **trực tiếp tạo Ticket trên Desk ERPNext** thay cho khách.*
+  > 3. *Kỹ thuật viên tại hiện trường thao tác nhận việc và xử lý qua **Mobile Desk PWA**.*
   > 4. *Đặc biệt, KTV có thêm một cổng tương tác nhanh là **AI Copilot Chat UI** — đóng vai trò giao diện hội thoại tự nhiên để hỏi đáp sự cố.*
   > 5. *Và cuối cùng là **Frappe REST API Engine** để tích hợp dữ liệu với các hệ thống bên ngoài.*
   > 
@@ -304,6 +305,19 @@ flowchart TD
   > *"Dạ thưa Thầy/Cô, trong Frappe Framework, `User Permission` và `Role-Based Access Control` không phải là một module nghiệp vụ mà là một **Bộ lọc tầng sâu (Framework Middleware Layer)**.*
   > 
   > *Mọi truy vấn SQL từ Web Portal, Desk, hay REST API khi đi vào CSDL đều phải đi qua bộ lọc RBAC này trước. Việc đặt nó thành một cột dọc xuyên suốt bên trái thể hiện chính xác tính chất: Nó là bức tường an ninh bảo vệ toàn diện, đảm bảo khách hàng không xem trộm dữ liệu của nhau và KTV không can thiệp vào kho xe của người khác."*
+
+---
+
+### ❓ Câu 6: "Khách hàng công nghiệp gặp sự cố khẩn cấp thường bốc máy gọi Hotline hoặc nhắn Zalo, chứ ai rảnh vào Web Portal? Cuộc gọi đó đi vào hệ thống qua cổng nào?"
+
+* **Trả lời chuẩn:**
+  > *"Dạ thưa Thầy/Cô, đây là câu hỏi chạm đúng thực tế vận hành hiện trường của doanh nghiệp B2B ạ!*
+  > 
+  > *Hệ thống phân định rạch ròi 2 hình thức tiếp nhận sự cố:
+  > 1. **Kênh tự phục vụ (Self-service):** Khách chủ động quét mã QR trên thân máy để gửi vé qua **Web Portal**.
+  > 2. **Kênh cuộc gọi truyền thống / Hotline khẩn cấp:** Khách không chạm vào phần mềm mà gọi điện thoại cho **Dispatcher (Điều phối viên)**. Khi đó, Dispatcher là người nghe máy và trực tiếp thao tác trên **Desk ERPNext (Nội bộ)** để tạo nhanh một vé `Issue` mới thay cho khách.*
+  > 
+  > *Ngoài ra, nếu khách gửi email, cổng **Frappe Email Account (SMTP/IMAP Gateway)** ở hàng dịch vụ phía dưới sẽ tự động quét hòm thư và sinh vé tự động (Email-to-Ticket). Nhờ vậy, mọi kênh liên lạc bên ngoài (Web, Gọi điện thoại, Email) đều hội tụ chuẩn xác về một đầu mối duy nhất là **Core Helpdesk (DocType: Issue)**."*
 
 ---
 
