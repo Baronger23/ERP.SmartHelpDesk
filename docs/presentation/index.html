@@ -97,14 +97,14 @@
         <button id="prevBtn" class="p-1.5 hover:bg-white hover:shadow-xs text-slate-700 rounded transition" title="Slide trước (Phím Mũi Tên Trái)">
           <i data-lucide="chevron-left" class="w-4 h-4"></i>
         </button>
-        <span class="px-3.5 py-1 font-bold text-blue-700 tracking-wide" id="slideCounter">01 / 13</span>
+        <span class="px-3.5 py-1 font-bold text-blue-700 tracking-wide" id="slideCounter">01 / 14</span>
         <button id="nextBtn" class="p-1.5 hover:bg-white hover:shadow-xs text-slate-700 rounded transition" title="Slide sau (Phím Mũi Tên Phải / Phím Cách)">
           <i data-lucide="chevron-right" class="w-4 h-4"></i>
         </button>
       </div>
 
       <!-- Overview Modal Button -->
-      <button id="overviewBtn" class="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg border border-slate-200 hover:border-slate-300 transition flex items-center gap-1.5 text-xs font-semibold shadow-xs" title="Xem tất cả 13 slide (Phím O)">
+      <button id="overviewBtn" class="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg border border-slate-200 hover:border-slate-300 transition flex items-center gap-1.5 text-xs font-semibold shadow-xs" title="Xem tất cả 14 slide (Phím O)">
         <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i>
         <span class="hidden sm:inline">Tổng quan</span>
       </button>
@@ -230,7 +230,7 @@
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-200">BÀI TOÁN KINH DOANH</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">NỖI ĐAU THỰC TẾ: MÁY HỎNG KHÔNG CHỈ LÀ MỘT "TICKET"</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 02 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 02 / 14</div>
       </div>
 
       <!-- Main Grid: 6 Problems & Ripple Diagram -->
@@ -348,7 +348,7 @@
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">CHUYỂN ĐỔI SỐ HÓA</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">CHUYỂN ĐỔI QUY TRÌNH: AS-IS &rarr; TO-BE</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 03 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 03 / 14</div>
       </div>
 
       <!-- Comparative Flow Container -->
@@ -478,7 +478,7 @@
           </h2>
         </div>
         <div class="text-right">
-          <div class="text-xs text-slate-500 font-mono font-bold">SLIDE 04 / 13</div>
+          <div class="text-xs text-slate-500 font-mono font-bold">SLIDE 04 / 14</div>
           <span class="text-[10px] text-emerald-600 font-mono font-semibold flex items-center gap-1 justify-end mt-0.5">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 100% Cấu Hình Thực Tế
           </span>
@@ -487,7 +487,7 @@
 
       <!-- Main Visual & Architectural Pillars Grid -->
       <div class="my-auto py-2 space-y-3 w-full max-w-6xl mx-auto">
-        <!-- Interactive Diagram Frame -->
+                <!-- Interactive Diagram Frame -->
         <div class="relative bg-white rounded-2xl border border-slate-200 p-2 sm:p-3 shadow-xs hover:shadow-md transition group">
           <!-- Top mini-toolbar -->
           <div class="flex items-center justify-between px-2 pb-2 mb-1 border-b border-slate-100 text-xs">
@@ -501,14 +501,14 @@
               <a href="architecture_tab1.png" target="_blank" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[11px] font-semibold flex items-center gap-1 transition" title="Mở file ảnh gốc trong tab mới">
                 <i data-lucide="external-link" class="w-3 h-3 text-slate-600"></i> Ảnh gốc
               </a>
-              <button onclick="openDiagramModal()" class="px-2.5 py-0.5 rounded bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-mono text-[11px] font-semibold flex items-center gap-1 transition" title="Phóng to toàn màn hình">
+              <button onclick="openDiagramModal('tab1')" class="px-2.5 py-0.5 rounded bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-mono text-[11px] font-semibold flex items-center gap-1 transition" title="Phóng to toàn màn hình">
                 <i data-lucide="maximize-2" class="w-3 h-3 text-blue-600"></i> Phóng to
               </button>
             </div>
           </div>
 
           <!-- The Diagram Image -->
-          <div class="w-full overflow-hidden rounded-xl bg-white border border-slate-100 flex items-center justify-center cursor-pointer" onclick="openDiagramModal()" title="Nhấp để phóng to toàn màn hình">
+          <div class="w-full overflow-hidden rounded-xl bg-white border border-slate-100 flex items-center justify-center cursor-pointer p-1" onclick="openDiagramModal('tab1')" title="Nhấp để phóng to toàn màn hình">
             <img 
               src="architecture_tab1.png" 
               alt="Smart HelpDesk Architecture Diagram (Tab 1)" 
@@ -571,15 +571,127 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 05: 5 CORE ENTERPRISE PILLARS ==================== -->
+    
+    <!-- ==================== SLIDE 05: LOGICAL ARCHITECTURE & DATA FLOW (TAB 2 SVG) ==================== -->
     <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="5">
+      <!-- Slide Header -->
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between shrink-0">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2.5 py-0.5 rounded border border-purple-200">
+              KIẾN TRÚC LOGIC &amp; DÒNG CHẢY DỮ LIỆU
+            </span>
+            <span class="text-[11px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 flex items-center gap-1 font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Vector SVG HD (Tab 2 Draw.io)
+            </span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">
+            SMART HELPDESK LOGICAL ARCHITECTURE
+          </h2>
+        </div>
+        <div class="text-right">
+          <div class="text-xs text-slate-500 font-mono font-bold">SLIDE 05 / 14</div>
+          <span class="text-[10px] text-blue-600 font-mono font-semibold flex items-center gap-1 justify-end mt-0.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Customer &amp; Asset Hub
+          </span>
+        </div>
+      </div>
+
+      <!-- Main Visual & Architectural Pillars Grid -->
+      <div class="my-auto py-2 space-y-3 w-full max-w-6xl mx-auto">
+        <!-- Interactive Diagram Frame for SVG -->
+        <div class="relative bg-white rounded-2xl border border-slate-200 p-2 sm:p-3 shadow-xs hover:shadow-md transition group">
+          <!-- Top mini-toolbar -->
+          <div class="flex items-center justify-between px-2 pb-2 mb-1 border-b border-slate-100 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="font-mono font-bold text-slate-700 flex items-center gap-1.5 text-[11px]">
+                <i data-lucide="network" class="w-3.5 h-3.5 text-purple-600"></i> SƠ ĐỒ TAB 2: LOGICAL ARCHITECTURE &amp; WORKFLOW
+              </span>
+              <span class="text-[10px] text-slate-500 font-mono hidden sm:inline">(Single Source of Truth Flow)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="SYSTEM_ARCHITECTURE_DESIGN.svg" target="_blank" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[11px] font-semibold flex items-center gap-1 transition" title="Mở file SVG gốc trong tab mới">
+                <i data-lucide="file-code-2" class="w-3 h-3 text-slate-600"></i> File SVG gốc
+              </a>
+              <button onclick="openDiagramModal('svg')" class="px-2.5 py-0.5 rounded bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 font-mono text-[11px] font-semibold flex items-center gap-1 transition" title="Phóng to toàn màn hình">
+                <i data-lucide="maximize-2" class="w-3 h-3 text-purple-600"></i> Phóng to
+              </button>
+            </div>
+          </div>
+
+          <!-- The Diagram Image SVG -->
+          <div class="w-full overflow-hidden rounded-xl bg-white border border-slate-100 flex items-center justify-center cursor-pointer p-1" onclick="openDiagramModal('svg')" title="Nhấp để phóng to toàn màn hình">
+            <img 
+              src="SYSTEM_ARCHITECTURE_DESIGN.svg" 
+              alt="Smart HelpDesk Logical Architecture Diagram (SVG)" 
+              class="w-full h-auto max-h-[46vh] object-contain transition-transform duration-200 group-hover:scale-[1.008]"
+              loading="eager"
+            />
+          </div>
+        </div>
+
+        <!-- 3 Architecture Streams Quick Reference Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
+          <!-- Stream 1: Helpdesk Flow -->
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition">
+            <div class="flex items-center gap-2 text-slate-900 font-bold mb-1">
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-800"></span>
+              <span class="text-blue-950 font-bold uppercase">1. Luồng Dịch Vụ (Helpdesk)</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-snug">
+              <strong>Web Portal &amp; PWA</strong> &rarr; <strong>Issue Core</strong> &rarr; <strong>SLA Policy</strong> &rarr; <strong>Skill Routing</strong> phân công KTV &rarr; Đo <strong>Callback / FTFR</strong>.
+            </p>
+          </div>
+
+          <!-- Stream 2: CMMS Flow -->
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-orange-300 transition">
+            <div class="flex items-center gap-2 text-slate-900 font-bold mb-1">
+              <span class="w-2.5 h-2.5 rounded-full bg-orange-600"></span>
+              <span class="text-orange-950 font-bold uppercase">2. Luồng Bảo Trì (CMMS)</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-snug">
+              <strong>Maintenance Plan</strong> &rarr; <strong>Log</strong> &rarr; <strong>PM-to-CM Trigger</strong> (sinh vé sửa khẩn) &rarr; Giám sát <strong>Downtime MTBF</strong> &amp; Claim bảo hành.
+            </p>
+          </div>
+
+          <!-- Stream 3: MRO & Finance Flow -->
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-sky-300 transition">
+            <div class="flex items-center gap-2 text-slate-900 font-bold mb-1">
+              <span class="w-2.5 h-2.5 rounded-full bg-sky-600"></span>
+              <span class="text-sky-950 font-bold uppercase">3. Luồng Kho &amp; Tài Chính (MRO)</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-snug">
+              <strong>Stock Entry</strong> &rarr; <strong>Kho Xe Van Stock</strong> &rarr; Cảnh báo <strong>Bin Reorder</strong> &rarr; Phân nhánh <strong>Billing Type</strong> &rarr; Xuất <strong>Sales Invoice</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Principle Callout Banner -->
+      <div class="p-3 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs sm:text-sm font-medium shrink-0 shadow-xs">
+        <div class="flex items-center gap-3">
+          <div class="p-1.5 rounded-lg bg-purple-600 text-white shrink-0">
+            <i data-lucide="git-merge" class="w-4 h-4"></i>
+          </div>
+          <span>
+            <strong class="text-purple-400 font-bold">TRUNG TÂM KẾT NỐI:</strong> Cụm <strong>Customer &amp; Asset Hub</strong> là chìa khóa xâu chuỗi đồng bộ giữa Vé sự cố, Kế hoạch bảo trì và Kho phụ tùng trên cùng một CSDL ACID.
+          </span>
+        </div>
+        <span class="text-xs text-slate-400 font-mono hidden lg:inline shrink-0 pl-3 border-l border-slate-800">
+          Logical Architecture
+        </span>
+      </div>
+    </section>
+
+<!-- ==================== SLIDE 06: 5 CORE ENTERPRISE PILLARS ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="6">
       <!-- Slide Header -->
       <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">BẢN ĐỒ DOANH NGHIỆP</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">NĂM TRỤ CỘT NGHIỆP VỤ DOANH NGHIỆP CỐT LÕI</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 05 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 06 / 14</div>
       </div>
 
       <!-- 5 Pillars Connected Lifecycle -->
@@ -702,15 +814,15 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 06: DATA / TRANSACTION ARCHITECTURE ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="6">
+    <!-- ==================== SLIDE 07: DATA / TRANSACTION ARCHITECTURE ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="7">
       <!-- Slide Header -->
       <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">KIẾN TRÚC DỮ LIỆU</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">DỮ LIỆU &amp; CHỨNG TỪ GIAO DỊCH ERP LIÊN KẾT</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 06 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 07 / 14</div>
       </div>
 
       <!-- Transaction Architecture Diagram -->
@@ -825,15 +937,15 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 07: MASTER DATA + RBAC ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="7">
+    <!-- ==================== SLIDE 08: MASTER DATA + RBAC ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="8">
       <!-- Slide Header -->
       <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">QUẢN TRỊ DỮ LIỆU &amp; BẢO MẬT</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">DỮ LIỆU CHỦ (MASTER DATA) &amp; PHÂN TÁCH NHIỆM VỤ (RBAC / SoD)</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 07 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 08 / 14</div>
       </div>
 
       <!-- Split Container: Left Master Data, Right RBAC -->
@@ -964,15 +1076,15 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 08: DEEP DIVE: HELPDESK + SLA + ROUTING ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="8">
+    <!-- ==================== SLIDE 09: DEEP DIVE: HELPDESK + SLA + ROUTING ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="9">
       <!-- Slide Header -->
       <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">CHUYÊN SÂU 1: DỊCH VỤ</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">HELPDESK &bull; MA TRẬN SLA 2 CHIỀU &bull; SKILL ROUTING</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 08 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 09 / 14</div>
       </div>
 
       <!-- Main Layout: Ingestion Flow & SLA Table -->
@@ -1067,15 +1179,15 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 09: DEEP DIVE: CMMS + MRO + FIELD SERVICE ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="9">
+    <!-- ==================== SLIDE 10: DEEP DIVE: CMMS + MRO + FIELD SERVICE ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="10">
       <!-- Slide Header -->
       <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">CHUYÊN SÂU 2: HIỆN TRƯỜNG</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">CMMS &bull; MOBILE VAN STOCK &bull; TÁC NGHIỆP HIỆN TRƯỜNG</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 09 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 10 / 14</div>
       </div>
 
       <!-- 3 Columns Layout: Asset, Field Service, Van Stock -->
@@ -1193,15 +1305,15 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 10: ⭐ E2E LIVE CASE: ISS-2026-00001 ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="10">
+    <!-- ==================== SLIDE 11: ⭐ E2E LIVE CASE: ISS-2026-00001 ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="11">
       <!-- Slide Header -->
       <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">HERO SLIDE &bull; KIỂM CHỨNG LIVE</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">DIỄN BIẾN CA SỰ CỐ THỰC TẾ: MÁY NÉN KHÍ HITACHI (ISS-2026-00001)</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 10 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 11 / 14</div>
       </div>
 
       <!-- Timeline Hero Flow -->
@@ -1311,15 +1423,15 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 11: FIT-GAP + ADR ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="11">
+    <!-- ==================== SLIDE 12: FIT-GAP + ADR ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="12">
       <!-- Slide Header -->
       <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">PHÂN TÍCH GIẢI PHÁP</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">PHÂN TÍCH FIT-GAP &amp; 3 QUYẾT ĐỊNH KIẾN TRÚC ĐÁNH ĐỔI (ADR)</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 11 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 12 / 14</div>
       </div>
 
       <!-- Main Layout: Fit-Gap Table & 3 ADRs -->
@@ -1440,15 +1552,15 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 12: KPI + EVIDENCE ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="12">
+    <!-- ==================== SLIDE 13: KPI + EVIDENCE ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="13">
       <!-- Slide Header -->
       <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">ĐO LƯỜNG HIỆU QUẢ</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">KẾT QUẢ ĐO LƯỜNG VẬN HÀNH &amp; MINH CHỨNG HỆ THỐNG (KPI)</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 12 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 13 / 14</div>
       </div>
 
       <!-- 4 Big Metric Cards -->
@@ -1522,15 +1634,15 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 13: AI/RAG + IOT ROADMAP ==================== -->
-    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="13">
+    <!-- ==================== SLIDE 14: AI/RAG + IOT ROADMAP ==================== -->
+    <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="14">
       <!-- Slide Header -->
       <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
         <div>
           <span class="text-xs font-mono font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">ĐỊNH HƯỚNG TƯƠNG LAI</span>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">ĐỊNH HƯỚNG MỞ RỘNG: HYBRID AI / RAG &amp; BẢO TRÌ DỰ ĐOÁN (IoT)</h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 13 / 13</div>
+        <div class="text-xs text-slate-500 font-mono">SLIDE 14 / 14</div>
       </div>
 
       <!-- Main Content: AI Architecture Diagram & 4-Phase Roadmap -->
@@ -1662,7 +1774,7 @@
         <div>
           <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
             <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i>
-            <span>Tổng Quan 13 Slide Thuyết Trình</span>
+            <span>Tổng Quan 14 Slide Thuyết Trình</span>
           </h3>
           <p class="text-xs text-slate-500">Bấm vào slide bất kỳ để chuyển đến nhanh (Phím tắt: O hoặc Esc để đóng)</p>
         </div>
@@ -1680,17 +1792,22 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL: FULLSCREEN DIAGRAM VIEW (TAB 1) ==================== -->
-  <div id="diagramModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-6" onclick="closeDiagramModal(event)">
-    <div class="bg-white rounded-2xl shadow-2xl max-w-7xl w-full max-h-[95vh] flex flex-col overflow-hidden border border-slate-200" onclick="event.stopPropagation()">
+    <!-- ==================== MODAL: FULLSCREEN DIAGRAM VIEW ==================== -->
+  <div id="diagramModal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-6" onclick="closeDiagramModal(event)">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-7xl w-full max-h-[96vh] flex flex-col overflow-hidden border border-slate-200" onclick="event.stopPropagation()">
       <div class="p-3 sm:p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0">
         <div class="flex items-center gap-2">
           <span class="w-3 h-3 rounded-full bg-blue-600"></span>
-          <h3 class="text-xs sm:text-sm font-bold text-slate-900 font-mono">TAB 1: SMART HELPDESK &amp; MAINTENANCE ARCHITECTURE (FULLSCREEN)</h3>
+          <h3 id="modalTitle" class="text-xs sm:text-sm font-bold text-slate-900 font-mono">SMART HELPDESK ARCHITECTURE (FULLSCREEN)</h3>
+          <span id="modalBadge" class="text-[10px] bg-emerald-100 text-emerald-800 font-mono font-semibold px-2 py-0.5 rounded">Vector SVG</span>
         </div>
         <div class="flex items-center gap-2">
-          <a href="architecture_tab1.png" target="_blank" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold font-mono flex items-center gap-1 transition">
-            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Mở ảnh gốc
+          <div class="flex items-center bg-slate-100 rounded-lg p-0.5 border border-slate-200 text-xs font-mono">
+            <button onclick="openDiagramModal('tab1')" class="px-2.5 py-1 rounded hover:bg-white text-slate-700 transition">Tab 1 System</button>
+            <button onclick="openDiagramModal('svg')" class="px-2.5 py-1 rounded hover:bg-white text-slate-700 transition">Tab 2 Logical SVG</button>
+          </div>
+          <a id="modalSourceLink" href="SYSTEM_ARCHITECTURE_DESIGN.svg" target="_blank" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold font-mono flex items-center gap-1 transition">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Mở file gốc
           </a>
           <button onclick="closeDiagramModal()" class="p-1.5 hover:bg-slate-200 text-slate-600 rounded-lg transition" title="Đóng (Phím Esc)">
             <i data-lucide="x" class="w-5 h-5"></i>
@@ -1698,30 +1815,31 @@
         </div>
       </div>
       <div class="flex-1 overflow-auto p-3 sm:p-4 bg-slate-100/70 flex items-center justify-center">
-        <img src="architecture_tab1.png" alt="Smart HelpDesk Architecture Fullscreen" class="max-w-full h-auto rounded-xl shadow-xs bg-white border border-slate-200" />
+        <img id="modalDiagramImg" src="SYSTEM_ARCHITECTURE_DESIGN.svg" alt="Smart HelpDesk Architecture Fullscreen" class="max-w-full h-auto max-h-[85vh] rounded-xl shadow-xs bg-white border border-slate-200 object-contain" />
       </div>
     </div>
   </div>
 
   <!-- ==================== INTERACTIVE JAVASCRIPT ==================== -->
   <script>
-    const totalSlides = 13;
+    const totalSlides = 14;
     let currentSlide = 1;
 
-    const slideTitles = [
+        const slideTitles = [
       "01. Trang Bìa: Tổng Quan Smart Helpdesk & Maintenance ERP",
       "02. Bài Toán Kinh Doanh: Máy Hỏng Không Chỉ Là Một Ticket",
       "03. Chuyển Đổi Quy Trình: As-Is &rarr; To-Be Trên ERPNext",
       "04. Kiến Trúc Hệ Thống: Smart HelpDesk Architecture (Tab 1)",
-      "05. Năm Trụ Cột Nghiệp Vụ Doanh Nghiệp Cốt Lõi",
-      "06. Kiến Trúc Dữ Liệu & Giao Dịch Chứng Từ ERP Liên Kết",
-      "07. Dữ Liệu Chủ (Master Data) & Phân Tách Nhiệm Vụ (RBAC/SoD)",
-      "08. Chuyên Sâu 1: Helpdesk, Ma Trận SLA 2D & Skill Routing",
-      "09. Chuyên Sâu 2: CMMS, Kho Xe Lưu Động & Tác Nghiệp Hiện Trường",
-      "10. Kịch Bản Thực Nghiệm: Ca Máy Nén Khí Hitachi (ISS-2026-00001)",
-      "11. Phân Tích Fit-Gap & 3 Quyết Định Kiến Trúc Đánh Đổi (ADR)",
-      "12. Kết Quả Đo Lường Vận Hành & Minh Chứng Thực Nghiệm (KPI)",
-      "13. Định Hướng Tương Lai: Hybrid AI / RAG & Bảo Trì Dự Đoán IoT"
+      "05. Kiến Trúc Logic: Sơ Đồ Điều Phối & Dòng Chảy Dữ Liệu (Tab 2 SVG)",
+      "06. Năm Trụ Cột Nghiệp Vụ Doanh Nghiệp Cốt Lõi",
+      "07. Kiến Trúc Dữ Liệu & Giao Dịch Chứng Từ ERP Liên Kết",
+      "08. Dữ Liệu Chủ (Master Data) & Phân Tách Nhiệm Vụ (RBAC/SoD)",
+      "09. Chuyên Sâu 1: Helpdesk, Ma Trận SLA 2D & Skill Routing",
+      "10. Chuyên Sâu 2: CMMS, Kho Xe Lưu Động & Tác Nghiệp Hiện Trường",
+      "11. Kịch Bản Thực Nghiệm: Ca Máy Nén Khí Hitachi (ISS-2026-00001)",
+      "12. Phân Tích Fit-Gap & 3 Quyết Định Kiến Trúc Đánh Đổi (ADR)",
+      "13. Kết Quả Đo Lường Vận Hành & Minh Chứng Thực Nghiệm (KPI)",
+      "14. Định Hướng Tương Lai: Hybrid AI / RAG & Bảo Trì Dự Đoán IoT"
     ];
 
     function updateSlide(targetIndex) {
@@ -1835,9 +1953,26 @@
     document.getElementById('overviewBtn').onclick = toggleOverview;
     document.getElementById('closeOverviewBtn').onclick = toggleOverview;
 
-    // Diagram Fullscreen Modal
-    function openDiagramModal() {
+        // Diagram Fullscreen Modal
+    function openDiagramModal(type = 'svg') {
       const modal = document.getElementById('diagramModal');
+      const modalImg = document.getElementById('modalDiagramImg');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalBadge = document.getElementById('modalBadge');
+      const modalLink = document.getElementById('modalSourceLink');
+
+      if (type === 'tab1') {
+        if (modalImg) modalImg.src = 'architecture_tab1.png';
+        if (modalTitle) modalTitle.textContent = 'TAB 1: SMART HELPDESK & MAINTENANCE ARCHITECTURE';
+        if (modalBadge) { modalBadge.textContent = 'Modular Monolith'; modalBadge.className = 'text-[10px] bg-blue-100 text-blue-800 font-mono font-semibold px-2 py-0.5 rounded'; }
+        if (modalLink) modalLink.href = 'architecture_tab1.png';
+      } else {
+        if (modalImg) modalImg.src = 'SYSTEM_ARCHITECTURE_DESIGN.svg';
+        if (modalTitle) modalTitle.textContent = 'TAB 2: SMART HELPDESK LOGICAL ARCHITECTURE';
+        if (modalBadge) { modalBadge.textContent = 'Vector SVG HD'; modalBadge.className = 'text-[10px] bg-purple-100 text-purple-800 font-mono font-semibold px-2 py-0.5 rounded'; }
+        if (modalLink) modalLink.href = 'SYSTEM_ARCHITECTURE_DESIGN.svg';
+      }
+
       if (modal) {
         modal.classList.remove('hidden');
         modal.classList.add('flex');
