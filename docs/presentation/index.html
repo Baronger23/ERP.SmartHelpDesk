@@ -460,115 +460,114 @@
       </div>
     </section>
 
-    <!-- ==================== SLIDE 04: ENTERPRISE ARCHITECTURE ==================== -->
+    <!-- ==================== SLIDE 04: SYSTEM ARCHITECTURE (TAB 1) ==================== -->
     <section class="slide w-full h-full flex flex-col justify-between p-6 sm:p-8 md:p-10 lg:p-12 overflow-y-auto custom-scrollbar bg-slate-50 text-slate-800" data-slide="4">
       <!-- Slide Header -->
-      <div class="pb-3 border-b border-slate-200 flex items-center justify-between">
+      <div class="pb-3 border-b border-slate-200 flex items-center justify-between shrink-0">
         <div>
-          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">KIẾN TRÚC HỆ THỐNG</span>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">ENTERPRISE ARCHITECTURE: ERPNext ĐỨNG Ở ĐÂU?</h2>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">
+              KIẾN TRÚC HỆ THỐNG (TAB 1 DRAW.IO)
+            </span>
+            <span class="text-[11px] font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+              Pragmatic 3-Tier Architecture
+            </span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-1">
+            SMART HELPDESK &amp; MAINTENANCE ARCHITECTURE
+          </h2>
         </div>
-        <div class="text-xs text-slate-500 font-mono">SLIDE 04 / 13</div>
+        <div class="text-right">
+          <div class="text-xs text-slate-500 font-mono font-bold">SLIDE 04 / 13</div>
+          <span class="text-[10px] text-emerald-600 font-mono font-semibold flex items-center gap-1 justify-end mt-0.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 100% Cấu Hình Thực Tế
+          </span>
+        </div>
       </div>
 
-      <!-- 6-Layer Simplified Architecture Stack -->
-      <div class="my-auto py-3 space-y-2.5 max-w-5xl mx-auto w-full">
-        <!-- Layer 1 -->
-        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-between gap-4 hover:border-blue-400 transition">
-          <div class="w-32 shrink-0 text-xs font-mono font-bold text-blue-700 uppercase flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-blue-600"></span> L1: EXPERIENCE
+      <!-- Main Visual & Architectural Pillars Grid -->
+      <div class="my-auto py-2 space-y-3 w-full max-w-6xl mx-auto">
+        <!-- Interactive Diagram Frame -->
+        <div class="relative bg-white rounded-2xl border border-slate-200 p-2 sm:p-3 shadow-xs hover:shadow-md transition group">
+          <!-- Top mini-toolbar -->
+          <div class="flex items-center justify-between px-2 pb-2 mb-1 border-b border-slate-100 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="font-mono font-bold text-slate-700 flex items-center gap-1.5 text-[11px]">
+                <i data-lucide="layers" class="w-3.5 h-3.5 text-blue-600"></i> SƠ ĐỒ TAB 1: SYSTEM ARCHITECTURE
+              </span>
+              <span class="text-[10px] text-slate-400 font-mono hidden sm:inline">(Frappe Bench Modular Monolith)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <a href="architecture_tab1.png" target="_blank" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-mono text-[11px] font-semibold flex items-center gap-1 transition" title="Mở file ảnh gốc trong tab mới">
+                <i data-lucide="external-link" class="w-3 h-3 text-slate-600"></i> Ảnh gốc
+              </a>
+              <button onclick="openDiagramModal()" class="px-2.5 py-0.5 rounded bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-mono text-[11px] font-semibold flex items-center gap-1 transition" title="Phóng to toàn màn hình">
+                <i data-lucide="maximize-2" class="w-3 h-3 text-blue-600"></i> Phóng to
+              </button>
+            </div>
           </div>
-          <div class="flex-1 text-xs text-slate-700 font-medium flex flex-wrap gap-2">
-            <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">B2B Customer Portal</span>
-            <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">Tem QR Code Hiện Trường</span>
-            <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">Dispatcher Console</span>
-            <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">Mobile Desk KTV</span>
-            <span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200">Warehouse &amp; Accounting Workspace</span>
+
+          <!-- The Diagram Image -->
+          <div class="w-full overflow-hidden rounded-xl bg-white border border-slate-100 flex items-center justify-center cursor-pointer" onclick="openDiagramModal()" title="Nhấp để phóng to toàn màn hình">
+            <img 
+              src="architecture_tab1.png" 
+              alt="Smart HelpDesk Architecture Diagram (Tab 1)" 
+              class="w-full h-auto max-h-[46vh] object-contain transition-transform duration-200 group-hover:scale-[1.008]"
+              loading="eager"
+            />
           </div>
         </div>
 
-        <!-- Layer 2 -->
-        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-between gap-4 hover:border-indigo-400 transition">
-          <div class="w-32 shrink-0 text-xs font-mono font-bold text-indigo-700 uppercase flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-indigo-600"></span> L2: PROCESS
+        <!-- 3 Architecture Layers Quick Reference Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
+          <!-- Card 1: Clients -->
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition">
+            <div class="flex items-center gap-2 text-slate-900 font-bold mb-1">
+              <span class="w-5 h-5 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center text-[10px] font-mono font-bold">L1</span>
+              <span class="text-blue-950 font-bold">CLIENTS (6 CỔNG GIAO DIỆN)</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-snug">
+              Web Portal (QR thân máy), Mobile Desk PWA (KTV), Dispatcher Console, Kho &amp; Kế toán Workspace, AI Copilot. Tất cả hội tụ qua chuẩn <strong>REST API Engine</strong>.
+            </p>
           </div>
-          <div class="flex-1 text-xs text-slate-700 font-medium flex flex-wrap gap-2">
-            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">Incident Intake (T0/T1)</span>
-            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">2D SLA Engine</span>
-            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">Skill-Based Routing</span>
-            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">PM-to-CM Trigger</span>
-            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">Van Stock Logistics</span>
-            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">Procure-to-Stock</span>
-            <span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200 font-semibold">3-Way Billing</span>
-          </div>
-        </div>
 
-        <!-- Layer 3: Highlighted Core -->
-        <div class="p-3.5 rounded-xl bg-blue-50/70 border-2 border-blue-500 shadow-sm flex items-center justify-between gap-4">
-          <div class="w-32 shrink-0 text-xs font-mono font-bold text-blue-900 uppercase flex items-center gap-1.5">
-            <i data-lucide="database" class="w-4 h-4 text-blue-600"></i> L3: ERP TRANSACTION
+          <!-- Card 2: Services & Automations -->
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-emerald-300 transition">
+            <div class="flex items-center gap-2 text-slate-900 font-bold mb-1">
+              <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-mono font-bold">L2</span>
+              <span class="text-emerald-950 font-bold">SERVICES &amp; AUTOMATIONS</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-snug">
+              <strong>5 Phân hệ lõi:</strong> Helpdesk (SLA 2D &amp; Skill Routing), CMMS PM, Van Stock kho xe 2 chặng, Billing 3 nguồn, AI Gateway (Draft only) &amp; PM-to-CM Trigger.
+            </p>
           </div>
-          <div class="flex-1 text-xs font-mono font-bold text-blue-800 flex flex-wrap gap-2">
-            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Issue</span>
-            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Asset</span>
-            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Asset Maintenance Log</span>
-            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Stock Entry</span>
-            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Material Request</span>
-            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Purchase Order</span>
-            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Purchase Receipt</span>
-            <span class="px-2.5 py-1 rounded bg-white border border-blue-300 shadow-2xs">Sales Invoice</span>
-          </div>
-        </div>
 
-        <!-- Layer 4 -->
-        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-between gap-4 hover:border-emerald-400 transition">
-          <div class="w-32 shrink-0 text-xs font-mono font-bold text-emerald-700 uppercase flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-600"></span> L4: GOVERNANCE
-          </div>
-          <div class="flex-1 text-xs text-slate-700 font-medium flex flex-wrap gap-2">
-            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">5 RBAC Roles</span>
-            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Segregation of Duties (SoD)</span>
-            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">User Permission Isolation</span>
-            <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Audit Trail (docstatus: 0&rarr;1&rarr;2)</span>
-          </div>
-        </div>
-
-        <!-- Layer 5 -->
-        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-between gap-4 hover:border-slate-400 transition">
-          <div class="w-32 shrink-0 text-xs font-mono font-bold text-slate-700 uppercase flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-slate-600"></span> L5: PLATFORM
-          </div>
-          <div class="flex-1 text-xs text-slate-600 font-mono flex flex-wrap gap-2">
-            <span>Frappe Framework v16</span> &bull;
-            <span>Python 3.11+ WSGI</span> &bull;
-            <span>MariaDB 10.6+ InnoDB</span> &bull;
-            <span>Redis Cache &amp; Queue</span> &bull;
-            <span>REST API</span> &bull;
-            <span>Docker Compose (9 Containers)</span>
-          </div>
-        </div>
-
-        <!-- Layer 6 -->
-        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center justify-between gap-4 hover:border-purple-400 transition">
-          <div class="w-32 shrink-0 text-xs font-mono font-bold text-purple-700 uppercase flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-purple-600"></span> L6: INTELLIGENCE
-          </div>
-          <div class="flex-1 text-xs text-slate-700 font-medium flex flex-wrap gap-2">
-            <span class="px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">Executive KPI Engine</span>
-            <span class="px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">AI / RAG Technical Assistant</span>
-            <span class="px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">IoT / MQTT Telemetry</span>
-            <span class="px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200">Predictive Maintenance</span>
+          <!-- Card 3: Infrastructure -->
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-purple-300 transition">
+            <div class="flex items-center gap-2 text-slate-900 font-bold mb-1">
+              <span class="w-5 h-5 rounded-md bg-purple-100 text-purple-700 flex items-center justify-center text-[10px] font-mono font-bold">L3</span>
+              <span class="text-purple-950 font-bold">INFRASTRUCTURE &amp; RUNTIME</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-snug">
+              <strong>MariaDB 10.6+ InnoDB</strong> (ACID toàn vẹn giao dịch), <strong>Redis</strong> (Cache &amp; SLA Queue Broker), <strong>Frappe Bench</strong> Python 3.11 trên <strong>Docker Local</strong>.
+            </p>
           </div>
         </div>
       </div>
 
-      <!-- Key Message Banner -->
-      <div class="p-3.5 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs sm:text-sm font-medium">
+      <!-- Key Architectural Principle Callout Banner -->
+      <div class="p-3 rounded-xl bg-slate-900 text-white flex items-center justify-between text-xs sm:text-sm font-medium shrink-0 shadow-xs">
         <div class="flex items-center gap-3">
-          <i data-lucide="layers" class="w-5 h-5 text-blue-400 shrink-0"></i>
-          <span><strong class="text-blue-400 font-bold">KEY MESSAGE:</strong> ERPNext là <strong>Transactional Core</strong>; Frappe là <strong>Platform Khung gầm</strong>; AI/RAG là <strong>Intelligence Layer</strong>.</span>
+          <div class="p-1.5 rounded-lg bg-blue-600 text-white shrink-0">
+            <i data-lucide="check-check" class="w-4 h-4"></i>
+          </div>
+          <span>
+            <strong class="text-blue-400 font-bold">NGUYÊN TẮC THIẾT KẾ:</strong> Không vẽ tính năng ảo ngoài phạm vi. Mọi khối kiến trúc đều truy vết 100% về Pain Point vận hành thực tế tại doanh nghiệp AIS.
+          </span>
         </div>
-        <span class="text-xs text-slate-400 font-mono hidden md:inline">Single Source of Truth</span>
+        <span class="text-xs text-slate-400 font-mono hidden lg:inline shrink-0 pl-3 border-l border-slate-800">
+          Traceable Architecture
+        </span>
       </div>
     </section>
 
@@ -1681,6 +1680,29 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL: FULLSCREEN DIAGRAM VIEW (TAB 1) ==================== -->
+  <div id="diagramModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-6" onclick="closeDiagramModal(event)">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-7xl w-full max-h-[95vh] flex flex-col overflow-hidden border border-slate-200" onclick="event.stopPropagation()">
+      <div class="p-3 sm:p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-blue-600"></span>
+          <h3 class="text-xs sm:text-sm font-bold text-slate-900 font-mono">TAB 1: SMART HELPDESK &amp; MAINTENANCE ARCHITECTURE (FULLSCREEN)</h3>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="architecture_tab1.png" target="_blank" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold font-mono flex items-center gap-1 transition">
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Mở ảnh gốc
+          </a>
+          <button onclick="closeDiagramModal()" class="p-1.5 hover:bg-slate-200 text-slate-600 rounded-lg transition" title="Đóng (Phím Esc)">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+      <div class="flex-1 overflow-auto p-3 sm:p-4 bg-slate-100/70 flex items-center justify-center">
+        <img src="architecture_tab1.png" alt="Smart HelpDesk Architecture Fullscreen" class="max-w-full h-auto rounded-xl shadow-xs bg-white border border-slate-200" />
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== INTERACTIVE JAVASCRIPT ==================== -->
   <script>
     const totalSlides = 13;
@@ -1690,7 +1712,7 @@
       "01. Trang Bìa: Tổng Quan Smart Helpdesk & Maintenance ERP",
       "02. Bài Toán Kinh Doanh: Máy Hỏng Không Chỉ Là Một Ticket",
       "03. Chuyển Đổi Quy Trình: As-Is &rarr; To-Be Trên ERPNext",
-      "04. Enterprise Architecture: ERPNext Đứng Ở Đâu?",
+      "04. Kiến Trúc Hệ Thống: Smart HelpDesk Architecture (Tab 1)",
       "05. Năm Trụ Cột Nghiệp Vụ Doanh Nghiệp Cốt Lõi",
       "06. Kiến Trúc Dữ Liệu & Giao Dịch Chứng Từ ERP Liên Kết",
       "07. Dữ Liệu Chủ (Master Data) & Phân Tách Nhiệm Vụ (RBAC/SoD)",
@@ -1731,6 +1753,14 @@
 
     // Keyboard Shortcuts
     document.addEventListener('keydown', (e) => {
+      const diagramModal = document.getElementById('diagramModal');
+      if (diagramModal && !diagramModal.classList.contains('hidden')) {
+        if (e.key === 'Escape') {
+          closeDiagramModal();
+          return;
+        }
+      }
+
       const modal = document.getElementById('overviewModal');
       if (!modal.classList.contains('hidden')) {
         if (e.key === 'Escape' || e.key === 'o' || e.key === 'O') toggleOverview();
@@ -1805,8 +1835,34 @@
     document.getElementById('overviewBtn').onclick = toggleOverview;
     document.getElementById('closeOverviewBtn').onclick = toggleOverview;
 
-    // Initialize on page load
-    updateSlide(1);
+    // Diagram Fullscreen Modal
+    function openDiagramModal() {
+      const modal = document.getElementById('diagramModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeDiagramModal(event) {
+      if (event && event.stopPropagation) {
+        event.stopPropagation();
+      }
+      const modal = document.getElementById('diagramModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // Initialize on page load (support #4 or ?slide=4)
+    const hash = window.location.hash.replace('#', '');
+    const initialSlide = parseInt(hash, 10);
+    if (!isNaN(initialSlide) && initialSlide >= 1 && initialSlide <= totalSlides) {
+      updateSlide(initialSlide);
+    } else {
+      updateSlide(1);
+    }
   </script>
 </body>
 </html>

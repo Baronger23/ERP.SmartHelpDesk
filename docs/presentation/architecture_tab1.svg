@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="50 10 1460 840" width="100%" height="100%" style="background-color: #FFFFFF; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <filter id="shadow-sm" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#0F172A" flood-opacity="0.07"/>
+    </filter>
+    <marker id="arrow-64748B" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#64748B"/>
+    </marker>
+    <marker id="arrow-94A3B8" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#94A3B8"/>
+    </marker>
+    <marker id="arrow-2563EB" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563EB"/>
+    </marker>
+    <marker id="arrow-059669" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#059669"/>
+    </marker>
+    <marker id="arrow-D97706" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#D97706"/>
+    </marker>
+    <marker id="arrow-7C3AED" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#7C3AED"/>
+    </marker>
+    <marker id="arrow-0284C7" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284C7"/>
+    </marker>
+    <marker id="arrow-334155" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect id="c_top" x="60.0" y="70.0" width="1440.0" height="90.0" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="85.0" y="95.0" fill="#1E293B" font-size="15px" font-weight="bold">Clients</text>
+  <rect id="c_mid" x="100.0" y="190.0" width="1400.0" height="490.0" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="2"/>
+  <text x="125.0" y="214.0" fill="#334155" font-size="14px" font-weight="bold">Services (Frappe Bench Runtime)</text>
+  <rect id="c_bot" x="100.0" y="705.0" width="1400.0" height="95.0" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="125.0" y="726.0" fill="#475569" font-size="13px" font-weight="bold">Infrastructure &amp; Runtime</text>
+  <rect id="async_bar" x="150.0" y="485.0" width="1315.0" height="60.0" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <rect id="sub_row2_bar" x="150.0" y="565.0" width="1315.0" height="55.0" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
+  <rect id="c_web" x="150.0" y="98.0" width="170.0" height="45.0" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="235.0" y="124.7" text-anchor="middle" fill="#1E293B" font-size="12px" font-weight="bold">Web Portal</text>
+  <rect id="c_desk" x="385.0" y="98.0" width="170.0" height="45.0" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="470.0" y="124.7" text-anchor="middle" fill="#1E293B" font-size="12px" font-weight="bold">Mobile Desk PWA</text>
+  <rect id="c_dispatch" x="620.0" y="98.0" width="170.0" height="45.0" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="705.0" y="124.7" text-anchor="middle" fill="#1E293B" font-size="12px" font-weight="bold">Dispatcher Console</text>
+  <rect id="c_wh" x="855.0" y="98.0" width="170.0" height="45.0" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="940.0" y="124.7" text-anchor="middle" fill="#1E293B" font-size="12px" font-weight="bold">Warehouse Desk</text>
+  <rect id="c_bill" x="1090.0" y="98.0" width="170.0" height="45.0" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="1175.0" y="124.7" text-anchor="middle" fill="#1E293B" font-size="12px" font-weight="bold">Billing Desk</text>
+  <rect id="c_ai" x="1295.0" y="98.0" width="170.0" height="45.0" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="1380.0" y="124.7" text-anchor="middle" fill="#1E293B" font-size="12px" font-weight="bold">AI Copilot</text>
+  <rect id="wl_box" x="150.0" y="235.0" width="170.0" height="220.0" rx="8" fill="#1E293B" stroke="#0F172A" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="235.0" y="260.0" text-anchor="middle" fill="#FFFFFF" font-size="13px" font-weight="bold">Framework Core</text>
+  <rect id="wl_doc" x="160.0" y="270.0" width="150.0" height="35.0" rx="0" fill="#334155" stroke="none" stroke-width="1"/>
+  <text x="235.0" y="291.35" text-anchor="middle" fill="#FFFFFF" font-size="11px" font-weight="bold">DocType Schema</text>
+  <rect id="wl_rbac" x="160.0" y="315.0" width="150.0" height="35.0" rx="0" fill="#334155" stroke="none" stroke-width="1"/>
+  <text x="235.0" y="336.35" text-anchor="middle" fill="#FFFFFF" font-size="11px" font-weight="bold">RBAC &amp; Security</text>
+  <rect id="wl_api" x="160.0" y="360.0" width="150.0" height="35.0" rx="0" fill="#334155" stroke="none" stroke-width="1"/>
+  <text x="235.0" y="381.35" text-anchor="middle" fill="#FFFFFF" font-size="11px" font-weight="bold">REST API Engine</text>
+  <rect id="wl_cli" x="160.0" y="405.0" width="150.0" height="35.0" rx="0" fill="#334155" stroke="none" stroke-width="1"/>
+  <text x="235.0" y="426.35" text-anchor="middle" fill="#FFFFFF" font-size="11px" font-weight="bold">Client Scripts</text>
+  <rect id="srv_hd" x="385.0" y="235.0" width="170.0" height="95.0" rx="8" fill="#2563EB" stroke="#1D4ED8" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="470.0" y="287.4" text-anchor="middle" fill="#FFFFFF" font-size="14px" font-weight="bold">Helpdesk Services</text>
+  <rect id="sub_hd" x="385.0" y="360.0" width="170.0" height="95.0" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text text-anchor="middle" fill="#1E40AF" font-size="11px" font-weight="bold">
+    <tspan x="470.0" y="391.5">Issue &amp;</tspan>
+    <tspan x="470.0" y="409.5">2D SLA</tspan>
+    <tspan x="470.0" y="427.5">Skill Routing</tspan>
+  </text>
+  <rect id="srv_cmms" x="620.0" y="235.0" width="170.0" height="95.0" rx="8" fill="#059669" stroke="#047857" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="705.0" y="287.4" text-anchor="middle" fill="#FFFFFF" font-size="14px" font-weight="bold">CMMS Services</text>
+  <rect id="sub_cmms" x="620.0" y="360.0" width="170.0" height="95.0" rx="8" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text text-anchor="middle" fill="#065F46" font-size="11px" font-weight="bold">
+    <tspan x="705.0" y="399.5">Asset &amp;</tspan>
+    <tspan x="705.0" y="419.5">Maintenance PM Schedules</tspan>
+  </text>
+  <rect id="srv_mro" x="855.0" y="235.0" width="170.0" height="95.0" rx="8" fill="#D97706" stroke="#B45309" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text text-anchor="middle" fill="#FFFFFF" font-size="14px" font-weight="bold">
+    <tspan x="940.0" y="274.5">MRO &amp;</tspan>
+    <tspan x="940.0" y="294.5">Van Stock</tspan>
+  </text>
+  <rect id="sub_mro" x="855.0" y="360.0" width="170.0" height="95.0" rx="8" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.5"/>
+  <text text-anchor="middle" fill="#92400E" font-size="11px" font-weight="bold">
+    <tspan x="940.0" y="391.5">Van Stock</tspan>
+    <tspan x="940.0" y="409.5">Xe KTV</tspan>
+    <tspan x="940.0" y="427.5">Material Issue</tspan>
+  </text>
+  <rect id="srv_bill" x="1090.0" y="235.0" width="170.0" height="95.0" rx="8" fill="#7C3AED" stroke="#6D28D9" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text text-anchor="middle" fill="#FFFFFF" font-size="14px" font-weight="bold">
+    <tspan x="1175.0" y="274.5">Billing</tspan>
+    <tspan x="1175.0" y="294.5">&amp; Finance</tspan>
+  </text>
+  <rect id="sub_bill" x="1090.0" y="360.0" width="170.0" height="95.0" rx="8" fill="#FAF5FF" stroke="#8B5CF6" stroke-width="1.5"/>
+  <text text-anchor="middle" fill="#5B21B6" font-size="11px" font-weight="bold">
+    <tspan x="1175.0" y="399.5">Warranty /</tspan>
+    <tspan x="1175.0" y="419.5">Billable Sales Invoice</tspan>
+  </text>
+  <rect id="srv_ai" x="1295.0" y="235.0" width="170.0" height="95.0" rx="8" fill="#0284C7" stroke="#0369A1" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text text-anchor="middle" fill="#FFFFFF" font-size="14px" font-weight="bold">
+    <tspan x="1380.0" y="274.5">AI</tspan>
+    <tspan x="1380.0" y="294.5">Copilot Gateway</tspan>
+  </text>
+  <rect id="sub_ai" x="1295.0" y="360.0" width="170.0" height="95.0" rx="8" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.5"/>
+  <text text-anchor="middle" fill="#0369A1" font-size="11px" font-weight="bold">
+    <tspan x="1380.0" y="391.5">REST Tool</tspan>
+    <tspan x="1380.0" y="409.5">Calls Draft</tspan>
+    <tspan x="1380.0" y="427.5">Only (docstatus=0)</tspan>
+  </text>
+  <rect id="inf_db" x="150.0" y="735.0" width="290.0" height="50.0" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="295.0" y="764.2" text-anchor="middle" fill="#1E40AF" font-size="12px" font-weight="bold">MariaDB 10.6+ (InnoDB)</text>
+  <rect id="inf_redis" x="490.0" y="735.0" width="290.0" height="50.0" rx="8" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="635.0" y="764.2" text-anchor="middle" fill="#991B1B" font-size="12px" font-weight="bold">Redis Cache &amp; Queue Broker</text>
+  <rect id="inf_bench" x="830.0" y="735.0" width="310.0" height="50.0" rx="8" fill="#EDE9FE" stroke="#7C3AED" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="985.0" y="764.2" text-anchor="middle" fill="#5B21B6" font-size="12px" font-weight="bold">Frappe Bench Application Runtime</text>
+  <rect id="inf_docker" x="1190.0" y="735.0" width="290.0" height="50.0" rx="8" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.5" filter="url(#shadow-sm)"/>
+  <text x="1335.0" y="764.2" text-anchor="middle" fill="#0369A1" font-size="12px" font-weight="bold">Docker Local Containers Platform</text>
+  <text x="800.0" y="43.5" text-anchor="middle" fill="#1E293B" font-size="24px" font-weight="800" letter-spacing="-0.5px">Smart HelpDesk Architecture</text>
+  <text x="155.0" y="479.0" fill="#94A3B8" font-size="10px" font-style="italic" font-weight="600">Hooks &amp; Automations</text>
+  <rect id="as_script" x="165.0" y="585.0" width="170.0" height="36.0" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="250.0" y="606.85" text-anchor="middle" fill="#334155" font-size="11px" font-weight="bold">Server scripts</text>
+  <rect id="as_worker" x="370.0" y="584.0" width="200.0" height="36.0" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="470.0" y="605.85" text-anchor="middle" fill="#334155" font-size="11px" font-weight="bold">Queue workers</text>
+  <rect id="as_cron" x="610.0" y="497.0" width="185.0" height="36.0" rx="4" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="702.5" y="518.85" text-anchor="middle" fill="#065F46" font-size="11px" font-weight="bold">Cron scheduler</text>
+  <rect id="as_trigger" x="830.0" y="497.0" width="185.0" height="36.0" rx="4" fill="#ECFDF5" stroke="#10B981" stroke-width="1.5"/>
+  <text x="922.5" y="518.85" text-anchor="middle" fill="#065F46" font-size="11px" font-weight="bold">PM-to-CM trigger</text>
+  <rect id="as_reorder" x="1050.0" y="497.0" width="185.0" height="36.0" rx="4" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="1142.5" y="518.85" text-anchor="middle" fill="#92400E" font-size="11px" font-weight="bold">Auto reorder</text>
+  <rect id="as_audit" x="1295.0" y="584.0" width="185.0" height="36.0" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="1387.5" y="605.85" text-anchor="middle" fill="#334155" font-size="11px" font-weight="bold">Audit trail &amp; logs</text>
+  <rect id="s2_py" x="155.0" y="498.0" width="170.0" height="35.0" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="240.0" y="519.175" text-anchor="middle" fill="#64748B" font-size="10.5px" font-weight="500">Python Doc Events Hooks</text>
+  <rect id="s2_sla" x="370.0" y="497.0" width="200.0" height="35.0" rx="4" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+  <text x="470.0" y="518.175" text-anchor="middle" fill="#1E40AF" font-size="10.5px" font-weight="500">SLA Countdown Clock</text>
+  <rect id="s2_ste" x="610.0" y="585.0" width="185.0" height="35.0" rx="4" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="702.5" y="606.175" text-anchor="middle" fill="#92400E" font-size="10.5px" font-weight="500">Stock Entry Validation</text>
+  <rect id="s2_sinv" x="1295.0" y="504.0" width="185.0" height="35.0" rx="4" fill="#FAF5FF" stroke="#8B5CF6" stroke-width="1.5"/>
+  <text x="1387.5" y="525.175" text-anchor="middle" fill="#5B21B6" font-size="10.5px" font-weight="500">Sales Invoice Auto-Link</text>
+  <rect id="s2_noti" x="1050.0" y="586.0" width="185.0" height="35.0" rx="4" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="1142.5" y="607.175" text-anchor="middle" fill="#64748B" font-size="10.5px" font-weight="500">Notifications (Email/Webhook)</text>
+  <text x="800.0" y="831.5" text-anchor="middle" fill="#64748B" font-size="12px" font-weight="bold">■ Framework &amp; Security      ■ Helpdesk &amp; SLA      ■ CMMS Services      ■ MRO &amp; Van Stock      ■ Billing &amp; Finance      ■ Infrastructure</text>
+  <line id="h_bus1" x1="320.0" y1="283.0" x2="385.0" y2="283.0" stroke="#94A3B8" stroke-width="1.5"/>
+  <line id="h_bus2" x1="555.0" y1="283.0" x2="620.0" y2="283.0" stroke="#94A3B8" stroke-width="1.5"/>
+  <line id="h_bus3" x1="790.0" y1="283.0" x2="855.0" y2="283.0" stroke="#94A3B8" stroke-width="1.5"/>
+  <line id="h_bus4" x1="1025.0" y1="283.0" x2="1090.0" y2="283.0" stroke="#94A3B8" stroke-width="1.5"/>
+  <line id="h_bus5" x1="1260.0" y1="283.0" x2="1295.0" y2="283.0" stroke="#94A3B8" stroke-width="1.5"/>
+  <line id="v_c1" x1="235.0" y1="143.0" x2="235.0" y2="235.0" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrow-64748B)"/>
+  <line id="v_c2" x1="470.0" y1="143.0" x2="470.0" y2="235.0" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-2563EB)"/>
+  <line id="v_c3" x1="705.0" y1="143.0" x2="705.0" y2="235.0" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-059669)"/>
+  <line id="v_c4" x1="940.0" y1="143.0" x2="940.0" y2="235.0" stroke="#D97706" stroke-width="1.5" marker-end="url(#arrow-D97706)"/>
+  <line id="v_c5" x1="1175.0" y1="143.0" x2="1175.0" y2="235.0" stroke="#7C3AED" stroke-width="1.5" marker-end="url(#arrow-7C3AED)"/>
+  <line id="v_c6" x1="1380.0" y1="143.0" x2="1380.0" y2="235.0" stroke="#0284C7" stroke-width="1.5" marker-end="url(#arrow-0284C7)"/>
+  <line id="v_sub2" x1="470.0" y1="330.0" x2="470.0" y2="360.0" stroke="#2563EB" stroke-width="1.5" marker-end="url(#arrow-2563EB)"/>
+  <line id="v_sub3" x1="705.0" y1="330.0" x2="705.0" y2="360.0" stroke="#059669" stroke-width="1.5" marker-end="url(#arrow-059669)"/>
+  <line id="v_sub4" x1="940.0" y1="330.0" x2="940.0" y2="360.0" stroke="#D97706" stroke-width="1.5" marker-end="url(#arrow-D97706)"/>
+  <line id="v_sub5" x1="1175.0" y1="330.0" x2="1175.0" y2="360.0" stroke="#7C3AED" stroke-width="1.5" marker-end="url(#arrow-7C3AED)"/>
+  <line id="v_sub6" x1="1380.0" y1="330.0" x2="1380.0" y2="360.0" stroke="#0284C7" stroke-width="1.5" marker-end="url(#arrow-0284C7)"/>
+  <path id="hook_fw_py" d="M 235.0 455.0 C 235.0 476.5, 240.0 476.5, 240.0 498.0" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow-334155)"/>
+  <line id="hook_hd_sla" x1="470.0" y1="455.0" x2="470.0" y2="497.0" stroke="#2563EB" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow-2563EB)"/>
+  <line id="hook_cmms_cron" x1="705.0" y1="455.0" x2="702.5" y2="497.0" stroke="#059669" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow-059669)"/>
+  <path id="hook_cmms_trigger" d="M 705.0 455.0 C 705.0 476.0, 922.5 476.0, 922.5 497.0" fill="none" stroke="#059669" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow-059669)"/>
+  <path id="hook_mro_ste" d="M 940.0 455.0 C 940.0 520.0, 702.5 520.0, 702.5 585.0" fill="none" stroke="#D97706" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow-D97706)"/>
+  <path id="hook_mro_reorder" d="M 940.0 455.0 C 940.0 476.0, 1142.5 476.0, 1142.5 497.0" fill="none" stroke="#D97706" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow-D97706)"/>
+  <path id="hook_bill_sinv" d="M 1175.0 455.0 C 1175.0 479.5, 1387.5 479.5, 1387.5 504.0" fill="none" stroke="#7C3AED" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow-7C3AED)"/>
+  <line id="v_svc_infra" x1="800" y1="680.0" x2="800" y2="705.0" stroke="#94A3B8" stroke-width="2" marker-end="url(#arrow-94A3B8)"/>
+</svg>
