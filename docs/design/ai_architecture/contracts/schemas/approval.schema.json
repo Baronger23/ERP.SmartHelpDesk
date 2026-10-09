@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "approval_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "proposal_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "binding_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "actor_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "company_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "customer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "site_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "actor_id",
+        "company_id",
+        "customer_id",
+        "site_id"
+      ],
+      "additionalProperties": false
+    },
+    "approver_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "policy_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "APPROVED",
+        "REJECTED",
+        "REVOKED"
+      ]
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expected_versions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      }
+    }
+  },
+  "required": [
+    "approval_id",
+    "proposal_id",
+    "run_id",
+    "binding_hash",
+    "scope",
+    "approver_id",
+    "policy_version",
+    "decision",
+    "decided_at",
+    "expires_at",
+    "expected_versions"
+  ],
+  "additionalProperties": false
+}

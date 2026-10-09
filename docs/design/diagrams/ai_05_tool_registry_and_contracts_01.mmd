@@ -1,0 +1,11 @@
+flowchart TD
+    A["Call: typed args + trusted context"] --> B["Allowlist/version/schema/scope check"]
+    B --> C{"Effect class?"}
+    C -->|"Read"| R["Scoped query + typed observation"]
+    C -->|"Prepare"| P["Immutable proposal, zero business effects"]
+    C -->|"Approved draft"| K{"Scoped key lookup: APPLIED same hash?"}
+    K -->|"Yes"| OLD["Stored receipt; no second effect"]
+    K -->|"No"| W["Lock approval/preconditions; revalidate"]
+    W --> X["Draft + approval consumed + receipt + outbox atomic"]
+    X --> Y["APPLIED receipt or OUTCOME_UNKNOWN"]
+    Y --> L["Authoritative lookup before same-key retry"]

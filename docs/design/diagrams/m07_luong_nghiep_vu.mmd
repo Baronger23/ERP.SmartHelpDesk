@@ -1,0 +1,9 @@
+flowchart TD
+    A["Coverage snapshot + diagnosis"] --> B["Chính sách phí và estimate version"]
+    B --> C["Xác nhận khách / ngoại lệ có thẩm quyền"]
+    C --> D["Visit thực hiện; công và vật tư thực tế"]
+    D --> E["Đối soát dùng/trả/công và phạm vi được duyệt"]
+    E --> F{"Đủ điều kiện tính phí?"}
+    F -->|"Không"| G["Giữ pending/dispute; yêu cầu xác nhận"]
+    F -->|"Có"| H["Nháp hóa đơn → duyệt → submit"]
+    H --> I["Theo dõi phải thu và điều chỉnh có nguồn"]

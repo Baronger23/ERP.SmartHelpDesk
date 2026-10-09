@@ -1,0 +1,14 @@
+flowchart TD
+    A["Trusted context + versioned plan"] --> B{"Limits, lease, permission còn hợp lệ?"}
+    B -->|"Không"| STOP["Stop với reason/outcome"]
+    B -->|"Có"| C["Chọn ready step và kiểm tool schema/policy"]
+    C --> D["Act: dispatch bounded attempt"]
+    D --> E["Observe: typed fact/error/unknown/conflict"]
+    E --> F["Persist evidence, counters và checkpoint"]
+    F --> G{"Objective đủ bằng chứng?"}
+    G -->|"Có"| V["Verify claims + final policy check"]
+    V --> END["Finalize kết quả / pending effect rõ ràng"]
+    G -->|"Không"| H{"Cần người hoặc outcome reconciliation?"}
+    H -->|"Có"| W["Checkpoint waiting hoặc reconcile cùng command"]
+    H -->|"Không"| R["Replan có lý do, tăng version, không reset budget"]
+    R --> B

@@ -1,0 +1,8 @@
+flowchart LR
+    C["Contracts/schemas/protocol vectors"] --> A["Adapter/state/ERP fault injection"]
+    A --> E["RAG/model holdout + expert gold"]
+    E --> P["Pilot: traces, cost, recovery and limits"]
+    P --> G{"Critical gates pass?"}
+    G -->|"No"| F["Fix version/policy and rerun affected tests"]
+    F --> C
+    G -->|"Yes"| R["Release bounded baseline with rollback bundle"]

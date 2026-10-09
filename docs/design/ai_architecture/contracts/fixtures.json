@@ -1,0 +1,529 @@
+{
+  "scope": "offline_contract_conformance",
+  "synthetic": true,
+  "protocol_vectors": [
+    {
+      "case_id": "valid_commit",
+      "covers": [
+        "HT-08"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "APPLIED",
+        "business_effect_count": 1
+      }
+    },
+    {
+      "case_id": "retry_same",
+      "covers": [
+        "HT-12",
+        "HT-14"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "commit"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "APPLIED",
+        "business_effect_count": 1
+      }
+    },
+    {
+      "case_id": "conflict_key",
+      "covers": [
+        "HT-14"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "commit"
+        },
+        {
+          "op": "change_payload",
+          "key": "quantity",
+          "value": "2.000"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "IDEMPOTENCY_CONFLICT",
+        "business_effect_count": 1
+      }
+    },
+    {
+      "case_id": "tampered_payload",
+      "covers": [
+        "HT-09"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "change_payload",
+          "key": "quantity",
+          "value": "2.000"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "HASH_MISMATCH",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "stale_object",
+      "covers": [
+        "HT-09"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "change_version",
+          "key": "stock",
+          "value": "stock-v18"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "STALE_APPROVAL",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "expired",
+      "covers": [
+        "HT-10"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "advance_time",
+          "value": "2026-10-09T10:00:00+07:00"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "EXPIRED",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "rejected",
+      "covers": [
+        "HT-10"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "approval_decision",
+          "value": "REJECTED"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "REJECTED",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "scope_changed",
+      "covers": [
+        "HT-16"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "change_scope",
+          "key": "customer_id",
+          "value": "other-customer"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "SCOPE_DENIED",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "policy_changed",
+      "covers": [
+        "HT-09"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "change_policy",
+          "value": "policy-v2"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "STALE_APPROVAL",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "crash_after_commit",
+      "covers": [
+        "HT-12"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "commit"
+        },
+        {
+          "op": "lose_receipt"
+        },
+        {
+          "op": "lookup"
+        }
+      ],
+      "expected": {
+        "outcome": "APPLIED",
+        "business_effect_count": 1
+      }
+    },
+    {
+      "case_id": "write_timeout_unknown",
+      "covers": [
+        "HT-13"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "commit_timeout"
+        },
+        {
+          "op": "lookup"
+        }
+      ],
+      "expected": {
+        "outcome": "APPLIED",
+        "business_effect_count": 1
+      }
+    },
+    {
+      "case_id": "cancel_before",
+      "covers": [
+        "HT-18"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "cancel"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "CANCELLED",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "cancel_after",
+      "covers": [
+        "HT-18"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "commit"
+        },
+        {
+          "op": "cancel"
+        },
+        {
+          "op": "lookup"
+        }
+      ],
+      "expected": {
+        "outcome": "APPLIED",
+        "business_effect_count": 1
+      }
+    },
+    {
+      "case_id": "duplicate_resume",
+      "covers": [
+        "HT-11"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "resume"
+        },
+        {
+          "op": "resume"
+        }
+      ],
+      "expected": {
+        "outcome": "RESUMED_ONCE",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "forged_resume",
+      "covers": [
+        "HT-10",
+        "HT-11"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "resume",
+          "source_verified": false
+        }
+      ],
+      "expected": {
+        "outcome": "UNVERIFIED_EVENT",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "stock_timeout",
+      "covers": [
+        "HT-03"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "stock_timeout"
+        },
+        {
+          "op": "stock_timeout"
+        },
+        {
+          "op": "stock_timeout"
+        },
+        {
+          "op": "classify_stock_observations"
+        }
+      ],
+      "expected": {
+        "outcome": "PARTIAL_NO_SHORTAGE",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "forged_args",
+      "covers": [
+        "HT-07"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "validate_input",
+          "tool": "get_available_stock",
+          "arguments": {
+            "item_code": "PART-DEMO-01",
+            "warehouse_id": "WH-DEMO-01",
+            "actor_id": "Administrator"
+          }
+        }
+      ],
+      "expected": {
+        "outcome": "SCHEMA_INVALID",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "plan_cycle",
+      "covers": [
+        "HT-17"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "validate_plan",
+          "create_cycle": true
+        }
+      ],
+      "expected": {
+        "outcome": "INVALID_PLAN",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "budget_resume",
+      "covers": [
+        "HT-17"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "validate_resume_budget",
+          "tool_attempts": 16
+        }
+      ],
+      "expected": {
+        "outcome": "BUDGET_EXHAUSTED",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "revoked_evidence",
+      "covers": [
+        "HT-06"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "verify_evidence",
+          "eligible": false
+        }
+      ],
+      "expected": {
+        "outcome": "EVIDENCE_INELIGIBLE",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "compat_conflict",
+      "covers": [
+        "HT-05"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "verify_compatibility",
+          "value": "CONFLICTED"
+        }
+      ],
+      "expected": {
+        "outcome": "COMPATIBILITY_CONFLICT",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "retry_after_expiry",
+      "covers": [
+        "HT-08",
+        "HT-12"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "commit"
+        },
+        {
+          "op": "advance_time",
+          "value": "2026-10-10T10:00:00+07:00"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "APPLIED",
+        "business_effect_count": 1
+      }
+    },
+    {
+      "case_id": "stale_resume",
+      "covers": [
+        "HT-11"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "resume",
+          "checkpoint_version": 6
+        }
+      ],
+      "expected": {
+        "outcome": "STALE_RESUME",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "wrong_approval_resume",
+      "covers": [
+        "HT-10",
+        "HT-11"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "resume",
+          "approval_id": "other-approval"
+        }
+      ],
+      "expected": {
+        "outcome": "STALE_RESUME",
+        "business_effect_count": 0
+      }
+    },
+    {
+      "case_id": "scope_changed_after_commit",
+      "covers": [
+        "HT-16",
+        "HT-23"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "commit"
+        },
+        {
+          "op": "change_scope",
+          "key": "customer_id",
+          "value": "other-customer"
+        },
+        {
+          "op": "lookup"
+        }
+      ],
+      "expected": {
+        "outcome": "SCOPE_DENIED",
+        "business_effect_count": 1
+      }
+    },
+    {
+      "case_id": "approval_scope_mismatch",
+      "covers": [
+        "HT-09",
+        "HT-10"
+      ],
+      "base_examples": "examples.json",
+      "actions": [
+        {
+          "op": "change_approval_scope",
+          "key": "customer_id",
+          "value": "other-customer"
+        },
+        {
+          "op": "commit"
+        }
+      ],
+      "expected": {
+        "outcome": "APPROVAL_SCOPE_MISMATCH",
+        "business_effect_count": 0
+      }
+    }
+  ]
+}

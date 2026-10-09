@@ -1,0 +1,10 @@
+flowchart TB
+    A["Nguồn được phép dùng + owner + scope"] --> B["Kiểm tra file, version, source hash"]
+    B --> C["Parse/OCR giữ page, bảng, hình và đơn vị"]
+    C --> D{"Chất lượng/metadata đủ?"}
+    D -->|"Không"| Q["Quarantine / reviewer sửa"]
+    D -->|"Có"| E["Chunk theo section; lexical + embeddings"]
+    E --> F["Index generation staging; test retrieval"]
+    F --> G["Reviewer publish effective version"]
+    G --> H["Atomic active generation + invalidation event"]
+    H --> I["Retrieval/cache recheck live catalog"]

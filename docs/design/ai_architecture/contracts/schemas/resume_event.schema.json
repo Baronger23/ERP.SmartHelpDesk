@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "checkpoint_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "approval_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "decision_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "source_verified": {
+      "type": "boolean"
+    },
+    "received_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "event_id",
+    "run_id",
+    "checkpoint_version",
+    "approval_id",
+    "decision_ref",
+    "source_verified",
+    "received_at"
+  ],
+  "additionalProperties": false
+}

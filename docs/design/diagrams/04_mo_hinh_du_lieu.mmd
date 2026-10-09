@@ -1,0 +1,26 @@
+erDiagram
+    CUSTOMER ||--o{ SITE : operates
+    SITE ||--o{ CONTACT_AUTHORITY : grants
+    CUSTOMER ||--o{ AGREEMENT_VERSION : signs
+    AGREEMENT_VERSION ||--o{ COVERAGE : defines
+    EQUIPMENT ||--o{ EQUIPMENT_LOCATION_EVENT : relocates
+    EQUIPMENT ||--o{ COVERAGE : covered_by
+    SERVICE_REQUEST ||--o| ENTITLEMENT_SNAPSHOT : applies
+    INCIDENT o|--o{ SERVICE_REQUEST : reported_by
+    INCIDENT o|--o| WORK_SOURCE : origin_incident
+    SERVICE_REQUEST o|--o| WORK_SOURCE : origin_consultation
+    PM_OCCURRENCE o|--o| WORK_SOURCE : origin_pm
+    WORK_SOURCE ||--o{ WORK_ORDER : authorizes_package
+    WORK_ORDER ||--o{ VISIT : performed_in
+    VISIT ||--o{ TIME_LOG : records
+    WORK_ORDER ||--o{ RESERVATION : needs
+    VISIT ||--o{ CONSUMPTION : uses
+    EQUIPMENT ||--o{ PM_PLAN_VERSION : maintained_by
+    PM_PLAN_VERSION ||--o{ PM_OCCURRENCE : schedules
+    PM_OCCURRENCE ||--o{ FINDING : discovers
+    INCIDENT o|--o{ FINDING : raised_from
+    CONSUMPTION ||--o{ CHARGE_LINE : valued_as
+    TIME_LOG ||--o{ CHARGE_LINE : charged_as
+    ESTIMATE_VERSION ||--o{ APPROVAL : approved_by
+    INVOICE_LINE ||--o{ CHARGE_ALLOCATION : allocates
+    CHARGE_LINE ||--o{ CHARGE_ALLOCATION : billed_via

@@ -1,0 +1,11 @@
+erDiagram
+    AGENT_DEFINITION ||--o{ AGENT_RUN : pins_version
+    AGENT_RUN ||--o{ PLAN_VERSION : plans
+    PLAN_VERSION ||--o{ AGENT_STEP : schedules
+    AGENT_STEP ||--o{ TOOL_ATTEMPT : attempts
+    AGENT_RUN ||--o{ AGENT_CHECKPOINT : checkpoints
+    AGENT_RUN ||--o{ AGENT_APPROVAL_REF : waits_for
+    AGENT_STEP ||--o{ EVIDENCE_REF : observes
+    AGENT_RUN ||--o{ RESUME_EVENT_INBOX : deduplicates
+    AGENT_APPROVAL_REF ||--|| BUSINESS_APPROVAL : references_authority
+    AGENT_STEP o|--o{ BUSINESS_COMMAND_RECEIPT : reconciles

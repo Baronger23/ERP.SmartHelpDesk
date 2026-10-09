@@ -1,0 +1,23 @@
+stateDiagram-v2
+    [*] --> CREATED
+    CREATED --> RUNNING: authorize and acquire lease
+    RUNNING --> WAITING_INPUT: context insufficient
+    RUNNING --> WAITING_APPROVAL: proposal checkpointed
+    WAITING_INPUT --> RESUMING: authorized input event
+    WAITING_APPROVAL --> RESUMING: valid decision event
+    RESUMING --> RUNNING: CAS, new lease, revalidate
+    RUNNING --> VERIFYING: enough observations
+    VERIFYING --> RUNNING: bounded replan
+    VERIFYING --> COMPLETED: objective satisfied
+    VERIFYING --> PARTIAL: verified subset and missing evidence
+    RUNNING --> BLOCKED: permission, conflict or budget
+    RUNNING --> FAILED: unrecoverable system error
+    WAITING_APPROVAL --> BLOCKED: expired or rejected
+    RUNNING --> CANCELLED: cancel event
+    WAITING_INPUT --> CANCELLED: cancel event
+    WAITING_APPROVAL --> CANCELLED: cancel event
+    COMPLETED --> [*]
+    PARTIAL --> [*]
+    BLOCKED --> [*]
+    FAILED --> [*]
+    CANCELLED --> [*]

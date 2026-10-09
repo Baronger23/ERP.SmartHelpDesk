@@ -1,0 +1,11 @@
+flowchart TB
+    DOC["Nguồn + model + scope + revision"] --> PARSE["Parse/OCR giữ page/bảng/đơn vị"]
+    PARSE --> Q{"Chất lượng và metadata đủ?"}
+    Q -->|"Không"| HOLD["Quarantine / review"]
+    Q -->|"Có"| INDEX["Chunks + lexical/vector staging"]
+    INDEX --> PUB["Reviewer publish / active generation"]
+    PUB --> LIVE["Live catalog quyền/hiệu lực; invalidate cache"]
+    QUERY["KTV hoặc Harness query có trusted context"] --> FILTER["Lọc scope/model/status/effective"]
+    LIVE --> FILTER
+    FILTER --> RET["Hybrid retrieval, rerank và applicability"]
+    RET --> EVID["Evidence/version/page/conflict → consumer"]

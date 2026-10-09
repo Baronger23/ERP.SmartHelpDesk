@@ -1,0 +1,10 @@
+flowchart LR
+    A["Demand từ M05/PM/ca"] --> B["Xét tồn và đơn mở; tạo MR"]
+    B --> C["Duyệt lượng/NCC/giá theo thẩm quyền"]
+    C --> D["PO có dòng nguồn và lịch giao"]
+    D --> E["Nhận thực tế theo dòng"]
+    E --> F{"Đúng và dùng được?"}
+    F -->|"Có"| G["Receipt accepted; M05 tăng tồn"]
+    F -->|"Không"| H["Reject/quarantine/return; tiếp tục thiếu"]
+    G --> I["Cập nhật phần chưa nhận và ca chờ"]
+    H --> I

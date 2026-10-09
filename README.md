@@ -2,6 +2,10 @@
 
 Hệ thống quản lý HelpDesk và Bảo trì bảo dưỡng thiết bị (Maintenance Management) tích hợp trên nền tảng **ERPNext** (hỗ trợ cả môi trường **Frappe Cloud** và **Docker Local**).
 
+## Bộ thiết kế hệ thống
+
+Đọc [thiết kế tổng quan doanh nghiệp](docs/design/00_tong_quan_he_thong.md), [yêu cầu](docs/design/01_phan_tich_doanh_nghiep_va_yeu_cau.md), [10 module](docs/design/readme.md) và [9 tài liệu Agent Harness](docs/design/ai_architecture/readme.md). [Sổ sơ đồ](docs/design/diagrams/index.html) có SVG, PNG và Draw.io. Thiết kế v3.0 chuẩn hóa domain/workflow, tách M09 Knowledge khỏi runtime AI ngang; schemas/fixtures/checker offline không thay bằng chứng ERP/LLM runtime.
+
 ---
 
 ## 📌 Nội dung & Mục tiêu dự án

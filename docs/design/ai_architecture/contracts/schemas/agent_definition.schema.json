@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "definition_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "definition_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "instruction_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "registry_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "allowed_tools": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "resolve_equipment",
+          "get_service_context",
+          "get_entitlement_snapshot",
+          "get_work_history",
+          "search_approved_knowledge",
+          "verify_compatibility",
+          "get_available_stock",
+          "get_open_supply",
+          "get_eligible_technicians",
+          "get_pm_findings",
+          "get_charge_reconciliation",
+          "get_operational_risks",
+          "prepare_proposal",
+          "commit_approved_proposal",
+          "get_command_outcome"
+        ]
+      }
+    },
+    "model_policy": {
+      "type": "object",
+      "properties": {
+        "policy_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "primary_model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "allowed_models": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "policy_version",
+        "primary_model",
+        "allowed_models"
+      ],
+      "additionalProperties": false
+    },
+    "execution_limits": {
+      "type": "object",
+      "properties": {
+        "steps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tool_attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "model_turns": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tokens": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "active_ms": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "resumes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "steps",
+        "tool_attempts",
+        "model_turns",
+        "tokens",
+        "active_ms",
+        "resumes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "definition_id",
+    "definition_version",
+    "instruction_version",
+    "registry_version",
+    "allowed_tools",
+    "model_policy",
+    "execution_limits"
+  ],
+  "additionalProperties": false
+}

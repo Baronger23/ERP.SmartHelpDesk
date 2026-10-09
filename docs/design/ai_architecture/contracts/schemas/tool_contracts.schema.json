@@ -1,0 +1,2119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "quantity": {
+      "type": "string",
+      "pattern": "^[0-9]+(\\.[0-9]{1,3})?$"
+    },
+    "receipt_data": {
+      "type": "object",
+      "properties": {
+        "command_state": {
+          "const": "APPLIED"
+        },
+        "command_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "binding_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "effect_count": {
+          "const": 1
+        },
+        "document_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "docstatus": {
+          "const": 0
+        }
+      },
+      "required": [
+        "command_state",
+        "command_id",
+        "idempotency_key",
+        "binding_hash",
+        "effect_count",
+        "document_id",
+        "docstatus"
+      ],
+      "additionalProperties": false
+    },
+    "error_result": {
+      "type": "object",
+      "properties": {
+        "tool_version": {
+          "const": "1.0.0"
+        },
+        "status": {
+          "const": "error"
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "code": {
+          "type": "string",
+          "enum": [
+            "READ_TIMEOUT",
+            "RATE_LIMITED",
+            "TRANSIENT_FAILURE",
+            "RESOURCE_UNAVAILABLE",
+            "SCHEMA_INVALID",
+            "PERMISSION_DENIED",
+            "STALE_APPROVAL",
+            "PRECONDITION_FAILED",
+            "KNOWLEDGE_CONFLICT",
+            "IDEMPOTENCY_CONFLICT",
+            "OUTCOME_UNKNOWN"
+          ]
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "TRANSIENT",
+            "AUTHORIZATION",
+            "VALIDATION",
+            "PRECONDITION",
+            "CONFLICT",
+            "UNKNOWN"
+          ]
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "correlation_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "tool_version",
+        "status",
+        "observed_at",
+        "code",
+        "category",
+        "retryable",
+        "correlation_ref"
+      ],
+      "additionalProperties": false
+    },
+    "resolve_equipment_input": {
+      "type": "object",
+      "properties": {
+        "equipment_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "equipment_code"
+      ],
+      "additionalProperties": false
+    },
+    "resolve_equipment_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "equipment_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "equipment_code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "model": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "serial": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "site_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "customer_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "equipment_version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "equipment_id",
+                "equipment_code",
+                "model",
+                "serial",
+                "site_id",
+                "customer_id",
+                "equipment_version"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "get_service_context_input": {
+      "type": "object",
+      "properties": {
+        "work_order_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "work_order_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_service_context_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "work_order_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "source_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "origin_kind": {
+                  "type": "string",
+                  "enum": [
+                    "INCIDENT",
+                    "SERVICE_REQUEST",
+                    "PM_OCCURRENCE"
+                  ]
+                },
+                "equipment_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "site_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "versions": {
+                  "type": "object",
+                  "minProperties": 1,
+                  "additionalProperties": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  }
+                }
+              },
+              "required": [
+                "work_order_id",
+                "source_id",
+                "origin_kind",
+                "equipment_id",
+                "site_id",
+                "versions"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "get_entitlement_snapshot_input": {
+      "type": "object",
+      "properties": {
+        "work_order_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "work_order_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_entitlement_snapshot_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "snapshot_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "coverage_version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "policy_version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "snapshot_id",
+                "coverage_version",
+                "policy_version"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "get_work_history_input": {
+      "type": "object",
+      "properties": {
+        "equipment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "equipment_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_work_history_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "equipment_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "visits": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "visit_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "outcome": {
+                        "type": "string",
+                        "enum": [
+                          "COMPLETED",
+                          "INCOMPLETE",
+                          "CANCELLED"
+                        ]
+                      },
+                      "occurred_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "source_version": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      }
+                    },
+                    "required": [
+                      "visit_id",
+                      "outcome",
+                      "occurred_at",
+                      "source_version"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "equipment_id",
+                "visits"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "search_approved_knowledge_input": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "error_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "query",
+        "model",
+        "error_code"
+      ],
+      "additionalProperties": false
+    },
+    "search_approved_knowledge_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "catalog_version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "index_generation": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "evidence_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "document_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "document_version": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "page": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "content_hash": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "support": {
+                        "type": "string",
+                        "enum": [
+                          "SUPPORTED",
+                          "PARTIAL",
+                          "CONFLICTED"
+                        ]
+                      },
+                      "eligible": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "evidence_id",
+                      "document_id",
+                      "document_version",
+                      "page",
+                      "content_hash",
+                      "support",
+                      "eligible"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "conflict": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "catalog_version",
+                "index_generation",
+                "evidence",
+                "conflict"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "verify_compatibility_input": {
+      "type": "object",
+      "properties": {
+        "equipment_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "item_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "equipment_id",
+        "item_code"
+      ],
+      "additionalProperties": false
+    },
+    "verify_compatibility_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "equipment_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "item_code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "compatibility": {
+                  "type": "string",
+                  "enum": [
+                    "VERIFIED",
+                    "UNKNOWN",
+                    "CONFLICTED"
+                  ]
+                },
+                "compatibility_version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "evidence_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "equipment_id",
+                "item_code",
+                "compatibility",
+                "compatibility_version",
+                "evidence_refs"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "get_available_stock_input": {
+      "type": "object",
+      "properties": {
+        "item_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "warehouse_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "item_code",
+        "warehouse_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_available_stock_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "item_code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "warehouse_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "actual_qty": {
+                  "type": "string",
+                  "pattern": "^[0-9]+(\\.[0-9]{1,3})?$"
+                },
+                "held_qty": {
+                  "type": "string",
+                  "pattern": "^[0-9]+(\\.[0-9]{1,3})?$"
+                },
+                "available_qty": {
+                  "type": "string",
+                  "pattern": "^[0-9]+(\\.[0-9]{1,3})?$"
+                },
+                "uom": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "item_code",
+                "warehouse_id",
+                "actual_qty",
+                "held_qty",
+                "available_qty",
+                "uom"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "get_open_supply_input": {
+      "type": "object",
+      "properties": {
+        "item_code": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "work_order_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "item_code",
+        "work_order_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_open_supply_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "orders": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "order_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "demand_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "remaining_qty": {
+                        "type": "string",
+                        "pattern": "^[0-9]+(\\.[0-9]{1,3})?$"
+                      },
+                      "accepted_qty": {
+                        "type": "string",
+                        "pattern": "^[0-9]+(\\.[0-9]{1,3})?$"
+                      },
+                      "eta": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    },
+                    "required": [
+                      "order_id",
+                      "demand_id",
+                      "remaining_qty",
+                      "accepted_qty",
+                      "eta"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "orders"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "get_eligible_technicians_input": {
+      "type": "object",
+      "properties": {
+        "work_order_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "work_order_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_eligible_technicians_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "eligible": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "user_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "skill_refs": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "uniqueItems": true
+                      },
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "slot_ref": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      }
+                    },
+                    "required": [
+                      "user_id",
+                      "skill_refs",
+                      "available",
+                      "slot_ref"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "availability_version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "eligible",
+                "availability_version"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "get_pm_findings_input": {
+      "type": "object",
+      "properties": {
+        "pm_occurrence_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "pm_occurrence_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_pm_findings_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "findings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "finding_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "occurrence_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "equipment_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "owner_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "severity": {
+                        "type": "string",
+                        "enum": [
+                          "LOW",
+                          "MEDIUM",
+                          "HIGH",
+                          "URGENT"
+                        ]
+                      },
+                      "outcome": {
+                        "type": "string",
+                        "enum": [
+                          "OPEN",
+                          "FOLLOW_UP",
+                          "INCIDENT",
+                          "RESOLVED"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "finding_id",
+                      "occurrence_id",
+                      "equipment_id",
+                      "owner_id",
+                      "severity",
+                      "outcome"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "findings"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "get_charge_reconciliation_input": {
+      "type": "object",
+      "properties": {
+        "work_order_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "work_order_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_charge_reconciliation_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "coverage_snapshot_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "charges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "charge_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "amount": {
+                        "type": "string",
+                        "pattern": "^-?[0-9]+(\\.[0-9]{1,3})?$"
+                      },
+                      "currency": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "reconciled": {
+                        "type": "boolean"
+                      },
+                      "source_ref": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      }
+                    },
+                    "required": [
+                      "charge_id",
+                      "amount",
+                      "currency",
+                      "reconciled",
+                      "source_ref"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "coverage_snapshot_id",
+                "charges"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "get_operational_risks_input": {
+      "type": "object",
+      "properties": {
+        "snapshot_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "snapshot_id"
+      ],
+      "additionalProperties": false
+    },
+    "get_operational_risks_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "snapshot_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "formula_version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "as_of": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "risks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "request_id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "deadline": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "source_event_refs": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 128
+                        },
+                        "uniqueItems": true
+                      }
+                    },
+                    "required": [
+                      "request_id",
+                      "reason",
+                      "deadline",
+                      "source_event_refs"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "snapshot_id",
+                "formula_version",
+                "as_of",
+                "risks"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "prepare_proposal_input": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "command_type": {
+              "const": "MATERIAL_ALLOCATION_DRAFT"
+            },
+            "target_domain": {
+              "const": "M05"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "work_order_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "equipment_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "item_code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "warehouse_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "quantity": {
+                  "type": "string",
+                  "pattern": "^[0-9]+(\\.[0-9]{1,3})?$"
+                },
+                "uom": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "work_order_id",
+                "equipment_id",
+                "item_code",
+                "warehouse_id",
+                "quantity",
+                "uom",
+                "reason_ref"
+              ],
+              "additionalProperties": false
+            },
+            "expected_versions": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "command_type",
+            "target_domain",
+            "payload",
+            "expected_versions",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "command_type": {
+              "const": "MATERIAL_REQUEST_DRAFT"
+            },
+            "target_domain": {
+              "const": "M06"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "work_order_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "equipment_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "item_code": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "warehouse_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "quantity": {
+                  "type": "string",
+                  "pattern": "^[0-9]+(\\.[0-9]{1,3})?$"
+                },
+                "uom": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "work_order_id",
+                "equipment_id",
+                "item_code",
+                "warehouse_id",
+                "quantity",
+                "uom",
+                "reason_ref"
+              ],
+              "additionalProperties": false
+            },
+            "expected_versions": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "command_type",
+            "target_domain",
+            "payload",
+            "expected_versions",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "command_type": {
+              "const": "WORK_ORDER_DRAFT"
+            },
+            "target_domain": {
+              "const": "M03"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "work_source_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "equipment_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "package_key": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "generation_version": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "work_source_id",
+                "equipment_id",
+                "package_key",
+                "generation_version",
+                "reason_ref"
+              ],
+              "additionalProperties": false
+            },
+            "expected_versions": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "command_type",
+            "target_domain",
+            "payload",
+            "expected_versions",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "command_type": {
+              "const": "TRIAGE_RECOMMENDATION"
+            },
+            "target_domain": {
+              "const": "M02"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "request_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "recommendation_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "request_id",
+                "recommendation_ref",
+                "reason_ref"
+              ],
+              "additionalProperties": false
+            },
+            "expected_versions": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "command_type",
+            "target_domain",
+            "payload",
+            "expected_versions",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "command_type": {
+              "const": "DISPATCH_RECOMMENDATION"
+            },
+            "target_domain": {
+              "const": "M03"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "work_order_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "eligible_technician_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "slot_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "reason_ref": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": [
+                "work_order_id",
+                "eligible_technician_id",
+                "slot_ref",
+                "reason_ref"
+              ],
+              "additionalProperties": false
+            },
+            "expected_versions": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "command_type",
+            "target_domain",
+            "payload",
+            "expected_versions",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "prepare_proposal_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "proposal_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "binding_hash": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "control_plane_only": {
+                  "const": true
+                },
+                "business_effect_count": {
+                  "const": 0
+                }
+              },
+              "required": [
+                "proposal_id",
+                "binding_hash",
+                "control_plane_only",
+                "business_effect_count"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "commit_approved_proposal_input": {
+      "type": "object",
+      "properties": {
+        "proposal_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "approval_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "proposal_id",
+        "approval_id",
+        "idempotency_key"
+      ],
+      "additionalProperties": false
+    },
+    "commit_approved_proposal_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "$ref": "#/$defs/receipt_data"
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    },
+    "get_command_outcome_input": {
+      "type": "object",
+      "properties": {
+        "command_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "binding_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "command_id",
+        "idempotency_key",
+        "binding_hash"
+      ],
+      "additionalProperties": false
+    },
+    "get_command_outcome_output": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "tool_version": {
+              "const": "1.0.0"
+            },
+            "status": {
+              "const": "ok"
+            },
+            "observed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "source_version": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "data": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "command_state": {
+                      "const": "APPLIED"
+                    },
+                    "receipt": {
+                      "$ref": "#/$defs/receipt_data"
+                    }
+                  },
+                  "required": [
+                    "command_state",
+                    "receipt"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "command_state": {
+                      "type": "string",
+                      "enum": [
+                        "NOT_FOUND",
+                        "APPLYING",
+                        "UNKNOWN"
+                      ]
+                    },
+                    "command_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": [
+                    "command_state",
+                    "command_id"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "tool_version",
+            "status",
+            "observed_at",
+            "source_version",
+            "data",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "$ref": "#/$defs/error_result"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+flowchart LR
+    A["Nhu cầu work order"] --> B["Kiểm tra tương thích và khả dụng"]
+    B --> C{"Đủ?"}
+    C -->|"Không"| D["M06 bổ sung; M03/M02 chờ rõ lý do"]
+    C -->|"Có"| E["Giữ chỗ"]
+    E --> F["Chuyển/cấp lên xe có bàn giao"]
+    F --> G["Visit: ghi thực dùng"]
+    G --> H["Tiêu hao theo ca và máy"]
+    F --> I["Thừa: trả / hỏng: thu hồi"]
+    I --> J["Đối soát và giải phóng reservation"]

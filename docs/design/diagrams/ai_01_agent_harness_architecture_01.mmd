@@ -1,0 +1,14 @@
+flowchart TB
+    U["KTV / điều phối / quản lý"] --> G["Agent Gateway: identity, scope, session, rate limit"]
+    G --> H["Single orchestrator / bounded controller"]
+    H --> C["Intent & context builder"]
+    H --> P["Planner: goal, steps, dependencies"]
+    H --> O["Observation / evaluator / evidence verifier"]
+    H --> A["Policy & approval gate"]
+    H <--> S["Durable state / checkpoint / controlled memory"]
+    H --> R["Knowledge retrieval capability"]
+    R --> K["M09: hybrid index, versions, citations"]
+    H --> T["Typed ERP Tool Gateway"]
+    A --> T
+    T --> B["M01-M08 facts; M10 policy and approval"]
+    H --> X["Tracing, audit, budget and evaluation"]

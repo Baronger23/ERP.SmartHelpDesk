@@ -1,0 +1,20 @@
+sequenceDiagram
+    actor U as User
+    participant H as Harness
+    participant S as State store
+    participant T as Tool gateway
+    participant E as ERP / M09
+    U->>H: Goal + authenticated session
+    H->>S: Create run, limits and lease
+    H->>T: Resolve equipment / scoped reads
+    T->>E: Authorize and query authoritative facts
+    E-->>T: Typed data, versions, observed_at
+    T-->>H: Observation envelope
+    H->>S: Persist plan and evidence references
+    loop Bounded ready steps
+        H->>T: Typed tool call with pinned version
+        T-->>H: Data or classified error
+        H->>S: Step outcome, counters and checkpoint
+        H->>H: Verify, evaluate, bounded replan or stop
+    end
+    H-->>U: Verified result / partial / waiting outcome

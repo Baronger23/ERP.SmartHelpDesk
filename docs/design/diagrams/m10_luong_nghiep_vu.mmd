@@ -1,0 +1,9 @@
+flowchart TD
+    A["Đề nghị thao tác"] --> B["Identity + action + scope + field check"]
+    B --> C{"Cần duyệt?"}
+    C -->|"Không"| F["Validation nghiệp vụ + thực hiện"]
+    C -->|"Có"| D["Approval giữ version và lý do"]
+    D --> E{"Đúng thẩm quyền/phiên bản?"}
+    E -->|"Không"| G["Từ chối / yêu cầu duyệt lại"]
+    E -->|"Có"| F
+    F --> H["Audit side effect và kết quả"]

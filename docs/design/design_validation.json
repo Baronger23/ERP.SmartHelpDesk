@@ -1,0 +1,15 @@
+{
+  "scope": "documentation_structure_only",
+  "markdown_docs": 27,
+  "ai_design_docs": 9,
+  "domain_modules": 10,
+  "pain_points": 20,
+  "stories": 48,
+  "acceptance_stories": 48,
+  "domain_functions": 60,
+  "local_links_checked": 99,
+  "svg_diagrams": 27,
+  "ai_svg_diagrams": 12,
+  "drawio_pages": 4,
+  "offline_protocol_vectors_passed": 26
+}

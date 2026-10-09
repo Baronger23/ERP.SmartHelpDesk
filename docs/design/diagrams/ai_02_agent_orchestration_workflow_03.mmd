@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant H as Harness
+    participant S as State store
+    actor A as Approver
+    participant G as ERP gateway
+    participant B as Business DB / M10
+    H->>S: Persist proposal + checkpoint WAITING_APPROVAL
+    H-->>A: Exact action, versions, evidence and limits
+    A->>B: Approve exact binding through authenticated UI
+    B-->>H: Decision notification with event ID
+    H->>B: Read authoritative decision
+    H->>S: CAS checkpoint, acquire fenced lease
+    H->>G: Commit approved proposal, stable idempotency key
+    G->>B: Lock key, scoped hash lookup for stored receipt
+    alt Already APPLIED with same hash and authorized receipt scope
+        B-->>G: Stored APPLIED receipt, no second effect
+        G-->>H: Previous draft ID and receipt
+    else New command has stale payload, policy, scope or versions
+        B-->>G: Reject STALE_APPROVAL / PRECONDITION_FAILED
+        G-->>H: No business effect, replan/reapproval
+    else New command authorized, approval/preconditions locked and valid
+        G->>B: Draft effect + consume approval + receipt + outbox in one transaction
+        B-->>G: APPLIED receipt, draft ID and version
+        G-->>H: Typed receipt
+        H->>S: Persist command observation and checkpoint
+    end

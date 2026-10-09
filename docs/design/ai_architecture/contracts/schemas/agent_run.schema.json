@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "definition_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "instruction_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "registry_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "CREATED",
+        "RUNNING",
+        "WAITING_INPUT",
+        "WAITING_APPROVAL",
+        "RESUMING",
+        "VERIFYING",
+        "COMPLETED",
+        "PARTIAL",
+        "BLOCKED",
+        "FAILED",
+        "CANCELLED"
+      ]
+    },
+    "reason_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "actor_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "company_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "customer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "site_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
+      },
+      "required": [
+        "actor_id",
+        "company_id",
+        "customer_id",
+        "site_id"
+      ],
+      "additionalProperties": false
+    },
+    "state_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "correlation_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "counters": {
+      "type": "object",
+      "properties": {
+        "steps": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool_attempts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "model_turns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "active_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resumes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "steps",
+        "tool_attempts",
+        "model_turns",
+        "tokens",
+        "active_ms",
+        "resumes"
+      ],
+      "additionalProperties": false
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "steps": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool_attempts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "model_turns": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "active_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "resumes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "steps",
+        "tool_attempts",
+        "model_turns",
+        "tokens",
+        "active_ms",
+        "resumes"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "run_id",
+    "definition_version",
+    "instruction_version",
+    "registry_version",
+    "status",
+    "reason_code",
+    "scope",
+    "state_version",
+    "correlation_id",
+    "counters",
+    "limits"
+  ],
+  "additionalProperties": false
+}

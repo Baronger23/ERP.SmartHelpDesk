@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sổ sơ đồ · Smart HelpDesk & Maintenance</title>
+<style>
+:root{font-family:Inter,"Segoe UI",sans-serif;color:#0f172a;background:#f8fafc}body{margin:0}header{padding:24px 32px;background:white;border-bottom:1px solid #e2e8f0}h1{font-size:24px;margin:0 0 8px}p{margin:8px 0;color:#475569}nav{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px}select,button,a.button{font:inherit;background:white;color:#1d4ed8;border:1px solid #cbd5e1;border-radius:8px;padding:10px 14px;text-decoration:none}button{cursor:pointer}button:hover,a.button:hover{background:#eff6ff}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #0284c7;outline-offset:3px}main{padding:24px;overflow:auto}img{display:block;max-width:none;border:1px solid #e2e8f0;background:white;border-radius:12px}footer{padding:16px 32px;border-top:1px solid #e2e8f0;background:white;font-size:14px;color:#475569}.small{font-size:14px}output{min-width:55px}
+</style>
+<header>
+<h1>Smart HelpDesk & Maintenance · Sổ sơ đồ</h1>
+<p>Thiết kế v3.0: 10 module domain và Agent Harness riêng. Chọn tổng quan, workflow, dữ liệu hoặc runtime; phóng to khi cần.</p>
+<nav aria-label="Điều khiển sơ đồ">
+<label for="view">Sơ đồ</label><select id="view">
+<option value="01_tong_quan_he_thong.svg">Tổng quan năng lực</option>
+<option value="02_chuoi_gia_tri.svg">Chuỗi giá trị và bàn giao</option>
+<option value="03_quan_he_module.svg">Quan hệ giữa module</option>
+<option value="04_mo_hinh_du_lieu.svg">Mô hình dữ liệu</option>
+<option value="05_agent_harness.svg">Agent Harness · Tổng quan có icon</option>
+<optgroup label="AI runtime · Phân rã v3">
+<option value="ai_01_agent_harness_architecture_01.svg">AI · Component boundaries</option>
+<option value="ai_02_agent_orchestration_workflow_01.svg">AI · Run lifecycle</option>
+<option value="ai_02_agent_orchestration_workflow_02.svg">AI · Bounded execution sequence</option>
+<option value="ai_02_agent_orchestration_workflow_03.svg">AI · Approval và transaction</option>
+<option value="ai_03_agent_state_and_memory_01.svg">AI · State và memory ER</option>
+<option value="ai_04_rag_ingestion_and_retrieval_01.svg">AI · Ingestion / publish</option>
+<option value="ai_04_rag_ingestion_and_retrieval_02.svg">AI · Hybrid retrieval / evidence</option>
+<option value="ai_05_tool_registry_and_contracts_01.svg">AI · Tool gateway contract</option>
+<option value="ai_06_reasoning_planning_execution_01.svg">AI · Plan / act / observe / evaluate</option>
+<option value="ai_07_security_and_human_approval_01.svg">AI · HITL sequence</option>
+<option value="ai_08_observability_and_evaluation_01.svg">AI · Evaluation release gates</option>
+<option value="ai_09_end_to_end_agent_scenarios_01.svg">AI · E2E máy demo / stock timeout</option>
+</optgroup>
+<option value="m01_luong_nghiep_vu.svg">M01 · Khách hàng và hợp đồng</option>
+<option value="m02_luong_nghiep_vu.svg">M02 · Tiếp nhận và SLA</option>
+<option value="m03_luong_nghiep_vu.svg">M03 · Điều phối và tác nghiệp</option>
+<option value="m04_luong_nghiep_vu.svg">M04 · Thiết bị và bảo trì</option>
+<option value="m05_luong_nghiep_vu.svg">M05 · Kho và vật tư</option>
+<option value="m06_luong_nghiep_vu.svg">M06 · Mua hàng và bổ sung</option>
+<option value="m07_luong_nghiep_vu.svg">M07 · Chi phí và hóa đơn</option>
+<option value="m08_luong_nghiep_vu.svg">M08 · Báo cáo và KPI</option>
+<option value="m09_luong_nghiep_vu.svg">M09 · Knowledge Domain</option>
+<option value="m10_luong_nghiep_vu.svg">M10 · Quản trị và kiểm soát</option>
+</select>
+<button id="minus" aria-label="Thu nhỏ">−</button><output id="level" aria-live="polite">100%</output><button id="plus" aria-label="Phóng to">+</button><button id="fit">Vừa cửa sổ</button>
+<a class="button" id="svg" href="01_tong_quan_he_thong.svg" download>Nguồn SVG</a>
+<a class="button" href="thiet_ke_doanh_nghiep.drawio" download>Draw.io 4 trang</a>
+<a class="button" href="module_review.html">Xem 10 luồng module</a>
+<a class="button" href="ai_review.html">Xem các luồng AI</a>
+<a class="button" href="https://canva.link/bucs6cajm4rbjqc" target="_blank" rel="noopener">Canva v2 đã duyệt</a>
+<a class="button" href="../readme.md">Đọc tài liệu</a>
+</nav>
+<p class="small" id="caption">M09 là tri thức; Harness là runtime ngang. Diagram là thiết kế mục tiêu, không bằng chứng runtime đã đạt.</p>
+</header>
+<main><img id="diagram" src="01_tong_quan_he_thong.svg" alt="Sơ đồ tổng quan năng lực doanh nghiệp AIS"></main>
+<footer>Icon Lucide · File nguồn trong repo · Các giả thuyết cần doanh nghiệp xác nhận · Không dùng dữ liệu demo làm baseline.</footer>
+<script>
+const picture=document.querySelector('#diagram'), view=document.querySelector('#view'), level=document.querySelector('#level');let scale=1;
+function resize(){picture.style.width=Math.round(picture.naturalWidth*scale)+'px';level.value=Math.round(scale*100)+'%';}
+function fit(){scale=Math.min(1,(document.querySelector('main').clientWidth-48)/(picture.naturalWidth||1920));resize();}
+picture.addEventListener('load',fit);
+picture.addEventListener('error',()=>{document.querySelector('#caption').textContent='Chưa có hình xuất cho sơ đồ này. Chạy render_diagrams.py để tạo lại từ nguồn Mermaid.';});
+view.addEventListener('change',()=>{picture.src=view.value;picture.alt=view.options[view.selectedIndex].textContent;document.querySelector('#svg').href=view.value;document.querySelector('#caption').textContent='Nguồn vector có thể chỉnh sửa; định nghĩa và quy tắc chi tiết nằm trong tài liệu cùng mã module.';});
+document.querySelector('#plus').onclick=()=>{scale=Math.min(3,scale+.15);resize();};document.querySelector('#minus').onclick=()=>{scale=Math.max(.2,scale-.15);resize();};document.querySelector('#fit').onclick=fit;
+</script>
+</html>

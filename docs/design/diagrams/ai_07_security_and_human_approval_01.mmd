@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant H as Harness
+    participant S as Checkpoint store
+    actor A as Approver
+    participant P as M10 approval authority
+    participant G as Business gateway
+    H->>S: Immutable binding + WAITING_APPROVAL
+    H-->>A: Exact preview, scope, versions, expiry
+    A->>P: Authenticated decision for binding hash
+    P-->>H: Decision event (notification only)
+    H->>P: Read decision and current authority
+    H->>S: Dedup event + CAS resume + fenced lease
+    H->>G: Commit exact approved command with same key
+    G->>P: Lock/recheck/consume in effect transaction
+    alt Expired, revoked or changed version
+        G-->>H: STALE_APPROVAL / EXPIRED, zero new effects
+    else Valid
+        G-->>H: APPLIED receipt or previous receipt
+    end

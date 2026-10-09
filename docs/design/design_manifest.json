@@ -1,0 +1,422 @@
+{
+  "version": "3.0",
+  "date": "2026-10-08",
+  "files": [
+    {
+      "path": "00_tong_quan_he_thong.md",
+      "words": 2810,
+      "bytes": 17424,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "01_phan_tich_doanh_nghiep_va_yeu_cau.md",
+      "words": 3275,
+      "bytes": 18797,
+      "user_stories": [
+        "US-01",
+        "US-02",
+        "US-03",
+        "US-04",
+        "US-05",
+        "US-06",
+        "US-07",
+        "US-08",
+        "US-09",
+        "US-10",
+        "US-11",
+        "US-12",
+        "US-13",
+        "US-14",
+        "US-15",
+        "US-16",
+        "US-17",
+        "US-18",
+        "US-19",
+        "US-20",
+        "US-21",
+        "US-22",
+        "US-23",
+        "US-24",
+        "US-25",
+        "US-26",
+        "US-27",
+        "US-28",
+        "US-29",
+        "US-30",
+        "US-31",
+        "US-32",
+        "US-33",
+        "US-34",
+        "US-35",
+        "US-36",
+        "US-37",
+        "US-38",
+        "US-39",
+        "US-40",
+        "US-41",
+        "US-42",
+        "US-43",
+        "US-44",
+        "US-45",
+        "US-46",
+        "US-47",
+        "US-48"
+      ],
+      "functions": [
+        "M01-F01",
+        "M01-F03",
+        "M01-F04",
+        "M01-F06",
+        "M02-F01",
+        "M02-F02",
+        "M02-F04",
+        "M02-F06",
+        "M03-F01",
+        "M03-F02",
+        "M03-F04",
+        "M03-F06",
+        "M04-F01",
+        "M04-F03",
+        "M04-F05",
+        "M04-F06",
+        "M05-F01",
+        "M05-F03",
+        "M05-F04",
+        "M05-F06",
+        "M06-F01",
+        "M06-F03",
+        "M06-F04",
+        "M06-F06",
+        "M07-F01",
+        "M07-F02",
+        "M07-F03",
+        "M07-F05",
+        "M08-F01",
+        "M08-F02",
+        "M08-F04",
+        "M08-F05",
+        "M09-F01",
+        "M09-F03",
+        "M09-F05",
+        "M10-F01",
+        "M10-F03",
+        "M10-F04",
+        "M10-F06"
+      ]
+    },
+    {
+      "path": "02_kien_truc_logic_va_du_lieu.md",
+      "words": 1859,
+      "bytes": 12600,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "03_lo_trinh_va_doi_chieu.md",
+      "words": 1493,
+      "bytes": 10241,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "04_huong_dan_so_do.md",
+      "words": 1025,
+      "bytes": 6917,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "05_domain_workflow_contracts.md",
+      "words": 1457,
+      "bytes": 9961,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "ai_architecture/01_agent_harness_architecture.md",
+      "words": 1064,
+      "bytes": 7431,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "ai_architecture/02_agent_orchestration_workflow.md",
+      "words": 1185,
+      "bytes": 8913,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "ai_architecture/03_agent_state_and_memory.md",
+      "words": 915,
+      "bytes": 7041,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "ai_architecture/04_rag_ingestion_and_retrieval.md",
+      "words": 976,
+      "bytes": 7162,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "ai_architecture/05_tool_registry_and_contracts.md",
+      "words": 996,
+      "bytes": 8052,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "ai_architecture/06_reasoning_planning_execution.md",
+      "words": 789,
+      "bytes": 6705,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "ai_architecture/07_security_and_human_approval.md",
+      "words": 1037,
+      "bytes": 7763,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "ai_architecture/08_observability_and_evaluation.md",
+      "words": 1211,
+      "bytes": 8765,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "ai_architecture/09_end_to_end_agent_scenarios.md",
+      "words": 1607,
+      "bytes": 11135,
+      "user_stories": [
+        "US-35",
+        "US-36",
+        "US-41",
+        "US-42",
+        "US-43",
+        "US-44",
+        "US-45",
+        "US-46",
+        "US-47",
+        "US-48"
+      ],
+      "functions": []
+    },
+    {
+      "path": "ai_architecture/readme.md",
+      "words": 256,
+      "bytes": 2307,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "modules/m01_khach_hang_va_hop_dong.md",
+      "words": 1373,
+      "bytes": 8261,
+      "user_stories": [
+        "US-01",
+        "US-02",
+        "US-03",
+        "US-04"
+      ],
+      "functions": [
+        "M01-F01",
+        "M01-F02",
+        "M01-F03",
+        "M01-F04",
+        "M01-F05",
+        "M01-F06"
+      ]
+    },
+    {
+      "path": "modules/m02_tiep_nhan_va_sla.md",
+      "words": 1256,
+      "bytes": 7743,
+      "user_stories": [
+        "US-05",
+        "US-06",
+        "US-07",
+        "US-08"
+      ],
+      "functions": [
+        "M02-F01",
+        "M02-F02",
+        "M02-F03",
+        "M02-F04",
+        "M02-F05",
+        "M02-F06"
+      ]
+    },
+    {
+      "path": "modules/m03_dieu_phoi_va_tac_nghiep.md",
+      "words": 1396,
+      "bytes": 8928,
+      "user_stories": [
+        "US-09",
+        "US-10",
+        "US-11",
+        "US-12"
+      ],
+      "functions": [
+        "M03-F01",
+        "M03-F02",
+        "M03-F03",
+        "M03-F04",
+        "M03-F05",
+        "M03-F06"
+      ]
+    },
+    {
+      "path": "modules/m04_thiet_bi_va_bao_tri.md",
+      "words": 1203,
+      "bytes": 7642,
+      "user_stories": [
+        "US-13",
+        "US-14",
+        "US-15",
+        "US-16"
+      ],
+      "functions": [
+        "M04-F01",
+        "M04-F02",
+        "M04-F03",
+        "M04-F04",
+        "M04-F05",
+        "M04-F06"
+      ]
+    },
+    {
+      "path": "modules/m05_kho_va_vat_tu.md",
+      "words": 1179,
+      "bytes": 7382,
+      "user_stories": [
+        "US-17",
+        "US-18",
+        "US-19",
+        "US-20"
+      ],
+      "functions": [
+        "M05-F01",
+        "M05-F02",
+        "M05-F03",
+        "M05-F04",
+        "M05-F05",
+        "M05-F06"
+      ]
+    },
+    {
+      "path": "modules/m06_mua_hang_va_bo_sung.md",
+      "words": 1055,
+      "bytes": 6682,
+      "user_stories": [
+        "US-21",
+        "US-22",
+        "US-23",
+        "US-24"
+      ],
+      "functions": [
+        "M06-F01",
+        "M06-F02",
+        "M06-F03",
+        "M06-F04",
+        "M06-F05",
+        "M06-F06"
+      ]
+    },
+    {
+      "path": "modules/m07_chi_phi_va_hoa_don.md",
+      "words": 1203,
+      "bytes": 7765,
+      "user_stories": [
+        "US-25",
+        "US-26",
+        "US-27",
+        "US-28"
+      ],
+      "functions": [
+        "M07-F01",
+        "M07-F02",
+        "M07-F03",
+        "M07-F04",
+        "M07-F05",
+        "M07-F06"
+      ]
+    },
+    {
+      "path": "modules/m08_bao_cao_va_kpi.md",
+      "words": 1287,
+      "bytes": 8033,
+      "user_stories": [
+        "US-29",
+        "US-30",
+        "US-31",
+        "US-32"
+      ],
+      "functions": [
+        "M08-F01",
+        "M08-F02",
+        "M08-F03",
+        "M08-F04",
+        "M08-F05",
+        "M08-F06"
+      ]
+    },
+    {
+      "path": "modules/m09_tri_thuc_va_tro_ly_ai.md",
+      "words": 931,
+      "bytes": 7159,
+      "user_stories": [
+        "US-33",
+        "US-34",
+        "US-35",
+        "US-36",
+        "US-41"
+      ],
+      "functions": [
+        "M09-F01",
+        "M09-F02",
+        "M09-F03",
+        "M09-F04",
+        "M09-F05",
+        "M09-F06"
+      ]
+    },
+    {
+      "path": "modules/m10_quan_tri_va_kiem_soat.md",
+      "words": 1270,
+      "bytes": 8600,
+      "user_stories": [
+        "US-37",
+        "US-38",
+        "US-39",
+        "US-40"
+      ],
+      "functions": [
+        "M10-F01",
+        "M10-F02",
+        "M10-F03",
+        "M10-F04",
+        "M10-F05",
+        "M10-F06"
+      ]
+    },
+    {
+      "path": "readme.md",
+      "words": 839,
+      "bytes": 5825,
+      "user_stories": [
+        "US-35"
+      ],
+      "functions": [
+        "M09-F04"
+      ]
+    }
+  ],
+  "missing_links": [],
+  "total_words": 34947
+}

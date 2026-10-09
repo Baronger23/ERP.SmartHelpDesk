@@ -1,0 +1,251 @@
+{
+  "binding": {
+    "proposal_id": "proposal-demo-1",
+    "run_id": "run-demo-001",
+    "command_type": "MATERIAL_ALLOCATION_DRAFT",
+    "target_domain": "M05",
+    "actor_id": "user-tech-demo",
+    "company_id": "company-ais-demo",
+    "customer_id": "customer-demo",
+    "site_id": "site-demo",
+    "payload": {
+      "work_order_id": "WO-DEMO-1",
+      "equipment_id": "AC-102-DEMO",
+      "item_code": "PART-DEMO-01",
+      "warehouse_id": "WH-DEMO-01",
+      "quantity": "1.000",
+      "uom": "Nos",
+      "reason_ref": "reason-demo-e17"
+    },
+    "expected_versions": {
+      "work_order": "wo-v3",
+      "equipment": "eq-v2",
+      "compatibility": "compat-v4",
+      "stock": "stock-v17"
+    },
+    "policy_version": "policy-v1",
+    "tool_version": "1.0.0",
+    "evidence_refs": [
+      "doc-demo-r1-p4",
+      "compat-demo-v4",
+      "stock-demo-v17"
+    ]
+  },
+  "approval": {
+    "approval_id": "approval-demo-1",
+    "proposal_id": "proposal-demo-1",
+    "run_id": "run-demo-001",
+    "binding_hash": "6ed128e7ad97fe554c9e30eb4ae55dc5bceebaf73f2e575ce98db711565824ff",
+    "scope": {
+      "actor_id": "user-tech-demo",
+      "company_id": "company-ais-demo",
+      "customer_id": "customer-demo",
+      "site_id": "site-demo"
+    },
+    "approver_id": "dispatcher-demo",
+    "policy_version": "policy-v1",
+    "decision": "APPROVED",
+    "decided_at": "2026-10-08T09:00:00+07:00",
+    "expires_at": "2026-10-09T09:00:00+07:00",
+    "expected_versions": {
+      "work_order": "wo-v3",
+      "equipment": "eq-v2",
+      "compatibility": "compat-v4",
+      "stock": "stock-v17"
+    }
+  },
+  "run": {
+    "run_id": "run-demo-001",
+    "definition_version": "ais-agent-v1",
+    "instruction_version": "instruction-v1",
+    "registry_version": "ais-tools-1.0.0",
+    "status": "WAITING_APPROVAL",
+    "reason_code": null,
+    "scope": {
+      "actor_id": "user-tech-demo",
+      "company_id": "company-ais-demo",
+      "customer_id": "customer-demo",
+      "site_id": "site-demo"
+    },
+    "state_version": 7,
+    "correlation_id": "corr-demo-1",
+    "counters": {
+      "steps": 6,
+      "tool_attempts": 7,
+      "model_turns": 3,
+      "tokens": 4300,
+      "active_ms": 24000,
+      "resumes": 0
+    },
+    "limits": {
+      "steps": 12,
+      "tool_attempts": 16,
+      "model_turns": 6,
+      "tokens": 12000,
+      "active_ms": 90000,
+      "resumes": 3
+    }
+  },
+  "plan": {
+    "run_id": "run-demo-001",
+    "plan_version": 1,
+    "goal": "Resolve demo equipment, gather evidence and prepare a proposal",
+    "steps": [
+      {
+        "step_id": "resolve",
+        "tool": "resolve_equipment",
+        "depends_on": [],
+        "success": "UNAMBIGUOUS_EQUIPMENT"
+      },
+      {
+        "step_id": "sop",
+        "tool": "search_approved_knowledge",
+        "depends_on": [
+          "resolve"
+        ],
+        "success": "ELIGIBLE_EVIDENCE"
+      },
+      {
+        "step_id": "stock",
+        "tool": "get_available_stock",
+        "depends_on": [
+          "sop"
+        ],
+        "success": "FRESH_STOCK"
+      }
+    ]
+  },
+  "resume_event": {
+    "event_id": "decision-demo-1",
+    "run_id": "run-demo-001",
+    "checkpoint_version": 7,
+    "approval_id": "approval-demo-1",
+    "decision_ref": "decision-authority-demo-1",
+    "source_verified": true,
+    "received_at": "2026-10-08T11:00:00+07:00"
+  },
+  "stock_ok": {
+    "tool_version": "1.0.0",
+    "status": "ok",
+    "observed_at": "2026-10-08T09:00:00+07:00",
+    "source_version": "stock-v17",
+    "data": {
+      "item_code": "PART-DEMO-01",
+      "warehouse_id": "WH-DEMO-01",
+      "actual_qty": "2.000",
+      "held_qty": "1.000",
+      "available_qty": "1.000",
+      "uom": "Nos"
+    },
+    "evidence_refs": [
+      "stock-demo-v17"
+    ]
+  },
+  "stock_timeout": {
+    "tool_version": "1.0.0",
+    "status": "error",
+    "observed_at": "2026-10-08T09:00:03+07:00",
+    "code": "READ_TIMEOUT",
+    "category": "TRANSIENT",
+    "retryable": true,
+    "correlation_ref": "corr-demo-1"
+  },
+  "definition": {
+    "definition_id": "ais-assistant",
+    "definition_version": "ais-agent-v1",
+    "instruction_version": "instruction-v1",
+    "registry_version": "ais-tools-1.0.0",
+    "allowed_tools": [
+      "resolve_equipment",
+      "get_service_context",
+      "get_entitlement_snapshot",
+      "get_work_history",
+      "search_approved_knowledge",
+      "verify_compatibility",
+      "get_available_stock",
+      "get_open_supply",
+      "get_eligible_technicians",
+      "get_pm_findings",
+      "get_charge_reconciliation",
+      "get_operational_risks",
+      "prepare_proposal",
+      "commit_approved_proposal",
+      "get_command_outcome"
+    ],
+    "model_policy": {
+      "policy_version": "model-policy-demo-1",
+      "primary_model": "model-demo-placeholder",
+      "allowed_models": [
+        "model-demo-placeholder"
+      ]
+    },
+    "execution_limits": {
+      "steps": 12,
+      "tool_attempts": 16,
+      "model_turns": 6,
+      "tokens": 12000,
+      "active_ms": 90000,
+      "resumes": 3
+    }
+  },
+  "step": {
+    "step_id": "step-commit-draft",
+    "run_id": "run-demo-001",
+    "plan_version": 2,
+    "action_type": "WRITE_DRAFT",
+    "tool_name": "commit_approved_proposal",
+    "input_ref": "proposal-demo-1",
+    "output_ref": null,
+    "outcome": "PENDING",
+    "attempt_count": 0,
+    "evidence_refs": [
+      "doc-demo-r1-p4",
+      "compat-demo-v4",
+      "stock-demo-v17"
+    ],
+    "command_key": "run-demo-001:step-commit-draft:proposal-1"
+  },
+  "checkpoint": {
+    "run_id": "run-demo-001",
+    "state_version": 7,
+    "status": "WAITING_APPROVAL",
+    "plan_version": 2,
+    "pending_step_ids": [
+      "step-commit-draft"
+    ],
+    "pending_command_keys": [
+      "run-demo-001:step-commit-draft:proposal-1"
+    ],
+    "evidence_refs": [
+      "doc-demo-r1-p4",
+      "compat-demo-v4",
+      "stock-demo-v17"
+    ],
+    "counters": {
+      "steps": 6,
+      "tool_attempts": 7,
+      "model_turns": 3,
+      "tokens": 4300,
+      "active_ms": 24000,
+      "resumes": 0
+    },
+    "resume_condition": {
+      "kind": "APPROVAL_DECISION",
+      "approval_id": "approval-demo-1"
+    }
+  },
+  "evidence": {
+    "evidence_id": "doc-demo-r1-p4",
+    "source_type": "DOCUMENT",
+    "source_id": "doc-demo",
+    "source_version": "r1",
+    "observed_at": "2026-10-08T09:00:00+07:00",
+    "scope_fingerprint": "71bc9e214d323480e391d14cbe37ddd8d382a9edb0488f90bd3e3dc8d0f803f4",
+    "content_hash": "b3e157db43ea8175b0d64087201516d904c821c30bd9ec0a8ee13cdda906d3fb",
+    "support": "SUPPORTED",
+    "eligible": true,
+    "permission_epoch": 1,
+    "document_page": 4,
+    "catalog_version": "catalog-demo-1"
+  }
+}

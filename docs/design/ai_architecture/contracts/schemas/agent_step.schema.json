@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "step_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "plan_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "READ",
+        "PREPARE",
+        "WRITE_DRAFT",
+        "VERIFY"
+      ]
+    },
+    "tool_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "input_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "output_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "SUCCESS",
+        "ERROR",
+        "UNKNOWN"
+      ]
+    },
+    "attempt_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      },
+      "uniqueItems": true
+    },
+    "command_key": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "step_id",
+    "run_id",
+    "plan_version",
+    "action_type",
+    "tool_name",
+    "input_ref",
+    "output_ref",
+    "outcome",
+    "attempt_count",
+    "evidence_refs",
+    "command_key"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "action_type": {
+            "const": "WRITE_DRAFT"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "command_key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "action_type": {
+            "const": "VERIFY"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "tool_name": {
+            "const": null
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "tool_name": {
+            "enum": [
+              "resolve_equipment",
+              "get_service_context",
+              "get_entitlement_snapshot",
+              "get_work_history",
+              "search_approved_knowledge",
+              "verify_compatibility",
+              "get_available_stock",
+              "get_open_supply",
+              "get_eligible_technicians",
+              "get_pm_findings",
+              "get_charge_reconciliation",
+              "get_operational_risks",
+              "prepare_proposal",
+              "commit_approved_proposal",
+              "get_command_outcome"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

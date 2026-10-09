@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "DOCUMENT",
+        "MODULE_OBSERVATION"
+      ]
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "source_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scope_fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "support": {
+      "type": "string",
+      "enum": [
+        "SUPPORTED",
+        "PARTIAL",
+        "CONFLICTED",
+        "UNSUPPORTED"
+      ]
+    },
+    "eligible": {
+      "type": "boolean"
+    },
+    "permission_epoch": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "document_page": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "catalog_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "evidence_id",
+    "source_type",
+    "source_id",
+    "source_version",
+    "observed_at",
+    "scope_fingerprint",
+    "content_hash",
+    "support",
+    "eligible",
+    "permission_epoch",
+    "document_page",
+    "catalog_version"
+  ],
+  "additionalProperties": false
+}

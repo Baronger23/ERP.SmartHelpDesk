@@ -1,0 +1,11 @@
+flowchart TD
+    A["Work order đủ đầu vào"] --> B["Gán người + slot + vật tư/dụng cụ"]
+    B --> C["KTV nhận và xác nhận điều kiện hiện trường"]
+    C --> D["Visit: chẩn đoán + công + bằng chứng"]
+    D --> E{"Thay đổi phạm vi/phí hoặc thiếu nguồn lực?"}
+    E -->|"Có"| F["Xin xác nhận M07 / chờ M05-M06"]
+    F --> G["Lượt tiếp theo; giữ visit cũ"]
+    G --> D
+    E -->|"Không"| H["Thử máy theo tiêu chí; ghi khôi phục"]
+    H --> I["Khách xác nhận hoặc ghi chưa chấp nhận"]
+    I --> J["Quality review / hoàn thành work order"]

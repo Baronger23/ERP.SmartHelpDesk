@@ -1,0 +1,24 @@
+sequenceDiagram
+    actor U as KTV
+    participant H as Harness
+    participant K as M09 Knowledge
+    participant T as ERP Gateway
+    participant A as Approval authority
+    U->>H: Analyze AC-102 demo and prepare materials if justified
+    H->>T: Resolve equipment, context and history
+    T-->>H: Authorized model/site/versions
+    H->>K: Hybrid retrieval for model/error
+    K-->>H: Approved evidence/version or conflicts
+    H->>T: Verify item compatibility and stock
+    alt Stock timeout after bounded retries
+        T-->>H: Typed READ_TIMEOUT, no stock data
+        H-->>U: PARTIAL, diagnosis evidence, stock not verified
+    else Verified item and fresh stock
+        T-->>H: Compatibility + available/held/versions
+        H->>H: Prepare immutable proposal and checkpoint
+        H-->>A: Exact action review
+        A-->>H: Authenticated authoritative decision event
+        H->>T: Revalidate and commit approved draft with stable key
+        T-->>H: APPLIED receipt or unknown to reconcile
+        H-->>U: Evidence + draft/pending status, no claim of reserve/submit
+    end

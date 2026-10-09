@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "plan_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "tool": {
+            "enum": [
+              "resolve_equipment",
+              "get_service_context",
+              "get_entitlement_snapshot",
+              "get_work_history",
+              "search_approved_knowledge",
+              "verify_compatibility",
+              "get_available_stock",
+              "get_open_supply",
+              "get_eligible_technicians",
+              "get_pm_findings",
+              "get_charge_reconciliation",
+              "get_operational_risks",
+              "prepare_proposal",
+              "commit_approved_proposal",
+              "get_command_outcome"
+            ]
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "uniqueItems": true
+          },
+          "success": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "step_id",
+          "tool",
+          "depends_on",
+          "success"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "run_id",
+    "plan_version",
+    "goal",
+    "steps"
+  ],
+  "additionalProperties": false
+}
