@@ -1,0 +1,256 @@
+{
+  "review_date": "2026-10-11",
+  "diagram_count": 27,
+  "canonical_mermaid_exports": 23,
+  "native_generator_views": 4,
+  "erp_or_llm_tested": false,
+  "limitations": [
+    "Conceptual diagrams are selected views, not every FK or exception.",
+    "Generated raster images require label and relation review."
+  ],
+  "diagrams": [
+    {
+      "diagram": "01_tong_quan_he_thong",
+      "source_document": "00_tong_quan_he_thong.md",
+      "svg_sha256": "d6fd26a2ec48a769984e20ef331d8ac5a2c73679d5b114680381aefb4615a372",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": null,
+      "canonical_labels_from_generator": true,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "02_chuoi_gia_tri",
+      "source_document": "00_tong_quan_he_thong.md",
+      "svg_sha256": "bd61519c33114655d67227dca54c794a1a513927b2921a0c0f74a399f869cd64",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": null,
+      "canonical_labels_from_generator": true,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "03_quan_he_module",
+      "source_document": "02_kien_truc_logic_va_du_lieu.md",
+      "svg_sha256": "65e0e8ce951e5a3bdaf5b48876e336205d52bd6cf4e733b2e1f1f9be99b32b83",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": null,
+      "canonical_labels_from_generator": true,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "04_mo_hinh_du_lieu",
+      "source_document": "02_kien_truc_logic_va_du_lieu.md",
+      "svg_sha256": "a97dd38009340be2d345099009a471c400eef6a1ca138ca78a53db41490d76fc",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "05_agent_harness",
+      "source_document": "ai_architecture/01_agent_harness_architecture.md",
+      "svg_sha256": "449c2a830e145a0e839583f501c12789cacf1a72a20167a37fc8d614e1affd12",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": null,
+      "canonical_labels_from_generator": true,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "m01_luong_nghiep_vu",
+      "source_document": "modules/m01_khach_hang_va_hop_dong.md",
+      "svg_sha256": "f5ed552af05d1231c1a045e067f36d36cbbf2e822818902c810169f07d97297e",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "m02_luong_nghiep_vu",
+      "source_document": "modules/m02_tiep_nhan_va_sla.md",
+      "svg_sha256": "00b45509876f181c3556bc63cd4e714142052fd6b5c7ce064d351b0befd64505",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "m03_luong_nghiep_vu",
+      "source_document": "modules/m03_dieu_phoi_va_tac_nghiep.md",
+      "svg_sha256": "d52c701aa6388162f268d0ac8f580b380a05b4b935c4de45fa6dc313ac712524",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "m04_luong_nghiep_vu",
+      "source_document": "modules/m04_thiet_bi_va_bao_tri.md",
+      "svg_sha256": "24a3b8cb6423c5b0ff6a079b9e04291929841e03196c6adc1fd8bc7324a9e37f",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "m05_luong_nghiep_vu",
+      "source_document": "modules/m05_kho_va_vat_tu.md",
+      "svg_sha256": "85be1be195602225a25525ccbf1889160802bd1a79ab344542957783fdb2aca0",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "m06_luong_nghiep_vu",
+      "source_document": "modules/m06_mua_hang_va_bo_sung.md",
+      "svg_sha256": "567df6f17d59627c2ede3a701cc0e95aa51a3737b981b6e0d773c4cd22a55f3d",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "m07_luong_nghiep_vu",
+      "source_document": "modules/m07_chi_phi_va_hoa_don.md",
+      "svg_sha256": "45cd959b101ac5f1f2b9605e093af0bf88e82a7e9548eb74d3716154db101bdd",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "m08_luong_nghiep_vu",
+      "source_document": "modules/m08_bao_cao_va_kpi.md",
+      "svg_sha256": "0e1574f2d5d27a36f5ed4e97d352ee39d8e179e3d02a8f7c3a1297a1f97c8fb6",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "m09_luong_nghiep_vu",
+      "source_document": "modules/m09_tri_thuc_va_tro_ly_ai.md",
+      "svg_sha256": "304e7c7f788bc9efc95e019fcb133e57a5c9b6328fc79169afe31ba9b7c6a345",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "m10_luong_nghiep_vu",
+      "source_document": "modules/m10_quan_tri_va_kiem_soat.md",
+      "svg_sha256": "3d27ade963657bba335df402472cb7f35ff62ca75aa022a78c06a66c5a0f1406",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_01_agent_harness_architecture_01",
+      "source_document": "ai_architecture/01_agent_harness_architecture.md",
+      "svg_sha256": "3fdf51bdff9eac767dd45c83efe8a250bfca6c7a20b5be557ae5bed1a70787b7",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_02_agent_orchestration_workflow_01",
+      "source_document": "ai_architecture/02_agent_orchestration_workflow.md",
+      "svg_sha256": "2eaf52439c787aadf645cbafd5b699ee02a7465ff0b514c0c1230cbc68b881f6",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_02_agent_orchestration_workflow_02",
+      "source_document": "ai_architecture/02_agent_orchestration_workflow.md",
+      "svg_sha256": "bf707c6aa38de200de5e038adf6a42fd14932ee6174af1ae9258e07e8a9b434c",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_02_agent_orchestration_workflow_03",
+      "source_document": "ai_architecture/02_agent_orchestration_workflow.md",
+      "svg_sha256": "c5b5cb1d965523704d38aa88be7d774fadaecec7583da4242d42fa1b71dcf097",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_03_agent_state_and_memory_01",
+      "source_document": "ai_architecture/03_agent_state_and_memory.md",
+      "svg_sha256": "d8017d33e85fb22106a369f924b09c2216483377844acc84ef5e6b7d1e679e39",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_04_rag_ingestion_and_retrieval_01",
+      "source_document": "ai_architecture/04_rag_ingestion_and_retrieval.md",
+      "svg_sha256": "094409746bde1d5cd74e7b5e6ba2c4cf3b11bf7a2353c75ff98b0c720e140153",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_04_rag_ingestion_and_retrieval_02",
+      "source_document": "ai_architecture/04_rag_ingestion_and_retrieval.md",
+      "svg_sha256": "dfccd065aadac2a1df74d6d68b7479ec67086c05f1db9613ea6cdf5cd6ac96a6",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_05_tool_registry_and_contracts_01",
+      "source_document": "ai_architecture/05_tool_registry_and_contracts.md",
+      "svg_sha256": "ccfcc39088a5e096c7233f65ebba4d9ba98d23ffa6266083144a21dce082168e",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_06_reasoning_planning_execution_01",
+      "source_document": "ai_architecture/06_reasoning_planning_execution.md",
+      "svg_sha256": "318d134a5873c80e46a6b3207f07a28ea54661aa632903b0f779c0807ed7a673",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_07_security_and_human_approval_01",
+      "source_document": "ai_architecture/07_security_and_human_approval.md",
+      "svg_sha256": "504c88fa81d98194ebc14972a7bb32a930454a1c579de94e807f27f4986b70dc",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_08_observability_and_evaluation_01",
+      "source_document": "ai_architecture/08_observability_and_evaluation.md",
+      "svg_sha256": "495875752add4d166b05367b051fcdfcfd61abf1ad5eef6712b54e3c545ba659",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    },
+    {
+      "diagram": "ai_09_end_to_end_agent_scenarios_01",
+      "source_document": "ai_architecture/09_end_to_end_agent_scenarios.md",
+      "svg_sha256": "4b34fdb471680cb855c831b4324149d19a53222c533202f6337098765c910988",
+      "svg_xml_valid": true,
+      "graph_export_matches_source": true,
+      "canonical_labels_from_generator": false,
+      "review_scope": "design semantics and document representation, not runtime"
+    }
+  ]
+}

@@ -53,11 +53,17 @@ sequenceDiagram
     H->>P: Read decision and current authority
     H->>S: Dedup event + CAS resume + fenced lease
     H->>G: Commit exact approved command with same key
-    G->>P: Lock/recheck/consume in effect transaction
-    alt Expired, revoked or changed version
-        G-->>H: STALE_APPROVAL / EXPIRED, zero new effects
-    else Valid
-        G-->>H: APPLIED receipt or previous receipt
+    G->>P: Scoped key/hash lookup for prior APPLIED receipt
+    alt Prior APPLIED same hash and authorized receipt scope
+        G-->>H: Stored receipt, no second effect or approval consumption
+    else New command
+        G->>P: Lock and recheck authority, versions and expiry
+        alt Expired, revoked or changed version
+            G-->>H: STALE_APPROVAL / EXPIRED, zero new effects
+        else Valid
+            G->>P: Draft + consume approval + receipt + outbox atomic
+            G-->>H: APPLIED receipt or OUTCOME_UNKNOWN to reconcile
+        end
     end
 ```
 

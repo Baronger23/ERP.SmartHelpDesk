@@ -6,6 +6,8 @@ Bộ này đi từ doanh nghiệp đến giải pháp. AIS là bối cảnh gi�
 
 ## Trình tự đọc
 
+Nếu muốn hiểu bằng ví dụ và biết thiết kế đề xuất khác hệ thống ban đầu ra sao, đọc [Giải thích thiết kế và so sánh với hệ thống cũ](06_giai_thich_thiet_ke_va_so_sanh_he_thong_cu.md) trước. Tài liệu trình bày cả mười module, Agent Harness và phân biệt thiết kế với phần đã triển khai.
+
 | Mức | Tài liệu | Câu hỏi cần trả lời |
 |---|---|---|
 | 0 | [Tổng quan hệ thống](00_tong_quan_he_thong.md) | AIS tạo giá trị gì, ai tham gia và cần những năng lực nào? |
@@ -35,6 +37,8 @@ Bộ này đi từ doanh nghiệp đến giải pháp. AIS là bối cảnh gi�
 | M10 | [Quản trị và kiểm soát](modules/m10_quan_tri_va_kiem_soat.md) | Phạm vi quyền, phê duyệt và dấu vết được kiểm soát xuyên suốt |
 
 ## Sơ đồ và tính chỉnh sửa
+
+[Brief đầy đủ cho GPT web](diagrams/thiet_ke_diagram_cho_gptweb.md) chứa kết quả rà soát 11/10/2026, quy tắc nội dung, prompt trình bày và nguồn của đủ 27 sơ đồ. Dùng một mục cho mỗi ảnh; đối chiếu chữ và quan hệ sau khi sinh ảnh.
 
 - [Sơ đồ tổng quan](diagrams/01_tong_quan_he_thong.svg): lớp người dùng, nhóm năng lực, module và nền tảng.
 - [Chuỗi giá trị và bàn giao](diagrams/02_chuoi_gia_tri.svg): từ yêu cầu đến kết quả được chấp nhận và quyết toán.

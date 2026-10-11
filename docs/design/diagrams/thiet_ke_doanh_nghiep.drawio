@@ -418,8 +418,8 @@
         <mxCell id="step-module2" parent="1" value="M03 · M05" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=21;fontColor=#1D4ED8;fontStyle=1;">
           <mxGeometry as="geometry" x="692" y="476" width="122.85000000000001" height="30.45" />
         </mxCell>
-        <mxCell id="step-action2" parent="1" value="Người, slot, kỹ năng&#10;Giữ chỗ / dụng cụ" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=21;fontColor=#475569;fontStyle=0;">
-          <mxGeometry as="geometry" x="692" y="522" width="273.0" height="60.9" />
+        <mxCell id="step-action2" parent="1" value="Người, slot, kỹ năng&#10;Giữ chỗ atomic / dụng cụ" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=21;fontColor=#475569;fontStyle=0;">
+          <mxGeometry as="geometry" x="692" y="522" width="327.6" height="60.9" />
         </mxCell>
         <mxCell id="step-output2" parent="1" value="" vertex="1" style="rounded=1;arcSize=8;fillColor=#F0F9FF;strokeColor=#E0F2FE;strokeWidth=1.5;dashed=0;">
           <mxGeometry as="geometry" x="686" y="606" width="244" height="80" />
@@ -448,8 +448,8 @@
         <mxCell id="step-module3" parent="1" value="M03 · M04" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=21;fontColor=#1D4ED8;fontStyle=1;">
           <mxGeometry as="geometry" x="995" y="476" width="122.85000000000001" height="30.45" />
         </mxCell>
-        <mxCell id="step-action3" parent="1" value="Visit, chẩn đoán, công&#10;Thử máy / kết quả đo" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=21;fontColor=#475569;fontStyle=0;">
-          <mxGeometry as="geometry" x="995" y="522" width="300.3" height="60.9" />
+        <mxCell id="step-action3" parent="1" value="Visit, thử máy, công&#10;M03 ghi nghiệm thu" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=21;fontColor=#475569;fontStyle=0;">
+          <mxGeometry as="geometry" x="995" y="522" width="273.0" height="60.9" />
         </mxCell>
         <mxCell id="step-output3" parent="1" value="" vertex="1" style="rounded=1;arcSize=8;fillColor=#F0F9FF;strokeColor=#E0F2FE;strokeWidth=1.5;dashed=0;">
           <mxGeometry as="geometry" x="989" y="606" width="244" height="80" />
@@ -478,8 +478,8 @@
         <mxCell id="step-module4" parent="1" value="M07" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=21;fontColor=#1D4ED8;fontStyle=1;">
           <mxGeometry as="geometry" x="1298" y="476" width="40.95" height="30.45" />
         </mxCell>
-        <mxCell id="step-action4" parent="1" value="Nghiệm thu và phí&#10;Phát sinh đã được duyệt" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=21;fontColor=#475569;fontStyle=0;">
-          <mxGeometry as="geometry" x="1298" y="522" width="313.95" height="60.9" />
+        <mxCell id="step-action4" parent="1" value="Nhận nghiệm thu M03&#10;Phí có nguồn và approval" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=21;fontColor=#475569;fontStyle=0;">
+          <mxGeometry as="geometry" x="1298" y="522" width="327.6" height="60.9" />
         </mxCell>
         <mxCell id="step-output4" parent="1" value="" vertex="1" style="rounded=1;arcSize=8;fillColor=#F0F9FF;strokeColor=#E0F2FE;strokeWidth=1.5;dashed=0;">
           <mxGeometry as="geometry" x="1292" y="606" width="244" height="80" />
@@ -569,18 +569,18 @@
     </mxGraphModel>
   </diagram>
   <diagram id="03_quan_he_module" name="Quan hệ giữa các module nghiệp vụ">
-    <mxGraphModel page="1" pageScale="1" pageWidth="1920" pageHeight="1380" grid="1" gridSize="8">
+    <mxGraphModel page="1" pageScale="1" pageWidth="1920" pageHeight="1820" grid="1" gridSize="8">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="background" parent="1" value="" vertex="1" style="rounded=1;arcSize=8;fillColor=#F8FAFC;strokeColor=#F8FAFC;strokeWidth=1.5;dashed=0;">
-          <mxGeometry as="geometry" x="0" y="0" width="1920" height="1380" />
+          <mxGeometry as="geometry" x="0" y="0" width="1920" height="1820" />
         </mxCell>
         <mxCell id="title" parent="1" value="Quan hệ giữa các module nghiệp vụ" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=40;fontColor=#0F172A;fontStyle=1;">
           <mxGeometry as="geometry" x="64" y="42" width="858.0" height="58.0" />
         </mxCell>
-        <mxCell id="subtitle" parent="1" value="Mũi tên là thông tin bàn giao trong cùng hệ thống · không suy ra microservices" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=23;fontColor=#475569;fontStyle=0;">
-          <mxGeometry as="geometry" x="64" y="98" width="1166.1000000000001" height="33.35" />
+        <mxCell id="subtitle" parent="1" value="Luồng chính trên hình + bảng bàn giao bổ sung · không suy ra microservices" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=23;fontColor=#475569;fontStyle=0;">
+          <mxGeometry as="geometry" x="64" y="98" width="1106.3" height="33.35" />
         </mxCell>
         <mxCell id="coverage" parent="1" source="M01" target="M02" edge="1" style="edgeStyle=none;endArrow=block;endFill=1;strokeWidth=2.5;strokeColor=#1D4ED8;exitX=1.0;exitY=0.3466666666666667;exitPerimeter=0;entryX=0.0;entryY=0.3466666666666667;entryPerimeter=0;">
           <mxGeometry as="geometry" relative="1">
@@ -849,17 +849,38 @@
         <mxCell id="analytics-note" parent="1" value="M08 còn đọc M01–M06 theo kỳ và quyền" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=19;fontColor=#475569;fontStyle=0;">
           <mxGeometry as="geometry" x="1358" y="1198" width="444.6" height="27.55" />
         </mxCell>
+        <mxCell id="handoffs" parent="1" value="" vertex="1" style="rounded=1;arcSize=8;fillColor=#FFFFFF;strokeColor=#E2E8F0;strokeWidth=1.5;dashed=0;">
+          <mxGeometry as="geometry" x="64" y="1240" width="1792" height="300" />
+        </mxCell>
+        <mxCell id="handoffs-title" parent="1" value="Bàn giao bổ sung theo hợp đồng logic" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=25;fontColor=#1D4ED8;fontStyle=1;">
+          <mxGeometry as="geometry" x="88" y="1256" width="585.0" height="36.25" />
+        </mxCell>
+        <mxCell id="handoffs-left" parent="1" value="M01 → M07: coverage snapshot / quyền lợi tính phí&#10;M04 → M03: kỳ PM / checklist / nguồn công việc&#10;M07 → M02: approval / pending / dispute&#10;M03 / M04 → M09: bài học qua quality review" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=22;fontColor=#475569;fontStyle=0;">
+          <mxGeometry as="geometry" x="88" y="1305" width="700.7" height="127.6" />
+        </mxCell>
+        <mxCell id="handoffs-right" parent="1" value="M09 → Harness / M03: tri thức có nguồn và scope&#10;M01–M07 → M08: facts theo kỳ / quyền / watermark&#10;M03 → M02: khôi phục / nghiệm thu do M03 ghi&#10;M10 ↔ mọi module: quyền / policy / approval / audit" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=22;fontColor=#475569;fontStyle=0;">
+          <mxGeometry as="geometry" x="960" y="1305" width="729.3000000000001" height="127.6" />
+        </mxCell>
+        <mxCell id="handoffs-note" parent="1" value="Bảng là phần của sơ đồ: giữ các quan hệ này khi dựng lại; không thêm đường chéo qua khối và nhãn." vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=21;fontColor=#475569;fontStyle=0;">
+          <mxGeometry as="geometry" x="88" y="1470" width="1324.05" height="30.45" />
+        </mxCell>
         <mxCell id="M10" parent="1" value="" vertex="1" style="rounded=1;arcSize=8;fillColor=#EFF6FF;strokeColor=#1D4ED8;strokeWidth=1.5;dashed=0;">
-          <mxGeometry as="geometry" x="64" y="1260" width="1792" height="64" />
+          <mxGeometry as="geometry" x="64" y="1580" width="1792" height="64" />
         </mxCell>
         <mxCell id="M10-icon" parent="1" value="" vertex="1" style="shape=image;imageAspect=0;aspect=fixed;image=data:image/svg+xml,PHN2ZwogIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICB3aWR0aD0iMjQiCiAgaGVpZ2h0PSIyNCIKICB2aWV3Qm94PSIwIDAgMjQgMjQiCiAgZmlsbD0ibm9uZSIKICBzdHJva2U9IiMxRDRFRDgiCiAgc3Ryb2tlLXdpZHRoPSIyIgogIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIKICBzdHJva2UtbGluZWpvaW49InJvdW5kIgo+CiAgPHBhdGggZD0iTTIwIDEzYzAgNS0zLjUgNy41LTcuNjYgOC45NWExIDEgMCAwIDEtLjY3LS4wMUM3LjUgMjAuNSA0IDE4IDQgMTNWNmExIDEgMCAwIDEgMS0xYzIgMCA0LjUtMS4yIDYuMjQtMi43MmExLjE3IDEuMTcgMCAwIDEgMS41MiAwQzE0LjUxIDMuODEgMTcgNSAxOSA1YTEgMSAwIDAgMSAxIDF6IiAvPgogIDxwYXRoIGQ9Im05IDEyIDIgMiA0LTQiIC8+Cjwvc3ZnPgo=;">
-          <mxGeometry as="geometry" x="84" y="1274" width="34" height="34" />
+          <mxGeometry as="geometry" x="84" y="1594" width="34" height="34" />
         </mxCell>
         <mxCell id="M10-title" parent="1" value="M10  Identity / scope • approval • audit • chất lượng dữ liệu và vận hành — áp dụng cho tất cả module" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=23;fontColor=#1D4ED8;fontStyle=1;">
-          <mxGeometry as="geometry" x="139" y="1279" width="1509.95" height="33.35" />
+          <mxGeometry as="geometry" x="139" y="1599" width="1509.95" height="33.35" />
+        </mxCell>
+        <mxCell id="harness-relations" parent="1" value="" vertex="1" style="rounded=1;arcSize=8;fillColor=#F0F9FF;strokeColor=#0284C7;strokeWidth=1.5;dashed=0;">
+          <mxGeometry as="geometry" x="64" y="1670" width="1792" height="64" />
+        </mxCell>
+        <mxCell id="harness-relations-text" parent="1" value="Harness ↔ M01–M10 qua capabilities / gateway: reads, proposals, approved drafts; authority vẫn thuộc domain" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=22;fontColor=#0284C7;fontStyle=1;">
+          <mxGeometry as="geometry" x="88" y="1689" width="1530.1000000000001" height="31.9" />
         </mxCell>
         <mxCell id="footer" parent="1" value="AIS · Thiết kế v3.0 · Kiến trúc mục tiêu; runtime chưa triển khai · Icon Lucide" vertex="1" style="text;html=0;align=left;verticalAlign=top;spacing=0;overflow=visible;whiteSpace=wrap;fontFamily=Segoe UI;fontSize=18;fontColor=#475569;fontStyle=0;">
-          <mxGeometry as="geometry" x="64" y="1347" width="924.3000000000001" height="26.099999999999998" />
+          <mxGeometry as="geometry" x="64" y="1770" width="924.3000000000001" height="26.099999999999998" />
         </mxCell>
       </root>
     </mxGraphModel>

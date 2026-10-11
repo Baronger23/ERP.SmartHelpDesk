@@ -28,16 +28,22 @@ Batch/mức mua tối thiểu có thể tạo lượng mua khác thiếu thực;
 ![Luồng nghiệp vụ M06](../diagrams/m06_luong_nghiep_vu.svg)
 
 ```mermaid
-flowchart LR
-    A["Demand từ M05/PM/ca"] --> B["Xét tồn và đơn mở; tạo MR"]
-    B --> C["Duyệt lượng/NCC/giá theo thẩm quyền"]
+flowchart TD
+    A["Demand từ M05/PM/ca"] --> B["Tính thiếu ròng: availability + nguồn cung mở"]
+    B --> N{"Còn thiếu cần mua?"}
+    N -->|"Không"| O["Liên kết nguồn đáp ứng; không tạo MR mới"]
+    N -->|"Có"| MR["MR có nguồn; chống trùng khi retry"]
+    MR --> C["Duyệt lượng/NCC/giá theo thẩm quyền"]
     C --> D["PO có dòng nguồn và lịch giao"]
     D --> E["Nhận thực tế theo dòng"]
     E --> F{"Đúng và dùng được?"}
-    F -->|"Có"| G["Receipt accepted; M05 tăng tồn"]
-    F -->|"Không"| H["Reject/quarantine/return; tiếp tục thiếu"]
+    F -->|"Có"| G["Receipt accepted; M05 tăng lượng dùng được"]
+    F -->|"Không"| H["Reject/quarantine/return; không tăng khả dụng"]
     G --> I["Cập nhật phần chưa nhận và ca chờ"]
     H --> I
+    I --> P{"Còn phần chưa đáp ứng?"}
+    P -->|"Có"| Q["Theo dõi PO/ETA hoặc xử lý nguồn thay thế được duyệt"]
+    P -->|"Không"| R["Kết thúc nhu cầu; giữ liên kết chứng từ"]
 ```
 
 MR có thể gom nhiều demands, PO có thể phục vụ nhiều MR và một PO nhận nhiều lần. Tham chiếu ở dòng hàng và allocation nguồn để biết đã đáp ứng nhu cầu nào. Một ca có hàng chưa received accepted không được báo vật tư đã sẵn sàng.

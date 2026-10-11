@@ -42,14 +42,16 @@ Maker/checker áp theo mức rủi ro và quy mô thực tế; không tự đặ
 
 ```mermaid
 flowchart TD
-    A["Đề nghị thao tác"] --> B["Identity + action + scope + field check"]
-    B --> C{"Cần duyệt?"}
+    A["Đề nghị thao tác"] --> B["Identity + action + scope + field/file check"]
+    B --> P{"Được phép?"}
+    P -->|"Không"| G["Từ chối; audit theo quyền, không lộ dữ liệu"]
+    P -->|"Có"| C{"Cần duyệt?"}
     C -->|"Không"| F["Validation nghiệp vụ + thực hiện"]
-    C -->|"Có"| D["Approval giữ version và lý do"]
-    D --> E{"Đúng thẩm quyền/phiên bản?"}
-    E -->|"Không"| G["Từ chối / yêu cầu duyệt lại"]
+    C -->|"Có"| D["Approval bind payload/hash/version/expiry"]
+    D --> E{"Thẩm quyền và điều kiện hiện tại hợp lệ?"}
+    E -->|"Không"| R["Từ chối / yêu cầu duyệt lại"]
     E -->|"Có"| F
-    F --> H["Audit side effect và kết quả"]
+    F --> H["Audit effect và kết quả; retry không nhân đôi"]
 ```
 
 Nếu dữ liệu được sửa sau duyệt, approval cũ không cấp quyền cho version mới. Từ chối giữ lý do; timeout không tự xem là approved. Lỗi API sau duyệt không đánh dấu đã thực hiện nếu side effect chưa xác nhận.
@@ -86,4 +88,4 @@ M01 duyệt contract; M02 đổi clock/priority; M03 assign/accept; M04 publish 
 
 ## 9. Phân kỳ và quyết định mở
 
-P1 tài khoản cá nhân, scope server, audit và validation quan trọng; P2 approval matrix, lifecycle và restore drill; P3 tích hợp IdP/SSO nếu có nhu cầu. Phải xác nhận maker/checker, mức duyệt, dữ liệu nào được export và thời hạn lưu giữ trước production.
+P1 tài khoản cá nhân, scope server, audit, validation và gate approval tối thiểu đúng payload/version/thẩm quyền/expiry; P2 approval matrix nhiều cấp, lifecycle và restore drill; P3 tích hợp IdP/SSO nếu có nhu cầu. P2 không trì hoãn approval phát sinh P1 của M07. Phải xác nhận maker/checker, mức duyệt, dữ liệu nào được export và thời hạn lưu giữ trước production.

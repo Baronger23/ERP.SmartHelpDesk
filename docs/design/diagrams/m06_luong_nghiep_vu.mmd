@@ -1,10 +1,16 @@
-flowchart LR
-    A["Demand từ M05/PM/ca"] --> B["Xét tồn và đơn mở; tạo MR"]
-    B --> C["Duyệt lượng/NCC/giá theo thẩm quyền"]
+flowchart TD
+    A["Demand từ M05/PM/ca"] --> B["Tính thiếu ròng: availability + nguồn cung mở"]
+    B --> N{"Còn thiếu cần mua?"}
+    N -->|"Không"| O["Liên kết nguồn đáp ứng; không tạo MR mới"]
+    N -->|"Có"| MR["MR có nguồn; chống trùng khi retry"]
+    MR --> C["Duyệt lượng/NCC/giá theo thẩm quyền"]
     C --> D["PO có dòng nguồn và lịch giao"]
     D --> E["Nhận thực tế theo dòng"]
     E --> F{"Đúng và dùng được?"}
-    F -->|"Có"| G["Receipt accepted; M05 tăng tồn"]
-    F -->|"Không"| H["Reject/quarantine/return; tiếp tục thiếu"]
+    F -->|"Có"| G["Receipt accepted; M05 tăng lượng dùng được"]
+    F -->|"Không"| H["Reject/quarantine/return; không tăng khả dụng"]
     G --> I["Cập nhật phần chưa nhận và ca chờ"]
     H --> I
+    I --> P{"Còn phần chưa đáp ứng?"}
+    P -->|"Có"| Q["Theo dõi PO/ETA hoặc xử lý nguồn thay thế được duyệt"]
+    P -->|"Không"| R["Kết thúc nhu cầu; giữ liên kết chứng từ"]

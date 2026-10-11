@@ -1,12 +1,13 @@
 flowchart TD
     A["Máy + criticality + checklist version"] --> B["Plan có chu kỳ/cửa sổ"]
-    B --> C["Occurrence đến hạn + work order M03"]
+    B --> C["Occurrence đến hạn + WorkSource PM + work order M03"]
     C --> D["KTV ghi checklist, thông số và bằng chứng"]
-    D --> E{"Kết quả?"}
-    E -->|"Đạt"| F["Hoàn tất kỳ; tính kỳ kế tiếp"]
-    E -->|"Bất thường"| G["Finding: severity + owner + hạn theo tiếp"]
+    D --> E{"Có bất thường?"}
+    E -->|"Không"| F["Kiểm đủ checklist; hoàn tất kỳ, tính kỳ kế tiếp"]
+    E -->|"Có"| G["Mỗi finding: severity + owner + hạn theo tiếp"]
     G --> H{"Cần ca sửa có cam kết?"}
-    H -->|"Có"| I["M02 tạo ca; giữ liên kết finding"]
+    H -->|"Có"| I["M02 tạo/liên kết incident; không trùng khi retry"]
     H -->|"Không"| J["Theo dõi/công việc theo lịch đã duyệt"]
     I --> F
     J --> F
+    F --> K["Findings giữ trạng thái riêng; không tự đóng khi PM xong"]

@@ -1,11 +1,17 @@
 flowchart TD
     A["Call: typed args + trusted context"] --> B["Allowlist/version/schema/scope check"]
-    B --> C{"Effect class?"}
+    B --> OK{"Hợp lệ?"}
+    OK -->|"Không"| DENY["Reject typed error; zero new effects"]
+    OK -->|"Có"| C{"Effect class?"}
     C -->|"Read"| R["Scoped query + typed observation"]
     C -->|"Prepare"| P["Immutable proposal, zero business effects"]
-    C -->|"Approved draft"| K{"Scoped key lookup: APPLIED same hash?"}
-    K -->|"Yes"| OLD["Stored receipt; no second effect"]
-    K -->|"No"| W["Lock approval/preconditions; revalidate"]
-    W --> X["Draft + approval consumed + receipt + outbox atomic"]
-    X --> Y["APPLIED receipt or OUTCOME_UNKNOWN"]
-    Y --> L["Authoritative lookup before same-key retry"]
+    C -->|"Approved draft"| K{"Scoped stable key/hash lookup"}
+    K -->|"APPLIED same hash"| OLD["Stored receipt; no second effect"]
+    K -->|"Same key different hash"| CONFLICT["IDEMPOTENCY_CONFLICT; zero new effects"]
+    K -->|"New command"| W["Lock approval/preconditions; revalidate"]
+    W --> VALID{"Scope/policy/version/expiry còn hợp lệ?"}
+    VALID -->|"Không"| DENY
+    VALID -->|"Có"| X["Draft + consume approval + receipt + outbox atomic"]
+    X --> Y{"Outcome?"}
+    Y -->|"APPLIED"| DONE["Return draft receipt; no reserve/submit"]
+    Y -->|"OUTCOME_UNKNOWN"| L["Authoritative lookup before any same-key retry"]

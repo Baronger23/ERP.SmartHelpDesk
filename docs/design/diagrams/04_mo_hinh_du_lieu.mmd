@@ -19,8 +19,8 @@ erDiagram
     PM_PLAN_VERSION ||--o{ PM_OCCURRENCE : schedules
     PM_OCCURRENCE ||--o{ FINDING : discovers
     INCIDENT o|--o{ FINDING : raised_from
-    CONSUMPTION ||--o{ CHARGE_LINE : valued_as
-    TIME_LOG ||--o{ CHARGE_LINE : charged_as
+    CONSUMPTION o|--o{ CHARGE_LINE : valued_as
+    TIME_LOG o|--o{ CHARGE_LINE : charged_as
     ESTIMATE_VERSION ||--o{ APPROVAL : approved_by
     INVOICE_LINE ||--o{ CHARGE_ALLOCATION : allocates
     CHARGE_LINE ||--o{ CHARGE_ALLOCATION : billed_via

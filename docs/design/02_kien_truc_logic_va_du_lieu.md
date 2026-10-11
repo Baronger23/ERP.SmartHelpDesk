@@ -58,14 +58,16 @@ erDiagram
     PM_PLAN_VERSION ||--o{ PM_OCCURRENCE : schedules
     PM_OCCURRENCE ||--o{ FINDING : discovers
     INCIDENT o|--o{ FINDING : raised_from
-    CONSUMPTION ||--o{ CHARGE_LINE : valued_as
-    TIME_LOG ||--o{ CHARGE_LINE : charged_as
+    CONSUMPTION o|--o{ CHARGE_LINE : valued_as
+    TIME_LOG o|--o{ CHARGE_LINE : charged_as
     ESTIMATE_VERSION ||--o{ APPROVAL : approved_by
     INVOICE_LINE ||--o{ CHARGE_ALLOCATION : allocates
     CHARGE_LINE ||--o{ CHARGE_ALLOCATION : billed_via
 ```
 
 Đây là mô hình conceptual, chưa phải DDL hoặc schema ERPNext. WorkSource dùng XOR ba FK: incident, request không có incident, hoặc PM occurrence. Request báo cùng incident dùng nguồn incident. Quan hệ optional trong hình không thay thế CHECK/UNIQUE; quy tắc tạo work order/PM không trùng nằm trong [hợp đồng nguồn việc](05_domain_workflow_contracts.md). Một nguồn có nhiều gói việc nhưng mỗi package/version chỉ sinh một work order.
+
+Mỗi ChargeLine có đúng một loại nguồn phí được xác nhận: vật tư, công hoặc nguồn phí khác được chính sách cho phép. Hai liên kết Consumption/TimeLog trong hình là optional theo loại nguồn, không yêu cầu một dòng phí đồng thời có cả hai. EquipmentLocationEvent tham chiếu site tại thời điểm di chuyển; ER này là một lát cắt khái niệm, không liệt kê mọi FK.
 
 ### Từ điển các đối tượng dễ bị gộp sai
 

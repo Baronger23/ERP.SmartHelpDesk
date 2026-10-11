@@ -1,10 +1,14 @@
-flowchart LR
+flowchart TD
     A["Nhu cầu work order"] --> B["Kiểm tra tương thích và khả dụng"]
-    B --> C{"Đủ?"}
+    B --> C{"Đủ theo dữ liệu hiện tại?"}
     C -->|"Không"| D["M06 bổ sung; M03/M02 chờ rõ lý do"]
-    C -->|"Có"| E["Giữ chỗ"]
-    E --> F["Chuyển/cấp lên xe có bàn giao"]
+    C -->|"Có"| E["Transaction giữ chỗ: recheck + lock/CAS + stable key"]
+    E --> K{"Hold thành công?"}
+    K -->|"Không: thiếu/xung đột"| B
+    K -->|"Có"| F["Chuyển/cấp lên xe có bàn giao; chưa là tiêu hao"]
     F --> G["Visit: ghi thực dùng"]
-    G --> H["Tiêu hao theo ca và máy"]
+    G --> H["Tiêu hao theo ca/máy; đối soát hold đã dùng"]
     F --> I["Thừa: trả / hỏng: thu hồi"]
-    I --> J["Đối soát và giải phóng reservation"]
+    H --> J["Đối soát và giải phóng phần reservation còn lại"]
+    I --> J
+    D -->|"Hàng được nhận đạt"| B

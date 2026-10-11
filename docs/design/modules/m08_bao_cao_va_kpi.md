@@ -47,13 +47,15 @@ Mỗi cảnh báo dẫn tới danh sách ca/chứng từ với owner và action 
 ![Luồng nghiệp vụ M08](../diagrams/m08_luong_nghiep_vu.svg)
 
 ```mermaid
-flowchart LR
-    A["Chọn company/site/kỳ/mốc"] --> B["Đọc đủ trang và lịch sử nguồn"]
+flowchart TD
+    A["Chọn company/site/kỳ và as_of"] --> B["Đọc đủ trang và lịch sử nguồn"]
     B --> C["Chuẩn hóa đơn vị/timezone/version"]
-    C --> D["Kiểm tra liên kết, thiếu mốc, trùng"]
-    D --> E["Tách tập đủ dữ liệu và ngoại lệ"]
-    E --> F["Tính tử/mẫu và danh sách nguồn"]
-    F --> G["Dashboard hành động + drill-down"]
+    C --> D["Dedup event; áp correction và kiểm mốc/liên kết"]
+    D --> E["Tách tập đủ dữ liệu và ngoại lệ/chưa đủ cửa sổ"]
+    E --> F["Tính tử/mẫu, source IDs, formula/policy version"]
+    F --> G["Snapshot có watermark/revision; dashboard + drill-down"]
+    L["Event đến muộn / callback / correction"] --> B
+    G --> N["Giữ bản đã phát; kỳ bị ảnh hưởng có revision mới"]
 ```
 
 Không đọc Bin hôm nay rồi gọi là tồn cuối tháng trước; báo cáo quá khứ cần ledger tới cut-off. Không dùng ToDo tổng làm tải việc nếu ca đã đóng hoặc một ca có nhiều ToDo trùng. Không trộn invoice canceled/draft vào doanh thu thực hiện. Nếu nguồn chỉ có snapshot hiện tại, chỉ báo được trạng thái hiện tại, không dựng lại lịch sử giả.

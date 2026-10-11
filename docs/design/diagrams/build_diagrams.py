@@ -103,7 +103,7 @@ def journey():
     c.icon('ribbon-icon','factory',88,177,44)
     c.text('ribbon-title',154,169,'Khách hàng mua khả năng khôi phục, tính dự đoán và trách nhiệm',29,BLUE,True)
     c.text('ribbon-body',154,210,'Một ca có thể nhiều lượt đến; hoàn tất kỹ thuật ≠ khách chấp nhận ≠ đã lập hóa đơn ≠ đã thanh toán',22,MUTED)
-    steps=[('Cam kết','file-text','M01',['Khách / site / phạm vi','Cam kết và quyền lợi'],['Coverage version','Người có thẩm quyền']),('Tiếp nhận','clipboard-list','M02',['Báo lỗi, triage, owner','Mốc thực và thời hạn'],['Yêu cầu có context','Hạn có nguồn']),('Chuẩn bị','calendar-clock','M03 · M05',['Người, slot, kỹ năng','Giữ chỗ / dụng cụ'],['Work order / booking','Nguồn lực khả dụng']),('Thực hiện','wrench','M03 · M04',['Visit, chẩn đoán, công','Thử máy / kết quả đo'],['Kết quả kỹ thuật','Vật tư thực dùng']),('Quyết toán','receipt','M07',['Nghiệm thu và phí','Phát sinh đã được duyệt'],['Charge có nguồn','Hóa đơn / đối soát']),('Cải tiến','chart-no-axes-combined','M08 · M09',['Chất lượng và chi phí','Tri thức được review'],['Hành động quản lý','SOP / PM tốt hơn'])]
+    steps=[('Cam kết','file-text','M01',['Khách / site / phạm vi','Cam kết và quyền lợi'],['Coverage version','Người có thẩm quyền']),('Tiếp nhận','clipboard-list','M02',['Báo lỗi, triage, owner','Mốc thực và thời hạn'],['Yêu cầu có context','Hạn có nguồn']),('Chuẩn bị','calendar-clock','M03 · M05',['Người, slot, kỹ năng','Giữ chỗ atomic / dụng cụ'],['Work order / booking','Nguồn lực khả dụng']),('Thực hiện','wrench','M03 · M04',['Visit, thử máy, công','M03 ghi nghiệm thu'],['Kết quả kỹ thuật','Vật tư thực dùng']),('Quyết toán','receipt','M07',['Nhận nghiệm thu M03','Phí có nguồn và approval'],['Charge có nguồn','Hóa đơn / đối soát']),('Cải tiến','chart-no-axes-combined','M08 · M09',['Chất lượng và chi phí','Tri thức được review'],['Hành động quản lý','SOP / PM tốt hơn'])]
     c.text('chain-label',64,294,'Chuỗi chính',25,BLUE,True)
     for i,(title,ico,mods,actions,outputs) in enumerate(steps):
         x=64+i*303
@@ -131,7 +131,7 @@ def journey():
 
 
 def relationships():
-    c=Canvas('03_quan_he_module','Quan hệ giữa các module nghiệp vụ','Mũi tên là thông tin bàn giao trong cùng hệ thống · không suy ra microservices',1380)
+    c=Canvas('03_quan_he_module','Quan hệ giữa các module nghiệp vụ','Luồng chính trên hình + bảng bàn giao bổ sung · không suy ra microservices',1820)
     pos={0:(64,220),1:(700,220),2:(1336,220),3:(64,630),4:(700,630),6:(1336,630),8:(64,1040),5:(700,1040),7:(1336,1040)}
     c.edge('coverage',[(556,272),(700,272)],'Quyền lợi',(576,240))
     c.edge('work',[(1192,272),(1336,272)],'Giao việc',(1212,240))
@@ -147,10 +147,25 @@ def relationships():
     c.edge('financial-source',[(1582,780),(1582,1040)],'Phí / chứng từ',(1600,886))
     for i,(x,y) in pos.items(): card(c,i,x,y,w=492,h=150,compact=True)
     c.text('analytics-note',1358,1198,'M08 còn đọc M01–M06 theo kỳ và quyền',19,MUTED)
-    c.box('M10',64,1260,1792,64,'#EFF6FF',BLUE)
-    c.icon('M10-icon','shield-check',84,1274,34)
-    c.text('M10-title',139,1279,'M10  Identity / scope • approval • audit • chất lượng dữ liệu và vận hành — áp dụng cho tất cả module',23,BLUE,True)
-    c.footer(1347)
+    c.box('handoffs',64,1240,1792,300)
+    c.text('handoffs-title',88,1256,'Bàn giao bổ sung theo hợp đồng logic',25,BLUE,True)
+    c.text('handoffs-left',88,1305,[
+        'M01 → M07: coverage snapshot / quyền lợi tính phí',
+        'M04 → M03: kỳ PM / checklist / nguồn công việc',
+        'M07 → M02: approval / pending / dispute',
+        'M03 / M04 → M09: bài học qua quality review'],22,MUTED)
+    c.text('handoffs-right',960,1305,[
+        'M09 → Harness / M03: tri thức có nguồn và scope',
+        'M01–M07 → M08: facts theo kỳ / quyền / watermark',
+        'M03 → M02: khôi phục / nghiệm thu do M03 ghi',
+        'M10 ↔ mọi module: quyền / policy / approval / audit'],22,MUTED)
+    c.text('handoffs-note',88,1470,'Bảng là phần của sơ đồ: giữ các quan hệ này khi dựng lại; không thêm đường chéo qua khối và nhãn.',21,MUTED)
+    c.box('M10',64,1580,1792,64,'#EFF6FF',BLUE)
+    c.icon('M10-icon','shield-check',84,1594,34)
+    c.text('M10-title',139,1599,'M10  Identity / scope • approval • audit • chất lượng dữ liệu và vận hành — áp dụng cho tất cả module',23,BLUE,True)
+    c.box('harness-relations',64,1670,1792,64,'#F0F9FF','#0284C7')
+    c.text('harness-relations-text',88,1689,'Harness ↔ M01–M10 qua capabilities / gateway: reads, proposals, approved drafts; authority vẫn thuộc domain',22,'#0284C7',True)
+    c.footer(1770)
     return c
 
 

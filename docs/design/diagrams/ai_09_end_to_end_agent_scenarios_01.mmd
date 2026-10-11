@@ -17,7 +17,9 @@ sequenceDiagram
         T-->>H: Compatibility + available/held/versions
         H->>H: Prepare immutable proposal and checkpoint
         H-->>A: Exact action review
-        A-->>H: Authenticated authoritative decision event
+        A-->>H: Authenticated decision notification
+        H->>A: Read authoritative decision and current authority
+        H->>H: Dedup event, CAS checkpoint and revalidate scope
         H->>T: Revalidate and commit approved draft with stable key
         T-->>H: APPLIED receipt or unknown to reconcile
         H-->>U: Evidence + draft/pending status, no claim of reserve/submit

@@ -1,5 +1,7 @@
 # Hướng dẫn sơ đồ, công cụ và cách trình bày
 
+Rà soát 11/10/2026: đã cập nhật owner khôi phục/nghiệm thu, các nhánh chưa hoàn thành, giữ chỗ atomic, approval gate, dữ liệu muộn và giao thức AI. [Brief cho GPT web](diagrams/thiet_ke_diagram_cho_gptweb.md) tự chứa mô tả và nguồn của toàn bộ 27 hình cùng bảng thay đổi. Sơ đồ là lát cắt thiết kế mục tiêu, không chứng minh runtime đã đạt.
+
 ## 1. Công cụ đã kiểm tra và sử dụng
 
 Plugin Figma có khả năng tạo diagram FigJam trong ChatGPT/Codex, nhưng kết nối chưa được xác nhận trong phiên làm việc này. Đã đề xuất cài/kết nối; không tuyên bố đã dùng FigJam khi chưa có công cụ hoạt động. [Figma mô tả tích hợp ChatGPT](https://www.figma.com/blog/turn-your-chatgpt-brainstorms-into-figjam-diagrams/).

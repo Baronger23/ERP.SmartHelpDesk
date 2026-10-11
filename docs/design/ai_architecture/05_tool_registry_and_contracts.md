@@ -73,15 +73,21 @@ Prepare không giảm kho hoặc tạo MR submitted; nó persist control-plane p
 ```mermaid
 flowchart TD
     A["Call: typed args + trusted context"] --> B["Allowlist/version/schema/scope check"]
-    B --> C{"Effect class?"}
+    B --> OK{"Hợp lệ?"}
+    OK -->|"Không"| DENY["Reject typed error; zero new effects"]
+    OK -->|"Có"| C{"Effect class?"}
     C -->|"Read"| R["Scoped query + typed observation"]
     C -->|"Prepare"| P["Immutable proposal, zero business effects"]
-    C -->|"Approved draft"| K{"Scoped key lookup: APPLIED same hash?"}
-    K -->|"Yes"| OLD["Stored receipt; no second effect"]
-    K -->|"No"| W["Lock approval/preconditions; revalidate"]
-    W --> X["Draft + approval consumed + receipt + outbox atomic"]
-    X --> Y["APPLIED receipt or OUTCOME_UNKNOWN"]
-    Y --> L["Authoritative lookup before same-key retry"]
+    C -->|"Approved draft"| K{"Scoped stable key/hash lookup"}
+    K -->|"APPLIED same hash"| OLD["Stored receipt; no second effect"]
+    K -->|"Same key different hash"| CONFLICT["IDEMPOTENCY_CONFLICT; zero new effects"]
+    K -->|"New command"| W["Lock approval/preconditions; revalidate"]
+    W --> VALID{"Scope/policy/version/expiry còn hợp lệ?"}
+    VALID -->|"Không"| DENY
+    VALID -->|"Có"| X["Draft + consume approval + receipt + outbox atomic"]
+    X --> Y{"Outcome?"}
+    Y -->|"APPLIED"| DONE["Return draft receipt; no reserve/submit"]
+    Y -->|"OUTCOME_UNKNOWN"| L["Authoritative lookup before any same-key retry"]
 ```
 
 Adapter lock command/idempotency row và approval/precondition rows; kiểm scope/policy epoch/object versions, schema/domain invariants, expiry và approver. Ghi effect draft, approval consumed, receipt/hash và outbox cùng transaction. Unique key/hash bảo vệ retries; returns old receipt nếu APPLIED trước đó mà không consume approval lần hai.

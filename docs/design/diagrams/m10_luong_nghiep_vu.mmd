@@ -1,9 +1,11 @@
 flowchart TD
-    A["Đề nghị thao tác"] --> B["Identity + action + scope + field check"]
-    B --> C{"Cần duyệt?"}
+    A["Đề nghị thao tác"] --> B["Identity + action + scope + field/file check"]
+    B --> P{"Được phép?"}
+    P -->|"Không"| G["Từ chối; audit theo quyền, không lộ dữ liệu"]
+    P -->|"Có"| C{"Cần duyệt?"}
     C -->|"Không"| F["Validation nghiệp vụ + thực hiện"]
-    C -->|"Có"| D["Approval giữ version và lý do"]
-    D --> E{"Đúng thẩm quyền/phiên bản?"}
-    E -->|"Không"| G["Từ chối / yêu cầu duyệt lại"]
+    C -->|"Có"| D["Approval bind payload/hash/version/expiry"]
+    D --> E{"Thẩm quyền và điều kiện hiện tại hợp lệ?"}
+    E -->|"Không"| R["Từ chối / yêu cầu duyệt lại"]
     E -->|"Có"| F
-    F --> H["Audit side effect và kết quả"]
+    F --> H["Audit effect và kết quả; retry không nhân đôi"]

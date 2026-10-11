@@ -29,16 +29,23 @@ Xác nhận kế hoạch không giống xác nhận KTV đã nhận việc. KTV 
 
 ```mermaid
 flowchart TD
-    A["Work order đủ đầu vào"] --> B["Gán người + slot + vật tư/dụng cụ"]
+    A["WorkSource + work order đủ đầu vào"] --> B["Gán người + slot + vật tư/dụng cụ"]
     B --> C["KTV nhận và xác nhận điều kiện hiện trường"]
     C --> D["Visit: chẩn đoán + công + bằng chứng"]
     D --> E{"Thay đổi phạm vi/phí hoặc thiếu nguồn lực?"}
-    E -->|"Có"| F["Xin xác nhận M07 / chờ M05-M06"]
-    F --> G["Lượt tiếp theo; giữ visit cũ"]
+    E -->|"Có"| F["Duyệt scope/phí đúng version M07; chờ M05-M06"]
+    F --> G["Lượt tiếp theo sau đủ điều kiện; giữ visit cũ"]
     G --> D
-    E -->|"Không"| H["Thử máy theo tiêu chí; ghi khôi phục"]
-    H --> I["Khách xác nhận hoặc ghi chưa chấp nhận"]
-    I --> J["Quality review / hoàn thành work order"]
+    E -->|"Không"| H["Thử máy theo tiêu chí; ghi fact khôi phục M03"]
+    H --> I{"Người đúng thẩm quyền nghiệm thu?"}
+    I -->|"Pending/rejected"| K["Ghi outcome/lý do; theo dõi hoặc xử lý lại"]
+    K --> L{"Cần khắc phục kỹ thuật?"}
+    L -->|"Có"| D
+    L -->|"Không"| W["Chờ xác minh/người nghiệm thu; giữ trạng thái pending"]
+    W -->|"Có thông tin hoặc quyết định mới"| I
+    I -->|"Accepted"| J["Quality review / hoàn thành work order"]
+    H --> M["M02 phản chiếu khôi phục; M07 nhận nguồn công/phí"]
+    J --> N["Phát acceptance fact cho M02/M07/M08"]
 ```
 
 KTV ghi observed symptoms, diagnosis, root cause sau kiểm tra, hành động, time log và hàng thực dùng; chẩn đoán có thể thay đổi, không bị ép ghi một nguyên nhân cố định lúc chưa đủ bằng chứng. Checklist tác nghiệp/điều kiện an toàn dùng quy trình đã được doanh nghiệp/site duyệt; thiết kế không tự đưa hướng dẫn kỹ thuật nguy hiểm vào nội dung hệ thống.
@@ -86,4 +93,4 @@ Không có người đủ năng lực → hàng đợi exception có owner; khá
 
 ## 9. Phân kỳ
 
-P1 work order đơn giản, nhiều visit, gán có thông tin, nghiệm thu và time log. P2 availability chi tiết, reservation và quality review. P3 tối ưu lịch/tuyến và offline đồng bộ. Cửa sổ callback, cách tính travel và người xác nhận thử máy là quyết định nghiệp vụ còn mở.
+P1 work order đơn giản, nhiều visit, gán có thông tin, nghiệm thu và time log; nhu cầu vật tư cần cam kết sử dụng reservation atomic P1 của M05. P2 availability chi tiết, bàn giao vật tư sâu và quality review nâng cao. P3 tối ưu lịch/tuyến và offline đồng bộ. Cửa sổ callback, cách tính travel và người xác nhận thử máy là quyết định nghiệp vụ còn mở.

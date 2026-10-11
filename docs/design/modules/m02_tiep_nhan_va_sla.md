@@ -41,10 +41,14 @@ flowchart TD
     A["Nhận báo lỗi và mốc thực"] --> B["Xác minh khách/site/máy; tìm ca liên quan"]
     B --> C{"Trùng đã được xác nhận?"}
     C -->|"Có"| D["Nối liên hệ; giữ lịch sử và ca chủ"]
-    C -->|"Không"| E["Triage ảnh hưởng và quyền lợi"]
-    E --> F["Cam kết + owner + chuyển M03"]
-    F --> G["Timeline, chờ, escalation và cập nhật khách"]
-    G --> H["Khôi phục → nghiệm thu → đóng theo quy tắc"]
+    D --> G["Timeline, chờ, escalation và cập nhật khách"]
+    C -->|"Không"| E["Triage ảnh hưởng và snapshot quyền lợi"]
+    E --> F["Cam kết + owner + WorkSource chuyển M03"]
+    F --> G
+    G --> H["Nhận facts khôi phục/nghiệm thu từ M03"]
+    H --> I{"Đủ điều kiện đóng theo policy?"}
+    I -->|"Có"| J["M02 đóng request; giữ nguồn sự kiện"]
+    I -->|"Không"| G
 ```
 
 ## 5. Mốc và trạng thái

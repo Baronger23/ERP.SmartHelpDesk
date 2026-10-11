@@ -107,8 +107,8 @@
     },
     {
       "path": "02_kien_truc_logic_va_du_lieu.md",
-      "words": 1859,
-      "bytes": 12600,
+      "words": 1926,
+      "bytes": 13045,
       "user_stories": [],
       "functions": []
     },
@@ -121,8 +121,8 @@
     },
     {
       "path": "04_huong_dan_so_do.md",
-      "words": 1025,
-      "bytes": 6917,
+      "words": 1086,
+      "bytes": 7335,
       "user_stories": [],
       "functions": []
     },
@@ -130,6 +130,13 @@
       "path": "05_domain_workflow_contracts.md",
       "words": 1457,
       "bytes": 9961,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "06_giai_thich_thiet_ke_va_so_sanh_he_thong_cu.md",
+      "words": 9086,
+      "bytes": 55291,
       "user_stories": [],
       "functions": []
     },
@@ -142,8 +149,8 @@
     },
     {
       "path": "ai_architecture/02_agent_orchestration_workflow.md",
-      "words": 1185,
-      "bytes": 8913,
+      "words": 1201,
+      "bytes": 9046,
       "user_stories": [],
       "functions": []
     },
@@ -163,8 +170,8 @@
     },
     {
       "path": "ai_architecture/05_tool_registry_and_contracts.md",
-      "words": 996,
-      "bytes": 8052,
+      "words": 1032,
+      "bytes": 8426,
       "user_stories": [],
       "functions": []
     },
@@ -177,8 +184,8 @@
     },
     {
       "path": "ai_architecture/07_security_and_human_approval.md",
-      "words": 1037,
-      "bytes": 7763,
+      "words": 1081,
+      "bytes": 8097,
       "user_stories": [],
       "functions": []
     },
@@ -191,8 +198,8 @@
     },
     {
       "path": "ai_architecture/09_end_to_end_agent_scenarios.md",
-      "words": 1607,
-      "bytes": 11135,
+      "words": 1621,
+      "bytes": 11257,
       "user_stories": [
         "US-35",
         "US-36",
@@ -212,6 +219,24 @@
       "words": 256,
       "bytes": 2307,
       "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "diagrams/thiet_ke_diagram_cho_gptweb.md",
+      "words": 11870,
+      "bytes": 87385,
+      "user_stories": [
+        "US-01",
+        "US-05",
+        "US-09",
+        "US-13",
+        "US-17",
+        "US-21",
+        "US-25",
+        "US-29",
+        "US-33",
+        "US-37"
+      ],
       "functions": []
     },
     {
@@ -235,8 +260,8 @@
     },
     {
       "path": "modules/m02_tiep_nhan_va_sla.md",
-      "words": 1256,
-      "bytes": 7743,
+      "words": 1278,
+      "bytes": 7913,
       "user_stories": [
         "US-05",
         "US-06",
@@ -254,8 +279,8 @@
     },
     {
       "path": "modules/m03_dieu_phoi_va_tac_nghiep.md",
-      "words": 1396,
-      "bytes": 8928,
+      "words": 1481,
+      "bytes": 9540,
       "user_stories": [
         "US-09",
         "US-10",
@@ -273,8 +298,8 @@
     },
     {
       "path": "modules/m04_thiet_bi_va_bao_tri.md",
-      "words": 1203,
-      "bytes": 7642,
+      "words": 1224,
+      "bytes": 7783,
       "user_stories": [
         "US-13",
         "US-14",
@@ -292,8 +317,8 @@
     },
     {
       "path": "modules/m05_kho_va_vat_tu.md",
-      "words": 1179,
-      "bytes": 7382,
+      "words": 1220,
+      "bytes": 7662,
       "user_stories": [
         "US-17",
         "US-18",
@@ -311,8 +336,8 @@
     },
     {
       "path": "modules/m06_mua_hang_va_bo_sung.md",
-      "words": 1055,
-      "bytes": 6682,
+      "words": 1116,
+      "bytes": 7123,
       "user_stories": [
         "US-21",
         "US-22",
@@ -330,8 +355,8 @@
     },
     {
       "path": "modules/m07_chi_phi_va_hoa_don.md",
-      "words": 1203,
-      "bytes": 7765,
+      "words": 1216,
+      "bytes": 7895,
       "user_stories": [
         "US-25",
         "US-26",
@@ -349,8 +374,8 @@
     },
     {
       "path": "modules/m08_bao_cao_va_kpi.md",
-      "words": 1287,
-      "bytes": 8033,
+      "words": 1316,
+      "bytes": 8245,
       "user_stories": [
         "US-29",
         "US-30",
@@ -388,8 +413,8 @@
     },
     {
       "path": "modules/m10_quan_tri_va_kiem_soat.md",
-      "words": 1270,
-      "bytes": 8600,
+      "words": 1307,
+      "bytes": 8907,
       "user_stories": [
         "US-37",
         "US-38",
@@ -407,8 +432,8 @@
     },
     {
       "path": "readme.md",
-      "words": 839,
-      "bytes": 5825,
+      "words": 932,
+      "bytes": 6475,
       "user_stories": [
         "US-35"
       ],
@@ -418,5 +443,5 @@
     }
   ],
   "missing_links": [],
-  "total_words": 34947
+  "total_words": 56543
 }

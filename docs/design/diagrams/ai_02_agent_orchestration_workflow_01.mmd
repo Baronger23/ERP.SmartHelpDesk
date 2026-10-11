@@ -13,6 +13,9 @@ stateDiagram-v2
     RUNNING --> BLOCKED: permission, conflict or budget
     RUNNING --> FAILED: unrecoverable system error
     WAITING_APPROVAL --> BLOCKED: expired or rejected
+    CREATED --> CANCELLED: cancel before dispatch
+    RESUMING --> CANCELLED: cancel event
+    VERIFYING --> CANCELLED: cancel event
     RUNNING --> CANCELLED: cancel event
     WAITING_INPUT --> CANCELLED: cancel event
     WAITING_APPROVAL --> CANCELLED: cancel event
