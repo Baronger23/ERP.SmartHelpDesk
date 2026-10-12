@@ -61,7 +61,7 @@ def main():
             image=tmp/f'flow-{i}.svg'
             if not image.exists(): raise RuntimeError(f'Missing rendered Mermaid output: {image}')
             (ROOT/(name+'.svg')).write_bytes(image.read_bytes())
-    previews=[] if options.skip_previews else [('01_tong_quan_he_thong',1660),('02_chuoi_gia_tri',1100),('03_quan_he_module',1820),('05_agent_harness',1500)]
+    previews=[] if options.skip_previews else [('01_tong_quan_he_thong',1660),('02_chuoi_gia_tri',1100),('03_quan_he_module',1820),('05_agent_harness',1500),('06_kien_truc_trien_khai',1280)]
     for name,height in previews:
         run([npx,'playwright','screenshot','--browser','chromium','--channel','msedge','--viewport-size',f'1920,{height}',(ROOT/(name+'.svg')).as_uri(),str(ROOT/(name+'.png'))])
     print(f'Rendered {len(blocks)} Mermaid diagrams and {len(previews)} browser PNG previews.')

@@ -24,6 +24,7 @@ Các lựa chọn này được chọn theo tính chỉnh sửa và khả năng 
 | thiet_ke_doanh_nghiep.drawio | Bốn trang chỉnh sửa | Business overview/value/module relations và Agent Harness |
 | index.html | Sổ sơ đồ cục bộ | Chuyển tab, phóng to và tải nguồn không cần mạng |
 | 05_agent_harness.svg | Runtime AI | Single orchestrator, gateway, durable state và observability |
+| 06_kien_truc_trien_khai.svg | Kiến trúc triển khai | Thiết bị, vùng biên, node ứng dụng/AI, dữ liệu, tích hợp và DevSecOps của production mục tiêu |
 | ai_*.svg / ai_*.mmd | AI phân rã | State/sequence/RAG/loop/HITL/evaluation/scenario từ 9 tài liệu |
 | Mermaid trong 10 bản module | Phân rã | Decision, trạng thái, error path và bàn giao riêng |
 | Mermaid ER trong 02 | Conceptual data | Phân biệt request/incident/work order/visit và ledger |

@@ -218,6 +218,135 @@ def agent_harness():
     return c
 
 
+def deployment():
+    c=Canvas('06_kien_truc_trien_khai','Kiến trúc triển khai mục tiêu','Smart HelpDesk & Maintenance · Production topology từ thiết bị người dùng đến cloud/VPC, dữ liệu và DevSecOps',1280)
+
+    def server_card(key,x,title,badge,icon,accent,fill,lines):
+        c.box(key,x,421,315,274,fill,accent)
+        c.box(key+'-icon-bg',x+16,440,56,56,accent,accent)
+        c.icon(key+'-icon',icon,x+28,452,32,'#FFFFFF')
+        c.text(key+'-title',x+87,434,title,21,INK,True)
+        c.text(key+'-badge',x+87,468,badge,17,accent,True)
+        c.box(key+'-body-bg',x+14,514,287,160,'#FFFFFF','#FFFFFF')
+        c.text(key+'-body',x+28,526,['• '+line for line in lines],18,MUTED)
+
+    # Devices / roles — same layered visual language as the system architecture poster.
+    c.box('device-band',24,136,1872,126,'#DCEEFF','#BFDBFE')
+    c.text('device-title',44,154,'Thiết bị',25,'#0B3478',True)
+    c.text('device-subtitle',44,190,['người dùng','(theo vai trò)'],19,'#0B3478')
+    devices=[
+      ('Khách hàng','globe',['Laptop / tablet / điện thoại','Web Portal responsive']),
+      ('Kỹ thuật viên','wrench',['Điện thoại / tablet công ty','Desk/Portal + ảnh hiện trường']),
+      ('Điều phối & vận hành','users',['Máy tính văn phòng','ERPNext Desk theo role']),
+      ('Quản lý','chart-no-axes-combined',['Laptop / tablet','Dashboard & phê duyệt']),
+      ('Quản trị hệ thống','shield-check',['Máy quản trị tin cậy','VPN / bastion / console'])]
+    for i,(title,ico,body) in enumerate(devices):
+        x=190+i*337
+        c.box('device'+str(i),x,153,322,91,'#FFFFFF','#D8E7F5')
+        c.icon('device-icon'+str(i),ico,x+18,177,38,'#0B4F9C')
+        c.text('device-title'+str(i),x+72,162,title,21,'#082C6A',True)
+        c.text('device-body'+str(i),x+72,199,body,16,'#294E82')
+        c.edge('device-edge'+str(i),[(x+161,246),(x+161,276)],color='#0B4F9C')
+
+    # Public edge.
+    c.box('edge-band',24,282,1872,96,'#0B4F9C','#0B4F9C')
+    c.text('edge-title',44,301,'Internet &',24,'#FFFFFF',True)
+    c.text('edge-title-2',44,333,'vùng biên',24,'#FFFFFF',True)
+    edge_items=[
+      ('DNS + CDN','globe','Tên miền · cache static'),
+      ('WAF + Rate limit','shield-check','Lọc tấn công · giới hạn tải'),
+      ('TLS Load Balancer','cpu','HTTPS 443 · health routing'),
+      ('Ingress routes','file-text','/web · /api · /socket · /agent')]
+    for i,(title,ico,body) in enumerate(edge_items):
+        x=220+i*415
+        if i: c.box('edge-divider'+str(i),x-20,303,2,54,'#8DBBE9','#8DBBE9')
+        c.icon('edge-icon'+str(i),ico,x,309,40,'#FFFFFF')
+        c.text('edge-item-title'+str(i),x+58,298,title,21,'#FFFFFF',True)
+        c.text('edge-item-body'+str(i),x+58,334,body,17,'#DCEEFF')
+    # Private application subnet with deployable node pools.
+    c.box('app-band',24,399,1872,320,'#EAF6FF','#BAE0F8')
+    c.text('app-title',43,421,['Máy chủ','ứng dụng'],24,'#0B3478',True)
+    c.text('app-subtitle',43,492,['Private subnet','Container · scale'],16,'#294E82')
+    c.box('app-inner',164,412,1712,293,'#FFFFFF','#D8E7F5')
+    server_card('web-pool',185,'Web node pool','2 INSTANCE','globe','#1D4ED8','#EFF6FF',[
+      'frontend / Nginx','Portal & Desk assets','Reverse proxy nội bộ','Stateless · health check'])
+    server_card('backend-pool',522,'ERPNext Backend','2 INSTANCE','cpu','#1D4ED8','#EFF6FF',[
+      'Frappe + custom app','M01–M10 · REST API','RBAC · validation','Transaction / enqueue job'])
+    server_card('realtime-pool',859,'Realtime node','≥ 1 INSTANCE','users','#0284C7','#F0F9FF',[
+      'Node / Socket.IO','WSS realtime updates','Redis pub/sub','Reconnect / fallback REST'])
+    server_card('worker-pool',1196,'Worker node pool','≥ 2 INSTANCE','wrench','#047857','#ECFDF5',[
+      'queue-short / default','queue-long / reports','scheduler: 1 active','Retry + idempotency'])
+    server_card('ai-pool',1533,'AI node pool','1 → N INSTANCE','book-open','#7C3AED','#F5F3FF',[
+      'Agent Gateway / Harness','Orchestrator + checkpoint','RAG ingestion / retrieval','ERP Tool Gateway only'])
+    c.edge('edge-to-app',[(342,380),(342,417)],color='#0B4F9C')
+    c.edge('web-backend',[(501,558),(519,558)],color='#1D4ED8')
+    c.edge('backend-realtime',[(838,558),(856,558)],color='#0284C7')
+
+    # External systems and AI egress.
+    c.box('integration-band',24,739,1872,143,'#E8E2FF','#C4B5FD')
+    c.text('integration-title',43,754,['Dịch vụ','bên ngoài','& tích hợp'],20,'#3B258A',True)
+    integrations=[
+      ('Identity Provider','shield-check',['OIDC / SAML · MFA','Map role/scope tại ERP']),
+      ('Đối tác / thiết bị','globe',['REST API có schema','Rate limit · audit · timeout']),
+      ('Email · SMS · Zalo','message-circle',['Worker/adapter gửi thông báo','Callback phải xác thực']),
+      ('LLM / Embedding API','book-open',['AI node → HTTPS 443','Không nhận ERP secret'])]
+    for i,(title,ico,body) in enumerate(integrations):
+        x=190+i*420
+        c.box('integration'+str(i),x,760,400,101,'#FFFFFF','#D9D0FF')
+        c.box('integration-icon-bg'+str(i),x+16,781,48,48,'#7C3AED','#7C3AED')
+        c.icon('integration-icon'+str(i),ico,x+25,790,30,'#FFFFFF')
+        c.text('integration-title'+str(i),x+78,769,title,20,'#3B258A',True)
+        c.text('integration-body'+str(i),x+78,805,body,16,MUTED)
+    c.edge('backend-partner',[(679,697),(679,724),(810,724),(810,756)],color='#1D4ED8')
+    c.edge('worker-notify',[(1353,697),(1353,730),(1230,730),(1230,756)],color='#047857')
+    c.edge('ai-llm',[(1690,697),(1690,736),(1650,736),(1650,756)],color='#7C3AED')
+
+    # Private data subnet.
+    c.box('data-band',24,902,1872,152,'#E5F4FF','#BAE0F8')
+    c.text('data-title',43,929,['Máy chủ','dữ liệu'],23,'#0B3478',True)
+    c.text('data-subtitle',43,993,['Private subnet','Không public'],15,'#294E82',True)
+    data_items=[
+      ('MariaDB Primary','database',['Read / write','Nguồn facts giao dịch']),
+      ('DB Replica','database',['Standby / failover','Backup nhất quán']),
+      ('Redis Cache','cpu',['Session · cache','Có thể tái tạo']),
+      ('Redis Queue','cpu',['RQ jobs · pub/sub','Backlog / retry']),
+      ('Object Storage','file-text',['File · ảnh · SOP','Signed URL · backup']),
+      ('Vector DB','book-open',['Embedding + metadata','Citation về tài liệu nguồn'])]
+    for i,(title,ico,body) in enumerate(data_items):
+        x=164+i*284
+        c.box('data'+str(i),x,921,268,112,'#FFFFFF','#CFE5F4')
+        c.icon('data-icon'+str(i),ico,x+16,945,34,'#0B4F9C')
+        c.text('data-title'+str(i),x+62,931,title,19,'#082C6A',True)
+        c.text('data-body'+str(i),x+62,968,body,15,MUTED)
+    c.edge('db-replication',[(432,977),(441,977)],color='#0B4F9C')
+
+    # Cross-cutting DevSecOps / operations.
+    c.box('ops-band',24,1074,1872,133,'#DDEFFF','#BFDBFE')
+    c.text('ops-title',43,1097,['DevSecOps','& vận hành'],23,'#0B3478',True)
+    ops=[
+      ('CI/CD + Registry','cpu',['Test · scan · ký image','Staging → Production']),
+      ('Secrets / KMS','shield-check',['Vault · rotation','Không secret trong image/Git']),
+      ('Monitoring & Logs','chart-no-axes-combined',['Metrics · trace · correlation','Web · worker · DB · AI']),
+      ('Backup & Restore','database',['DB + files + config + index','Mã hóa · restore test']),
+      ('Release & Scaling','wrench',['Rolling / blue-green','Health gate · rollback'])]
+    for i,(title,ico,body) in enumerate(ops):
+        x=180+i*335
+        c.box('ops'+str(i),x,1092,315,94,'#FFFFFF','#D1E4F4')
+        c.icon('ops-icon'+str(i),ico,x+16,1117,32,'#1D4ED8')
+        c.text('ops-title'+str(i),x+62,1102,title,19,'#082C6A',True)
+        c.text('ops-body'+str(i),x+62,1138,body,15,MUTED)
+
+    c.text('legend-title',42,1224,'Chú thích:',17,'#0B3478',True)
+    c.edge('legend-main',[(183,1240),(257,1240)],color='#1D4ED8')
+    c.text('legend-main-text',270,1225,'Luồng request / API',16,MUTED)
+    c.edge('legend-private',[(500,1240),(574,1240)],color='#0284C7')
+    c.text('legend-private-text',587,1225,'Kết nối private network',16,MUTED)
+    c.box('legend-boundary',870,1227,28,24,'#EAF6FF','#BAE0F8')
+    c.text('legend-boundary-text',913,1225,'Vùng triển khai / trust boundary',16,MUTED)
+    c.text('footer',1392,1227,'AIS · Deployment Architecture v1.0 · Thiết kế production mục tiêu',14,MUTED)
+    return c
+
+
 def svg(c):
     root=ET.Element('svg',xmlns='http://www.w3.org/2000/svg',width=str(c.w),height=str(c.h),viewBox=f'0 0 {c.w} {c.h}',role='img')
     ET.SubElement(root,'title').text=c.title
@@ -314,7 +443,7 @@ def ai_gallery():
 
 
 if __name__=='__main__':
-    views=[overview(),journey(),relationships(),agent_harness()]
+    views=[overview(),journey(),relationships(),agent_harness(),deployment()]
     for c in views: (OUT/f'{c.name}.svg').write_text(svg(c),encoding='utf-8')
     (OUT/'thiet_ke_doanh_nghiep.drawio').write_text(drawio(views),encoding='utf-8')
     (OUT/'01_tong_quan_he_thong.drawio').write_text(drawio([views[0]]),encoding='utf-8')

@@ -121,8 +121,8 @@
     },
     {
       "path": "04_huong_dan_so_do.md",
-      "words": 1086,
-      "bytes": 7335,
+      "words": 1112,
+      "bytes": 7514,
       "user_stories": [],
       "functions": []
     },
@@ -137,6 +137,13 @@
       "path": "06_giai_thich_thiet_ke_va_so_sanh_he_thong_cu.md",
       "words": 9086,
       "bytes": 55291,
+      "user_stories": [],
+      "functions": []
+    },
+    {
+      "path": "07_kien_truc_trien_khai.md",
+      "words": 2862,
+      "bytes": 18662,
       "user_stories": [],
       "functions": []
     },
@@ -432,8 +439,8 @@
     },
     {
       "path": "readme.md",
-      "words": 932,
-      "bytes": 6475,
+      "words": 985,
+      "bytes": 6878,
       "user_stories": [
         "US-35"
       ],
@@ -443,5 +450,5 @@
     }
   ],
   "missing_links": [],
-  "total_words": 56543
+  "total_words": 59484
 }

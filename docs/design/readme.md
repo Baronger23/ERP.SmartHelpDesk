@@ -13,6 +13,7 @@ Nếu muốn hiểu bằng ví dụ và biết thiết kế đề xuất khác h
 | 0 | [Tổng quan hệ thống](00_tong_quan_he_thong.md) | AIS tạo giá trị gì, ai tham gia và cần những năng lực nào? |
 | 1 | [Phân tích doanh nghiệp và yêu cầu](01_phan_tich_doanh_nghiep_va_yeu_cau.md) | Pain point suy ra từ đâu; story và tính năng giải quyết chúng như thế nào? |
 | 1 | [Kiến trúc logic và dữ liệu](02_kien_truc_logic_va_du_lieu.md) | Các module trao đổi gì, ai sở hữu dữ liệu và đâu là ranh giới? |
+| 2 | [Kiến trúc triển khai](07_kien_truc_trien_khai.md) | Thiết bị, vùng mạng, node ứng dụng/AI/dữ liệu và quy trình đưa phần mềm lên production được thiết kế ra sao? |
 | 2 | [Mười bản phân rã module](#cac-ban-phan-ra-module) | Quy trình, quy tắc, trạng thái, ngoại lệ và nghiệm thu cụ thể ra sao? |
 | 3 | [Lộ trình và đối chiếu](03_lo_trinh_va_doi_chieu.md) | Có thể triển khai trên ERPNext như thế nào, phần nào còn thiếu? |
 | Xuyên suốt | [Hướng dẫn sơ đồ](04_huong_dan_so_do.md) | Cách mở, sửa, đọc các loại sơ đồ và công cụ sử dụng |
@@ -44,6 +45,7 @@ Nếu muốn hiểu bằng ví dụ và biết thiết kế đề xuất khác h
 - [Chuỗi giá trị và bàn giao](diagrams/02_chuoi_gia_tri.svg): từ yêu cầu đến kết quả được chấp nhận và quyết toán.
 - [Quan hệ module](diagrams/03_quan_he_module.svg): đường nối có tên thông tin trao đổi.
 - [Agent Harness có icon](diagrams/05_agent_harness.svg): runtime ngang, capabilities/gateway và checkpoint.
+- [Kiến trúc triển khai](diagrams/06_kien_truc_trien_khai.svg): topology production mục tiêu từ thiết bị người dùng đến edge, node ứng dụng/AI, dữ liệu và DevSecOps.
 - [Bản Draw.io nhiều trang](diagrams/thiet_ke_doanh_nghiep.drawio): các khối, icon và connector có thể sửa.
 - [Sổ sơ đồ](diagrams/index.html): xem và chuyển giữa các sơ đồ ngay trong trình duyệt.
 - [Bản Canva v2 đã duyệt](https://canva.link/bucs6cajm4rbjqc): capability map trước nâng cấp Harness; bản runtime v3 ở SVG/Draw.io/Markdown cục bộ.
