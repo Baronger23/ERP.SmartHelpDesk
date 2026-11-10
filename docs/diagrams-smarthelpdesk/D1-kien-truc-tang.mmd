@@ -1,0 +1,45 @@
+flowchart TB
+    subgraph NguoiDung["Người dùng AIS"]
+        U1["Service Coordinator"]
+        U2["Service Owner / Technician"]
+        U3["Warehouse / Commercial / Manager"]
+    end
+    subgraph TrinhBay["Tầng trình bày — Frappe Desk (meta-driven, không viết lại UI)"]
+        UI["Workspace 'Smart Helpdesk' (10 lối tắt M01–M10)<br/>Form List/Form tự sinh từ DocType<br/>Form SHD bị khóa Read Only"]
+    end
+    subgraph API["Tầng API duy nhất"]
+        EP["POST /api/method/smart_helpdesk.api.execute<br/>Xác thực: session / API key / Bearer token<br/>envelope: command, payload, idempotency_key"]
+    end
+    subgraph SHD["Custom App smart_helpdesk (lớp nghiệp vụ của dự án)"]
+        CMD["40 lệnh nghiệp vụ<br/>operations 18 + inventory 11 + maintenance 5 + commercial 5 + reporting 1"]
+        RULE["Máy luật: sla.py (SLA Engine riêng)<br/>validate.py (kiểm tra quyền sở hữu bản ghi)<br/>compatibility.py (tương thích vật tư)"]
+        LEDGER["SHD Command (biên nhận idempotency)<br/>SHD Event (nhật ký sự kiện → KPI Snapshot)"]
+    end
+    subgraph DuLieuSHD["Dữ liệu SHD — 28 DocType tự khai báo trong schema.py"]
+        DT["Chain: Equipment → Agreement → Entitlement<br/>Request → Incident → Work Source → Work Order<br/>Visit / Time Log / Acceptance / Reservation / Charge..."]
+    end
+    subgraph ERPNext["ERPNext v16.34.2 (native — dùng thẳng, không sửa)"]
+        MD["Master data: Company, Customer, Supplier, Item, Warehouse"]
+        STK["Sổ kho thật: Bin, Stock Entry, Stock Ledger Entry"]
+        PROC["Mua hàng: Material Request, Purchase Order, Purchase Receipt"]
+        SAL["Bán hàng: Sales Invoice"]
+    end
+    subgraph Frappe["Frappe Framework v16.33.1"]
+        META["DocType / DocField (metadata) — quyền — REST — lịch/queue"]
+        DB[("MariaDB 11.8<br/>tabSHD ... / tabIssue / tabBin ...")]
+    end
+    U1 --> UI
+    U2 --> UI
+    U3 --> UI
+    UI --> EP
+    EP --> CMD
+    CMD --> RULE
+    CMD --> LEDGER
+    CMD --> DT
+    CMD -->|"gọi dịch vụ native"| MD
+    CMD --> STK
+    CMD --> PROC
+    CMD --> SAL
+    DT --> META
+    ERPNext --> META
+    META --> DB

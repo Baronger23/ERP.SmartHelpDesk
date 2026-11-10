@@ -1,0 +1,12 @@
+flowchart TB
+    subgraph CongTruong["BENCH — 'ban quản lý công trường'<br/>bộ công cụ để xây, lắp đặt, mở cửa và bảo trì các tòa nhà bên dưới"]
+        B1["Tạo khu đất & dựng khung (bench init)<br/>Mang các bộ phận về (get-app)<br/>Xây một tòa nhà cụ thể (new-site)<br/>Lắp thêm phòng chức năng (install-app)<br/>Mở cửa vận hành (bench start) / Bảo trì nâng cấp (migrate, update)"]
+    end
+    subgraph ToaNha["MỘT HỆ THỐNG ĐANG CHẠY (một 'site')"]
+        T3["TẦNG TRÊN CÙNG — do nhóm tự xây thêm<br/>SmartHelpDesk: các 'phòng' chuyên cho nghiệp vụ bảo trì của AIS"]
+        T2["TÒA NHÀ ĐÃ XÂY HOÀN CHỈNH — ERPNext<br/>các 'phòng ban' có sẵn: bán hàng, mua hàng, kho, kế toán, tài sản..."]
+        T1["NỀN MÓNG + KHUNG + HỆ THỐNG CHUNG — Frappe (framework)<br/>điện, nước, thang máy, bảo vệ, sổ trực... của tòa nhà:<br/>tài khoản người dùng, phân quyền, biểu mẫu, tìm kiếm, báo cáo, tệp đính kèm"]
+    end
+    CongTruong -->|"xây dựng & vận hành"| ToaNha
+    T3 -->|"dựa trên"| T2
+    T2 -->|"dựa trên"| T1

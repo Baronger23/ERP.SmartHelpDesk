@@ -1,0 +1,14 @@
+flowchart TB
+    subgraph Lop1["LỚP 1 — SCRIPT GIỮA KỲ (legacy demo, đóng băng)"]
+        S1["scripts/setup/01–06<br/>cấu hình qua REST"] --> N1["DocType NATIVE bị bẻ cong:<br/>Issue, Asset, Asset Maintenance<br/>+ native SLA, + 19 Custom Fields"]
+        S2["scripts/scenarios + reports<br/>sinh dữ liệu & bằng chứng"] --> N1
+        N2["Đặc tính: cài app = No<br/>logic nằm ngoài hệ thống<br/>sửa tay trên form là vỡ luật"]
+        N1 --> N2
+    end
+    subgraph Lop2["LỚP 2 — CUSTOM APP SHD v3 (hướng chuẩn Frappe, hệ thống hiện tại)"]
+        A1["apps/smart_helpdesk<br/>khai báo 28 DocType trong schema.py<br/>install.py cài bằng after_install / after_migrate"] --> A2["Desk form khóa → mọi ghi dữ liệu<br/>chỉ qua 40 lệnh tại một API duy nhất<br/>idempotency + SHD Event journal"]
+        A2 --> A3["Chỉ dùng native ở nơi native là 'sự thật':<br/>Company/Customer/Item/Warehouse<br/>Bin/Stock Entry, PO/PR, Sales Invoice"]
+    end
+    Lop1 -.->|"bài học rút ra:<br/>điểm đau của Lớp 1 (SLA neo thời điểm tạo,<br/>không có entitlement snapshot, không pause)<br/>là căn cứ thiết kế Lớp 2"| Lop2
+    X["QUY TẮC CHUNG NGÀNH: cấu hình native trước →<br/>Custom Field/Script/Workflow → Custom App → TUYỆT ĐỐI không sửa core<br/>script ngoài chỉ để seed / demo / tích hợp / kiểm thử"]
+    Lop2 --> X

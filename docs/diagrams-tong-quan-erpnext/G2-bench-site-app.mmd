@@ -1,0 +1,11 @@
+flowchart TB
+    BENCH["BENCH<br/>(một môi trường làm việc trên một máy)"]
+    BENCH --> S1["SITE 1<br/>hệ thống của công ty A"]
+    BENCH --> S2["SITE 2<br/>hệ thống của công ty B"]
+    BENCH --> S3["SITE kiểm thử<br/>shd-test.localhost"]
+    S1 --> APP["Các APP được lắp vào site"]
+    APP --> A1["frappe<br/>(nền — bắt buộc có)"]
+    APP --> A2["erpnext<br/>(các phòng ban có sẵn)"]
+    APP --> A3["smart_helpdesk<br/>(phần nhóm tự xây)"]
+    GHI["Đọc sơ đồ: Bench quản lý NHIỀU site;<br/>mỗi site lắp NHIỀU app;<br/>dữ liệu của site nào nằm riêng site đó"]
+    BENCH -.-> GHI

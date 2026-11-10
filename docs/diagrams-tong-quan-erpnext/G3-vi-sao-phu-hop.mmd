@@ -1,0 +1,25 @@
+flowchart LR
+    subgraph NhuCau["BẢN CHẤT CỦA BÀI TOÁN ERP"]
+        N1["Rất nhiều BIỂU MẪU:<br/>đơn hàng, phiếu kho, hóa đơn..."]
+        N2["Quy trình thay đổi liên tục<br/>theo từng doanh nghiệp"]
+        N3["Nhiều người, nhiều vai trò<br/>ai được xem/sửa cái gì phải rõ"]
+        N4["Mọi phòng ban dùng CHUNG<br/>khách hàng, mặt hàng, kho..."]
+        N5["Cần báo cáo, tìm kiếm,<br/>tệp đính kèm ở khắp nơi"]
+    end
+    subgraph FrappeCo["FRAPPE ĐƯỢC SINH RA ĐÚNG CHO VIỆC NÀY"]
+        F1["DocType: khai báo một biểu mẫu một lần<br/>→ có luôn màn hình nhập, nơi lưu, API, quyền"]
+        F2["Tùy biến bằng cấu hình + app riêng<br/>không sửa lõi → nâng cấp không vỡ"]
+        F3["Phân quyền theo vai trò<br/>tích hợp sẵn tới từng biểu mẫu, từng ô"]
+        F4["Mọi app trên cùng một nền<br/>→ dữ liệu dùng chung tự nhiên"]
+        F5["Báo cáo, tìm kiếm, đính kèm, in ấn<br/>là tính năng của nền, không phải viết lại"]
+    end
+    N1 --> F1
+    N2 --> F2
+    N3 --> F3
+    N4 --> F4
+    N5 --> F5
+    F1 --> KQ["KẾT LUẬN: ERPNext không 'bị ép' chạy trên Frappe —<br/>Frappe được chính đội ERPNext tạo ra để làm nền cho ERPNext"]
+    F2 --> KQ
+    F3 --> KQ
+    F4 --> KQ
+    F5 --> KQ

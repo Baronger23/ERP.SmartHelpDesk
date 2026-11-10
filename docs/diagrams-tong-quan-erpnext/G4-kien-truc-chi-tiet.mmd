@@ -1,0 +1,10 @@
+flowchart TB
+    ND["Người dùng<br/>trình duyệt web / điện thoại"]
+    ND --> WEB["Máy chủ web (nginx)<br/>cửa tiếp tân: nhận yêu cầu, phát giao diện"]
+    WEB --> APP["Ứng dụng Frappe (Python)<br/>xử lý nghiệp vụ của ERPNext + SmartHelpDesk"]
+    APP --> DB[("MariaDB<br/>kho sổ sách chính:<br/>mọi biểu mẫu đều lưu ở đây")]
+    APP --> CACHE[("Redis<br/>trí nhớ tạm: hàng đợi việc nền,<br/>phiên đăng nhập, dữ liệu hay dùng")]
+    APP --> FILES["Thư mục tệp<br/>tệp đính kèm, ảnh, bản in PDF"]
+    APP --> BG["Tiến trình nền (worker + scheduler)<br/>việc chạy ngầm: gửi mail, tính KPI, việc hẹn giờ"]
+    NOTE["Chỉ tới tầng này mới cần biết tên kỹ thuật.<br/>Toàn bộ phần trên của tài liệu không cần các tên này vẫn hiểu đúng bản chất"]
+    APP -.-> NOTE

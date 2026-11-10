@@ -1,0 +1,8 @@
+erDiagram
+    "SHD Work Order" }o--|| "User" : "technician"
+    "SHD Knowledge" }o--|| "User" : "reviewed_by"
+    "SHD Knowledge" }o--|| "SHD Work Order" : "lesson_work_order"
+    "SHD KPI Snapshot" }o--|| "SHD KPI Snapshot" : "supersedes"
+    "SHD Event" }o--|| "User" : "actor"
+    "SHD Event" }o--|| "SHD Event" : "supersedes_event"
+    "SHD Command" }o--|| "User" : "actor"

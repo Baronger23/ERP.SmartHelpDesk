@@ -1,0 +1,17 @@
+stateDiagram-v2
+    [*] --> Draft: insert (docstatus = 0)
+    Draft --> Draft: save → validate / before_save
+    Draft --> Submitted: submit (docstatus = 1)
+    Submitted --> Cancelled: cancel (docstatus = 2)
+    Cancelled --> [*]
+    Submitted --> [*]: bản ghi bị khóa<br/>chỉ sửa qua amend / lệnh nghiệp vụ
+    note right of Draft
+        Ở dự án SHD: form Desk bị khóa,
+        mọi thay đổi Draft đều đi qua
+        40 lệnh nghiệp vụ, không sửa tay
+    end note
+    note left of Submitted
+        ERPNext dùng docstatus cho chứng từ
+        thật (Stock Entry, Sales Invoice)
+        để cập nhật sổ kho / sổ kế toán
+    end note

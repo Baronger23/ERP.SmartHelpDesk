@@ -1,0 +1,13 @@
+erDiagram
+    "SHD Incident" }o--|| "SHD Equipment" : "equipment"
+    "SHD Incident" }o--|| "SHD Incident" : "callback_of"
+    "SHD Work Source" }o--|| "SHD Incident" : "incident"
+    "SHD Work Source" }o--|| "SHD PM Occurrence" : "pm_occurrence"
+    "SHD PM Plan" }o--|| "SHD Equipment" : "equipment"
+    "SHD PM Plan" }o--|| "User" : "service_owner"
+    "SHD PM Occurrence" }o--|| "SHD PM Plan" : "plan"
+    "SHD PM Occurrence" }o--|| "SHD Equipment" : "equipment"
+    "SHD Finding" }o--|| "SHD PM Occurrence" : "pm_occurrence"
+    "SHD Finding" }o--|| "SHD Equipment" : "equipment"
+    "SHD Finding" }o--|| "User" : "service_owner"
+    "SHD Finding" }o--|| "SHD Incident" : "incident"

@@ -1,0 +1,34 @@
+flowchart TB
+    ROOT["BẢN ĐỒ MAPPING: nhu cầu AIS → ERPNext v16"]
+    ROOT --> FIT["NHÓM A — FIT: dùng NATIVE THẲNG"]
+    ROOT --> FITPLUS["NHÓM B — FIT+: NATIVE + CẤU HÌNH NHẸ của dự án"]
+    ROOT --> GAPSUA["NHÓM C — GAP–SỬA/NÂNG CẤP: native có họ hàng nhưng thiếu chất"]
+    ROOT --> GAPMOI["NHÓM D — GAP–MỚI: bắt buộc TỰ XÂY trong app SHD"]
+    ROOT --> CHUA["NHÓM E — CHƯA LÀM / NGOÀI PHẠM VI"]
+
+    FIT --> F1["Master data: Company, Customer, Supplier (M01)"]
+    FIT --> F2["Item, Warehouse, Bin (M07)"]
+    FIT --> F3["Sổ kho: Stock Entry, Stock Ledger Entry (M06/M07)"]
+    FIT --> F4["Mua: Material Request, Purchase Order, Purchase Receipt (M07)"]
+    FIT --> F5["Hóa đơn: Sales Invoice (M08)"]
+
+    FITPLUS --> P1["SLA Engine SHD chạy trên nền<br/>Working Day / Holiday List của Frappe (M03)"]
+    FITPLUS --> P2["Nhận diện: mã QR trên nhãn thiết bị (M02)"]
+    FITPLUS --> P3["Workspace + 8 Role tự định nghĩa (toàn hệ thống)"]
+
+    GAPSUA --> C1["Issue + native SLA (giữa kỳ) → nâng cấp thành<br/>SHD Request + SHD Incident + SLA Engine riêng (M03)"]
+    GAPSUA --> C2["Asset (tài sản của chủ sở hữu) → SHD Equipment<br/>là máy của KHÁCH đặt tại Site (M02)"]
+    GAPSUA --> C3["Asset Maintenance (lịch theo ngày) → SHD PM Plan<br/>+ PM Occurrence theo chu kỳ/policy hợp đồng (M05)"]
+    GAPSUA --> C4["Work Order của ERPNext = lệnh SẢN XUẤT<br/>→ SHD Work Order = lệnh DỊCH VỤ hiện trường (M04)"]
+
+    GAPMOI --> D1["Agreement + Entitlement snapshot (M02/M03)"]
+    GAPMOI --> D2["Wait Interval — khoảng chờ tính SLA (M03)"]
+    GAPMOI --> D3["Reservation giữ tồn cho ca (M06)"]
+    GAPMOI --> D4["Compatibility tương thích vật tư (M06/M09)"]
+    GAPMOI --> D5["Estimate → Charge → đối chiếu hóa đơn (M08)"]
+    GAPMOI --> D6["Event journal + KPI Snapshot tái lập (M10)"]
+
+    CHUA --> E1["AI/RAG: mới có SHD Knowledge catalog + thiết kế, CHƯA runtime (M09)"]
+    CHUA --> E2["Customer portal riêng, SLA pause, notification/escalation (M01/M03)"]
+    CHUA --> E3["Không dùng và không cần: Manufacturing, Quality, Projects, POS"]
+    CHUA --> E4["App riêng chưa cài: HRMS (Leave), Frappe Helpdesk (HD Ticket)"]

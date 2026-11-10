@@ -1,0 +1,16 @@
+flowchart TB
+    DN["MỘT DOANH NGHIỆP VẬN HÀNH MỖI NGÀY"]
+    DN --> P1["Bán hàng<br/>gặp khách, báo giá, xuất hóa đơn"]
+    DN --> P2["Mua hàng<br/>đặt mua vật tư từ nhà cung cấp"]
+    DN --> P3["Kho<br/>biết còn bao nhiêu hàng, ở đâu"]
+    DN --> P4["Kế toán<br/>tiền vào, tiền ra, công nợ"]
+    DN --> P5["Nhân sự & điều phối<br/>ai làm việc gì, khi nào"]
+    DN --> P6["Chăm sóc & dịch vụ<br/>khách báo hỏng → cử người sửa → nghiệm thu"]
+    P1 --> SO["CÁCH LÀM THỦ CÔNG: mỗi phòng một quyển sổ riêng<br/>→ số liệu lệch nhau, tìm lại rất khổ, dễ thất lạc"]
+    P2 --> SO
+    P3 --> SO
+    P4 --> SO
+    P5 --> SO
+    P6 --> SO
+    SO --> ERP["CÁCH LÀM BẰNG ERP: cả công ty dùng CHUNG một hệ thống<br/>mọi phòng nhìn cùng một dữ liệu, cập nhật một lần, dùng khắp nơi"]
+    ERP --> KQ["ERPNext là một hệ thống ERP như vậy<br/>mã nguồn mở, chạy trên trình duyệt web"]

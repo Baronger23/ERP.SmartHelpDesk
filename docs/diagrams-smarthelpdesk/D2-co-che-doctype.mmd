@@ -1,0 +1,29 @@
+flowchart LR
+    subgraph KhaiBao["1 — KHAI BÁO (metadata)"]
+        A["DocType record<br/>(tabDocType)"] --> B["DocField records<br/>(tabDocField)"]
+        B --> B1["fieldtype: Data, Link, Table,<br/>Select, Date, Check, Currency..."]
+        B --> B2["reqd, unique, in_list_view,<br/>permlevel, options"]
+        A --> A1["naming: series / autoname<br/>is_submittable, issingle, istable"]
+        A --> A2["DocPerm: phân quyền theo Role"]
+    end
+    subgraph DongBo["2 — ĐỒNG BỘ LƯỢC ĐỒ"]
+        C["bench migrate / install-app<br/>Frappe so metadata với DB"] --> D["Sinh / sửa bảng vật lý<br/>tab+Tên DocType (bỏ khoảng trắng)<br/>vd: tabSHD Work Order"]
+        D --> D1["Cột chuẩn: name, creation, modified,<br/>modified_by, owner, docstatus, idx"]
+    end
+    subgraph TuSinh["3 — TỰ SINH (không cần code thêm)"]
+        E["Desk: Form View + List View"]
+        F["REST API: /api/resource/Tên DocType"]
+        G["Report Builder, Print Format,<br/>Permissions, Attachments, Comments"]
+    end
+    subgraph CodeMoRong["4 — CODE MỞ RỘNG (trong app của mình)"]
+        H["Controller (Python class)<br/>validate, before_save, on_submit..."]
+        I["doc_events / hooks<br/>Client Script phía trình duyệt"]
+    end
+    B2 --> C
+    A1 --> C
+    D --> E
+    D --> F
+    D --> G
+    D -.->|"khi cần luật riêng"| H
+    H --> I
+    classDef note fill:#f6f0dc,stroke:#999

@@ -1,0 +1,27 @@
+sequenceDiagram
+    autonumber
+    participant KH as Khách hàng (site)
+    participant REQ as SHD Request
+    participant SLA as SLA Engine (sla.py)
+    participant WO as SHD Work Order
+    participant KHO as Kho native (Bin/Stock Entry)
+    participant HD as Sales Invoice (native)
+    participant EV as SHD Event → KPI
+
+    KH->>REQ: receive_request (báo lỗi máy)
+    REQ->>REQ: kiểm tra Agreement + Entitlement snapshot
+    REQ->>SLA: mở đồng hồ SLA (điểm bắt đầu = thời điểm TIẾP NHẬN)
+    REQ->>WO: nguồn việc (Work Source) → sinh Work Order
+    WO->>WO: assign_technician (theo policy gán duy nhất)
+    WO->>KHO: reserve_material (SHD Reservation) — kiểm tra Bin khả dụng
+    alt Vật tư thiếu
+        KHO-->>WO: khả dụng âm → Demand → Material Request / Purchase Order
+    end
+    WO->>WO: start_work → Visit + Time Log
+    WO->>KHO: consume: sinh Stock Entry (Material Issue) — trừ sổ kho thật
+    WO->>WO: Acceptance (khách ký nghiệm thu tại site)
+    WO->>SLA: đóng đồng hồ: so deadline theo lịch policy hợp đồng
+    WO->>HD: Charge → đối chiếu Sales Invoice 1-1
+    WO->>EV: mỗi bước ghi 1 SHD Event (before/after hash)
+    EV-->>KH: KPI Snapshot tái tính bất cứ lúc nào
+    Note over REQ,EV: Mọi ghi dữ liệu đi qua lệnh nghiệp vụ tại 1 API duy nhất, form Desk bị khóa

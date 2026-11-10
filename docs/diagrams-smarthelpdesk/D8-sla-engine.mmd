@@ -1,0 +1,16 @@
+flowchart TB
+    A["Request/Incident được TIẾP NHẬN<br/>(reported_at — thời điểm khách báo)"] --> B["received_at — thời điểm AIS xác nhận tiếp nhận<br/>ĐIỂM BẮT ĐẦU tính SLA của SHD"]
+    B --> C{"Agreement còn hiệu lực?"}
+    C -->|Không| X["Từ chối / xử lý ngoài SLA<br/>(entitlement snapshot ghi lại căn cứ)"]
+    C -->|Có| D["Lấy SLA theo POLICY của hợp đồng<br/>(không phải mức mặc định toàn cục)<br/>+ priority của ca"]
+    D --> E["Tính deadline bằng LỊCH POLICY:<br/>ngày làm việc + giờ làm việc của hợp đồng<br/>trừ ngày lễ (Holiday List)"]
+    E --> F["Đáp ứng (response deadline)<br/>và Xử lý xong (resolution deadline)"]
+    F --> G{"Có khoảng chờ<br/>(chờ khách / chờ vật tư)?"}
+    G -->|Có| H["SHD Wait Interval ghi đoạn chờ<br/>đoạn chờ được TRỪ khỏi thời gian tính SLA<br/>(native SLA: không có khái niệm này)"]
+    H --> I["Cộng dồn các đoạn chờ → deadline hiệu chỉnh"]
+    G -->|Không| I
+    I --> J{"Hoàn thành trước deadline hiệu chỉnh?"}
+    J -->|Có| K["ĐẠT SLA — ghi SHD Event"]
+    J -->|Không| L["VI PHẠM SLA — ghi SHD Event<br/>(escalation tự động: CHƯA LÀM)"]
+    M["Đối chiếu NATIVE SLA của ERPNext:<br/>neo đồng hồ vào thời điểm TẠO bản ghi,<br/>một mức toàn cục, không policy theo hợp đồng,<br/>không reported/received, không wait interval<br/>→ căn cứ GAP để tự xây engine"]
+    E -.-> M
