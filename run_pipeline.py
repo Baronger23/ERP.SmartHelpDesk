@@ -21,52 +21,52 @@ STEPS = [
     {
         "step": "01",
         "title": "Master Data & Configuration (Company, Warehouses, Items, Assets)",
-        "script": os.path.join(PROJECT_ROOT, "scripts", "setup", "01_setup_master_data.py")
+        "script": os.path.join(PROJECT_ROOT, "legacy", "setup", "01_setup_master_data.py")
     },
     {
         "step": "02",
         "title": "Technicians, Teams & Round Robin Assignment Rules",
-        "script": os.path.join(PROJECT_ROOT, "scripts", "setup", "02_setup_technicians.py")
+        "script": os.path.join(PROJECT_ROOT, "legacy", "setup", "02_setup_technicians.py")
     },
     {
         "step": "03",
         "title": "DocType Custom Fields (FSM, SLA & Maintenance Links)",
-        "script": os.path.join(PROJECT_ROOT, "scripts", "setup", "03_setup_custom_fields.py")
+        "script": os.path.join(PROJECT_ROOT, "legacy", "setup", "03_setup_custom_fields.py")
     },
     {
         "step": "04",
         "title": "SLA Policies, Priorities, Calendars & Maintenance Plans",
-        "script": os.path.join(PROJECT_ROOT, "scripts", "setup", "04_setup_sla_and_plans.py")
+        "script": os.path.join(PROJECT_ROOT, "legacy", "setup", "04_setup_sla_and_plans.py")
     },
     {
         "step": "05",
         "title": "Field Technician Mobile Quick Actions (Client Scripts)",
-        "script": os.path.join(PROJECT_ROOT, "scripts", "setup", "05_setup_quick_actions.py")
+        "script": os.path.join(PROJECT_ROOT, "legacy", "setup", "05_setup_quick_actions.py")
     },
     {
         "step": "06",
         "title": "Enterprise RBAC & User Permission Data Isolation",
-        "script": os.path.join(PROJECT_ROOT, "scripts", "setup", "06_setup_rbac.py")
+        "script": os.path.join(PROJECT_ROOT, "legacy", "setup", "06_setup_rbac.py")
     },
     {
         "step": "07",
         "title": "Core Operational Scenarios & Evidence Collection",
-        "script": os.path.join(PROJECT_ROOT, "scripts", "scenarios", "05_execute_scenarios.py")
+        "script": os.path.join(PROJECT_ROOT, "legacy", "scenarios", "05_execute_scenarios.py")
     },
     {
         "step": "08",
         "title": "Procurement Flow (Reorder Trigger -> MR -> PO -> PR -> Stock Transfer)",
-        "script": os.path.join(PROJECT_ROOT, "scripts", "scenarios", "07_execute_procurement_flow.py")
+        "script": os.path.join(PROJECT_ROOT, "legacy", "scenarios", "07_execute_procurement_flow.py")
     },
     {
         "step": "09",
         "title": "Finance Touchpoints (Under Warranty, Billable, Goodwill Invoicing)",
-        "script": os.path.join(PROJECT_ROOT, "scripts", "scenarios", "08_execute_finance_touchpoint.py")
+        "script": os.path.join(PROJECT_ROOT, "legacy", "scenarios", "08_execute_finance_touchpoint.py")
     },
     {
         "step": "10",
         "title": "Executive Management KPI Dashboard & Analytics",
-        "script": os.path.join(PROJECT_ROOT, "scripts", "reports", "generate_kpi_dashboard.py")
+        "script": os.path.join(PROJECT_ROOT, "legacy", "reports", "generate_kpi_dashboard.py")
     }
 ]
 
@@ -112,7 +112,7 @@ def main():
     parser.add_argument("--site", default="frontend", help="Local Docker site for business app installation")
     args = parser.parse_args()
     if not args.legacy_demo:
-        subprocess.run([sys.executable, os.path.join(PROJECT_ROOT, "scripts", "setup", "install_business_app.py"),
+        subprocess.run([sys.executable, os.path.join(PROJECT_ROOT, "legacy", "setup", "install_business_app.py"),
                         "--site", args.site], check=True)
         return
     print_banner()
