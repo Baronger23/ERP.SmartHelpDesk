@@ -51,7 +51,7 @@ def normalize_dates(value):
 
 
 @frappe.whitelist(methods=["POST"])
-def execute(command, payload, idempotency_key):
+def execute(command: str, payload: dict, idempotency_key: str):
     handler = handlers().get(command)
     if not handler:
         frappe.throw("Unknown business command")
