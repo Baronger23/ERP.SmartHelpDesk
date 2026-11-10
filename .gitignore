@@ -31,3 +31,10 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Local packaging and browser QA state (may contain session cookies).
+*.egg-info/
+.playwright-cli/
+
+
+# Build artifacts (slide decks etc.)
+output/

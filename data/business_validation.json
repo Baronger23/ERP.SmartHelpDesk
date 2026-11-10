@@ -1,0 +1,53 @@
+{
+  "checked_at": "2026-10-15T05:08:35.463799+00:00",
+  "environment": {
+    "site": "shd-test.localhost",
+    "frappe": "16.33.1",
+    "erpnext": "16.34.2",
+    "database": "MariaDB 11.8"
+  },
+  "ai_runtime_included": false,
+  "success": true,
+  "results": [
+    {
+      "scope": "live_erpnext_mariadb_integration",
+      "site": "shd-test.localhost",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "success": true
+    },
+    {
+      "scope": "live_mariadb_concurrency",
+      "success": true,
+      "total_held": "2.0",
+      "outcomes": [
+        {
+          "outcome": "Held",
+          "name": "fha7ud6esg"
+        },
+        {
+          "outcome": "Rejected",
+          "reason": "CONCURRENCY_CONFLICT: transaction rolled back; retry with the same idempotency key"
+        }
+      ]
+    },
+    {
+      "scope": "live_authenticated_http",
+      "site": "shd-test.localhost",
+      "checks": {
+        "authenticated_write": true,
+        "http_retry_same_id": true,
+        "changed_payload_conflict": true,
+        "get_cannot_mutate": true,
+        "guest_denied": true
+      },
+      "success": true
+    },
+    {
+      "scope": "deterministic_sla_calendar",
+      "tests": 5,
+      "success": true
+    }
+  ]
+}

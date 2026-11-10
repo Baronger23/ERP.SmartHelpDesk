@@ -1,120 +1,54 @@
-# ERP Smart HelpDesk & Maintenance Management
+# Smart HelpDesk & Maintenance
 
-Hệ thống quản lý HelpDesk và Bảo trì bảo dưỡng thiết bị (Maintenance Management) tích hợp trên nền tảng **ERPNext** (hỗ trợ cả môi trường **Frappe Cloud** và **Docker Local**).
+Hệ thống dịch vụ bảo trì công nghiệp B2B trên ERPNext/Frappe. Custom app `apps/smart_helpdesk` hiện thực lõi nghiệp vụ theo bộ thiết kế v3. Agent Harness và tích hợp AI được hoãn; catalog tri thức kỹ thuật dùng độc lập.
 
-## Bộ thiết kế hệ thống
+## Vận hành local
 
-Đọc [thiết kế tổng quan doanh nghiệp](docs/design/00_tong_quan_he_thong.md), [yêu cầu](docs/design/01_phan_tich_doanh_nghiep_va_yeu_cau.md), [kiến trúc triển khai](docs/design/07_kien_truc_trien_khai.md), [10 module](docs/design/readme.md) và [9 tài liệu Agent Harness](docs/design/ai_architecture/readme.md). [Sổ sơ đồ](docs/design/diagrams/index.html) có SVG, PNG và Draw.io. Thiết kế v3.0 chuẩn hóa domain/workflow, tách M09 Knowledge khỏi runtime AI ngang; schemas/fixtures/checker offline không thay bằng chứng ERP/LLM runtime.
+Khởi động ERPNext Docker hiện có, rồi cài/cập nhật app:
 
----
-
-## 📌 Nội dung & Mục tiêu dự án
-
-- **Master Data & Cấu hình**: Thiết lập Công ty, Kho hàng (Warehouses), Phân loại sự cố (Issue Type), Ưu tiên (Priority), Phụ tùng linh kiện với ngưỡng đặt hàng lại tự động (Auto-reorder) và Hồ sơ thiết bị công nghiệp (Fixed Assets).
-- **Service Level Agreement (SLA)**: Quy định ma trận phản hồi (First Response) và xử lý sự cố (Resolution Time) 2 chiều theo phân hạng VIP / Standard.
-- **Phân công tự động (Round Robin)**: Phân bổ sự cố xoay vòng công bằng cho đội ngũ kỹ thuật viên bảo trì.
-- **Kịch bản vận hành & Kiểm chứng (End-to-End)**:
-  - Ghi nhận và xử lý yêu cầu sự cố & kế hoạch bảo dưỡng định kỳ thiết bị.
-  - Xuất kho linh kiện thay thế sửa chữa (`Stock Entry - Material Issue`) gắn định danh Issue, Asset, Kỹ thuật viên.
-  - Tự động cập nhật nhật ký bảo trì (`Asset Maintenance Log`).
-  - Kiểm chứng điều kiện kích hoạt cảnh báo tồn kho an toàn khi phụ tùng dưới ngưỡng.
-
----
-
-## 📂 Cấu trúc Thư mục Dự án Chuẩn Doanh nghiệp
-
-```text
-Project_SmartHelpDesk_Mainternance/
-├── .env                              # File cấu hình môi trường hiện hành (Local / Cloud)
-├── .env.example                      # File mẫu cấu hình biến môi trường
-├── .gitignore                        # Cấu hình bỏ qua các file nhạy cảm và tạm thời
-├── README.md                         # Tài liệu giới thiệu & hướng dẫn tổng quan dự án
-├── requirements.txt                  # Danh mục phụ thuộc Python
-├── run_pipeline.py                   # [KHUYẾN NGHỊ] Script chạy toàn bộ pipeline (01 -> 05) với 1 lệnh
-│
-├── docs/                             # TÀI LIỆU DỰ ÁN & BÁO CÁO
-│   ├── reports/
-│   │   ├── midterm_report.md         # Báo cáo giữa kỳ chi tiết toàn diện
-│   │   └── plan_midterm.md           # Kế hoạch & lộ trình triển khai
-│   ├── specifications/
-│   │   ├── master_data.md            # Đặc tả chi tiết dữ liệu nền tảng
-│   │   └── verification_matrix.md    # Ma trận kiểm chứng kịch bản & ca kiểm thử
-│   └── assets/
-│       └── screenshots/              # Album ảnh chụp màn hình minh chứng thực tế
-│
-├── scripts/                          # MÃ NGUỒN TỰ ĐỘNG HÓA HỆ THỐNG
-│   ├── core/
-│   │   └── frappe_client.py          # Thư viện giao tiếp REST API (tự động nhận diện .env)
-│   ├── setup/
-│   │   ├── 01_setup_master_data.py   # [Bước 1] Khởi tạo Công ty, Kho, Item, Asset
-│   │   ├── 02_setup_technicians.py   # [Bước 2] Khởi tạo User, Employee, Team, Round Robin
-│   │   ├── 03_setup_custom_fields.py # [Bước 3] Thêm Custom Fields cho FSM & SLA
-│   │   └── 04_setup_sla_and_plans.py # [Bước 4] Thiết lập SLA 2 chiều & Kế hoạch bảo trì
-│   ├── scenarios/
-│   │   └── 05_execute_scenarios.py   # [Bước 5] Thực thi 6 kịch bản kiểm thử End-to-End
-│   └── prototypes/
-│       └── 06_server_script_prototypes.py # Mã nguyên mẫu Server Scripts nâng cao
-│
-├── data/                             # DỮ LIỆU KIỂM CHỨNG ĐẦU RA
-│   └── verification_evidence.json    # Dữ liệu JSON ghi nhận bằng chứng kiểm thử
-│
-└── docker/                           # TIỆN ÍCH QUẢN LÝ ERPNEXT LOCAL
-    ├── README.md                     # Hướng dẫn chi tiết môi trường Docker
-    ├── start.bat                     # 1-Click khởi động container ERPNext
-    └── stop.bat                      # 1-Click dừng container để tiết kiệm RAM
-```
-
----
-
-## 🚀 Hướng dẫn Cài đặt & Vận hành
-
-### 1. Cấu hình Môi trường Kết nối
-Tạo file `.env` từ file mẫu:
-```bash
-cp .env.example .env
-```
-
-#### Tùy chọn A: Kết nối tới ERPNext Docker Local
-```env
-FRAPPE_BASE_URL=http://localhost:8080
-FRAPPE_API_KEY=f76b087b4d0fd45
-FRAPPE_API_SECRET=e00918ed98d7fd8
-```
-
-#### Tùy chọn B: Kết nối tới Frappe Cloud
-```env
-FRAPPE_BASE_URL=https://smarthelpdesk23mainternace.s.frappe.cloud
-FRAPPE_API_KEY=your_cloud_api_key
-FRAPPE_API_SECRET=your_cloud_api_secret
-```
-
----
-
-### 2. Chạy Toàn bộ Hệ thống (Khuyến nghị)
-Chạy script điều phối duy nhất để tự động kiểm tra kết nối và khởi tạo từ bước 01 đến 05:
-
-```bash
+```powershell
 python run_pipeline.py
 ```
 
----
+Lệnh backup DB + files, cài app và migrate trên site Docker `frontend`, không triển khai Cloud. Mở [workspace Smart Helpdesk](http://localhost:8080/desk/smart-helpdesk), dùng **Tạo hồ sơ** và **Thao tác nghiệp vụ**.
 
-### 3. Hoặc Chạy Từng Bước Thủ công
-Nếu muốn debug hoặc thiết lập từng thành phần:
+[Hướng dẫn triển khai và vận hành](docs/implementation/business_modules.md) mô tả cấu hình scope/authority, policy SLA, chuỗi nghiệp vụ, API, giới hạn và phần chưa triển khai. Cần cấu hình khách/site/máy, hợp đồng, người duyệt và quyền trước vận hành; dữ liệu demo không tự thành chính sách đã duyệt.
 
-```bash
-# Bước 1: Dữ liệu nền tảng
-python scripts/setup/01_setup_master_data.py
+## Module nghiệp vụ
 
-# Bước 2: Kỹ thuật viên & Luật gán việc
-python scripts/setup/02_setup_technicians.py
+M01 khách hàng/hợp đồng · M02 tiếp nhận/SLA · M03 điều phối/tác nghiệp · M04 thiết bị/PM · M05 kho/reservation · M06 mua hàng · M07 chi phí/hóa đơn · M08 báo cáo/KPI · M09 catalog tri thức · M10 quyền/audit.
 
-# Bước 3: Custom Fields
-python scripts/setup/03_setup_custom_fields.py
+Request, incident, work order và visit có dữ liệu riêng. Reservation kiểm tra đồng thời trên Bin native. Approval gắn nội dung/version/expiry, mua/kho/hóa đơn dùng chứng từ ERPNext native; command và journal có transaction/idempotency. Tài liệu triển khai phân biệt thiết kế mục tiêu với mức hiện thực.
 
-# Bước 4: Ma trận SLA & Kế hoạch bảo trì
-python scripts/setup/04_setup_sla_and_plans.py
+## Kiểm thử
 
-# Bước 5: Kịch bản kiểm chứng thực tế
-python scripts/scenarios/05_execute_scenarios.py
+```powershell
+python scripts/tests/run_business_checks.py
 ```
+
+Yêu cầu site thử `shd-test.localhost` đã cài ERPNext và smart_helpdesk. [business_validation.json](data/business_validation.json) ghi phạm vi live ERP/MariaDB, HTTP và calendar tests. Conformance AI offline không phải bằng chứng nghiệp vụ runtime.
+
+## Cấu trúc
+
+```text
+apps/smart_helpdesk/          Custom app, schema, commands, permissions, Desk UI, tests
+docs/design/                 Thiết kế nghiệp vụ, contracts, kiến trúc, sơ đồ
+docs/implementation/         Ánh xạ thiết kế → code, cài đặt và vận hành
+docker/compose.business.yml   Mount app vào các process ERP local
+scripts/setup/install_business_app.py   Installer có backup
+scripts/tests/               Runner kiểm thử tích hợp
+scripts/setup/, scenarios/   Bộ cấu hình và kịch bản demo lịch sử
+data/                        Bằng chứng kiểm thử và snapshot demo theo tên file
+```
+
+## Thiết kế
+
+[Tổng quan](docs/design/00_tong_quan_he_thong.md) · [Yêu cầu](docs/design/01_phan_tich_doanh_nghiep_va_yeu_cau.md) · [10 module](docs/design/readme.md) · [Domain/workflow](docs/design/05_domain_workflow_contracts.md) · [Deployment mục tiêu](docs/design/07_kien_truc_trien_khai.md) · [Sổ sơ đồ](docs/design/diagrams/index.html).
+
+## Bộ demo lịch sử
+
+```powershell
+python run_pipeline.py --legacy-demo
+```
+
+Chỉ dùng để tái hiện demo cũ. Lệnh sử dụng `.env`, tạo/thay đổi dữ liệu mẫu và chạy các script Issue/Asset/kho/tài chính/KPI cũ; đây không phải luồng vận hành mới. Snapshot và tỷ lệ gán cố định không chứng minh hệ thống đạt thiết kế.

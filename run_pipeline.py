@@ -10,6 +10,7 @@ import os
 import sys
 import time
 import subprocess
+import argparse
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts", "core"))
@@ -106,6 +107,14 @@ def run_step(step_info):
         print(f"[V] Step {step_num} completed successfully in {duration:.2f}s")
 
 def main():
+    parser = argparse.ArgumentParser(description="Install business workflows; legacy demos require an explicit flag")
+    parser.add_argument("--legacy-demo", action="store_true", help="Run the historical setup/scenario scripts")
+    parser.add_argument("--site", default="frontend", help="Local Docker site for business app installation")
+    args = parser.parse_args()
+    if not args.legacy_demo:
+        subprocess.run([sys.executable, os.path.join(PROJECT_ROOT, "scripts", "setup", "install_business_app.py"),
+                        "--site", args.site], check=True)
+        return
     print_banner()
     check_connectivity()
     
@@ -121,7 +130,7 @@ def main():
     print(f"[*] Procurement Evidence data : data/procurement_evidence.json")
     print(f"[*] Finance Evidence data     : data/finance_evidence.json")
     print(f"[*] KPI Dashboard data        : data/kpi_dashboard.json")
-    print(f"[*] System is fully operational, verified, and enterprise-grade.")
+    print("[*] Legacy demo scripts completed. These snapshots do not certify the design requirements.")
     print("=" * 78)
 
 if __name__ == "__main__":
