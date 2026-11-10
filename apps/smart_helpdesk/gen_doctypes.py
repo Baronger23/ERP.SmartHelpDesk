@@ -12,7 +12,7 @@ behavior-identical:
   status/customer/company/title/subject in_list_view=1
 - permissions: read-only for all ROLES; permlevel-1 read for Service Manager
   and Billing Accountant when the DocType has a permlevel-1 field.
-Output: <app>/smart_helpdesk/doctype/<slug>/<slug>.json + <slug>.py stub.
+Output: <app>/smart_helpdesk/smart_helpdesk/doctype/<slug>/<slug>.json + <slug>.py stub.
 """
 import json
 import sys
@@ -80,7 +80,7 @@ class {cls}(Document):
 
 
 def main() -> None:
-    base = APP_DIR / "doctype"
+    base = APP_DIR / "smart_helpdesk" / "doctype"
     for name, extra in SCHEMAS.items():
         s = slug(name)
         folder = base / s
