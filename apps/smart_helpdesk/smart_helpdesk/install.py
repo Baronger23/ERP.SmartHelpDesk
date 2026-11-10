@@ -1,9 +1,18 @@
 import frappe
-from smart_helpdesk.schema import COMMON, SCHEMAS, ROLES, field
+from smart_helpdesk.schema import ROLES, field
 
 
 def sync():
-    """Additive, repeatable migration; never imports demo data or broadens native roles."""
+    """Additive, repeatable migration; never imports demo data or broadens native roles.
+
+    Since the bench-standard refactor, the 28 SHD DocTypes are defined as
+    standard DocType JSON in smart_helpdesk/doctype/ (generated from
+    schema.py by gen_doctypes.py) and are synced by Frappe itself on
+    install/migrate. This hook only keeps what DocType JSON cannot express:
+    roles, composite unique constraints, the XOR check constraint, the
+    reservation balance index, Custom Fields on native DocTypes and the
+    workspace bootstrap.
+    """
     frappe.flags.shd_install = True
     try:
         for role in ROLES:
@@ -12,31 +21,6 @@ def sync():
                                 "desk_access": int(role != "AIS Customer Portal")}).insert(ignore_permissions=True)
         if not frappe.db.exists("Module Def", "Smart Helpdesk"):
             frappe.get_doc({"doctype": "Module Def", "module_name": "Smart Helpdesk", "app_name": "smart_helpdesk"}).insert(ignore_permissions=True)
-        # First create all schemas without Link validation, then reload references.
-        for name, extra in SCHEMAS.items():
-            existing = frappe.db.exists("DocType", name)
-            doc = frappe.get_doc("DocType", name) if existing else frappe.new_doc("DocType")
-            doc.update({"name": name, "module": "Smart Helpdesk", "custom": 1,
-                        "autoname": "prompt" if name == "SHD Command" else "hash", "track_changes": 1, "allow_rename": 0,
-                        "sort_field": "modified", "sort_order": "DESC"})
-            fields = [dict(f) for f in COMMON + extra if not (name == "SHD Site" and f["fieldname"] == "site")]
-            for f in fields:
-                if name == "SHD Command" and f["fieldname"] == "company":
-                    f["reqd"] = 0
-                f["read_only"] = 1
-                if f["fieldname"] in ("cost_rate", "unit_cost"):
-                    f["permlevel"] = 1
-                if f["fieldname"] in ("status", "customer", "company", "title", "subject"):
-                    f["in_list_view"] = 1
-            doc.set("fields", fields)
-            # Commands are the only write path. Desk/REST are read-only.
-            permissions = [{"role": role, "read": 1, "export": 0, "print": 0} for role in ROLES]
-            if any(f.get("permlevel") == 1 for f in fields):
-                permissions += [{"role": role, "permlevel": 1, "read": 1} for role in ("AIS Service Manager", "AIS Billing Accountant")]
-            doc.set("permissions", permissions)
-            doc.flags.ignore_links = True
-            doc.flags.ignore_validate = True
-            doc.save(ignore_permissions=True)
         for name, fields in [
             ("SHD Work Order", ["source", "package_key", "generation_version"]),
             ("SHD PM Occurrence", ["plan", "plan_version", "equipment", "period_key"]),
@@ -63,16 +47,12 @@ def sync():
             "Purchase Receipt": [dict(field("custom_shd_demand", "Link", "SHD Demand"), read_only=1)],
             "Sales Invoice": [dict(field("custom_shd_work_order", "Link", "SHD Work Order"), read_only=1)],
         })
-        # Frappe skips doctype_js hooks for custom DocTypes. Install app-owned
-        # Client Scripts from the same tracked source for Form and List views.
-        from pathlib import Path
-        script = (Path(__file__).parent / "public" / "js" / "operations.js").read_text(encoding="utf-8")
-        for name in SCHEMAS:
-            for view in ("Form", "List"):
-                script_name = "SHD Operations · " + name + " · " + view
-                client = frappe.get_doc("Client Script", script_name) if frappe.db.exists("Client Script", script_name) else frappe.new_doc("Client Script")
-                client.update({"name": script_name, "dt": name, "view": view, "enabled": 1, "script": script})
-                client.save(ignore_permissions=True)
+        # Client Scripts are no longer created here: the SHD DocTypes are now
+        # standard (non-custom) DocTypes, so the doctype_js / doctype_list_js
+        # hooks in hooks.py load public/js/operations.js directly. (The old
+        # programmatic Client Scripts existed only because Frappe skips
+        # doctype_js hooks for custom DocTypes.) Verified on the WSL bench
+        # install; see the migration plan in docs/.
         sync_workspace()
         frappe.clear_cache()
     finally:

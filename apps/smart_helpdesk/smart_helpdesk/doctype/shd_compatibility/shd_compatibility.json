@@ -1,0 +1,163 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "hash",
+ "creation": "2026-10-15 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "customer",
+  "site",
+  "status",
+  "revision",
+  "details",
+  "model",
+  "item",
+  "evidence"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "label": "Company",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "unique": 0,
+   "options": "Company",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "unique": 0,
+   "options": "Customer",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "site",
+   "label": "Site",
+   "fieldtype": "Link",
+   "reqd": 0,
+   "unique": 0,
+   "options": "SHD Site",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Data",
+   "reqd": 0,
+   "unique": 0,
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "revision",
+   "label": "Revision",
+   "fieldtype": "Int",
+   "reqd": 0,
+   "unique": 0,
+   "read_only": 1
+  },
+  {
+   "fieldname": "details",
+   "label": "Details",
+   "fieldtype": "JSON",
+   "reqd": 0,
+   "unique": 0,
+   "read_only": 1
+  },
+  {
+   "fieldname": "model",
+   "label": "Model",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "unique": 0,
+   "read_only": 1
+  },
+  {
+   "fieldname": "item",
+   "label": "Item",
+   "fieldtype": "Link",
+   "reqd": 1,
+   "unique": 0,
+   "options": "Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "evidence",
+   "label": "Evidence",
+   "fieldtype": "Small Text",
+   "reqd": 1,
+   "unique": 0,
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-10-15 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Smart Helpdesk",
+ "name": "SHD Compatibility",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "AIS Service Manager",
+   "read": 1,
+   "export": 0,
+   "print": 0
+  },
+  {
+   "role": "AIS Dispatcher",
+   "read": 1,
+   "export": 0,
+   "print": 0
+  },
+  {
+   "role": "AIS Field Technician",
+   "read": 1,
+   "export": 0,
+   "print": 0
+  },
+  {
+   "role": "AIS Warehouse Keeper",
+   "read": 1,
+   "export": 0,
+   "print": 0
+  },
+  {
+   "role": "AIS Purchasing",
+   "read": 1,
+   "export": 0,
+   "print": 0
+  },
+  {
+   "role": "AIS Billing Accountant",
+   "read": 1,
+   "export": 0,
+   "print": 0
+  },
+  {
+   "role": "AIS Customer Portal",
+   "read": 1,
+   "export": 0,
+   "print": 0
+  },
+  {
+   "role": "AIS Knowledge Reviewer",
+   "read": 1,
+   "export": 0,
+   "print": 0
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
