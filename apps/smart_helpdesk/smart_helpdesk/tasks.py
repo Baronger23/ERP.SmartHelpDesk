@@ -1,7 +1,9 @@
 """Opt-in scheduler jobs run as explicitly configured, scoped service identities."""
 from datetime import timedelta
+
 import frappe
-from frappe.utils import getdate, now_datetime
+from frappe.utils import getdate
+
 from smart_helpdesk.api import execute
 
 

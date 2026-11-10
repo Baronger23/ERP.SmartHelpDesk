@@ -1,5 +1,5 @@
 """Calendar arithmetic independent of Frappe; all inputs are explicit policy."""
-from datetime import datetime, date, time, timedelta
+from datetime import datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
 

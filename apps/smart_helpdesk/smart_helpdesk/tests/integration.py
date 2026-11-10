@@ -4,10 +4,11 @@ import threading
 import unittest
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
+
 import frappe
 from frappe.utils import now_datetime
+
 from smart_helpdesk.api import execute
-from smart_helpdesk.core import data
 
 
 def call(command, key=None, **payload):
@@ -233,8 +234,8 @@ class BusinessIntegration(unittest.TestCase):
     def test_11_report_revision_and_missing_data(self):
         self.request()
         call("receive_request", **self.scoped, subject="Still untriaged", reported_at=str(self.past), received_at=str(self.past))
-        payload = dict(company=self.company, customer=self.customer, site=self.site,
-            period_start=str(self.past - timedelta(hours=1)), period_end=str(self.future))
+        payload = {"company": self.company, "customer": self.customer, "site": self.site,
+            "period_start": str(self.past - timedelta(hours=1)), "period_end": str(self.future)}
         first = call("snapshot_kpis", **payload)
         sla = first["metrics"]["response_sla"]
         self.assertEqual((0, 1, 1), (sla["numerator"], sla["denominator"], sla["missing"]))
@@ -305,7 +306,7 @@ class BusinessIntegration(unittest.TestCase):
         frappe.set_user(self.tech)
         from smart_helpdesk.security import permits
         self.assertTrue(permits(frappe.get_doc("SHD Work Order", wo.name)))
-        stock = dict(work_order_id=wo.name, item=self.part, warehouse=self.warehouse)
+        stock = {"work_order_id": wo.name, "item": self.part, "warehouse": self.warehouse}
         call("available_stock", key="scoped-stock-read", **stock)
         frappe.set_user("Administrator")
         call("revoke", record_type="SHD Access Grant", name=grant, reason="User transferred teams")

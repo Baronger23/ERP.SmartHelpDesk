@@ -1,10 +1,12 @@
 """Reproducible event-time snapshots; never hard-code successful KPIs."""
 from datetime import timedelta
 from decimal import Decimal
+
 import frappe
 from frappe.utils import get_datetime, now_datetime
+
 from smart_helpdesk.api import command
-from smart_helpdesk.core import create, read, result, data, scope
+from smart_helpdesk.core import create, data, read, result, scope
 
 
 def ratio(numerator, denominator, missing=0):

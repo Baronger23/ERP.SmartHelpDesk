@@ -1,8 +1,21 @@
 from decimal import Decimal
+
 import frappe
 from frappe.utils import get_datetime, now_datetime
+
 from smart_helpdesk.api import command
-from smart_helpdesk.core import create, change, locked, read, result, scope, same_scope, number, data, digest, work_order
+from smart_helpdesk.core import (
+    change,
+    create,
+    data,
+    digest,
+    locked,
+    number,
+    read,
+    result,
+    scope,
+    work_order,
+)
 from smart_helpdesk.security import authority, roles
 
 
@@ -197,7 +210,7 @@ def cancel_service_invoice(invoice, reason):
     doc = frappe.get_doc("Sales Invoice", invoice, for_update=True)
     if not doc.get("custom_shd_work_order") or doc.docstatus != 1:
         frappe.throw("Submitted service invoice required")
-    wo = read("SHD Work Order", doc.custom_shd_work_order, "operate")
+    read("SHD Work Order", doc.custom_shd_work_order, "operate")
     doc.flags.ignore_permissions = True
     doc.cancel()
     for name in frappe.get_all("SHD Charge", filters={"sales_invoice": invoice}, pluck="name"):

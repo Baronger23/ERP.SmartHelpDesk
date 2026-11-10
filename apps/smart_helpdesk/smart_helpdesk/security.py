@@ -1,7 +1,8 @@
 """Fail-closed scope checks shared by commands, lists, forms and file attachments."""
 import frappe
 from frappe.utils import get_datetime, now_datetime
-from smart_helpdesk.schema import SCHEMAS, SENSITIVE, INTERNAL
+
+from smart_helpdesk.schema import INTERNAL, SCHEMAS, SENSITIVE
 
 
 def roles(user=None):

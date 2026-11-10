@@ -1,8 +1,19 @@
 from datetime import timedelta
+
 import frappe
-from frappe.utils import getdate, get_datetime, now_datetime
+from frappe.utils import getdate, now_datetime
+
 from smart_helpdesk.api import command
-from smart_helpdesk.core import create, change, locked, read, scope, same_scope, result, data, timestamp
+from smart_helpdesk.core import (
+    change,
+    create,
+    data,
+    locked,
+    read,
+    result,
+    scope,
+    timestamp,
+)
 
 
 @command("AIS Dispatcher")
@@ -62,9 +73,8 @@ def complete_pm(occurrence, observations, findings, occurred_at):
             frappe.throw("Invalid checklist result")
         if observation["result"] in ("Not applicable", "Not performed") and not observation.get("reason"):
             frappe.throw("Skipped checks require a reason")
-        if step.get("unit") and observation["result"] in ("Passed", "Abnormal"):
-            if observation.get("value") is None or observation.get("unit") != step["unit"]:
-                frappe.throw("Measured value and matching unit required; zero is a valid measurement")
+        if step.get("unit") and observation["result"] in ("Passed", "Abnormal") and (observation.get("value") is None or observation.get("unit") != step["unit"]):
+            frappe.throw("Measured value and matching unit required; zero is a valid measurement")
     finding_ids = []
     for finding in data(findings):
         if set(finding) - {"description", "severity", "service_owner", "due_at"}:

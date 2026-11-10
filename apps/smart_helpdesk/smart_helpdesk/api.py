@@ -1,12 +1,13 @@
 """POST-only, authenticated, transactional business command boundary."""
 import inspect
-import json
+
 import frappe
-from smart_helpdesk.core import data, digest, command_context
+
+from smart_helpdesk.core import command_context, data, digest
 
 
 def handlers():
-    from smart_helpdesk import operations, maintenance, inventory, commercial, reporting
+    from smart_helpdesk import commercial, inventory, maintenance, operations, reporting
     return {name: value for module in (operations, maintenance, inventory, commercial, reporting)
             for name, value in vars(module).items() if callable(value) and getattr(value, "business_command", False)}
 
@@ -21,9 +22,11 @@ def command(*allowed_roles):
 
 def normalize_dates(value):
     """Frappe stores naive site-local datetimes; honor explicit client UTC offsets."""
-    from smart_helpdesk.schema import SCHEMAS, COMMON
-    from frappe.utils import get_datetime, get_system_timezone
     from zoneinfo import ZoneInfo
+
+    from frappe.utils import get_datetime, get_system_timezone
+
+    from smart_helpdesk.schema import COMMON, SCHEMAS
     names = {f["fieldname"] for fields in SCHEMAS.values() for f in COMMON + fields if f["fieldtype"] == "Datetime"}
     names |= {"occurred_at", "starts_at", "ends_at", "period_start", "period_end"}
     def convert(obj):
@@ -125,7 +128,7 @@ def catalog():
 @frappe.whitelist()
 def master_catalog():
     from smart_helpdesk.operations import MASTER_ROLES
-    from smart_helpdesk.schema import SCHEMAS, COMMON
+    from smart_helpdesk.schema import COMMON, SCHEMAS
     user_roles = set(frappe.get_roles())
     result = {}
     for name, permitted_roles in MASTER_ROLES.items():

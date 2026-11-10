@@ -1,14 +1,26 @@
-import json
 from datetime import timedelta
-import frappe
-from frappe.utils import get_datetime, now_datetime, get_system_timezone
 from zoneinfo import ZoneInfo
-from smart_helpdesk.api import command
-from smart_helpdesk.core import create, change, read, locked, scope, same_scope, result, data, timestamp, work_order, number
-from smart_helpdesk.security import require, roles, authority
-from smart_helpdesk.schema import SCHEMAS
-from smart_helpdesk.sla import deadline, validate_policy
 
+import frappe
+from frappe.utils import get_datetime, get_system_timezone, now_datetime
+
+from smart_helpdesk.api import command
+from smart_helpdesk.core import (
+    change,
+    create,
+    data,
+    locked,
+    number,
+    read,
+    result,
+    same_scope,
+    scope,
+    timestamp,
+    work_order,
+)
+from smart_helpdesk.schema import SCHEMAS
+from smart_helpdesk.security import authority, roles
+from smart_helpdesk.sla import deadline, validate_policy
 
 MASTER_ROLES = {
     "SHD Site": {"AIS Dispatcher"}, "SHD Equipment": {"AIS Dispatcher"},
@@ -39,12 +51,11 @@ def register(record_type, values):
     if values.get("equipment"):
         equipment = read("SHD Equipment", values["equipment"], "operate")
         same_scope(equipment, frappe._dict(values))
-    if record_type in ("SHD Agreement", "SHD Contact Authority"):
-        if get_datetime(values["valid_until"]) <= get_datetime(values["valid_from"]):
-            frappe.throw("Invalid effective dates")
+    if record_type in ("SHD Agreement", "SHD Contact Authority") and get_datetime(values["valid_until"]) <= get_datetime(values["valid_from"]):
+        frappe.throw("Invalid effective dates")
     if record_type == "SHD Access Grant":
         values.setdefault("resource_type", "Service")
-        if set(x.strip() for x in values["actions"].split(",")) - {"read", "operate"}:
+        if {x.strip() for x in values["actions"].split(",")} - {"read", "operate"}:
             frappe.throw("Only read and operate grants are supported")
     if record_type == "SHD Agreement":
         values["policy"] = data(values["policy"])
@@ -52,15 +63,12 @@ def register(record_type, values):
             validate_policy(values["policy"])
         except (ValueError, KeyError, TypeError) as error:
             frappe.throw(str(error))
-    if record_type == "SHD PM Plan":
-        if int(values["interval_days"]) <= 0 or not data(values["checklist"]):
-            frappe.throw("Positive interval and versioned checklist required")
-    if record_type == "SHD Technician":
-        if get_datetime(values["available_until"]) <= get_datetime(values["available_from"]):
-            frappe.throw("Invalid availability window")
-    if record_type == "SHD Knowledge":
-        if get_datetime(values["effective_until"]) <= get_datetime(values["effective_from"]):
-            frappe.throw("Invalid knowledge effective dates")
+    if record_type == "SHD PM Plan" and (int(values["interval_days"]) <= 0 or not data(values["checklist"])):
+        frappe.throw("Positive interval and versioned checklist required")
+    if record_type == "SHD Technician" and get_datetime(values["available_until"]) <= get_datetime(values["available_from"]):
+        frappe.throw("Invalid availability window")
+    if record_type == "SHD Knowledge" and get_datetime(values["effective_until"]) <= get_datetime(values["effective_from"]):
+        frappe.throw("Invalid knowledge effective dates")
     status = "Draft" if record_type in ("SHD Agreement", "SHD PM Plan", "SHD Knowledge") else "Active"
     return result(create(record_type, values, status))
 
@@ -98,9 +106,9 @@ def receive_request(company, customer, site, subject, reported_at, received_at, 
     reported, received = timestamp(reported_at), timestamp(received_at)
     if received < reported:
         frappe.throw("Receipt cannot precede report")
-    values = dict(company=company, customer=customer, site=site, subject=subject,
-                  service_type=service_type, reported_at=reported, received_at=received,
-                  recorded_at=now_datetime(), equipment=equipment)
+    values = {"company": company, "customer": customer, "site": site, "subject": subject,
+                  "service_type": service_type, "reported_at": reported, "received_at": received,
+                  "recorded_at": now_datetime(), "equipment": equipment}
     if equipment:
         same_scope(frappe._dict(values), read("SHD Equipment", equipment))
     return result(create("SHD Request", values, "Received"))
@@ -249,7 +257,7 @@ def finish_visit(visit, outcome, evidence, occurred_at, completed=True):
     if not isinstance(completed, bool):
         frappe.throw("Completion outcome must be a boolean")
     doc = locked("SHD Visit", visit)
-    wo = work_order(doc.work_order)
+    work_order(doc.work_order)
     at = timestamp(occurred_at)
     if doc.status != "Started" or at < get_datetime(doc.started_at) or not outcome.strip() or not evidence:
         frappe.throw("Started visit, outcome and evidence required")

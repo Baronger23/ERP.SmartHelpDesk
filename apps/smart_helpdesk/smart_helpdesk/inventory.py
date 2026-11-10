@@ -1,8 +1,21 @@
 from decimal import Decimal
+
 import frappe
-from frappe.utils import get_datetime, now_datetime, getdate
+from frappe.utils import get_datetime, getdate, now_datetime
+
 from smart_helpdesk.api import command
-from smart_helpdesk.core import create, change, locked, read, result, scope, same_scope, number, work_order, data, digest
+from smart_helpdesk.core import (
+    change,
+    create,
+    data,
+    digest,
+    locked,
+    number,
+    read,
+    result,
+    scope,
+    work_order,
+)
 from smart_helpdesk.security import require
 
 
@@ -27,7 +40,6 @@ def held(item, warehouse):
 
 
 def warehouse_scope(wo, warehouse):
-    from frappe.utils import cint
     pseudo = frappe._dict(doctype="SHD Reservation", **scope(wo), warehouse=warehouse, work_order=wo.name)
     require(pseudo, "operate")
 
@@ -251,7 +263,9 @@ def prepare_purchase_order(demand, supplier, rate, delivery_date):
         mr.submit()
     if mr.docstatus != 1:
         frappe.throw("Material request must be submitted")
-    from erpnext.stock.doctype.material_request.material_request import make_purchase_order
+    from erpnext.stock.doctype.material_request.material_request import (
+        make_purchase_order,
+    )
     po = make_purchase_order(mr.name)
     po.supplier = supplier
     po.custom_shd_demand = doc.name
@@ -271,7 +285,7 @@ def purchase_binding(po):
     return {"company": po.company, "supplier": po.supplier, "currency": po.currency,
             "items": [{"item": i.item_code, "qty": str(i.qty), "rate": str(i.rate), "warehouse": i.warehouse,
                        "schedule_date": str(i.schedule_date)} for i in po.items],
-            "grand_total": str(po.grand_total), "taxes": [dict(account=t.account_head, amount=str(t.tax_amount)) for t in po.taxes]}
+            "grand_total": str(po.grand_total), "taxes": [{"account": t.account_head, "amount": str(t.tax_amount)} for t in po.taxes]}
 
 
 @command()
@@ -313,7 +327,9 @@ def receive_purchase(demand, accepted_quantity, rejected_quantity="0", rejected_
         wh = frappe.get_doc("Warehouse", rejected_warehouse)
         if wh.company != doc.company:
             frappe.throw("Quarantine warehouse belongs to another company")
-    from erpnext.buying.doctype.purchase_order.purchase_order import make_purchase_receipt
+    from erpnext.buying.doctype.purchase_order.purchase_order import (
+        make_purchase_receipt,
+    )
     receipt = make_purchase_receipt(po.name)
     if len(receipt.items) != 1:
         frappe.throw("P1 purchase receipt supports one demand/item per purchase order")
