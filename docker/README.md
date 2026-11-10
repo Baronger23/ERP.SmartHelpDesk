@@ -30,3 +30,21 @@ FRAPPE_API_KEY=f76b087b4d0fd45
 FRAPPE_API_SECRET=e00918ed98d7fd8
 ```
 *(Nếu muốn chuyển lại lên Frappe Cloud, chỉ cần sao chép nội dung từ `.env.cloud` sang `.env`).*
+
+## 4. Cài/cập nhật app SmartHelpDesk trong Docker
+
+Từ 2026-11-10 app đã về dạng Frappe chuẩn (DocType khai bằng JSON trong
+`apps/smart_helpdesk`), nên trong Docker cũng cài bằng cơ chế chuẩn:
+
+1. Bật stack (kèm overlay gắn thư mục app của repo vào container):
+   đặt biến môi trường `SHD_APP_PATH` trỏ tới `apps/smart_helpdesk` của repo,
+   rồi `docker compose -f ../../frappe_docker/pwd.yml -f compose.business.yml up -d`
+   (hoặc `start` nếu container đã tạo).
+2. Đảm bảo bench trong container có dòng `smart_helpdesk` trong `sites/apps.txt`
+   — thiếu dòng này `bench install-app` sẽ báo "App smart_helpdesk not in apps.txt".
+3. Chạy installer: `python docker/install_business_app.py`
+   (sao lưu DB + files trước, rồi `bench --site frontend install-app smart_helpdesk`
+   và `migrate` trong container, kèm vá cấu hình realtime).
+
+Đã kiểm chứng 2026-11-10: tạo site dùng một lần ngay trong container bằng app
+chuẩn mới cho đủ 28 bảng `tabSHD ...`, sau đó xóa site.

@@ -365,3 +365,36 @@ erDiagram
 - Mã nguồn dự án: repo `Baronger23/ERP.SmartHelpDesk` (nhánh `develop`) — `apps/smart_helpdesk/`, `scripts/`, `docs/` (ADR, Chương 7 Fit-Gap, DESIGN.md), `data/business_validation.json`.
 - Tài liệu chính thức: Frappe Framework v16 (DocType, DocField, Document lifecycle, Hooks), ERPNext v16 (Stock, Buying, Selling, Assets, Support/SLA), frappe_docker (pwd.yml).
 - File tổng quan nền của nhóm: `docs/Tim-hieu-du-an-SmartHelpDesk-ERPNext-Frappe-Mapping-2026-10-28.md`.
+
+---
+
+## Kết quả thực hành bench (bổ sung 2026-11-10)
+
+Sau khi tài liệu này được soạn, nhóm đã tự dựng **bench native trong WSL2/Ubuntu**
+theo đúng quy trình chuẩn của Frappe và cài dự án lên đó. Kết quả dưới đây đều là
+số đo/kiểm chứng thật trên máy, không phải trích dẫn tài liệu:
+
+- **Yêu cầu phiên bản (tự phát hiện qua thực hành):** toàn bộ dòng Frappe v16 đòi
+  **Python ≥ 3.14** và **Node ≥ 24** — Ubuntu 24.04 mặc định (Python 3.12, Node 20)
+  không đủ; bản Docker chạy được vì image đã đóng sẵn hai thứ này. Bench cuối cùng
+  dùng đúng bản của dự án: Frappe **v16.33.1**, ERPNext **v16.34.2**.
+- **Cài app chuẩn:** site `shd.localhost` trên bench nhận đủ **28/28 DocType SHD**
+  (28 bảng `tabSHD ...` trong MariaDB), workspace **Smart Helpdesk** với 10 lối tắt
+  M01–M10, **8 vai trò AIS**, khóa duy nhất tổ hợp trên SHD Work Order, ràng buộc
+  CHECK `shd_source_xor` và đủ **5 Custom Field** `custom_shd_*` trên các DocType gốc
+  (Stock Entry, Material Request, Purchase Order, Purchase Receipt, Sales Invoice).
+- **Bài học về cấu trúc app:** Frappe chỉ quét DocType trong thư mục module
+  (`<app>/<module>/doctype/`). Lần cài đầu đặt cây DocType ở cấp package nên Frappe
+  **bỏ qua lặng lẽ — app báo đã cài nhưng 0 bảng**; sửa vị trí thư mục (commit
+  `d873ff2`) thì cài đủ 28 bảng. Đây là minh chứng thực tế cho phần "cơ chế DocType"
+  trong tài liệu này.
+- **JavaScript phía Desk:** vì DocType nay là DocType chuẩn (không còn custom),
+  `operations.js` được nạp qua hooks `doctype_js` cho cả 28 DocType — không cần
+  Client Script tạo bằng code như cách làm cũ.
+- **Kiểm thử:** bộ test của app trên bench đạt **5/5** (lịch SLA: giờ trưa, cuối tuần/
+  ngày lễ, neo UTC, từ chối policy chồng lấp/thiếu); `bench start` phục vụ site ở
+  cổng 8000 (HTTP 200).
+- **Docker vẫn dùng được app mới:** tạo site dùng một lần ngay trong container
+  frappe_docker bằng app chuẩn cho đủ **28 bảng**, rồi xóa site — Docker giữ vai trò
+  môi trường phụ/demo, bench là môi trường phát triển chính.
+
