@@ -1,0 +1,103 @@
+{
+  "doctype": "Workspace",
+  "name": "Smart Helpdesk",
+  "label": "Smart Helpdesk",
+  "title": "Smart Helpdesk",
+  "module": "Smart Helpdesk",
+  "app": "smart_helpdesk",
+  "public": 1,
+  "icon": "support",
+  "type": "Workspace",
+  "is_hidden": 0,
+  "content": "[{\"id\":\"shd-header\",\"type\":\"header\",\"data\":{\"text\":\"Smart Helpdesk · Vận hành dịch vụ\",\"col\":12}},{\"id\":\"shd-0\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M01 · Khách hàng & hợp đồng\",\"col\":4}},{\"id\":\"shd-1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M02 · Tiếp nhận & SLA\",\"col\":4}},{\"id\":\"shd-2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M03 · Điều phối & tác nghiệp\",\"col\":4}},{\"id\":\"shd-3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M04 · Thiết bị & bảo trì\",\"col\":4}},{\"id\":\"shd-4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M05 · Kho & vật tư\",\"col\":4}},{\"id\":\"shd-5\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M06 · Mua hàng\",\"col\":4}},{\"id\":\"shd-6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M07 · Chi phí & hóa đơn\",\"col\":4}},{\"id\":\"shd-7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M08 · Báo cáo & KPI\",\"col\":4}},{\"id\":\"shd-8\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M09 · Tri thức kỹ thuật\",\"col\":4}},{\"id\":\"shd-9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"M10 · Quản trị & kiểm soát\",\"col\":4}}]",
+  "shortcuts": [
+    {
+      "label": "M01 · Khách hàng & hợp đồng",
+      "type": "DocType",
+      "link_to": "SHD Agreement",
+      "color": "Blue"
+    },
+    {
+      "label": "M02 · Tiếp nhận & SLA",
+      "type": "DocType",
+      "link_to": "SHD Request",
+      "color": "Blue"
+    },
+    {
+      "label": "M03 · Điều phối & tác nghiệp",
+      "type": "DocType",
+      "link_to": "SHD Work Order",
+      "color": "Blue"
+    },
+    {
+      "label": "M04 · Thiết bị & bảo trì",
+      "type": "DocType",
+      "link_to": "SHD PM Occurrence",
+      "color": "Blue"
+    },
+    {
+      "label": "M05 · Kho & vật tư",
+      "type": "DocType",
+      "link_to": "SHD Reservation",
+      "color": "Blue"
+    },
+    {
+      "label": "M06 · Mua hàng",
+      "type": "DocType",
+      "link_to": "SHD Demand",
+      "color": "Blue"
+    },
+    {
+      "label": "M07 · Chi phí & hóa đơn",
+      "type": "DocType",
+      "link_to": "SHD Charge",
+      "color": "Blue"
+    },
+    {
+      "label": "M08 · Báo cáo & KPI",
+      "type": "DocType",
+      "link_to": "SHD KPI Snapshot",
+      "color": "Blue"
+    },
+    {
+      "label": "M09 · Tri thức kỹ thuật",
+      "type": "DocType",
+      "link_to": "SHD Knowledge",
+      "color": "Blue"
+    },
+    {
+      "label": "M10 · Quản trị & kiểm soát",
+      "type": "DocType",
+      "link_to": "SHD Access Grant",
+      "color": "Blue"
+    }
+  ],
+  "roles": [
+    {
+      "role": "AIS Service Manager"
+    },
+    {
+      "role": "AIS Dispatcher"
+    },
+    {
+      "role": "AIS Field Technician"
+    },
+    {
+      "role": "AIS Warehouse Keeper"
+    },
+    {
+      "role": "AIS Purchasing"
+    },
+    {
+      "role": "AIS Billing Accountant"
+    },
+    {
+      "role": "AIS Knowledge Reviewer"
+    }
+  ],
+  "links": [],
+  "charts": [],
+  "number_cards": [],
+  "quick_lists": [],
+  "custom_blocks": []
+}
