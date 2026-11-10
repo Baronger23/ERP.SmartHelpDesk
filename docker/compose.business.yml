@@ -1,0 +1,16 @@
+# Layer over the existing local frappe_docker/pwd.yml. Source stays in this repository.
+x-business: &business
+  volumes:
+    - ${SHD_APP_PATH:?Set SHD_APP_PATH to the app directory}:/home/frappe/frappe-bench/apps/smart_helpdesk
+  environment:
+    PYTHONPATH: /home/frappe/frappe-bench/apps/smart_helpdesk
+
+services:
+  backend:
+    <<: *business
+  queue-short:
+    <<: *business
+  queue-long:
+    <<: *business
+  scheduler:
+    <<: *business
