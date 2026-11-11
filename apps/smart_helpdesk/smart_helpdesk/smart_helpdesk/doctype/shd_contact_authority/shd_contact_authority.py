@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdContactAuthority(Document):
+class SHDContactAuthority(Document):
     pass

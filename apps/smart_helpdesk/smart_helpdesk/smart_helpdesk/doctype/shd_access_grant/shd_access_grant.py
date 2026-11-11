@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdAccessGrant(Document):
+class SHDAccessGrant(Document):
     pass

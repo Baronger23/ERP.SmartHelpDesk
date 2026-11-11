@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdFinding(Document):
+class SHDFinding(Document):
     pass

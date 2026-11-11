@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdEquipment(Document):
+class SHDEquipment(Document):
     pass

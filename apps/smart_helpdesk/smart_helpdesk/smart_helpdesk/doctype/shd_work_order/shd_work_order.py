@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdWorkOrder(Document):
+class SHDWorkOrder(Document):
     pass

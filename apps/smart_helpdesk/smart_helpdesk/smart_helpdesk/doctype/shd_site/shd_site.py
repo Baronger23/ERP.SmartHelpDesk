@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdSite(Document):
+class SHDSite(Document):
     pass

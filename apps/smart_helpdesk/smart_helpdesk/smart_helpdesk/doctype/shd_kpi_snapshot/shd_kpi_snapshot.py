@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdKpiSnapshot(Document):
+class SHDKPISnapshot(Document):
     pass

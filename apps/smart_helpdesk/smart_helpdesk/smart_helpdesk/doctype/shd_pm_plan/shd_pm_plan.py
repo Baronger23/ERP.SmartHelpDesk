@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdPmPlan(Document):
+class SHDPMPlan(Document):
     pass

@@ -89,7 +89,7 @@ def main() -> None:
         doc = build_doctype(name, extra)
         (folder / f"{s}.json").write_text(
             json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-        cls = "".join(part.title() for part in s.split("_"))
+        cls = name.replace(" ", "").replace("-", "")
         (folder / f"{s}.py").write_text(CONTROLLER.format(cls=cls), encoding="utf-8")
         print(f"{name}: {len(doc['fields'])} fields, {len(doc['permissions'])} perms")
     print(f"TOTAL: {len(SCHEMAS)} doctypes -> {base}")

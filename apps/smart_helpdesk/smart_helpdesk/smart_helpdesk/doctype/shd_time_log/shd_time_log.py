@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdTimeLog(Document):
+class SHDTimeLog(Document):
     pass

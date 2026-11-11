@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdIncident(Document):
+class SHDIncident(Document):
     pass

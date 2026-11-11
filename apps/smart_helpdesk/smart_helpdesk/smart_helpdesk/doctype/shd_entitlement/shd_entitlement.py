@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdEntitlement(Document):
+class SHDEntitlement(Document):
     pass

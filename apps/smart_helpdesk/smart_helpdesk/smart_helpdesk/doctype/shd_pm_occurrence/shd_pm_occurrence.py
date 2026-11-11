@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdPmOccurrence(Document):
+class SHDPMOccurrence(Document):
     pass

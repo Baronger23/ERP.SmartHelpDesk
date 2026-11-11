@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdAgreement(Document):
+class SHDAgreement(Document):
     pass

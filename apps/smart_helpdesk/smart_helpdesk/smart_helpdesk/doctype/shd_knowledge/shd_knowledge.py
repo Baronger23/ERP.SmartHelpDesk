@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdKnowledge(Document):
+class SHDKnowledge(Document):
     pass

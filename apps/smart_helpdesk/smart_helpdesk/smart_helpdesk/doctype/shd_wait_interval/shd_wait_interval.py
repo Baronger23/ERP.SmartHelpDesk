@@ -4,5 +4,5 @@
 from frappe.model.document import Document
 
 
-class ShdWaitInterval(Document):
+class SHDWaitInterval(Document):
     pass
