@@ -76,7 +76,6 @@ docs/implementation/         Ánh xạ thiết kế → code, cài đặt và v�
 docker/compose.business.yml   Mount app vào các process ERP local
 docker/install_business_app.py   Installer Docker (backup + install-app chuẩn)
 scripts/tests/               Runner kiểm thử tích hợp
-legacy/                      Lớp script demo giữa kỳ đã đóng băng (xem legacy/README.md)
 data/                        Bằng chứng kiểm thử và snapshot demo theo tên file
 ```
 
@@ -84,10 +83,3 @@ data/                        Bằng chứng kiểm thử và snapshot demo theo 
 
 [Tổng quan](docs/design/00_tong_quan_he_thong.md) · [Yêu cầu](docs/design/01_phan_tich_doanh_nghiep_va_yeu_cau.md) · [10 module](docs/design/readme.md) · [Domain/workflow](docs/design/05_domain_workflow_contracts.md) · [Deployment mục tiêu](docs/design/07_kien_truc_trien_khai.md) · [Sổ sơ đồ](docs/design/diagrams/index.html).
 
-## Bộ demo lịch sử
-
-```powershell
-python run_pipeline.py --legacy-demo
-```
-
-Chỉ dùng để tái hiện demo cũ. Lệnh sử dụng `.env`, tạo/thay đổi dữ liệu mẫu và chạy các script Issue/Asset/kho/tài chính/KPI cũ; đây không phải luồng vận hành mới. Snapshot và tỷ lệ gán cố định không chứng minh hệ thống đạt thiết kế.
