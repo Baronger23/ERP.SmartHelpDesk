@@ -19,15 +19,17 @@ Ngày cập nhật: 15/10/2026. Nguồn yêu cầu: `docs/design` v3 và hợp �
 
 ## Cài đặt local
 
-Khởi động ERPNext Docker hiện có rồi chạy:
+Đường chính là bench native — xem README ở gốc repo (tạo bench, `new-site`, `install-app erpnext` + `smart_helpdesk`, `migrate`). Kiểm chứng toàn trình bằng một lệnh dựng site thử từ trắng: `python scripts/tests/run_bench_checks.py` (xem mục Kiểm thử).
+
+Đường phụ qua Docker: khởi động ERPNext Docker hiện có rồi chạy:
 
 ```powershell
 python run_pipeline.py
 # hoặc
-python scripts/setup/install_business_app.py --site frontend
+python docker/install_business_app.py --site frontend
 ```
 
-Installer chỉ thao tác cụm Docker local `frappe_docker`, không dùng `.env`/Frappe Cloud. Nó backup DB + files trước, mount source vào backend/worker/scheduler, cài package, đăng ký app, cài/migrate schema và restart process. Cập nhật dùng cùng lệnh.
+Installer Docker chỉ thao tác cụm Docker local `frappe_docker`, không dùng `.env`/Frappe Cloud. Nó backup DB + files trước, mount source vào backend/worker/scheduler, cài package, đăng ký app, cài/migrate schema và restart process. Cập nhật dùng cùng lệnh.
 
 Installer kiểm tra Origin browser khớp public Host tại Nginx, rồi dùng cặp Host/Origin `frontend:8080` trong Docker để realtime gọi ngược API xác thực. Điều này sửa xung đột hostname của template local mà vẫn từ chối Origin ngoài hệ thống; chạy `nginx -t` trước reload. Config trước sửa giữ ở `/etc/nginx/conf.d/frappe.conf.before-smart-helpdesk`. Chạy lại installer nếu tái tạo frontend container.
 
@@ -77,12 +79,15 @@ DB unique bảo vệ source/WO/PM/charge/command; CHECK bảo vệ WorkSource XO
 
 ## Kiểm thử
 
-```powershell
-docker exec frappe_docker-backend-1 bench new-site shd-test.localhost --install-app erpnext --install-app smart_helpdesk
-python scripts/tests/run_business_checks.py
+Một lệnh trên bench, dựng site thử từ trắng và chạy toàn bộ:
+
+```bash
+python scripts/tests/run_bench_checks.py
 ```
 
-Nhập DB/admin credentials local khi tạo site. Tests chỉ chấp nhận `shd-test.*`, dùng dữ liệu synthetic. Từng ca rollback; concurrency và HTTP giữ fixture trên site riêng để truy bằng chứng. Runner lưu `data/business_validation.json`, phân biệt live ERP/MariaDB, hai connection cạnh tranh, authenticated HTTP và calendar tests. Bằng chứng UI là workspace/list/dialog trên trình duyệt. Đây không phải UAT, load test, security certification hoặc restore/HA drill.
+Lệnh tự tạo mới site `shd-test.localhost` trên bench, cài ERPNext + smart_helpdesk, nạp fixture giá mua/tiền tệ và token HTTP trước khi chạy web, rồi chạy calendar, tích hợp, tranh chấp tồn và HTTP; có test fail thì trả exit code 1 cho CI. Mật khẩu root MariaDB qua `--db-root-password`, `SHD_DB_ROOT_PASSWORD` hoặc file `~/.dbpass`. Đường phụ trong Docker: tạo site thử trong container rồi chạy `python scripts/tests/run_business_checks.py`.
+
+Tests chỉ chấp nhận `shd-test.*`, dùng dữ liệu synthetic. Từng ca rollback; concurrency và HTTP giữ fixture trên site riêng để truy bằng chứng. Runner lưu `data/business_validation.json`, phân biệt live ERP/MariaDB, hai connection cạnh tranh, authenticated HTTP và calendar tests. Bằng chứng UI là workspace/list/dialog trên trình duyệt. Đây không phải UAT, load test, security certification hoặc restore/HA drill.
 
 ## Phần ngoài đợt triển khai
 

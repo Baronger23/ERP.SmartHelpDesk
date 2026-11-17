@@ -478,7 +478,7 @@ Khi trình bày, mở [sơ đồ tổng quan](diagrams/01_tong_quan_he_thong.svg
 | Muốn tìm hiểu | Tài liệu |
 |---|---|
 | Thiết kế ban đầu của bạn | [Báo cáo giữa kỳ](../reports/midterm_report.md), đặc biệt các chương về FSM, fit-gap và hướng AI |
-| Dữ liệu và cấu hình cũ | [Master data](../specifications/master_data.md), [setup](../../scripts/setup), [scenarios](../../scripts/scenarios) |
+| Dữ liệu và cấu hình cũ | [Master data](../specifications/master_data.md), setup/scenarios của lớp script cũ (đã xóa khỏi repo 2026-11-17; xem tại tag git `pre-bench-baseline`) |
 | Script báo cáo hiện tại | [Generate KPI dashboard](../../scripts/reports/generate_kpi_dashboard.py) |
 | Bức tranh doanh nghiệp mục tiêu | [Tổng quan](00_tong_quan_he_thong.md) và [pain point/user story](01_phan_tich_doanh_nghiep_va_yeu_cau.md) |
 | Dữ liệu và trao đổi giữa module | [Kiến trúc logic](02_kien_truc_logic_va_du_lieu.md) và [workflow contracts](05_domain_workflow_contracts.md) |

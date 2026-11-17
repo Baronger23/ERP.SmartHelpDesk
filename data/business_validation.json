@@ -1,6 +1,7 @@
 {
-  "checked_at": "2026-10-15T05:08:35.463799+00:00",
+  "checked_at": "2026-11-17T08:19:05.230394+00:00",
   "environment": {
+    "runner": "bench",
     "site": "shd-test.localhost",
     "frappe": "16.33.1",
     "erpnext": "16.34.2",
@@ -9,6 +10,41 @@
   "ai_runtime_included": false,
   "success": true,
   "results": [
+    {
+      "scope": "pre_web_fixtures",
+      "site": "shd-test.localhost",
+      "created": [
+        "erpnext_fixtures:Vietnam",
+        "Currency:VND(enabled)",
+        "Company:SHD Integration",
+        "Customer:SHD Test Customer",
+        "Price List:SHD Selling VND",
+        "Price List:SHD Buying VND",
+        "Fiscal Year:2026",
+        "Item:SHD-TEST-PART",
+        "Item:SHD-TEST-LABOR",
+        "Item Price:SHD-TEST-PART@SHD Buying VND=100 VND",
+        "Stock Entry:opening 2 x SHD-TEST-PART",
+        "User:shd.tech@example.invalid",
+        "User:shd.customer@example.invalid",
+        "User:shd.dispatch@example.invalid",
+        "User:shd.accounting@example.invalid",
+        "SHD Technician:shd.tech@example.invalid"
+      ],
+      "buying_price": {
+        "item": "SHD-TEST-PART",
+        "price_list": "SHD Buying VND",
+        "rate": 100,
+        "currency": "VND"
+      },
+      "success": true
+    },
+    {
+      "scope": "pre_web_http_token",
+      "site": "shd-test.localhost",
+      "ready": true,
+      "success": true
+    },
     {
       "scope": "live_erpnext_mariadb_integration",
       "site": "shd-test.localhost",
@@ -24,11 +60,11 @@
       "outcomes": [
         {
           "outcome": "Held",
-          "name": "fha7ud6esg"
+          "name": "2ss0rv4s83"
         },
         {
           "outcome": "Rejected",
-          "reason": "CONCURRENCY_CONFLICT: transaction rolled back; retry with the same idempotency key"
+          "reason": "INSUFFICIENT_STOCK: another work order may have reserved this stock"
         }
       ]
     },

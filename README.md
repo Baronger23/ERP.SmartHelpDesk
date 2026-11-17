@@ -53,19 +53,21 @@ Request, incident, work order và visit có dữ liệu riêng. Reservation ki�
 
 ## Kiểm thử
 
-Trên bench (cần bật một lần: `bench --site shd.localhost set-config allow_tests true`):
+Đường kiểm chứng chuẩn trên bench — một lệnh, dựng site thử từ trắng:
+
+```bash
+python scripts/tests/run_bench_checks.py
+```
+
+Lệnh tự drop/tạo mới site `shd-test.localhost`, cài ERPNext + smart_helpdesk, nạp fixture (giá mua + tiền tệ VND, dữ liệu nền) và token HTTP **trước khi** chạy web, rồi chạy đủ bốn nhóm: calendar SLA, tích hợp live ERPNext/MariaDB, tranh chấp tồn (concurrency) và HTTP có xác thực. Kết quả ghi vào [business_validation.json](data/business_validation.json); có test fail thì lệnh trả exit code 1, dùng được cho CI. Mật khẩu root MariaDB lấy từ `--db-root-password`, biến `SHD_DB_ROOT_PASSWORD` hoặc file `~/.dbpass`; bench ở thư mục khác thì truyền `--bench <đường/dẫn>`. Nếu bench chưa có app, lệnh tự liên kết `apps/smart_helpdesk` của repo vào bench.
+
+Chạy riêng bộ test đơn vị trên site dev (cần bật một lần: `bench --site shd.localhost set-config allow_tests true`):
 
 ```bash
 bench --site shd.localhost run-tests --app smart_helpdesk
 ```
 
-Bộ kiểm thử tích hợp chạy trên site Docker kiểm thử:
-
-```powershell
-python scripts/tests/run_business_checks.py
-```
-
-Yêu cầu site thử `shd-test.localhost` đã cài ERPNext và smart_helpdesk. [business_validation.json](data/business_validation.json) ghi phạm vi live ERP/MariaDB, HTTP và calendar tests. Conformance AI offline không phải bằng chứng nghiệp vụ runtime.
+Đường Docker (phụ): `python scripts/tests/run_business_checks.py` chạy cùng các suite trên site thử trong container. Conformance AI offline không phải bằng chứng nghiệp vụ runtime.
 
 ## Cấu trúc
 

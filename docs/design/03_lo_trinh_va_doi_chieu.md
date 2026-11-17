@@ -33,7 +33,7 @@ Chỉ ở bước này mới đối chiếu nhu cầu với mã hiện có. Ph�
 - Finance script dùng ID Issue cố định và dữ liệu công/giá mẫu; không đủ làm engine quyết toán tổng quát.
 - Quick Action “In Progress”, giá trị field HTML QR và việc scope Role cộng quyền cần thử trên version ERPNext mục tiêu.
 
-Nguồn mã: [pipeline](../../run_pipeline.py), [client API](../../scripts/core/frappe_client.py), [setup](../../scripts/setup), [scenarios](../../scripts/scenarios), [report KPI](../../scripts/reports/generate_kpi_dashboard.py). Các tệp data là snapshot demo, không số hiện thời của doanh nghiệp.
+Nguồn mã: [pipeline](../../run_pipeline.py), [client API](../../scripts/core/frappe_client.py), [setup](../../scripts/setup), [scenarios](../../scripts/scenarios), [report KPI](../../scripts/reports/generate_kpi_dashboard.py). Các tệp data là snapshot demo, không số hiện thời của doanh nghiệp. *(Cập nhật 2026-11-17: lớp script cũ — client API, setup, scenarios, report KPI — đã xóa khỏi cây repo; toàn bộ còn trong lịch sử git tại tag `pre-bench-baseline`. `run_pipeline.py` hiện chỉ là wrapper gọi `docker/install_business_app.py`.)*
 
 ## 4. Kế hoạch triển khai theo lát cắt giá trị
 
