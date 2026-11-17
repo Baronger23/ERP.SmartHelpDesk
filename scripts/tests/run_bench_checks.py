@@ -3,9 +3,12 @@
 Builds the dedicated test site from blank on a native Frappe bench,
 seeds the pre-web fixtures (buying price / currency) and the HTTP token,
 starts the web server, then runs every suite — SLA calendar, live
-ERPNext/MariaDB integration, stock-reservation concurrency and the
-authenticated HTTP boundary — writes data/business_validation.json and
-exits non-zero if anything fails, so CI can gate on it.
+ERPNext/MariaDB integration, stock-reservation concurrency, the
+authenticated HTTP boundary and the Desk role acceptance (three
+business flows executed as the AIS role holders on their own dataset,
+plus cross-customer and expired-approval denial cases) — writes
+data/business_validation.json and exits non-zero if anything fails,
+so CI can gate on it.
 
 Prerequisites: a bench with frappe + erpnext apps (see README), MariaDB
 and Redis reachable, and the MariaDB root password available via
@@ -34,7 +37,8 @@ ROOT = Path(__file__).resolve().parents[2]
 APP_DIR = ROOT / "apps" / "smart_helpdesk"
 SUITES = ("smart_helpdesk.tests.integration.run",
           "smart_helpdesk.tests.integration.run_concurrency",
-          "smart_helpdesk.tests.http_smoke.run")
+          "smart_helpdesk.tests.http_smoke.run",
+          "smart_helpdesk.tests.acceptance.run")
 
 
 def fail(message, process=None):

@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-17T08:19:05.230394+00:00",
+  "checked_at": "2026-11-17T09:18:40.871318+00:00",
   "environment": {
     "runner": "bench",
     "site": "shd-test.localhost",
@@ -59,12 +59,12 @@
       "total_held": "2.0",
       "outcomes": [
         {
-          "outcome": "Held",
-          "name": "2ss0rv4s83"
-        },
-        {
           "outcome": "Rejected",
           "reason": "INSUFFICIENT_STOCK: another work order may have reserved this stock"
+        },
+        {
+          "outcome": "Held",
+          "name": "5m1uoqmaia"
         }
       ]
     },
@@ -78,6 +78,423 @@
         "get_cannot_mutate": true,
         "guest_denied": true
       },
+      "success": true
+    },
+    {
+      "scope": "desk_role_acceptance",
+      "site": "shd-test.localhost",
+      "dataset": "SHD Acceptance",
+      "flows": [
+        {
+          "flow": "intake_to_invoice",
+          "documents": {
+            "request": "5o0d2qgucg",
+            "incident": "5o3q5035si",
+            "work_order": "5o51q1vhmp",
+            "estimate": "5o6f2ek2nj",
+            "reservation": "5o7pcjke7t",
+            "visit": "5o88ir1l9b",
+            "material_use": "5oak47pmgq",
+            "stock_entry": "MAT-STE-2026-00005",
+            "charge": "5oa4n567qp",
+            "sales_invoice": "ACC-SINV-2026-00001"
+          },
+          "steps": [
+            {
+              "step": "intake_by_customer",
+              "command": "receive_request",
+              "actor": "acc.customer.a@example.invalid",
+              "role": "AIS Customer Portal",
+              "document": "5o0d2qgucg"
+            },
+            {
+              "step": "triage_by_dispatcher",
+              "command": "triage",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5o0d2qgucg"
+            },
+            {
+              "step": "first_response",
+              "command": "acknowledge",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5o0d2qgucg"
+            },
+            {
+              "step": "work_order_by_dispatcher",
+              "command": "create_work_order",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5o51q1vhmp"
+            },
+            {
+              "step": "estimate_by_accountant",
+              "command": "propose_estimate",
+              "actor": "acc.accounting@example.invalid",
+              "role": "AIS Billing Accountant",
+              "document": "5o6f2ek2nj"
+            },
+            {
+              "step": "cost_approved_by_customer",
+              "command": "decide_estimate",
+              "actor": "acc.customer.a@example.invalid",
+              "role": "AIS Customer Portal",
+              "document": "5o6f2ek2nj"
+            },
+            {
+              "step": "materials_declared",
+              "command": "declare_materials",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5o51q1vhmp"
+            },
+            {
+              "step": "reserved_by_keeper",
+              "command": "reserve",
+              "actor": "acc.keeper@example.invalid",
+              "role": "AIS Warehouse Keeper",
+              "document": "5o7pcjke7t"
+            },
+            {
+              "step": "assigned_by_dispatcher",
+              "command": "assign",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5o51q1vhmp"
+            },
+            {
+              "step": "visit_started_by_technician",
+              "command": "start_visit",
+              "actor": "acc.tech@example.invalid",
+              "role": "AIS Field Technician",
+              "document": "5o88ir1l9b"
+            },
+            {
+              "step": "consumed_by_technician_on_site",
+              "command": "consume",
+              "actor": "acc.tech@example.invalid",
+              "role": "AIS Field Technician",
+              "document": "5oak47pmgq"
+            },
+            {
+              "step": "charge_by_accountant",
+              "command": "reconcile_charge",
+              "actor": "acc.accounting@example.invalid",
+              "role": "AIS Billing Accountant",
+              "document": "5oa4n567qp"
+            },
+            {
+              "step": "visit_finished_by_technician",
+              "command": "finish_visit",
+              "actor": "acc.tech@example.invalid",
+              "role": "AIS Field Technician",
+              "document": "5o88ir1l9b"
+            },
+            {
+              "step": "restored_by_technician",
+              "command": "restore",
+              "actor": "acc.tech@example.invalid",
+              "role": "AIS Field Technician",
+              "document": "5o51q1vhmp"
+            },
+            {
+              "step": "accepted_by_customer",
+              "command": "accept_work",
+              "actor": "acc.customer.a@example.invalid",
+              "role": "AIS Customer Portal",
+              "document": "5o51q1vhmp"
+            },
+            {
+              "step": "closed_by_dispatcher",
+              "command": "close_request",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5o0d2qgucg"
+            },
+            {
+              "step": "invoice_by_accountant",
+              "command": "prepare_invoice",
+              "actor": "acc.accounting@example.invalid",
+              "role": "AIS Billing Accountant",
+              "document": "ACC-SINV-2026-00001"
+            }
+          ],
+          "reconciliations": [
+            {
+              "check": "stock_bin_decreased_by_consumption",
+              "expected": "before-1",
+              "actual": "3.0->2.0",
+              "success": true
+            },
+            {
+              "check": "invoice_total_matches_approved_estimate",
+              "expected": "120",
+              "actual": "120.0",
+              "success": true
+            },
+            {
+              "check": "invoice_links_work_order_and_charge_allocated",
+              "expected": "5o51q1vhmp",
+              "actual": "5o51q1vhmp",
+              "success": true
+            },
+            {
+              "check": "invoice_does_not_issue_stock_again",
+              "expected": "update_stock=0",
+              "actual": "update_stock=0",
+              "success": true
+            },
+            {
+              "check": "request_closed_after_acceptance",
+              "expected": "Closed",
+              "actual": "Closed",
+              "success": true
+            }
+          ],
+          "success": true
+        },
+        {
+          "flow": "shortage_to_quarantine",
+          "documents": {
+            "spare_bin_before": 1.0,
+            "work_order": "5ofsrrug7j",
+            "demand": "5ogmeifcdn",
+            "material_request": "MAT-MR-2026-00001",
+            "purchase_order": "PUR-ORD-2026-00001",
+            "po_docstatus_before_approval": 0,
+            "purchase_receipt": "MAT-PRE-2026-00001",
+            "demand_status": "Partially fulfilled"
+          },
+          "steps": [
+            {
+              "step": "intake_by_dispatcher",
+              "command": "receive_request",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5ofepc65vn"
+            },
+            {
+              "step": "triage_by_dispatcher",
+              "command": "triage",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5ofepc65vn"
+            },
+            {
+              "step": "work_order_by_dispatcher",
+              "command": "create_work_order",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5ofsrrug7j"
+            },
+            {
+              "step": "demand_by_purchasing",
+              "command": "create_demand",
+              "actor": "acc.purchasing@example.invalid",
+              "role": "AIS Purchasing",
+              "document": "5ogmeifcdn"
+            },
+            {
+              "step": "requisition_by_purchasing",
+              "command": "requisition",
+              "actor": "acc.purchasing@example.invalid",
+              "role": "AIS Purchasing",
+              "document": "5ogmeifcdn"
+            },
+            {
+              "step": "po_prepared_by_purchasing",
+              "command": "prepare_purchase_order",
+              "actor": "acc.purchasing@example.invalid",
+              "role": "AIS Purchasing",
+              "document": "5ogmeifcdn"
+            },
+            {
+              "step": "po_approved_by_service_manager",
+              "command": "approve_purchase_order",
+              "actor": "acc.manager@example.invalid",
+              "role": "AIS Service Manager",
+              "document": "5ogmeifcdn"
+            },
+            {
+              "step": "partial_receipt_by_keeper",
+              "command": "receive_purchase",
+              "actor": "acc.keeper@example.invalid",
+              "role": "AIS Warehouse Keeper",
+              "document": "5ogmeifcdn"
+            }
+          ],
+          "reconciliations": [
+            {
+              "check": "net_requisition_is_shortage_only",
+              "expected": "MR qty 4.0 (5 needed - 1.0 in stock)",
+              "actual": "4.0",
+              "success": true
+            },
+            {
+              "check": "po_approved_by_manager",
+              "expected": "docstatus 0->1",
+              "actual": "0->1",
+              "success": true
+            },
+            {
+              "check": "accepted_stock_in_main_warehouse",
+              "expected": "1.0+3",
+              "actual": "4.0",
+              "success": true
+            },
+            {
+              "check": "rejected_stock_quarantined",
+              "expected": "0+1",
+              "actual": "1.0",
+              "success": true
+            },
+            {
+              "check": "po_received_quantity_counts_accepted_plus_rejected",
+              "expected": "4.0/4.0",
+              "actual": "4.0/4.0",
+              "success": true
+            },
+            {
+              "check": "demand_partially_fulfilled",
+              "expected": "Partially fulfilled",
+              "actual": "Partially fulfilled",
+              "success": true
+            }
+          ],
+          "success": true
+        },
+        {
+          "flow": "pm_finding_to_repair",
+          "documents": {
+            "pm_plan": "5p0rbigr2a",
+            "pm_occurrence": "5p1ail1jh2",
+            "pm_work_order": "5p14d9kcae",
+            "finding": "5p3mkd4sa1",
+            "repair_incident": "5p3o8maq94",
+            "repair_work_order": "5p39mu1m0m"
+          },
+          "steps": [
+            {
+              "step": "pm_generated_by_dispatcher",
+              "command": "generate_pm",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5p1ail1jh2"
+            },
+            {
+              "step": "pm_assigned_by_dispatcher",
+              "command": "assign",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5p14d9kcae"
+            },
+            {
+              "step": "pm_visit_started",
+              "command": "start_visit",
+              "actor": "acc.tech@example.invalid",
+              "role": "AIS Field Technician",
+              "document": "5p2roi833s"
+            },
+            {
+              "step": "pm_visit_finished",
+              "command": "finish_visit",
+              "actor": "acc.tech@example.invalid",
+              "role": "AIS Field Technician",
+              "document": "5p2roi833s"
+            },
+            {
+              "step": "pm_completed_with_finding_by_technician",
+              "command": "complete_pm",
+              "actor": "acc.tech@example.invalid",
+              "role": "AIS Field Technician",
+              "document": "5p1ail1jh2"
+            },
+            {
+              "step": "finding_classified_repair_by_dispatcher",
+              "command": "classify_finding",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5p3mkd4sa1"
+            },
+            {
+              "step": "repair_work_order_opened",
+              "command": "create_work_order",
+              "actor": "acc.dispatch@example.invalid",
+              "role": "AIS Dispatcher",
+              "document": "5p39mu1m0m"
+            }
+          ],
+          "reconciliations": [
+            {
+              "check": "occurrence_completed",
+              "expected": "Completed",
+              "actual": "Completed",
+              "success": true
+            },
+            {
+              "check": "finding_repair_pending_with_incident",
+              "expected": "Repair pending + incident",
+              "actual": "Repair pending",
+              "success": true
+            },
+            {
+              "check": "repair_work_order_from_finding_incident",
+              "expected": "Planned WO on incident",
+              "actual": "Planned",
+              "success": true
+            }
+          ],
+          "success": true
+        }
+      ],
+      "denials": [
+        {
+          "case": "cross_customer_access",
+          "actor": "acc.customer.b@example.invalid",
+          "role": "AIS Customer Portal",
+          "expected": "PermissionError + no visibility of customer A work orders",
+          "actual": "PermissionError: Resource unavailable or outside your operational scope",
+          "list_leak": false,
+          "success": true
+        },
+        {
+          "case": "expired_estimate_decision",
+          "actor": "acc.customer.a@example.invalid",
+          "role": "AIS Customer Portal",
+          "expected": "ValidationError (stale/expired estimate)",
+          "actual": "ValidationError: Estimate is stale, changed or expired",
+          "success": true
+        },
+        {
+          "case": "expired_contact_authority",
+          "actor": "acc.customer.a2@example.invalid",
+          "role": "AIS Customer Portal",
+          "expected": "PermissionError (no effective customer authority)",
+          "actual": "PermissionError: No effective customer authority for this decision",
+          "success": true
+        }
+      ],
+      "audit": [
+        {
+          "flow": "intake_to_invoice",
+          "steps": 17,
+          "missing_receipts": [],
+          "success": true
+        },
+        {
+          "flow": "shortage_to_quarantine",
+          "steps": 8,
+          "missing_receipts": [],
+          "success": true
+        },
+        {
+          "flow": "pm_finding_to_repair",
+          "steps": 7,
+          "missing_receipts": [],
+          "success": true
+        }
+      ],
       "success": true
     },
     {
