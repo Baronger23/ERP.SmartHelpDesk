@@ -1,6 +1,6 @@
 # Smart HelpDesk & Maintenance
 
-Hệ thống dịch vụ bảo trì công nghiệp B2B trên ERPNext/Frappe. Custom app `apps/smart_helpdesk` hiện thực lõi nghiệp vụ theo bộ thiết kế v3. Agent Harness và tích hợp AI được hoãn; catalog tri thức kỹ thuật dùng độc lập.
+Hệ thống dịch vụ bảo trì công nghiệp B2B trên ERPNext/Frappe. Custom app `apps/smart_helpdesk` hiện thực lõi nghiệp vụ theo bộ thiết kế v3 và cung cấp [API đọc ngữ cảnh ERP cho AI-1](docs/implementation/ai1_erp_context.md). Agent Harness, LLM và hybrid RAG vẫn ở giai đoạn thiết kế.
 
 ## Vận hành local (bench — đường chính)
 
@@ -59,7 +59,7 @@ Request, incident, work order và visit có dữ liệu riêng. Reservation ki�
 python scripts/tests/run_bench_checks.py
 ```
 
-Lệnh tự drop/tạo mới site `shd-test.localhost`, cài ERPNext + smart_helpdesk, nạp fixture (giá mua + tiền tệ VND, dữ liệu nền) và token HTTP **trước khi** chạy web, rồi chạy đủ năm nhóm: calendar SLA, tích hợp live ERPNext/MariaDB, tranh chấp tồn (concurrency), HTTP có xác thực và **nghiệm thu nghiệp vụ theo vai trò trên Desk** (`smart_helpdesk.tests.acceptance` — ba luồng tiếp nhận→hóa đơn, thiếu vật tư→cách ly hàng lỗi, PM→finding→ca sửa chữa, chạy bằng đúng user giữ từng vai trò AIS trên bộ dữ liệu riêng "SHD Acceptance", kèm hai ca từ chối: truy cập chéo khách hàng và duyệt khi đã hết hạn; mỗi luồng ghi ID chứng từ, vai trò thực hiện và đối chiếu kho/hóa đơn/audit). Kết quả ghi vào [business_validation.json](data/business_validation.json); có test fail thì lệnh trả exit code 1, dùng được cho CI. Mật khẩu root MariaDB lấy từ `--db-root-password`, biến `SHD_DB_ROOT_PASSWORD` hoặc file `~/.dbpass`; bench ở thư mục khác thì truyền `--bench <đường/dẫn>`. Nếu bench chưa có app, lệnh tự liên kết `apps/smart_helpdesk` của repo vào bench.
+Lệnh tự dựng lại site `shd-test.localhost`, cài ERPNext + smart_helpdesk, nạp fixture và token ADMIN kiểm thử trước khi chạy web. Runner chạy lịch SLA, tích hợp ERPNext/MariaDB, tranh chấp tồn, HTTP có xác thực, nghiệm thu ba luồng nghiệp vụ theo vai trò và [kiểm thử API đọc AI-1](docs/implementation/ai1_erp_context.md) trên bộ dữ liệu tổng hợp. Kết quả ghi vào [business_validation.json](data/business_validation.json) và runner trả exit code 1 khi có kiểm tra thất bại. Mật khẩu root MariaDB lấy từ biến `SHD_DB_ROOT_PASSWORD`, file `~/.dbpass` hoặc `--db-root-password`. Có thể truyền `--bench <đường/dẫn>` cho Bench ở vị trí khác. Nếu Bench chưa có app, runner liên kết `apps/smart_helpdesk` từ repo.
 
 Chạy riêng bộ test đơn vị trên site dev (cần bật một lần: `bench --site shd.localhost set-config allow_tests true`):
 

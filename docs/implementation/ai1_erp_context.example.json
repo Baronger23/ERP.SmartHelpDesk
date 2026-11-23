@@ -1,0 +1,85 @@
+{
+  "request": {
+    "equipment_code": "ACC-EQ-001",
+    "question": "Máy ACC-R1 rung cao. SOP và lịch sử ca trước ghi nhận gì?"
+  },
+  "response": {
+    "message": {
+      "contract_version": "1.0",
+      "observed_at": "2026-11-18T03:10:00+00:00",
+      "question": "Máy ACC-R1 rung cao. SOP và lịch sử ca trước ghi nhận gì?",
+      "equipment": {
+        "doctype": "SHD Equipment",
+        "name": "demo-equipment-a",
+        "revision": 1,
+        "company": "SHD Acceptance",
+        "customer": "ACC Customer A",
+        "site": "demo-site-a",
+        "equipment_code": "ACC-EQ-001",
+        "model": "ACC-R1",
+        "serial_number": "ACC-SERIAL-001"
+      },
+      "history": {
+        "work_orders": {
+          "items": [
+            {
+              "doctype": "SHD Work Order",
+              "name": "demo-wo-repair",
+              "revision": 6,
+              "status": "Customer accepted",
+              "scope": "Repair ACC line",
+              "restored_at": "2026-11-18 09:00:00",
+              "accepted_at": "2026-11-18 09:30:00",
+              "visits": {
+                "items": [
+                  {
+                    "doctype": "SHD Visit",
+                    "name": "demo-visit-repair",
+                    "revision": 2,
+                    "status": "Completed",
+                    "started_at": "2026-11-18 08:00:00",
+                    "ended_at": "2026-11-18 09:00:00",
+                    "outcome": "Line repaired"
+                  }
+                ],
+                "has_more": false
+              }
+            }
+          ],
+          "has_more": false
+        },
+        "findings": {
+          "items": [
+            {
+              "doctype": "SHD Finding",
+              "name": "demo-pm-finding",
+              "revision": 2,
+              "status": "Repair pending",
+              "description": "ACC bearing vibration above threshold",
+              "severity": "High"
+            }
+          ],
+          "has_more": false
+        }
+      },
+      "knowledge": {
+        "items": [
+          {
+            "doctype": "SHD Knowledge",
+            "name": "demo-sop-vibration",
+            "revision": 2,
+            "title": "AI-1 vibration SOP (approved)",
+            "model": "ACC-R1",
+            "document_version": "1.0",
+            "source_reference": "SHD AI-1 synthetic SOP / approved / section 1",
+            "effective_from": "2026-11-17 10:00:00",
+            "effective_until": "2027-11-18 10:00:00",
+            "content_text": "Đối chiếu số đo rung với lần kiểm tra trước. Nếu số đo bất thường, ghi nhận và yêu cầu trưởng nhóm xác minh.",
+            "content_truncated": false
+          }
+        ],
+        "has_more": false
+      }
+    }
+  }
+}

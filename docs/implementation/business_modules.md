@@ -91,7 +91,7 @@ Tests chỉ chấp nhận `shd-test.*`, dùng dữ liệu synthetic. Từng ca r
 
 ## Phần ngoài đợt triển khai
 
-- Agent Harness, LLM, hybrid RAG/ingestion/vector DB, AI registry/checkpoint/resume/HITL: hoãn theo yêu cầu.
+- [API đọc ngữ cảnh ERP cho AI-1](ai1_erp_context.md) cung cấp hồ sơ máy, lịch sử và SOP theo quyền. Agent Harness, LLM, hybrid RAG/ingestion, checkpoint/resume và HITL vẫn ở giai đoạn thiết kế.
 - Nhiều mức duyệt/delegation, SLA pause, tích hợp hotline/Zalo, tối ưu lịch/tuyến, mobile/offline, IoT: chưa triển khai.
 - Scope generation mới, sửa phạm vi đã thực hiện/nghiệm thu, chuyển site equipment, serial/batch/core recovery, credit-note/charge chia nhiều invoice: cần workflow bổ sung. P1 chặn các trường hợp chưa hỗ trợ.
 - Scheduler daily có sinh kỳ PM và tạo/revise báo cáo theo scope tài khoản dịch vụ được cấu hình. Chưa tự chốt kỳ hoặc gửi escalation/notification.
